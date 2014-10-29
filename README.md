@@ -27,7 +27,7 @@ The fastest way to get an additional NPM module added to the hook.io platform is
 
 If your module requires additional dependencies outside of what NPM can install, you can create a custom build script in [this folder](http://github.com/bigcompany/hook.io/blob/master/modules/builds/). The hosting environment for hook.io is `Ubuntu 14.04.1 LTS`. Bash scripts are recommended.
 
-## Source Code
+## Server Source Code
 
 Soon, the source code that runs the live [hook.io](http://hook.io) site will be open-sourced so that you can run your own private hook.io servers!
 
