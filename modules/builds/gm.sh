@@ -1,0 +1,1 @@
+apt-get install ImageMagick
