@@ -9,7 +9,7 @@
 ```
 ## Hosting for Webhooks and Transform Streams
 
-### Incredibly simple. Free to try.
+### Incredibly simple. Surprisingly Powerful.
 
 To start using hook.io visit the website at [http://hook.io](http://hook.io). Here you will find many examples and documentation on how to use hook.io
 
