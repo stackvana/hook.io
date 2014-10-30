@@ -2,6 +2,7 @@ module['exports'] = {
   "cheerio": "^0.17.0",
   "colors": "^1.0.3",
   "cron": "^1.0.5",
+  "geocodio": "^0.0.1",
   "github": "^0.2.2",
   "gm": "^1.16.0",
   "hyperquest": "^1.0.1",
