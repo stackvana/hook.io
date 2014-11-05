@@ -7,9 +7,7 @@
 |__|  |__|  \______/   \______/  |__|\__\  (__)  |__|  \______/  
 
 ```
-## Hosting for Webhooks and Transform Streams
-
-### Incredibly simple. Surprisingly Powerful.
+## Build and deploy HTTP microservices in seconds
 
 To start using hook.io visit the website at [http://hook.io](http://hook.io). Here you will find many examples and documentation on how to use hook.io
 
@@ -27,6 +25,13 @@ The fastest way to get an additional NPM module added to the hook.io platform is
 
 If your module requires additional dependencies outside of what NPM can install, you can create a custom build script in [this folder](http://github.com/bigcompany/hook.io/blob/master/modules/builds/). The hosting environment for hook.io is `Ubuntu 14.04.1 LTS`. Bash scripts are recommended.
 
+## Contributing
+
+Contributions are welcomed and much appreciated. Simply open up a Github Pull Request to start the discussion.
+
+All contributors must sign our <a href="https://www.clahub.com/agreements/bigcompany/hook.io">Contributor License Agreement</a>. 
+
+This is a simple document to help protect both the hook.io project and your rights as a contributor.
 
 ## Dependency Tree
 
