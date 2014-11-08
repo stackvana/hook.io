@@ -14,5 +14,6 @@ module['exports'] = {
   "resource-user": "0.5.x",
   "stream-buffers": "^1.1.0",
   "through2": "^0.6.3",
-  "twit": "^1.1.18"
+  "twit": "^1.1.18",
+  "xtend": "^4.0.0"
 }
