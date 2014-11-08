@@ -8,6 +8,7 @@ module['exports'] = {
   "hyperquest": "^1.0.1",
   "irc": "^0.3.7",
   "mschema": "^0.5.3",
+  "object-path": "^0.6.0",
   "passport": "^0.2.1",
   "passport-github": "^0.1.5",
   "resource": "^0.5.3",
