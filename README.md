@@ -35,7 +35,7 @@ This is a simple document to help protect both the hook.io project and your righ
 
 ## Dependency Tree
 
-hook.io itself is not a very large application. The majority of what powers hook.io is already MIT open-sourced and available for immediately download.
+hook.io itself is not a very large application. The majority of what powers hook.io is already MIT open-sourced and available for immediate download.
 
 Learning about the following dependencies is a great way to start understanding how [hook.io](http://hook.io) works.
 
