@@ -2,6 +2,7 @@ module['exports'] = {
   "bluebird": "^2.3.11",
   "cheerio": "^0.17.0",
   "colors": "^1.0.3",
+  "collect-stream": "^1.0.0",
   "contentful": "^0.1.2",
   "contentful-management": "^0.1.0",
   "cron": "^1.0.5",
