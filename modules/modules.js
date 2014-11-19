@@ -26,6 +26,7 @@ module['exports'] = {
   "resource-user": "0.5.x",
   "slack-notify": "^0.1.2",
   "stream-buffers": "^1.1.0",
+  "stream-transcoder": "0.0.5",
   "stripe": "^2.8.0",
   "through2": "^0.6.3",
   "twilio": "^1.7.0",

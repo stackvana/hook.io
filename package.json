@@ -1,0 +1,49 @@
+{
+  "name": "hook.io",
+  "version": "1.0.0",
+  "description": "microservice and webhook hosting platform",
+  "main": "server.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "big": "^0.5.0",
+    "body-parser": "^1.9.2",
+    "busboy": "^0.2.9",
+    "cheerio": "^0.17.0",
+    "colors": "^1.0.3",
+    "cron-parser": "^0.4.5",
+    "datauri": "^0.5.5",
+    "dateformat": "^1.0.8",
+    "debug": "^2.1.0",
+    "github": "^0.2.2",
+    "hyperquest": "^1.0.1",
+    "jugglingdb-nano": "https://github.com/Marak/nano-adapter/tarball/master",
+    "mime": "^1.2.11",
+    "mkdirp": "^0.5.0",
+    "mschema": "^0.5.4",
+    "mschema-forms": "*",
+    "mustache": "^0.8.2",
+    "passport": "^0.2.1",
+    "passport-github": "^0.1.5",
+    "request": "^2.48.0",
+    "resource": "^0.5.3",
+    "resource-email": "0.5.x",
+    "resource-http": "^0.6.0",
+    "resource-user": "0.5.x",
+    "stream-body-parser": "0.0.1",
+    "stream-buffers": "^1.1.0",
+    "through2": "^0.6.3",
+    "view": "^0.6.0"
+  },
+  "devDependencies": {
+    "gulp-rename": "*",
+    "gulp-mustache": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Marak",
+  "license": "AGPL"
+}

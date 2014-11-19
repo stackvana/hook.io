@@ -1,0 +1,20 @@
+<html>
+ <head>
+   <title>hook</title>
+ </head>
+ <body>
+   <div id="content">This is the simple Hook Theme</div>
+   
+   <br/>
+   <!-- here we have access to the hook object -->
+   {{hook.params.username}}/{{hook.params.hook}} <br/><br/>
+   {{hook.output}}
+
+   <br/>
+   <br/>
+   <form method="POST" action="">
+    <input type="submit" name="run" value="Test Hook"/>
+   </form>
+   
+ </body>
+</html>

@@ -1,0 +1,135 @@
+<style>
+.cron-button {
+    height: 16px;
+    padding-left: 20px;
+    margin-left: 5px;
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    cursor: pointer;
+}
+.cron-button-save {
+    background-image: url('img/disk.png');
+}
+.cron-changed {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #fdd;
+}
+.cron-controls {
+    margin-left: 10px;
+    color: #c77;
+    font-size: 0.9em;
+}
+.cron-controls > span.cron-loading {
+    background-image: url('img/loading.gif');
+}
+
+.cronRow {
+  display: none;
+}
+
+.cronRow .tabs {
+  font-size:16px;
+}
+.cronRow #clear {
+  font-size:16px;
+}
+
+input[type="text"] {
+  width: 600px;
+}
+
+</style>
+<link href="/css/jquery-ui.css" rel="stylesheet">
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/jquery.croneditor.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // TODO: enable cron functionality
+    // $('.cronDiv').croneditor();
+    $('input[name="cronActive"]').click(function(){
+      if($(this).prop('checked')) {
+        $('.cronRow').show();
+      } else {
+        $('.cronRow').hide();
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    
+    $('#cronString').keydown(function(){
+      var job = new cron.CronTime($(this).val());
+      var start = new Date();
+      var next = job._getNextDateFrom(start);
+      $('#estimateRun').val(next);
+    });
+   
+  });
+</script>
+
+<div style="font-size:22px;background-image: url('./img/node_turtle.png');background-repeat: none;height:800px;text-align: left;">
+  <h1>Create Hook</h1>
+  <br/>
+  <p><strong>To create a new hook, first specify the source code as a <a href="/gist">Github Gist</a>.</strong></p>
+  <form method="GET" action="https://gist.github.com/new">
+    <p><input tabindex="1" id="fork" name="fork" type="submit" value="Create new Github Gist"/ class="btn"></p>
+  </form>
+  <br/>
+  <p><strong>Paste the Github Gist URL below as the Hook's source code.</strong></p>
+  <form method="post" action="/new">
+    <table class="table-condensed" style="font-size:22px;">
+      <tr>
+        <td align="left">Hook Name</td>
+        <td><input type="text" id="name" name="name" placeholder="name of hook" size="40"/></td>
+      </tr>
+      <tr>
+        <td align="left">Hook Source Code:</td>
+        <td><input type="text" id="gist" name="gist" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="40"/></td>
+      </tr>
+      <tr>
+        <td align="left">Hook Theme:</td>
+        <td><select name="theme">
+          <option value="debug">debug</option>
+          <option value="simple">simple</option>
+          <option value="simple-form">simple-form</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="font-size:16px;">
+          To create a custom Hook Theme visit: <a href="http://hook.io/themes">http://hook.io/themes</a>
+        </td>
+      </tr>
+      <!--
+      <tr>
+        <td align="left">Cron Active:</td>
+        <td><input type="checkbox" name="cronActive"/><span style="font-size:14px;">&nbsp;&nbsp;If checked, the Hook will run as a scheduled task.</span></td>
+      </tr>
+      <tr class="cronRow">
+        <td colspan="2"><div class="cronDiv"></div></td>
+      </tr>
+      -->
+      <tr>
+        <td colspan="2">
+          <input tabindex="1" id="create" name="create" type="submit" value="Create new Hook"/ class="btn">
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <br/>
+
+  <p><strong>If you want to fork an existing hook you can fork the echo example below.</strong></p>
+
+  <form method="GET" action="/Marak/echo">
+    <input tabindex="1" id="fork" name="fork" type="submit" value="Fork This Hook"/ class="btn">
+  </form>
+
+  <script src="https://gist.github.com/Marak/357645b8a17daeb17458.js"></script>
+  
+  
+  <br/>
+  <br/>
+</div>

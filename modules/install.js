@@ -1,9 +1,7 @@
-/*
-
-  install.js - installs npm dependencies from the ./modules.js file
-
+/* 
+  THIS WILL OVERRIDE ALL LOCAL NPM LINKS ON PRODUCTION 
+  Beware: resource / view / big / resource-http / etc
 */
-
 var npm = require("npm");
 var modules = require('./modules');
 
@@ -21,6 +19,6 @@ function iterate () {
   var m = arr.pop();
   npm.commands.install([m + "@" + modules[m]], function (err, data) {
     if (err) throw err;
-   iterate();
+    iterate();
   });
 };

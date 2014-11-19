@@ -1,0 +1,296 @@
+<html>
+  <head>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.rumble.js"></script>
+    <script type="text/javascript" src="/js/jquery.hoverIntent.js"></script>
+    <script type="text/javascript" src="/js/jquery.scrollTo.js"></script>
+    <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="/themes/debug/css/jumbotron-narrow.css" media="all" rel="stylesheet" type="text/css" />
+
+    <link href="/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
+    <title>hook</title>
+    <link href="/css/social.css" media="all" rel="stylesheet" type="text/css" />
+    <script style="text/javascript">
+      $(document).ready(function(){
+        $('.footerNav img').jrumble({
+          speed: 100
+        });
+        $('.footerNav img').hover(function(){
+          $(this).trigger('startRumble');
+        }, function(){
+          $(this).trigger('stopRumble');
+        });
+      });
+    </script>
+    <style>
+    /* Sticky footer styles
+          -------------------------------------------------- */
+
+          html,
+          body {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+          }
+
+          /* Wrapper for page content to push down footer */
+          #wrap {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            /* Negative indent footer by it's height */
+            margin: 0 auto -60px;
+          }
+
+          /* Set the fixed height of the footer here */
+          #push,
+          #footer {
+            height: 12px;
+          }
+          #footer {
+            padding-top:20px;
+            padding-left:10px;
+            background-color: #000000;
+            color: #FFFFFF;
+          }
+
+          /* Lastly, apply responsive CSS fixes as necessary */
+          @media (max-width: 600px) {
+            #footer {
+              margin-left: -20px;
+              margin-right: -20px;
+              padding-left: 20px;
+              padding-right: 20px;
+            }
+          }
+
+          .counter {
+            font-size: 12px;
+          }
+          
+          .run-icon {
+            height: 32px;
+            width: 32px;
+            padding: 0px;
+            margin: 0px;
+          }
+
+          form legend {
+            position: relative;
+          }
+          
+          
+          .header {
+            vertical-align: bottom;
+            position: relative;
+            width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .jumbotron {
+            background-color: #FFFFFF;
+            padding-bottom: 0px;
+          }
+          
+          .gist pre,
+          .gist code {
+              font: inherit;
+              white-space: pre;
+          }
+          
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div id="header" class="header">
+        <div style="float: left;bottom: 10px;">
+          <a href="/"><img src="/img/logo.png"/></a>
+        </div>
+        <div align="right" style="bottom: 0px;right: -4px;">
+          <a href="/"><img src="/img/pipe.gif" style="height: 125px;padding-bottom: 10px;padding-top:10px;"/></a>
+        </div>
+      </div>
+    
+      <div class="jumbotron">
+
+
+
+
+      <script type="text/javascript">
+      $(document).ready(function(){
+
+        $('#testHook').click(function(){
+          alert($('#dataUrl').val());
+        });
+
+        // toggle the display of documentation / help
+        $('.docs').click(function(){
+          if($('.hookDocs .content').css("display") === "none") {
+            $('.hookDocs .content').slideDown(800, function(){
+              $('.docs').val('Hide Documentation');
+            });
+          } else {
+            $('.hookDocs .content').slideUp(400, function(){
+              $('.docs').val('Show Documentation');
+            });
+          }
+        });
+
+        $('.codeButton').click(function(){
+          $('body').scrollTo('.source')
+        })
+
+
+        // switch location.hash for opening docs as link
+        var locations = [
+         "#running",
+         "#forking",
+         "#code",
+         "#data",
+         "#hook",
+         "#schema",
+         "#accept"
+        ];
+        if (locations.indexOf(location.hash) !== -1) {
+          $('.hookDocs .content').slideDown(800, function(){
+            $('.docs').val('Hide Documentation');
+            $(document).scrollTop( $('a[name="' + location.hash.replace('#', '') + '"').offset().top );  
+          });
+        }
+
+      });
+      </script>
+
+      <style>
+       .hookDocs .content {
+         display: none;
+       }
+       .hookDocs .content p {
+         font-size: 20px;
+       }
+       .btn {
+         font-size:16px;
+       }
+
+       .hookOutput {
+         /* padding: 10px; */
+         font-size:22px;
+       }
+
+       .hookOptions {
+         text-align: left;
+         font-size:26px;
+       }
+       
+       .hookOptions legend {
+         font-size:36px;
+       }
+
+       .hookResult {
+         font-size:22px;
+         text-align: left;
+       }
+
+       .notice {
+         font-size:22px;
+       }
+
+       .hookResult textarea {
+         font-size:16px;
+         width: 100%;
+       }
+
+       h1.success {
+         color: rgb(68, 199, 68);
+       }
+
+       h1.message.error{
+         color: rgb(255, 2, 2);
+       }
+
+       .hookForm {
+         text-align: left;
+       }
+
+       .gistEmbed {
+         text-align: left;
+       }
+      </style>
+
+      <div class="wrapper">
+        <form method="GET" class="hookForm">
+          <input tabindex="2" name="docs" type="button" value="Show Documentation" class="btn docs"/>
+          <input tabindex="3" name="code" type="button" value="View Code" class="btn code codeButton"/>
+          <input tabindex="4" name="fork" type="submit" value="Fork this Hook" class="btn fork"/>
+          <input type="hidden" name="format" value="friendly"/>
+          <div class="hookDocs"></div>
+        </form>
+      </div>
+      <div class="notice"></div>
+      <div class="wrapper">
+      <div class="hookResult">
+        <h1 class="message success">Success!</h1>
+        <h2>Hook Output</h2>
+        <div class="viewRaw">
+          <p><em>The output of this Hook has been rendered in a browser friendly format. You can adjust this format by changing the "format" parameter.</em></p> 
+        </div>
+        <div class="binaryFileLink">
+          <p>It looks like the hook returned a response of type <strong><span class="contentType">contentType</span></strong>.</p>
+          <p><em>Since this is not text/html the friendly page format cannot render it.</em></p>
+          <p>Try rendering the page in the raw format?</p>
+        </div>
+
+        <div class="hookOutput">
+        </div>
+
+        <h2>Hook.req.params</h2>
+        <textarea cols="80" rows="4" class="hookParams"></textarea>
+        <h2>Hook.res.headers</h2>
+        <textarea cols="80" rows="4" class="hookHeaders"></textarea>
+        <br/>
+        <p><em><strong>Note:</strong> When running hooks from this friendly view, all hook responses are fully buffered.</p>
+        <hr/>
+        <h2>Hook Debug Console</h2>
+        <textarea cols="80" rows="10" class="hookDebugOutput"></textarea>
+        <br/>
+        <br/>
+      </div>
+      </div>
+      <div class="hookOptions">
+        <div class="testForm"></div>
+        <!--
+        data.url <input type="text" id="dataUrl" name="dataUrl" placeholder="http://google.com" size="40"/>
+        Webhook Url <input type="text" id="webhookUrl" name="webhookUrl" placeholder="http://hook.io/987123khj" size="40"/>
+        -->
+      </div>
+      <a class="source" name="source"/>
+      <div class="gistEmbed"></div>
+
+      <br/>
+      <br/>
+      <br/>
+
+   </div>
+
+    <div id="footer" class="navbar navbar-fixed-bottom">
+      <!-- <a href=""><img src="./img/block.png"/></a> -->
+      <div class="footerNav">
+        Copyright <a href="http://hook.io/">hook.io</a> 2014 A <a href="http://big.vc">Big</a> company
+        <div style="position: absolute;right: 129px;bottom: 4px;"><a href="/modules"><img src="/img/tinynpm.png"/></a></div>
+        <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img src="/img/littlecat.png"/></a></div>
+        <div style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="/img/pipe.gif"/></a></div>
+        </div>
+    </div>
+  </div>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-56831462-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+var hook = require('../lib/resources/hook');
+
+// Put your hook code here
+var exampleHook = function exampleHook (hook) {
+  hook.res.end('Success!');
+}
+
+var http = require('resource-http');
+
+http.listen({ port: 9999 }, function(err, app){
+  app.get('/test', function(req, res){
+    req.resource = {};
+    req.resource.params = {
+      "foo": "bar"
+    }
+    req.hook = {};
+    req.hook.env = {};
+    hook.runUntrustedHook({ req: req, res: res, params: "format" } , exampleHook);
+  })
+});

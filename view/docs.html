@@ -1,0 +1,160 @@
+<style>
+  .content p {
+    font-size: 20px;
+  }
+</style>
+<div align="left">
+  <div class="docsHeader">
+    <h1>Documentation</h1>
+  </div>
+  <div class="content">
+
+    <h2><strong>Getting Started</strong></h2>
+    <p>A Hook is represented by a unique URL.</p>
+    <p>The Hook can be executed by sending HTTP requests to the this URL.</p>
+    <p>
+      <ul style="font-size:22px;">
+        <li><a href="#creating">Creating a Hook</a></li>
+        
+        <li><a href="#running">Running a Hook</a></li>
+        <li><a href="#forking">Forking a Hook</a></li>
+        <li><a href="#data">Sending Data to a Hook</a></li>
+        <li><a href="#code">Editing a Hook</a></li>
+        <li><a href="#hook">Accessing the Hook object</a></li>
+        <li><a href="#schema">Specifying Hook Schema</a></li>
+        <li><a href="#forms">Hook Schema Form Generator</a></li>
+        <li><a href="#env">Setting Hook Environment</a></li>
+        <li><a href="#accept">Content-Type Routing</a></li>
+      </ul>
+    </p>
+    <hr/>
+
+    <a name="creating"></a>
+    <h2><strong>Creating a Hook</strong></h2>
+    <p>To create a Hook visit: <a href="http://hook.io/new">http://hook.io/new</a></p>
+    <p>On this page, the following propreties can be specified to create a Hook:</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name</strong> <em>required</em> - Name of hook</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Gist</strong> <em>required</em> - Source code of the Hook as a Github Gist</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - URL of the Theme that will render the output of the Hook, see: <a href="http://hook.io/themes">Themes</a></p>
+    <p>Once a Hook is created the browser will redirect to the landing page for that Hook.</p>
+    <hr/>
+
+
+    <a name="running"></a>
+    <h2><strong>Running a Hook</strong></h2>
+    <p>To run a hook you can click the <input name="run" type="submit" value="Run this Hook"/ class="btn run"> button.</p>
+    <p>You can also specify the <strong>run</strong> parameter as a query string variable or form field when accessing the Hook URL and the Hook will execute.</p>
+    <p><strong>Important:</strong> If you access a Hook from a non-browser source ( no text/html Accept header ), the hook will execute without specifying the <strong>run</strong> parameter. This behavior is achieved through routing incoming HTTP requests based on their accepted Content-Type ( see <a href="#accept">Content-Type Routing</a> )</p>
+    <hr/>
+
+    <a name="forking"></a>
+    <h2><strong>Forking a Hook</strong></h2>
+    <p>To fork a Hook simply click the <input tabindex="2" name="fork" type="submit" value="Fork This Hook"/ class="btn fork"> button.</p>
+    <p>You will be taken to a new page where you can start customizing your Fork.</p>
+
+    <hr/>
+    <h2><strong>Sending data to the Hook</strong></h2>
+    <p>Data is sent to the Hook through the query string or posted form data.</p>
+
+    <a name="data"></a>
+    <h3><strong>Query String Data</strong></h3>
+    <p>To add a parameter via query string simply append it to the url of the Hook</p>
+    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo?foo=bar&hello=there&run=true">http://hook.io/Marak/echo?foo=bar&hello=there&run=true</a></p>
+    <p>Nested parameters are also supported.</p>
+    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true">http://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
+
+    <h3><strong>Form Data</strong></h3>
+    <p>Data can also be sent via form POST</p>
+    <p><strong>Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' http://hook.io/Marak/echo" size="60"/></p>
+    <p><em>Notice that we don't specify the <strong>run</strong> parameter in the Curl example? This is because the hook is being called from a non-browser source ( no text/html Accept header ) and will automatically execute.</em></p>
+
+    <h3><strong>Streaming Data</strong></h3>
+    <p>To send streaming data to the hook, simply open up a streaming http request.</p>
+    <p><a href="/Marak/transform">Here is an example of streaming data to a hook</a></p>
+    <hr/>
+
+    <a name="code"></a>
+    <h2><strong>Editing Hook source code</strong></h2>
+    <p>The source code for a Hook is a <a href="/gist">Github Gist</a></p>
+    <p>
+      You can edit the Hook Source Code by clicking on the bottom of it's embedded Github Gist.
+    </p>
+    <p>
+      If you want to edit a Hook which you do not own, you can <a href="#forking">Fork It</a>.
+    </p>
+    <hr/>
+
+    <a name="hook"></a>
+    <h2><strong>Accessing the Hook object inside your code</strong></h2>
+    <p>Every hook receives a <strong>Hook</strong> object as it's first argument.</p>
+    <p>
+      <strong>Hook.debug</strong> - Logging method for sending debug messages to the debug console <br/>
+      <strong>Hook.params</strong> - Incoming HTTP request data ( query string and form fields )<br/>
+      <strong>Hook.req</strong> - Incoming <a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a> stream <br/>
+      <strong>Hook.res</strong> - Outgoing <a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">httpServer.response</a> stream<br/>
+      <strong>Hook.open</strong> - Method for opening URLs ( such as another Hook ). Options pass through to <a href="https://github.com/substack/hyperquest">Hyperquest API</a>.<br/>
+      <strong>Hook.schema</strong> - Optional <a href="https://github.com/mschema/mschema">mschema</a> for <strong>hook.params</strong><br/>
+      <strong>Hook.env</strong> - Optional. Key / value pairs stored by the owner of the Hook. See: <a href="#env">Setting Hook Environment</a><br/>
+      <strong>Hook.streaming</strong> - Boolean. Is the Hook.req still streaming data. For most browser requests, this will be false.<br/>
+    </p>
+    <hr/>
+
+    <a name="schema"></a>
+    <h2><strong>Specifying Optional Schema</strong></h2>
+    <p>Through the use of <a href="https://github.com/mschema/mschema">mschema</a>, it is possible to enable validation and default values for incoming hook parameters.</p>
+
+    <p>To create a mschema for the incoming hook parameters, simply specify the schema property of the hook.</p> 
+    <p>
+      <strong>Example:</strong>
+      <script src="https://gist.github.com/Marak/33f13d0f9a390c9601f9.js"></script>
+    </p>
+    <p>
+      Documentation for mschema can be found <a href="http://github.com/mschema/mschema/">here</a>.
+    </p>
+
+    <p><strong>Important:</strong> For performance reasons, changes made to the Hook schema will not appear in the User Interface until the Hook has been run once. The schema is applied to the Hook immediately when the gist is updated, just the User Interface will lag behind. This performance setting may be configurable in the future. The work-around is to simply run the Hook once to update the UI with new schema data.</p>
+    <hr/>
+
+    <a name="forms"></a>
+    <h2><strong>Using Schema Based Forms</strong></h2>
+    <p>Through the use of <a href="https://github.com/mschema/mschema-forms">mschema-forms</a>, all Hooks have the ability to auto-generate an HTML form element populated with input fields matching that Hook's <strong>Hook.schema</strong></p>
+
+    <p>Forms are automatically generated in the <strong>friendly</strong> format when a <strong>Hook.schema</strong> is specified.</p> 
+    <p>
+    <p>
+      <strong>Important:</strong> Forms will not be updated until the Hook is run at least once.
+    </p>
+
+    <hr/>
+    <a name="env"></a>
+    <h2><strong>Setting Hook Environment Variables</strong></h2>
+    <p>To set Hook Environment variables visit: <a href="/env">http://hook.io/env</a></p>
+    <p>Arbitrary key / value pairs can be set on your account so that all your Hooks will have access to the pairs in the <strong>Hook.env</strong> variable.</p> 
+    <p>This is useful for protecting private authorization credentials from public view ( such as an API key or password ).</p>
+    <p>After you have updated your environment variables they will be available in your hook's <strong>Hook.env</strong> </p>
+    <hr/>
+
+    <a name="accept"></a>
+    <h2><strong>Content-Type Routing</strong></h2>
+    <p>Based on the Content-Type header, hook.io will process the incoming request differently.</p>
+    <br/>
+    <p><strong>application/json</strong><br/>
+      Will buffer the incoming request in order to parse the body as JSON. Incoming JSON maps to <em>Hook.params</em>. Streaming the incoming request is no longer possible at this point.</p>
+
+    <p><strong>application/x-www-form-urlencoded</strong><br/>
+       Will buffer the incoming request in order to process form fields. Incoming form fields maps to <em>Hook.params</em>.Streaming the incoming request is no longer possible at this point.</p>
+    
+    <p><strong>multipart/form-data</strong><br/>Will attach any multipart file uploads as streams to <em>Hook.params</em>. File uploads can be then be handled as streams inside the Hook.</p>
+
+    <p><strong>application/octet-stream</strong><br/>Will treat the incoming request as a binary data stream.</p>
+
+    <br/>
+    <h2>Accept Header Routing</h2>
+    <p>The hook will also respond to requests differently based on their incoming <strong>Accept</strong> HTTP header.</p>
+    <br/>
+    <p><strong>text/html</strong><br/>Returns a friendly HTML landing page ( useful for humans )</p>
+    <p><strong>*/*</strong><br/>Executes the hook and returns the response type specified in the Hook  ( useful for programs )</p>
+    <p>Accept Header Routing can be overridden by setting <em>Hook.params.format</em> to <em>raw</em>. 
+  
+  </div>
+</div>

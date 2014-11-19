@@ -1,0 +1,262 @@
+<style>
+  .userBar {
+    font-size:26px;
+    padding-bottom: 40px;
+  }
+  .tagLines li {
+    font-size:22px;
+    text-align: left;
+    margin-left: 5px;
+    list-style-image: url('/img/little-sideways-pipe-grey.gif');
+  }
+  .splashImage {
+    padding-top: 10px;
+    /* text-align: left; */
+    /* width: 600px; */
+    margin-top: 2px;
+    margin-left: 16px;
+  }
+  .splashImage img {
+    /*
+    height: 60px;
+    width: 115px;
+    */
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    margin: 8px;
+  }
+  ul {
+    list-style-type: binary;
+  }
+  .splashSections > div {
+    /* width: 565px; */
+    font-size: 22px;
+    text-align: left;
+  }
+  
+  .examples {
+    /* width: 580px; */
+    /* text-align: center; */
+  }
+  .loginBar {
+    padding-top:10px;
+  }
+  .loginBar .curls input {
+    margin-bottom:5px;
+  }
+  
+  .curls input {
+    width: 368px;
+  }
+
+  .lowerNav td {
+    width: 200px;
+  }
+  
+  .lowerNav {
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  
+</style>
+
+<script type="text/javascript">
+
+$('document').ready(function(){
+  
+  $.fn.random = function() {
+    return this.eq(Math.floor(Math.random() * this.length));
+  }          
+
+
+  $('.splashImage img').jrumble({
+     speed: 100
+   });
+
+   setInterval(function(){
+     var el = $('.splashImage img').random();
+     el.trigger('startRumble');
+     setTimeout(function(){
+       el.trigger('stopRumble');
+     }, 1000)
+   }, 5000);
+
+   $('.splashImage img').hover(function(){
+     $(this).trigger('startRumble');
+   }, function(){
+     $(this).trigger('stopRumble');
+   });
+
+
+  var loadHeaderSection = function loadHeaderSection () {
+    $(".splashSections > div").hide();
+    //alert("." + $(this).attr('id'))
+    $('.tagLines').show();
+    $('.tagLines').removeClass('hidden');
+  }
+  
+  $('#header img').click(loadHeaderSection)
+  //$('#header img').hoverIntent(loadHeaderSection)
+  
+  var loadSplashSection = function loadSplashSection () {
+    //$(".splashSections > div").hide();
+    //alert("." + $(this).attr('id'))
+    $(document).scrollTo($("." + $(this).attr('id')));
+    $("." + $(this).attr('id')).removeClass('hidden');
+  }
+
+  //$('.splashImage img').hoverIntent(loadSplashSection);
+  $('.splashImage img').click(loadSplashSection);
+  
+
+});
+</script>
+
+    <h1 style="margin-top: 2px;font-size:32px;" class="splash"><em>Build and deploy HTTP microservices in seconds</em></h1>
+
+    <div class="splash"><p>The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms. These services are built around business capabilities and are independently deployable by fully automated deployment machinery.</p></div>
+    
+    <div class="splash loginBar">
+      <a href="/login" class="btn btn-social btn-github"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
+            <!--
+            <div style="font-size:26px;padding-left:2px;padding-top:10px;padding-left: 0px;padding-right: 0px;">Try running these:</div>
+      </div>
+      <div>
+            <input style="font-size:12px;" type="text" value="curl --data 'foo=bar&hello=there' http://hook.io/Marak/echo" size="60"/>
+            <input style="font-size:12px;" type="text" value="echo 'foo' | curl --header 'content-type: application/octet-stream'  --data-binary @- http://hook.io/Marak/transform" size="60"/>
+            <input style="font-size:12px;" type="text" value="curl http://hook.io/Marak/isTheWebsiteDown?url=http://google.com" size="60"/>
+      </div>
+      -->
+    </div>
+    
+    <div class="splash splashImage" style="margin-top: 2px;">
+      <!-- copyright for images 
+        penguin-variant is copyrighted by Larry Ewing and Simon Budig (penguin-variant.sk also by Anja Gerwinski), redistribution is free but has to include this Copyright notice.
+        jstiny - logo.js -The MIT License (MIT) Copyright (c) 2011 Christopher Williams <chris@iterativedesigns.com> 
+        tinynpm - (c) npmjs.org 
+        setuptocat - (c) Github
+      -->
+      <a href="/javascript"><img alt="JavaScript!" width="80" height="70" src="/img/jstiny.png" id="splash-javascript"></a>
+      <a href="/modules"><img alt="Node.js" width="135" height="45" src="/img/node.png" id="splash-node"></a>
+      <a href="/modules"><img alt="npm" width="135" height="45" src="/img/tinynpm.png" id="splash-npm"></a>
+      <a href="/gist"><img alt="Github" width="112" height="75" src="/img/setuptocat.png" id="splash-github"></a>
+      <a href="/curl"><img alt="Unix" width="85" height="75" src="/img/penguin-variant.png" id="splash-unix"></a>
+    
+    </div>
+    <div class="splash"><h2><a href="/login">Sign in now to deploy your first microservice</a></h2></div>
+
+
+    <div class="userBar">
+      <span class="welcome"></span><br/>
+      <a href="/new">Create Hook</a><br/>
+      <a href="/Marak" class="yourHooks">Your Hooks</a><br/>
+      <a href="/logout">Logout</a>
+    </div>
+    <!--
+    <div class="splash">
+
+            <div class="splashSections">
+              <div class="tagLines">
+                <ul>
+                  <li>No downloads required</li>
+                  <li><a href="/pricing">Free for Developers</a></li>
+                  <li>Direct access to HTTP request and response streams</li>
+                  <li>Services can be <a href="http://hook.io/Marak/merge">composed</a> using <a href="http://hook.io/Marak/transform">streams</a> and <a href="http://hook.io/Marak/pipe">pipes</a></li>
+                  <li>Custom <a href="http://hook.io/themes">Themes</a></li>
+                  <li>Works great with <a href="http://hook.io/curl">Curl</a> and other Unix tools</li>
+                  <li>Source code hosting provided by <a href="/gist">Github</a></li>
+                </ul>
+              </div>
+              <div class="splash-javascript">
+
+              </div>
+              <div class="splash-node">
+                <p>
+                  <strong>Native Node.js Module Support</strong>
+                </p>
+                <p>hook.io supports the Node.js API out of the box.</p> 
+                <p>This is useful for performing a variety of basic operations.</p>
+
+                <p><strong>API Documentation</strong></p>
+                <p><a href="http://nodejs.org/api/">nodejs.org/api</a></p>
+              </div>
+              <div class="splash-npm">
+                <p><strong>NPM Module Support</strong></p>
+                <p>
+                 <a href="https://www.npmjs.org/">NPM</a> delivers support for thousands of modules.
+                </p>
+
+                <p>
+                 A curated list of packages is available for hosted Hooks.
+                </p>
+                <p><strong>Modules</strong></p>
+                <p>
+                   <a href="http://hook.io/modules#modules">hook.io/modules</a>
+                </p>
+
+              </div>
+              <div class="splash-github">
+                <p><strong>The source code for a Hook is stored as a <a href="http://github.com">Github</a> Gist.</strong></p>
+                <p><a href="http://gist.github.com">Gist</a> is a free service for hosting small snippets of code.</p>
+                <p>This allows for seamless revisions, code-highlighting, source history, and shareability through forking.</p>
+              </div>
+              <div class="splash-unix">
+                <p><strong>The <a href="http://en.wikipedia.org/wiki/Unix_philosophy">Unix Philosophy</a></strong></p>
+                <p>hook.io works very nicely with the Terminal, Unix Pipes, and all existing Unix tools.</p>
+                <p>Hooks can accept <a href="http://en.wikipedia.org/wiki/Standard_streams">STDOUT</a> from tools such as Curl.</p>
+                <p><strong>Examples</strong></p>
+                <p><a href="http://hook.io/curl">hook.io/curl</a></p> 
+              </div>
+
+            </div>
+    </div>
+    -->
+    <!--
+    <h4><strong>Try it now: </strong> <input type="text" value="curl --data 'foo=bar&hello=there' http://hook.io/Marak/echo" size="58"/></h4>
+    -->
+    <div style="height:160px;">
+
+      <table class="lowerNav">
+        <!--
+        <tr valign="bottom">
+          <td align="center">
+            <a href="/gist"><img src="./img/setuptocat.png"/></a> <br/>
+            <h3><a href="/gist">Integrated Github Gist</a></h3>
+          </td>
+          <td align="center">
+            <a href="/modules"><img src="./img/npm.png"/></a> <br/>
+            <h3><a href="/modules">Integrated Node Package Manager</a></h3>
+          </td>
+        </tr>
+        -->
+        <tr valign="bottom">
+          <td align="center">
+            <h3><a href="/pricing">Pricing</a></h3>
+          </td>
+          <td align="center">
+            <h3><a href="/docs">Documentation</a></h3>
+          </td>
+          <td align="center">
+            <h3><a href="http://github.com/bigcompany/hook.io/issues">Support</a></h3>
+          </td>
+        </tr>
+
+        <tr valign="bottom">
+          <td align="center">
+            <h3><a href="/curl">Unix Pipe Integration</a></h3>
+          </td>
+          <td align="center">
+            <h3><a href="/examples">Examples</a></h3>
+          </td>
+          <td align="center">
+            <h3><a href="/themes">Themes</a></h3>
+          </td>
+        </tr>
+
+      </table>
+
+    </div>
+    

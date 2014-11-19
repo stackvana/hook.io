@@ -1,0 +1,5 @@
+var cron = require('../lib/resources/cron');
+
+cron.processAll(function(err, result){
+  console.log(err, result);
+});
