@@ -17,7 +17,7 @@ If you run into an issue, have a question, or have feedback with using hook.io y
 
 The fastest way to get an additional NPM module added to the hook.io platform is to open up a Pull Request modifying [this file](https://github.com/bigcompany/hook.io/blob/master/modules/modules.js).
 
-If your module requires additional dependencies outside of what NPM can install, you can create a custom build script in [this folder](http://github.com/bigcompany/hook.io/master/modules/build/). The hosting environment for hook.io is Ubuntu 10.04. Bash scripts are recommended.
+If your module requires additional dependencies outside of what NPM can install, you can create a custom build script in [this folder](https://github.com/bigcompany/hook.io/tree/master/modules/builds). The hosting environment for hook.io is Ubuntu 14.04.1 LTS (Trusty Tahr) Bash scripts are recommended.
 
 ## Dependency Tree
 
