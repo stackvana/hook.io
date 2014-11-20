@@ -39,14 +39,17 @@ input[type="text"] {
   width: 600px;
 }
 
+input[name="cronActive"] {
+  cursor: pointer;
+}
+
 </style>
 <link href="/css/jquery-ui.css" rel="stylesheet">
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/jquery.croneditor.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    // TODO: enable cron functionality
-    // $('.cronDiv').croneditor();
+    $('.cronDiv').croneditor();
     $('input[name="cronActive"]').click(function(){
       if($(this).prop('checked')) {
         $('.cronRow').show();
@@ -102,7 +105,6 @@ input[type="text"] {
           To create a custom Hook Theme visit: <a href="http://hook.io/themes">http://hook.io/themes</a>
         </td>
       </tr>
-      <!--
       <tr>
         <td align="left">Cron Active:</td>
         <td><input type="checkbox" name="cronActive"/><span style="font-size:14px;">&nbsp;&nbsp;If checked, the Hook will run as a scheduled task.</span></td>
@@ -110,7 +112,6 @@ input[type="text"] {
       <tr class="cronRow">
         <td colspan="2"><div class="cronDiv"></div></td>
       </tr>
-      -->
       <tr>
         <td colspan="2">
           <input tabindex="1" id="create" name="create" type="submit" value="Create new Hook"/ class="btn">

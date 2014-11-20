@@ -86,6 +86,7 @@ $.fn.croneditor = function(opts) {
   function drawCron () {
 
     var newCron = cronArr.join(' ');
+    newCron = newCron.substr(2, newCron.length);
     $('#cronString').val(newCron);
     // TODO: add back next estimated cron time
     /*
@@ -109,7 +110,7 @@ $.fn.croneditor = function(opts) {
   }
 
   $('#clear').click(function(){
-    $('#cronString').val('* * * * * *');
+    $('#cronString').val('* * * * *');
     cronArr = ["*","*","*","*","*", "*"];
     
   });
@@ -360,7 +361,7 @@ $.fn.croneditor = function(opts) {
 };
 
 // HTML Template for plugin
-var tmpl = '<input type="text" id="cronString" value="* * * * * *" size="80"/>\
+var tmpl = '<input type="text" id="cronString" name="cronString" value="* * * * *" size="80"/>\
 <br/>\
 <input type="button" value="Reset" id="clear"/>\
 <br/>\
@@ -369,29 +370,12 @@ var tmpl = '<input type="text" id="cronString" value="* * * * * *" size="80"/>\
 <!-- the cron editor will be here -->\
 <div id="tabs" class="tabs">\
   <ul>\
-    <li><a href="#tabs-second">Second</a></li>\
     <li><a href="#tabs-minute">Minute</a></li>\
     <li><a href="#tabs-hour">Hour</a></li>\
     <li><a href="#tabs-day">Day of Month</a></li>\
     <li><a href="#tabs-month">Month</a></li>\
     <li><a href="#tabs-week">Day of Week</a></li>\
   </ul>\
-  <div id="tabs-second">\
-    <div class="tabs">\
-      <ul>\
-        <li id="button-second-every"><a href="#tabs-second-every">Every second</a></li>\
-        <li id="button-second-n"><a href="#tabs-second-n">Every n seconds</a></li>\
-      </ul>\
-      <div id="tabs-second-every" class="preview">\
-        <div>*</div>\
-        <div>Every second.</div>\
-      </div>\
-      <div id="tabs-second-n">\
-        <div class="preview"> Every 1 seconds</div>\
-        <div class="slider"></div>\
-      </div>\
-    </div>\
-  </div>\
   <div id="tabs-minute">\
     <div class="tabs">\
       <ul>\
