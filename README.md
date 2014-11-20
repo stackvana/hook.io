@@ -1,5 +1,5 @@
 <img src="http://hook.io/img/logo.png"></img>
-## Hosting for Webhooks and Transform Streams
+## Open-Source Microservice Hosting Platform 
 
 ### Build and deploy HTTP microservices in seconds
 
