@@ -73,14 +73,18 @@ module['exports'] = function view (opts, callback) {
 
       var completed = false;
       completedTimer = clearTimeout(completedTimer);
-      _view.present({ 
-        request: req, 
-        response: res,
-        gist: req.hook.gist
-      }, function(err, rendered){
-        return callback(null, rendered);
-      });
-      
+      try { // this will catch user run-time errors in the presenter
+        _view.present({
+          request: req,
+          response: res,
+          gist: req.hook.gist
+        }, function(err, rendered){
+          return callback(null, rendered);
+        });
+      } catch (err) {
+        return res.end(err.stack);
+      }
+
     });
   });
 
