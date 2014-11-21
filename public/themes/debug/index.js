@@ -105,7 +105,7 @@ module['exports'] = function view (opts, callback) {
    // TODO: add audio
    if (!isVideo && !isImage) {
      $('.binaryFileLink').remove();
-     //$('.hookOutput').html('<textarea cols="80" rows="10" class="hookOutput">' + result.output + '</textarea>');
+     $('.hookOutput').html('<textarea cols="80" rows="10" class="hookOutput">' + result.output + '</textarea>');
    }
 
    $('.hookHeaders').html(JSON.stringify(result.headers, true, 2));
