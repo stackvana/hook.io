@@ -31,6 +31,7 @@
     "resource-email": "0.5.x",
     "resource-http": "^0.6.0",
     "resource-user": "0.5.x",
+    "slug": "^0.8.0",
     "stream-body-parser": "0.0.1",
     "stream-buffers": "^1.1.0",
     "through2": "^0.6.3",
