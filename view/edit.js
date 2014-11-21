@@ -20,11 +20,11 @@ var themes = {
 */
 
 module['exports'] = function doc (opts, callback) {
-  var $ = this.$;
+  var $ = this.$, self = this;
 
   var req = opts.request, res = opts.response, params = req.resource.params;
   //console.log('got params', params)
-
+  $('.hookLink').html('<a href="http://hook.io/' + params.hook + '">' + params.hook + '</a>')
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     if (typeof params.hook === "undefined" || params.hook.length === 0) {
@@ -85,9 +85,8 @@ module['exports'] = function doc (opts, callback) {
             h.cronActive = false;
           }
           h.cron = params.cronString;
-          // TODO: update theme
-          // console.log('updating form', h)
-
+          h.theme = params.theme;
+          h.presenter = params.presenter;
           return h.save(function(err){
             if (err) {
               return res.end(err.stack);
@@ -113,7 +112,14 @@ module['exports'] = function doc (opts, callback) {
         $('form input[name="cronString"]').attr('value', h.cron);
         // load information about the hook
         // bind hook data to form
-        return callback(null, $.html());
+        
+        self.parent.components.themeSelector.present({}, function(err, html){
+          var el = $('.table-condensed > tr').eq(1);
+          console.log(el)
+          el.after(html);
+          return callback(null, $.html());
+        })
+        
       }
 
     });

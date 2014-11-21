@@ -64,6 +64,37 @@ input[name="cronActive"] {
     if($('.cronRow').attr('cronString').length > 0) {
       $('#cronString').attr('value',$('.cronRow').attr('cronString')) ;
     }
+  
+    // lookup themes from curated theme list
+     // TODO: Create "themes" resource and persist this to database
+     var themes = {
+       "debug": {
+         "theme": "http://hook.io/themes/debug/index.html",
+         "presenter": "http://hook.io/themes/debug/index.js"
+       },
+       "simple": {
+         "theme": "http://hook.io/themes/simple/index.html",
+         "presenter": "http://hook.io/themes/simple/index.js"
+       },
+       "simple-form": {
+         "theme": "http://hook.io/themes/simple-form/index.html",
+         "presenter": "http://hook.io/themes/simple-form/index.js"
+       },
+       "none": {
+         "theme": "http://hook.io/themes/none/index.html",
+         "presenter": "http://hook.io/themes/none/index.js"
+       },
+       "custom": {
+         "theme": "",
+         "presenter": ""
+       }
+     };  
+     $('.themeSelect').change(function(e){
+       var val = themes[$(this).val()];
+       console.log(val)
+       $('#theme').attr('value', val.theme);
+       $('#presenter').attr('value', val.presenter);
+     });
     
   });
 </script>
@@ -71,6 +102,7 @@ input[name="cronActive"] {
 
 <div style="text-align:left;">
   <h1>Edit Hook</h2>
+  <h2 class="hookLink"></h2>
     <br/>
     <form method="post" action="">
       <table class="table-condensed" style="font-size:22px;">
@@ -83,24 +115,13 @@ input[name="cronActive"] {
           <td><input type="text" id="gist" name="gist" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="40"/></td>
         </tr>
         <tr>
-          <td align="left">Hook Theme:</td>
-          <td><select name="theme">
-            <option value="debug">debug</option>
-            <option value="simple">simple</option>
-            <option value="simple-form">simple-form</option>
-          </select></td>
-        </tr>
-        <tr>
-          <td colspan="2" style="font-size:16px;">
-            To create a custom Hook Theme visit: <a href="http://hook.io/themes">http://hook.io/themes</a>
-          </td>
-        </tr>
-        <tr>
           <td align="left">Active Cron</td>
-          <td><input type="checkbox" name="cronActive"/><span style="font-size:14px;">&nbsp;&nbsp;If checked, the Hook will run as a scheduled task. see: <a href="http://hook.io/cron">hook.io/cron</a></span></td>
+          <td colspan="2">
+            <input type="checkbox" name="cronActive"/>
+            <span style="font-size:14px;">If checked, the Hook will run as a scheduled task. see: <a href="http://hook.io/cron">hook.io/cron</a></span></td>
         </tr>
         <tr class="cronRow">
-          <td colspan="2"><div class="cronDiv"></div></td>
+          <td colspan="3"><div class="cronDiv"></div></td>
         </tr>
         <tr>
           <td colspan="2">

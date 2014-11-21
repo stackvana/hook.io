@@ -2,12 +2,37 @@ var hook = require("../lib/resources/hook")
 var bodyParser = require('body-parser');
 var config = require('../config');
 
+// lookup themes from curated theme list
+// TODO: Create "themes" resource and persist this to database
+var themes = {
+  "debug": {
+    "theme": config.defaultTheme,
+    "presenter": config.defaultPresenter
+  },
+  "simple": {
+    "theme": "http://hook.io/themes/simple/index.html",
+    "presenter": "http://hook.io/themes/simple/index.js"
+  },
+  "simple-form": {
+    "theme": "http://hook.io/themes/simple-form/index.html",
+    "presenter": "http://hook.io/themes/simple-form/index.js"
+  },
+  "none": {
+    "theme": "http://hook.io/themes/none/index.html",
+    "presenter": "http://hook.io/themes/none/index.js"
+  },
+  "custom": {
+    "theme": "",
+    "presenter": ""
+  }
+};
 
 module['exports'] = function view (opts, callback) {
   var req = opts.request,
       res = opts.response;
   
-  var $ = this.$;
+  var $ = this.$,
+  self = this;
   
   if (!req.isAuthenticated()) { 
     req.session.redirectTo = "/new";
@@ -35,26 +60,6 @@ module['exports'] = function view (opts, callback) {
           var h = results[0];
           return res.redirect('/' + h.owner + "/" + h.name + "?alreadyExists=true");
         }
-        
-        // lookup themes from curated theme list
-        var themes = {
-          "debug": {
-            "theme": config.defaultTheme,
-            "presenter": config.defaultPresenter
-          },
-          "simple": {
-            "theme": "http://hook.io/themes/simple/index.html",
-            "presenter": "http://hook.io/themes/simple/index.js"
-          },
-          "simple-form": {
-            "theme": "http://hook.io/themes/simple-form/index.html",
-            "presenter": "http://hook.io/themes/simple-form/index.js"
-          },
-        };
-
-        var t = params.theme;
-        params.theme = themes[params.theme].theme;
-        params.presenter = themes[t].presenter;
         params.cron = params.cronString;
 
         return hook.create(params, function(err, result){
@@ -63,6 +68,7 @@ module['exports'] = function view (opts, callback) {
           }
           
           var h = result;
+          req.hook = h;
           
           // fetch the hook from github and check if it has a schema / theme
           // if so, attach it to the hook document
@@ -96,7 +102,13 @@ module['exports'] = function view (opts, callback) {
       });
     }
 
-    callback(null, $.html());
+    self.parent.components.themeSelector.present({}, function(err, html){
+      var el = $('.table-condensed > tr').eq(1);
+      console.log(el)
+      el.after(html);
+      callback(null, $.html());
+    })
+
   });
 
 };
