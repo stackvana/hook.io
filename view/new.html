@@ -47,17 +47,17 @@ input[name="cronActive"] {
   margin-top: 10px;
 }
 
-table td {
+.hookTable td {
   font-size: 22px;
   font-weight: bold;
 }
 
-table td input {
+.hookTable td input {
   font-size: 22px;
   font-weight: normal;
 }
 
-table td span {
+.hookTable td span {
   font-size: 22px;
   font-weight: normal;
 }
@@ -134,7 +134,7 @@ table td span {
   <br/>
   <h2><strong>Paste the Github Gist URL below as the Hook's source code.</strong></h2>
   <form method="post" action="/new">
-    <table class="table-condensed" style="font-size:22px;">
+    <table class="table-condensed hookTable" style="font-size:22px;">
       <tr>
         <td align="left" style="min-width: 225px;">Hook Name</td>
         <td colspan="2"><input type="text" id="name" name="name" placeholder="name of hook" size="40"/></td>

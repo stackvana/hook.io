@@ -101,25 +101,23 @@ module['exports'] = function doc (opts, callback) {
       }
 
       function renderForm () {
+        // bind hook data to form
         $('form input[name="name"]').attr('value', h.name);
         $('form input[name="gist"]').attr('value', h.gist);
-        $('form select[name="theme"] option[value="' + "simple" + '"]').attr('selected', 'selected');
         if (h.cronActive !== false) {
           $('form input[name="cronActive"]').attr('checked', 'checked');
           $('.cronRow').attr('showMe', 'true');
         }
         $('.cronRow').attr('cronString', h.cron);
         $('form input[name="cronString"]').attr('value', h.cron);
-        // load information about the hook
-        // bind hook data to form
-        
         self.parent.components.themeSelector.present({}, function(err, html){
           var el = $('.table-condensed > tr').eq(1);
-          console.log(el)
           el.after(html);
+          $('form input[name="theme"]').attr('value', h.theme);
+          $('form input[name="presenter"]').attr('value', h.presenter);
+          //  $('form select[name="theme"] option[value="' + "simple" + '"]').attr('selected', 'selected');
           return callback(null, $.html());
-        })
-        
+        });
       }
 
     });
