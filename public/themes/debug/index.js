@@ -34,6 +34,18 @@ module['exports'] = function view (opts, callback) {
   $('.hookDocs').html(docs);
   $('.hookDocs .docsHeader').remove();
 
+  /* TODO: req has no passport session in worker, session info should be forwarded
+  if (req.session.user && req.session.user === req.params.username) {
+    $('#fork').remove();
+  } else {
+    $('#edit').remove();
+  }
+  */
+  
+  if (params.edit) {
+    return res.redirect(301, "/edit?hook=" + req.params.username + "/" + req.params.hook);
+  }
+
   if (params.run) {
     // check result.headers for content type
     // if the content type is not text, display binary file message
@@ -58,7 +70,6 @@ module['exports'] = function view (opts, callback) {
    $('.sourceCode').remove();
    $('.hookOptions').remove();
    $('.hookParams').html(JSON.stringify(result.params, true, 2));
-
 
    var Datauri = require('datauri'),
        dUri    = new Datauri();

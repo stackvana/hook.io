@@ -223,7 +223,8 @@
         <form method="GET" class="hookForm">
           <input tabindex="2" name="docs" type="button" value="Show Documentation" class="btn docs"/>
           <input tabindex="3" name="code" type="button" value="View Code" class="btn code codeButton"/>
-          <input tabindex="4" name="fork" type="submit" value="Fork this Hook" class="btn fork"/>
+          <input tabindex="4" id="fork" name="fork" type="submit" value="Fork this Hook" class="btn fork"/>
+          <input tabindex="5" id="edit" name="edit" type="submit" value="Edit this Hook" class="btn edit"/>
           <input type="hidden" name="format" value="friendly"/>
           <div class="hookDocs"></div>
         </form>
@@ -267,8 +268,8 @@
       </div>
       <a class="source" name="source"/>
       <div class="gistEmbed"></div>
+      <p><em>Rendered with the <a href="https://github.com/bigcompany/hook.io/tree/master/public/themes/debug">Debug Theme</a></em></p>
 
-      <br/>
       <br/>
       <br/>
 
@@ -284,6 +285,7 @@
         </div>
     </div>
   </div>
+  
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

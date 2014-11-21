@@ -8,6 +8,13 @@
     padding-bottom: 40px;
   }
   
+  .userBar table {
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    border: none;
+  }
+  
   .manageEnv {
     font-size: 28px;
   }
@@ -18,7 +25,7 @@
     font-size:22px;
   }
   .navBar {
-    padding-bottom:10px;
+    margin-bottom:0px;
   }
 
 </style>
@@ -29,17 +36,13 @@
   <div class="navBar">
 
     <div class="userBar">
-      <div class="createHook">
-        <a href="/new">Create new Hook</a>
-      </div>
-
-      <div class="manageEnv">
-        <a href="/env">Manage Hook Environment Variables</a>
-      </div>
-
-      <div class="referrals">
-        <a href="/referrals">Manage Referrals</a>
-      </div>
+      <table>
+        <tr>
+          <td><a href="/new">Create new Hook</a></td>
+          <td><a href="/env">Manage Hook Environment Variables</a></td>
+          <td><a href="/referrals">Manage Referrals</a></td>
+        </tr>
+      </table>
       
     </div>
   </div>

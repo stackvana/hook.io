@@ -12,7 +12,7 @@ module['exports'] = function view (opts, callback) {
   }
   
   if (!opts.request.isAuthenticated()) { 
-    $('.userBar').remove()
+    $('.navBar').remove()
   }
 
   for(var h in opts.hooks) {
