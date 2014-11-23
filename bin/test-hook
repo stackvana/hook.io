@@ -1,20 +1,46 @@
 var hook = require('../lib/resources/hook');
 
-// Put your hook code here
-var exampleHook = function exampleHook (hook) {
-  hook.res.end('Success!');
-}
+/*********************************************************/
+  //
+  // Put your hook code here
+  //
 
-var http = require('resource-http');
+  var exampleHook = function exampleHook (hook) {
+    hook.res.end('Success!');
+  }
 
-http.listen({ port: 9999 }, function(err, app){
-  app.get('/test', function(req, res){
-    req.resource = {};
-    req.resource.params = {
-      "foo": "bar"
-    }
-    req.hook = {};
-    req.hook.env = {};
-    hook.runUntrustedHook({ req: req, res: res, params: "format" } , exampleHook);
-  })
-});
+/*********************************************************/
+  //
+  // This code runs the hook locally
+  //
+
+  var http = require('resource-http');
+  var request = require('request');
+
+  http.listen({ port: 9999 }, function(err, app){
+    app.get('/test', function(req, res){
+      req.resource = {};
+      // Set custom Hook.params here
+      req.resource.params = {
+        "foo": "bar"
+      }
+      req.hook = {};
+      req.hook.env = {};
+      hook.runUntrustedHook({ req: req, res: res, params: "format" } , exampleHook, function(err){
+        if (err) {
+          throw err;
+        }
+      });
+    });
+    request.get('http://localhost:9999/test', function(err, res, body){
+      console.log(err, body);
+      process.exit();
+    });
+  });
+
+/*********************************************************/
+
+//
+// TODO: move this code into a separate module
+// see: https://github.com/bigcompany/hook.io/issues/17
+//
