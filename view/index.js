@@ -23,8 +23,7 @@ module['exports'] = function view (opts, callback) {
       req = opts.request,
       res = opts.response,
       params = req.resource.params,
-      user = opts.request.user;
-
+      user = req.session.user;
   // enables curl signups
   // curl http://hook.io?signup=youremail@marak.com
   if (typeof params.signup !== "undefined" && params.signup.length > 0) { // TODO: email validation
@@ -52,10 +51,10 @@ module['exports'] = function view (opts, callback) {
   if (typeof user === "undefined") {
     $('.userBar').remove();
   } else {
-    $('.userBar .welcome').html('Welcome <strong>' + user.username + "</strong>!")
+    $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
     $('.loginBar').remove();
     $('.tagline').remove();
-    $('.yourHooks').attr("href", "/" + user.username);
+    $('.yourHooks').attr("href", "/" + user);
     $('.splash').remove();
   }
 

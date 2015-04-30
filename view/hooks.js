@@ -19,8 +19,10 @@ module['exports'] = function view (opts, callback) {
     $('.hooks').append('<tr><td><a href="/' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '">' + opts.hooks[h].name + '</a></td></tr>')
   }
 
-  if (Object.keys(opts.hooks).length > 0) {
-    $('.noHooks').remove();
+  if (typeof opts.hooks === "object") {
+    if (Object.keys(opts.hooks).length > 0) {
+      $('.noHooks').remove();
+    }
   }
 
   callback(null, this.$.html());

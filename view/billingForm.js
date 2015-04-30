@@ -1,0 +1,60 @@
+var forms = require('mschema-forms');
+var mustache = require('mustache');
+
+module['exports'] = function billingForm (data, cb) {
+
+  var billingSchema = billingSchema || {};
+
+  billingSchema.name = {
+    type: "string",
+    default: data.name,
+    disabled: true
+  };
+
+  billingSchema.method = {
+    type: "string",
+    default: data.type,
+    disabled: true
+  };
+
+ /*
+  billingSchema.card_number = {
+    type: "string",
+    default: data.card_number,
+    disabled: true
+  };
+
+  billingSchema.card_exp = {
+    type: "string",
+    default: data.card_exp,
+    disabled: true
+  };
+
+  billingSchema.card_ccv = {
+    type: "string",
+    default: data.card_ccv,
+    disabled: true
+   };
+ */
+  console.log('using billingSchema', data, billingSchema);
+
+  billingSchema.run = {
+    "type": "string",
+    "default": "true",
+    "format": "hidden"
+  };
+
+  forms.generate({
+    type: "generic",
+    form: {
+      legend: "Billing Information",
+      submit: "Update",
+      action: ""
+    },
+    schema: billingSchema,
+    }, function (err, result){
+      console.log('generated', err, result)
+      cb(null, result);
+  });
+
+};
