@@ -1,2 +1,6 @@
 var server = require('../lib/server');
-server.start();
+server.start({}, function(err){
+  if (err) {
+    throw err;
+  }
+});
