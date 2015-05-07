@@ -17,6 +17,14 @@ module['exports'] = function billingForm (data, cb) {
     disabled: true
   };
 
+  var amt = (data.amount / 100).toString() + ".00";
+  billingSchema.amount = {
+    type: "number",
+    default: amt,
+    disabled: true
+  };
+
+
  /*
   billingSchema.card_number = {
     type: "string",
@@ -45,7 +53,7 @@ module['exports'] = function billingForm (data, cb) {
   };
 
   forms.generate({
-    type: "generic",
+    type: "read-only",
     form: {
       legend: "Billing Information",
       submit: "Update",

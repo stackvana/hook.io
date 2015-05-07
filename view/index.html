@@ -1,8 +1,12 @@
 <style>
   .userBar {
-    font-size:26px;
+    font-size: 26px;
     padding-bottom: 40px;
+    text-align: left;
+    float: left;
+    padding-left: 100px;
   }
+
   .tagLines li {
     font-size:22px;
     text-align: left;
@@ -34,7 +38,15 @@
     font-size: 22px;
     text-align: left;
   }
-  
+
+  .userSplash {
+    background-image: url('/img/robotcat.png');
+    width: 360px;
+    height: 342px;
+    float: left;
+    margin-left: 100px;
+   }
+
   .examples {
     /* width: 580px; */
     /* text-align: center; */
@@ -156,7 +168,10 @@ $('document').ready(function(){
       <a href="/account" class="yourAccount">Account Information</a><br/>
       <a href="/billing" class="yourBilling">Billing Information</a><br/>
       <a href="/logout">Logout</a>
+
     </div>
+    <div class="userSplash"></div>
+
     <!--
     <div class="splash">
 

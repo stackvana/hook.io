@@ -4,11 +4,18 @@ var billing = require('../lib/resources/billing')
 var bodyParser = require('body-parser');
 var mergeParams = require('./mergeParams');
 
+// user schema used for form
+var userSchema = {
+  name: { type: 'string', required: true },
+  email: { type: 'string', format: 'email', required: false },
+};
+
+var addPaymentOption = require("./addPaymentOption");
+
 module['exports'] = function view (opts, callback) {
 
   var $ = this.$;
   var req = opts.request, res = opts.response;
- 
 
   // if not logged in, kick out
   if (!req.isAuthenticated()) { 
@@ -16,15 +23,14 @@ module['exports'] = function view (opts, callback) {
     return res.redirect('/login');
   }
 
-  // get user if logged in
-  
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
 
     var params = req.resource.params;
-  
+    //$('.addPaymentOption').html(addPaymentOption());
+
     user.find({ name: req.user.username }, function(err, results) {
-      
+
       if (err) {
         return callback(null, err.message);
       }
@@ -33,42 +39,56 @@ module['exports'] = function view (opts, callback) {
       }
 
       var _user = results[0];
-      $('.account').html(JSON.stringify(_user, true, 2))
 
-      billing.find({ owner: req.user.username }, function(err, results) {
+      $('.myHooks').attr('href', '/' + _user.name);
 
-        if (err) {
-          return callback(null, err.message);
-        }
-        if (results.length === 0) {
-          $('.billing').html('No Billing Options Found!');
-        } else {
-          var _billing = results[0];
-          $('.billing').html(JSON.stringify(_billing, true, 2));
-        }
-
-
+      // display user info in account form
+      // TODO: if form post data, attempt to update user account information
+      showUserForm(_user, function(err, result){
+        $('.userForm').html(result);
         callback(null, $.html());
       });
 
     });
 
   });
-  
-    // display user info in account form
-
-    // if form post data, attempt to update user account information
 
 
 };
 
 
-// TODO - make request
+var request = require('hyperquest');
+var dateFormat = require('dateformat');
+var forms = require('mschema-forms');
+var mustache = require('mustache');
 
-/*
-curl https://api.stripe.com/v1/charges \
-   -u sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV: \
-   -d source=btcrcv_15qUDWBUxcOSI5dklE50qie6 \
-   -d amount=2000 \
-   -d currency=usd
-*/
+var billingForm = require('./billingForm');
+
+function showUserForm (user, cb) {
+  var formSchema = userSchema || {};
+
+  formSchema.name.default = user.name;
+  formSchema.name.disabled = true;
+
+  formSchema.email.default = user.email || "";
+  formSchema.email.disabled = true;
+
+  formSchema.run = {
+    "type": "string",
+    "default": "true",
+    "format": "hidden"
+  };
+
+  forms.generate({
+    type: "read-only",
+    form: {
+      legend: "Account Information",
+      submit: "Save",
+      action: ""
+    },
+    schema: formSchema,
+    }, function (err, result){
+      cb(null, result);
+  });
+
+}

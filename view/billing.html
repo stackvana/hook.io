@@ -15,12 +15,123 @@
   .billingForm {
     text-align: left;
   }
+  .status {
+    font-size: 36px;
+    color: #6bc40c;
+  }
+
+  #slider {
+    cursor: pointer;
+  }
+
+  #addPaymentMethod {
+    font-size: 36px;
+    height: 120px;
+    width: 600px;
+    /*
+    background: #6bc40c;
+    color: red;
+    */
+  }
+
+  #addPaymentMethod:hover {
+    border: black;
+  }
+
 </style>
+
+<script id="databind" type="text/javascript">
+  var resource = {};
+  resource.billing = {
+    amount: null
+  };
+</script>
+
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<div class="status"></div>
 
 <form action="/billing" method="POST">
   <input type="hidden" value="true" name="addCustomer"/>
-  <div class="addPaymentOption"></div>
+  <input type="hidden" value="500" id="amount" name="amount"/>
+  <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
+  <input
+      type="submit"
+      id="addPaymentMethod"
+      class="well"
+      value="Pay $0.00 per month"
+      data-image="/img/pipe.gif"
+      data-key="pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
+      data-amount="000"
+      data-currency="usd"
+      data-name="hook.io hosting"
+      data-description="1 Month Basic Hosting"
+  />
+  <div id="slider"></div>
 </form>
+
+<div class="userMessage">
+  <h2>Select the amount you want to pay each month</h2>
+  <h3>We let our users choose how much to pay every month. The more you choose to pay, the better we can make the service in the future. We appreciate your business and respect your choice to pay whatever you want.</h3>
+</div>
+
+<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+<script>
+$(document).ready(function() {
+    $(':submit').on('click', function(event) {
+        event.preventDefault();
+
+        var $button = $(this),
+            $form = $button.parents('form');
+
+        var opts = $.extend({}, $button.data(), {
+            token: function(result) {
+                $form.append($('<input>').attr({ type: 'hidden', name: 'stripeToken', value: result.id })).submit();
+            }
+        });
+
+        StripeCheckout.open(opts);
+    });
+
+    if (location.hash==="#add") {
+      $(':submit').click();
+    }
+
+    $( "#slider" ).slider({
+      step: 5,
+      min: 0,
+      max: 100
+    });
+
+    function handleSlide (ev, ui) {
+      console.log(ui.value);
+      $('#addPaymentMethod').val('Pay $' + ui.value + '.00 per month');
+      $('#amount').val(ui.value * 100);
+    }
+
+    $('#slider').on("slide", function(ev, ui){
+      handleSlide(ev, ui);
+    });
+
+    // if user already has billing, show plan
+    // handleSlide(null, { value: resource.billing.amount / 100 });
+    if (resource.billing.amount === null) {
+
+    } else {
+      var amt = resource.billing.amount / 100;
+      $('#addPaymentMethod').val('Currently paying $' + amt + '.00 per month');
+      $('#addPaymentMethod').attr('disabled', 'DISABLED');
+      $('#amount').val(amt);
+      $('#slider').remove();
+      $('.userMessage').remove();
+    }
+
+    //$('#slider').slider('value', resource.billing.amount / 100);
+    //$('#email').val('foo@bar.com');
+
+});
+</script>
 
 <div class="billingForm">
 </div>
