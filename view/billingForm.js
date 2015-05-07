@@ -24,6 +24,11 @@ module['exports'] = function billingForm (data, cb) {
     disabled: true
   };
 
+  billingSchema.plan = {
+    type: "string",
+    default: data.plan,
+    disabled: true
+  };
 
  /*
   billingSchema.card_number = {
