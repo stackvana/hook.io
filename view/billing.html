@@ -113,7 +113,8 @@ $(document).ready(function() {
     $( "#slider" ).slider({
       step: 5,
       min: 0,
-      max: 100
+      max: 100,
+      value: 5
     });
 
     function handleSlide (ev, ui) {
@@ -132,6 +133,8 @@ $(document).ready(function() {
       rest: 'label',
       step: 2
     });
+
+    handleSlide(null, { value: 5 });
 
     // if user already has billing, show plan
     // handleSlide(null, { value: resource.billing.amount / 100 });
