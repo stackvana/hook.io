@@ -18,14 +18,17 @@ var address = {
 module['exports'] = function view (opts, callback) {
 
   var userResource = require('../lib/resources/user');
+  var domain = require('../lib/resources/domain');
 
   var $ = this.$,
       req = opts.request,
       res = opts.response,
       params = req.resource.params,
-      user = opts.request.user;
-
+      user = req.session.user;
+  //
   // enables curl signups
+  // EASYTODO: move this into separate module
+  //
   // curl http://hook.io?signup=youremail@marak.com
   if (typeof params.signup !== "undefined" && params.signup.length > 0) { // TODO: email validation
     // TODO: this should be part of mschema. see: https://github.com/mschema/mschema/issues/10
@@ -48,14 +51,18 @@ module['exports'] = function view (opts, callback) {
       });
     });
   }
+  //
+  // end curl signups
+  //
 
   if (typeof user === "undefined") {
     $('.userBar').remove();
+    $('.userSplash').remove();
   } else {
-    $('.userBar .welcome').html('Welcome <strong>' + user.username + "</strong>!")
+    $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
     $('.loginBar').remove();
     $('.tagline').remove();
-    $('.yourHooks').attr("href", "/" + user.username);
+    $('.yourHooks').attr("href", "/" + user);
     $('.splash').remove();
   }
 

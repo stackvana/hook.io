@@ -12,6 +12,23 @@
   <h2>Basic</h2>
   <p>
     Basic Hook hosting starts at $5.00 USD per month. <!-- We accept Bitcoin, Peercoin, Litecoin and Dogecoin --></p>
+    <p>
+    <form action="/billing" method="POST">
+      <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
+      <input
+          type="submit"
+          id="addPaymentMethod"
+          class="well"
+          value="Click to Add Payment Method"
+          data-image="/img/pipe.gif"
+          data-key="pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
+          data-amount="500"
+          data-currency="usd"
+          data-name="hook.io hosting"
+          data-description="1 Month Basic Hosting ($5.00)"
+      />
+    </form>
+    </p>
   <!--
   <h3>Dedicated Servers</h3>
   <p>Dedicated Servers start at $50.00 USD per month</p>

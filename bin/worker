@@ -1,2 +1,6 @@
 var worker = require('../lib/worker');
-worker.start();
+worker.start({}, function (err){
+  if (err) {
+    throw err;
+  }
+});

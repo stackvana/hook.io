@@ -8,13 +8,13 @@ apt-get -y update
 apt-get -y install git-core
 
 # get latest stable node as tar
-wget https://github.com/joyent/node/tarball/v0.11.14
+wget https://github.com/joyent/node/tarball/v0.11.16
 
 # extract latest node
-tar xf v0.11.14
+tar xf v0.11.16
 
 # change directory into node
-cd joyent-node-74dd5a7
+cd joyent-node-afeb6e1
 
 # install some missing deps
 apt-get -y install g++ curl libssl-dev apache2-utils
@@ -42,6 +42,32 @@ nano /etc/couchdb/default.ini
 start couchdb
 
 # fix admin party for couch
+
 # create hook database on couch
 
+# clone hook.io main repo
+git clone https://github.com/bigcompany/hook.io
+cd hook.io
+sudo npm install
+
+# update configuration data with new production information
+nano config/index.js 
+
+# install mon
+cd ..
+git clone https://github.com/tj/mon
+cd mon
+make install
+
+# install user modules
+cd ..
+cd hook.io
+sudo npm install npm
+cd modules
+sudo node install.js
+
+# run custom builds scripts /modules/builds
+
+# start production
+sudo sh scripts/start-production.sh
 

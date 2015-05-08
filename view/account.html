@@ -1,0 +1,67 @@
+<style>
+  .hooks {
+    font-size: 28px;
+    text-align:center;
+  }
+  .manageEnv {
+    font-size: 28px;
+  }
+  .referrals {
+    font-size: 28px;
+  }
+  .noHooks {
+    font-size:22px;
+  }
+  .accountForm {
+    text-align: left;
+  }
+  .userForm {
+    text-align: left;
+  }
+  .billingForm {
+    text-align: left;
+  }
+
+  #addPaymentMethod {
+    font-size: 36px;
+    height: 120px;
+    width: 600px;
+    /*
+    background: #6bc40c;
+    color: red;
+    */
+  }
+
+  #addPaymentMethod:hover {
+    border: black;
+  }
+
+</style>
+
+</script>
+<div id="main" class="container">
+  <div class="userForm"></div>
+  <form action="/billing" method="post">
+    <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
+    <input
+        type="submit"
+        id="addPaymentMethod"
+        class="well"
+        value="Add Payment Method"
+        data-image="/img/pipe.gif"
+        data-key="pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
+        data-amount="500"
+        data-currency="usd"
+        data-name="hook.io hosting"
+        data-description="1 Month Basic Hosting ($5.00)"
+    />
+  </form>
+  <!-- <div class="billingForm"></div> -->
+  <!-- <div class="hooks"><a href="/hooks" class="myHooks">My Hooks</a></div> -->
+  <form action="/account" method="POST"></form>
+</div>
+
+<br/>
+<br/>
+<br/>
+<br/>

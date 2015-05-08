@@ -1,0 +1,49 @@
+<!-- TODO: remove copy-pasta from env.html -->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.removeKey').click(function(){
+      $(this).parent().parent().remove();
+    });
+    $('.addKey').click(function(){
+      var _delete = '<a href="#remove" class="removeKey">X</a>';
+      var _key = '<input name="key" type="text" value="' + "" + '" size="20"/>';
+      var _value = '<input name="value" type="text" value="' + "" + '" size="60"/>';
+      $('.env').append('<tr><td>' + _delete + '</td><td>' + _key + '</td></tr>');
+      $('.removeKey').click(function(){
+        $(this).parent().parent().remove();
+      });
+    });
+  });
+</script>
+
+<style>
+ .env input {
+   font-size:22px;
+ }
+ .env td {
+   font-size:22px;
+ }
+</style>
+
+<div style="font-size:26px;background-image: url('./img/socialite.png');background-repeat: none;text-align:left;padding-bottom:20px">
+  <h1>Custom Web Domains</h1>
+  <p>Here you can add / remove custom web domains that will route to your hooks.</p>
+  <p>This is a great way to use a custom domain like www.marak.com to point to a hook.</p>
+  <form action="" method="POST">
+    <a href="#addKey" class="addKey">Add new Domain</a>
+    <br/>
+    <br/>
+    <input class="btn" name="update" type="submit" value="Save Domains"/> 
+    <br/>
+    <table class="env table-condensed">
+      <tr>
+        <td>&nbsp;</td>
+        <td><strong>Domain</strong></td>
+        <!-- ><td><strong>Value</strong></td> -->
+      </tr>
+    </table>
+    <br/>
+    <input class="btn" name="update" type="submit" value="Save Domains"/>
+  </form>
+</div>
