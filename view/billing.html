@@ -19,6 +19,9 @@
     font-size: 36px;
     color: #6bc40c;
   }
+  .error {
+    color: red;
+  }
 
   #slider {
     cursor: pointer;
@@ -48,9 +51,16 @@
 </script>
 
 <script type="text/javascript" src="/js/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="/js/jquery-ui-slider-pips.js"></script>
+
+<link rel="stylesheet" href="/css/jquery-ui.css">
+<link rel="stylesheet" href="/css/jquery-ui-slider-pips.css">
 
 <div class="status"></div>
+
+<div class="userMessage">
+  <h2>Select the amount you want to pay each month</h2>
+</div>
 
 <form action="/billing" method="POST">
   <input type="hidden" value="true" name="addCustomer"/>
@@ -63,16 +73,18 @@
       value="Pay $0.00 per month"
       data-image="/img/pipe.gif"
       data-key="pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
-      data-amount="000"
+      data-amount="500"
       data-currency="usd"
       data-name="hook.io hosting"
       data-description="1 Month Basic Hosting"
   />
+  
+  <!-- data-bitcoin="true" -->
   <div id="slider"></div>
 </form>
-
+<br/>
+<br/>
 <div class="userMessage">
-  <h2>Select the amount you want to pay each month</h2>
   <h3>We let our users choose how much to pay every month. The more you choose to pay, the better we can make the service in the future. We appreciate your business and respect your choice to pay whatever you want.</h3>
 </div>
 
@@ -108,10 +120,18 @@ $(document).ready(function() {
       console.log(ui.value);
       $('#addPaymentMethod').val('Pay $' + ui.value + '.00 per month');
       $('#amount').val(ui.value * 100);
+      $('#addPaymentMethod').attr('data-amount', Number(ui.value) * 100);
+      //  TODO: issue with stripe checkout.js not adjusting input dollar value,
+      //  after closing and opening with a new slider value
+      //  $('.iconTick').html('Pay $' + ui.value + '.00'); // maybe?
     }
 
     $('#slider').on("slide", function(ev, ui){
       handleSlide(ev, ui);
+    }).slider("pips", {
+      prefix: "$",
+      rest: 'label',
+      step: 2
     });
 
     // if user already has billing, show plan

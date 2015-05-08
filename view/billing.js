@@ -52,7 +52,7 @@ module['exports'] = function view (opts, callback) {
       };
 
       results.forEach(function(item){
-        item.destroy();
+        // item.destroy();
         billingForm(item, function (err, re){
           $('.billingForm').append(re);
           count--;
