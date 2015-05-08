@@ -1,4 +1,5 @@
 <style>
+
   .hooks {
     font-size: 28px;
     text-align:center;
@@ -72,13 +73,12 @@
       class="well"
       value="Pay $0.00 per month"
       data-image="/img/pipe.gif"
-      data-key="pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
+      data-key=""
       data-amount="500"
       data-currency="usd"
       data-name="hook.io hosting"
       data-description="1 Month Basic Hosting"
   />
-  
   <!-- data-bitcoin="true" -->
   <div id="slider"></div>
 </form>
@@ -117,7 +117,6 @@ $(document).ready(function() {
     });
 
     function handleSlide (ev, ui) {
-      console.log(ui.value);
       $('#addPaymentMethod').val('Pay $' + ui.value + '.00 per month');
       $('#amount').val(ui.value * 100);
       $('#addPaymentMethod').attr('data-amount', Number(ui.value) * 100);

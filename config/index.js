@@ -1,7 +1,7 @@
 module['exports'] = {
   site: {
     port: 9999,
-    https: false
+    https: true
   },
   couch: {
     "database": "hook",
@@ -21,4 +21,8 @@ module['exports'] = {
   },
   defaultTheme : "http://localhost:9999/themes/debug/index.html",
   defaultPresenter : "http://localhost:9999/themes/debug/index.js",
+  stripe: {
+    secretKey: "sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV",
+    publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
+  },
 };

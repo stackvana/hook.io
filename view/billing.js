@@ -5,24 +5,26 @@
 
 var hook = require('../lib/resources/hook');
 var user = require('../lib/resources/user');
+var config = require('../config');
 var bodyParser = require('body-parser');
 var mergeParams = require('./mergeParams');
 var request = require('request');
 var billing = require('../lib/resources/billing')
-var stripe = require('stripe')('sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV');
+var stripe = require('stripe')(config.stripe.secretKey);
 
 var billingForm = require('./billingForm');
 var addPaymentOption = require('./addPaymentOption');
 
 module['exports'] = function view (opts, callback) {
-  console.log('billing')
+
   var $ = this.$;
   var req = opts.request, res = opts.response;
+
+  $('#addPaymentMethod').attr('data-key', config.stripe.publicKey);
 
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     var params = req.resource.params;
-    console.log(params);
 
     if (!req.isAuthenticated()) { 
       req.session.redirectTo = "/billing";
@@ -134,7 +136,7 @@ module['exports'] = function view (opts, callback) {
               <input type="hidden" value="true" name="addCustomer"/> \
               <script \
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button" \
-                data-key="pk_test_axAR0vF3Qam8zs09JE7t8ZIo" \
+                data-key="' + config.stripe.publicKey + '" \
                 data-image="/square-image.png" \
                 data-name="hook.io hosting" \
                 data-description="1 Month Basic Hosting ($5.00)" \
