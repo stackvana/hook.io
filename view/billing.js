@@ -33,7 +33,6 @@ module['exports'] = function view (opts, callback) {
 
     function showBillings (results, callback) {
 
-
       var count = results.length;
 
       function finish () {
@@ -76,19 +75,38 @@ module['exports'] = function view (opts, callback) {
           }
           // console.log('new customer created', err, customer);
           $('.status').html('New billing informationed added!');
-          billing.create({ owner: req.user.username, stripeID: customer.id, amount: params.amount }, function (err, _billing) {
-            console.log('new billing created', err, _billing);
-            if (err) {
-              $('.status').html(err.message);
-              return callback(null, err.message);
-            }
-            stripe.customers.createSubscription(customer.id, {
-               plan: 'BASIC_HOSTING_PLAN',
-               source: params.stripeToken // source is the token created from checkout.js
-             }, function(err, charge){
-               if (err) {
-                 $('.status').html(err.message);
-               }
+
+          // select plan based on user-selected value
+          var _plan = "BASIC_HOSTING_PLAN";
+
+          if (params.amount > 500) {
+            _plan = _plan + "_" + (params.amount / 100);
+          }
+
+          // console.log('attempting to use plan', _plan);
+
+          stripe.customers.createSubscription(customer.id, {
+             plan: _plan,
+             source: params.stripeToken // source is the token created from checkout.js
+           }, function(err, charge){
+             if (err) {
+               $('.status').addClass('error');
+               $('.status').html(err.message);
+               return callback(err, $.html());
+             }
+
+            billing.create({
+              owner: req.user.username,
+              stripeID: customer.id,
+              amount: params.amount,
+              plan: _plan
+            }, function (err, _billing) {
+              // console.log('new billing created', err, _billing);
+              if (err) {
+                $('.status').html(err.message);
+                return callback(null, err.message);
+              }
+
                // console.log('added to plan', err, charge);
                $('.status').html('Billing Information Added! Thank you!');
                billing.find({ owner: req.user.username }, function (err, results) {
@@ -101,7 +119,7 @@ module['exports'] = function view (opts, callback) {
                  });
                });
             });
-         });
+          });
         }
       );
     } else {
