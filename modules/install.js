@@ -4,21 +4,51 @@
 */
 var npm = require("npm");
 var modules = require('./modules');
+var fs = require("fs");
+var colors = require('colors');
 
 var arr = Object.keys(modules);
 
-npm.load({exit: false}, function (err) {
- if(err) throw err;
- iterate();
+npm.load({ exit: false }, function (err) {
+ if (err) throw err;
+ checkPackage();
 });
 
-function iterate () {
+function checkPackage () {
   if (arr.length === 0) {
     process.exit();
   }
   var m = arr.pop();
-  npm.commands.install([m + "@" + modules[m]], function (err, data) {
-    if (err) throw err;
-    iterate();
-  });
+  if (isVersionInstalled(m, modules[m])) {
+    // do not install if module@version is already installed
+    console.log(('found ' + m + '@' + modules[m]).green);
+    checkPackage();
+  } else {
+    // install version
+    console.log(('missing ' + m + '@' + modules[m]).yellow);
+    npm.commands.install([m + "@" + modules[m]], function (err, data) {
+      if (err) throw err;
+      console.log(('installed ' + m + '@' + modules[m]).blue);
+      checkPackage();
+    });
+  }
+};
+
+//
+// Checks local node_modules for package
+// Returns boolean
+function isVersionInstalled (m, v) {
+  // console.log('checking version for', m, '@', v);
+  var pkg, result = false;
+  try {
+    pkg = fs.readFileSync('./node_modules/' + m + '/package.json').toString();
+    pkg = JSON.parse(pkg);
+    // console.log(pkg.version)
+    if (pkg.version === v) {
+      result = true;
+    }
+  } catch (err) {
+    result = false;
+  }
+  return result;
 };
