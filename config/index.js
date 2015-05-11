@@ -25,4 +25,6 @@ module['exports'] = {
     secretKey: "sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV",
     publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
   },
+  sslKeyDirectory: __dirname + '/../ssl/',
+  customDomains: true
 };
