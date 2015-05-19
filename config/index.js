@@ -1,7 +1,8 @@
 module['exports'] = {
   site: {
     port: 9999,
-    https: true
+    https: true,
+    roots: ["127.0.0.1", "localhost", "hook.io", "www.hook.io"]
   },
   couch: {
     "database": "hook",
