@@ -5,12 +5,14 @@ module['exports'] = function billingForm (data, cb) {
 
   var billingSchema = billingSchema || {};
 
+/*
   billingSchema.name = {
     type: "string",
     default: data.name,
     disabled: true
   };
 
+*/
   billingSchema.method = {
     type: "string",
     default: data.type,

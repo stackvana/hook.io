@@ -10,12 +10,18 @@ module['exports'] = function view (opts, callback) {
     req.session.referredBy = req.params.username;
     return res.redirect("/");
   }
-  
+
   if (!opts.request.isAuthenticated()) { 
     $('.navBar').remove()
   }
 
-  for(var h in opts.hooks) {
+  for (var h in opts.hooks) {
+    // TODO: add ability to delete hooks https://github.com/bigcompany/hook.io/issues/47
+    if (req.params.username.toLowerCase() === req.user.username.toLowerCase()) {
+      // $('.hooks').append('<tr><td><a href="/' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '">' + opts.hooks[h].name + '</a></td><td><a href="">Delete</a></td></tr>')
+    } else {
+      // $('.hooks').append('<tr><td><a href="/' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '">' + opts.hooks[h].name + '</a></td></tr>')
+    }
     $('.hooks').append('<tr><td><a href="/' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '">' + opts.hooks[h].name + '</a></td></tr>')
   }
 

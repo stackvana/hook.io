@@ -29,18 +29,58 @@
   }
 
   #addPaymentMethod {
+    -moz-box-shadow: 0px 1px 38px 0px #ffffff;
+    -webkit-box-shadow: 0px 1px 38px 0px #ffffff;
+    box-shadow: 0px 1px 38px 0px #ffffff;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9));
+    background:-moz-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:-webkit-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:-o-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:-ms-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+    background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9',GradientType=0);
+    background-color:#f9f9f9;
+    -moz-border-radius:33px;
+    -webkit-border-radius:33px;
+    border-radius:33px;
+    border:7px solid #dcdcdc;
+    display:inline-block;
+    cursor:pointer;
+    color:#666666;
+    font-family:Arial;
+    font-size:27px;
+    font-weight:bold;
+    padding:27px 64px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #ffffff;
+    min-width: 435px;
+  }
+  #addPaymentMethod:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e9e9e9), color-stop(1, #f9f9f9));
+    background:-moz-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:-webkit-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:-o-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:-ms-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+    background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9',GradientType=0);
+    background-color:#e9e9e9;
+  }
+  #addPaymentMethod:active {
+    position:relative;
+    top:1px;
+  }
+ 
+/*
+  #addPaymentMethod {
     font-size: 36px;
     height: 120px;
     width: 600px;
-    /*
-    background: #6bc40c;
-    color: red;
-    */
   }
 
   #addPaymentMethod:hover {
     border: black;
   }
+  */
 
 </style>
 

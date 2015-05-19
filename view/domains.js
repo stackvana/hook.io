@@ -41,14 +41,17 @@ module['exports'] = function view (opts, callback) {
       schema: {
         name: {
           type: 'string',
-          description: 'marak.com',
+          description: 'Your custom domain name. Example: marak.com',
+          placeholder: 'marak.com',
           required: true,
           minLength: 1,
           maxLength: 50
         },
         forwardUrl: {
           type: 'string',
-          description: '/Marak/echo',
+          label: "hook",
+          placeholder: "/Marak/echo",
+          description: 'The Hook to point your domain to. Example: /Marak/echo',
           required: true,
           minLength: 1,
           maxLength: 50
