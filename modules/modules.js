@@ -52,6 +52,6 @@ module['exports'] = {
   "twilio": "1.8.0",
   "twit": "1.1.18",
   "view": "0.6.0",
-  "xml2js": "2.6.2",
+  "xml2js": "0.4.8",
   "xtend": "4.0.0"
 };
