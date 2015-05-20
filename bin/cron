@@ -1,8 +1,15 @@
 var cron = require('../lib/resources/cron');
 
 cron.processAll(function(err, result){
+  if (err) {
+    throw err;
+  }
+  console.log('processed all crons', result)
   // wait 60 seconds and process again
   setTimeout(function(){
+    // this script is intended to be run with a process monitor
+    // by calling process.exit, we close the script and let the process
+    // monitor restart the cron process
     process.exit(0);
-  }, 60000)
+  }, 60000);
 });
