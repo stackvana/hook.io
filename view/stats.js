@@ -2,6 +2,25 @@ var user = require('../lib/resources/user'),
     hook = require('../lib/resources/hook'),
     request = require('request');
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/*
+
+ todo: consider adding route caching to resource-http
+ 
+ var routeCache = require('route-cache');
+
+ // cache route for 20 seconds 
+ app.get('/index', routeCache.cacheSeconds(20), function(req, res){
+     // do your dirty work here... 
+     console.log('you will only see this every 20 seconds.');
+     res.send('this response will be cached');
+ });
+
+*/
+
 module['exports'] = function view (opts, callback) {
   var $ = this.$;
   user.all(function(err, results){
@@ -12,7 +31,7 @@ module['exports'] = function view (opts, callback) {
       results.forEach(function(h){
         count += h.ran;
       });
-      $('.totalRun').html(count);
+      $('.totalRun').html(numberWithCommas(count));
       request('https://api.github.com/repos/bigcompany/hook.io', {
         headers: {
           "User-Agent": "hook.io stats"
