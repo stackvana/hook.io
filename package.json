@@ -30,7 +30,7 @@
     "request": "^2.48.0",
     "resource": "^0.5.3",
     "resource-email": "0.5.x",
-    "resource-http": "^0.6.0",
+    "resource-http": "git://github.com/bigcompany/http.git",
     "resource-user": "0.5.x",
     "slug": "^0.8.0",
     "stream-body-parser": "0.0.1",
@@ -38,7 +38,8 @@
     "stripe": "^3.3.4",
     "through2": "^0.6.3",
     "trycatch": "^1.5.11",
-    "view": "0.6.x"
+    "view": "0.6.x",
+    "resource-forms" : "^0.4.2"
   },
   "devDependencies": {
     "gulp-rename": "*",
