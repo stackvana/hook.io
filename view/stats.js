@@ -6,21 +6,6 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-/*
-
- todo: consider adding route caching to resource-http
- 
- var routeCache = require('route-cache');
-
- // cache route for 20 seconds 
- app.get('/index', routeCache.cacheSeconds(20), function(req, res){
-     // do your dirty work here... 
-     console.log('you will only see this every 20 seconds.');
-     res.send('this response will be cached');
- });
-
-*/
-
 module['exports'] = function view (opts, callback) {
   var $ = this.$;
   user.all(function(err, results){
@@ -48,3 +33,6 @@ module['exports'] = function view (opts, callback) {
     });
   });
 };
+
+// cache this page to only reload every 60 seconds
+module['exports'].cache = 60000;
