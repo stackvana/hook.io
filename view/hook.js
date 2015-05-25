@@ -4,7 +4,6 @@ var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
 var mustache = require('mustache');
 var View = require('view').View;
-
 var config = require('../config');
 
 module['exports'] = function view (opts, callback) {
@@ -16,6 +15,14 @@ module['exports'] = function view (opts, callback) {
   var gist = opts.gist || params.gist;
 
   var run = params.run;
+
+  //
+  // check referral status
+  //
+  // if there is no referral set, assign one based on the owner of the current hook
+  if (typeof req.session.referredBy === "undefined") {
+    req.session.referredBy = req.hook.owner;
+  }
 
   if (params.run) {
     opts.req = req;
@@ -53,10 +60,23 @@ module['exports'] = function view (opts, callback) {
   }
 
   // if a theme was set ( not the default debug theme, and no presenter was given, use simple.js )
+  // check to see if in offline mode
+  /*
+  if (big.mode === "Offline") {
+    // replace any references to http://hook.io/ production site with local dev configuration
+    theme = theme.replace('http://hook.io/', 'http://dev.hook.io:9999/')
+  }
+  */
   hook.fetchHookTheme(theme, function(err, _theme){
     if (err) {
       return res.end('Unable to fetch theme: ' + theme  + ' ' + err.message);
     }
+    /*
+    if (big.mode === "Offline") {
+      // replace any references to http://hook.io/ production site with local dev configuration
+      presenter = presenter.replace('http://hook.io/', 'http://dev.hook.io:9999/')
+    }
+    */
     hook.fetchHookPresenter(presenter, function(err, _presenter){
       if (err) {
         return res.end(hook.formatError(err));
