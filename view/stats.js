@@ -26,8 +26,6 @@ module['exports'] = function view (opts, callback) {
         if (err) {
           console.log(err.message);
         }
-        $('.githubStars').html(output.stargazers_count);
-        $('.projectForks').html(output.forks_count);
         callback(null, $.html());
       });
     });

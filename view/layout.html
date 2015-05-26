@@ -26,6 +26,12 @@
         }, function(){
           $(this).trigger('stopRumble');
         });
+
+        // load the github social async ( after page loads and is ready )
+        // there is no need to wait for 3rd party sites to respond before our page loads...
+        $('.githubSocialButtons').html('<iframe src="https://ghbtns.com/github-btn.html?user=bigcompany&repo=hook.io&type=star&count=true&v=2" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>\
+        <iframe src="https://ghbtns.com/github-btn.html?user=bigcompany&repo=hook.io&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>');
+
       });
     </script>
     <style>
@@ -92,9 +98,14 @@
             width: 290px;
             padding: 0px;
           }
-          
+
           h1, h2, h3 {
             padding-bottom:10px !important;
+          }
+
+          iframe {
+            padding: none;
+            margin: none;
           }
 
     </style>
@@ -118,6 +129,7 @@
       <!-- <a href=""><img src="./img/block.png"/></a> -->
       <div class="footerNav">
         Copyright <a href="http://hook.io/">hook.io</a> 2014 A <a href="http://big.vc">Big</a> company
+        <div style="position: absolute;left: 280px;bottom: 5px;" class="githubSocialButtons"></div>
         <div title="Node Package Manager" style="position: absolute;right: 129px;bottom: 4px;"><a href="/modules"><img alt="npm modules" src="/img/tinynpm.png"/></a></div>
         <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img title="Support" alt="Support" src="/img/littlecat.png"/></a></div>
         <div title="My Hooks" style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="/img/pipe.gif"/></a></div>
