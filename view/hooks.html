@@ -31,11 +31,23 @@
 
 </style>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.deleteLink').on('click', function(){
+      var name = $(this).attr('data-name');
+      var result = confirm('Are you certain you want to destroy:\n\n' + name);
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  });
+</script>
+
 <br/>
 <div>
-
   <div class="navBar">
-
     <div class="userBar">
       <table>
         <tr>
@@ -51,8 +63,7 @@
     <p>It looks like you haven't created any hooks yet!</p>
     <p>You can Create a new Hook by <a href="/new">clicking here</p>
   </div>
-
-  <table class="hooks">
+  <table class="hooks table">
   </table>
 </div>
 <br/>
