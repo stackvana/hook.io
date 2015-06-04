@@ -24,6 +24,8 @@ module['exports'] = function view (opts, callback) {
     req.session.referredBy = req.hook.owner;
   }
 
+  // should we just run the hook?
+  // TODO: it looks like using ?run=true might result in template / theme logic being bypassed
   if (params.run) {
     opts.req = req;
     opts.res = res;
@@ -34,7 +36,6 @@ module['exports'] = function view (opts, callback) {
       }
       return callback(null, result.output);
     });
-
   }
 
   // not forking the hook, not running the hook, we need to present it
@@ -57,6 +58,12 @@ module['exports'] = function view (opts, callback) {
     }
   } else {
     presenter = req.hook.presenter;
+  }
+
+  // TODO: make themes overridable through ?theme= param
+  // if ?admin=true, redirect to admin page
+  if (params.admin) {
+    return res.redirect('/admin?owner=' + req.hook.owner + '&name=' + req.hook.name);
   }
 
   // if a theme was set ( not the default debug theme, and no presenter was given, use simple.js )

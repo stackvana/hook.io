@@ -1,0 +1,143 @@
+<link href="/css/jquery-ui.css" rel="stylesheet">
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/jquery.croneditor.js"></script>
+<script type="text/javascript">
+  // lookup themes from curated theme list
+  // TODO: Create "themes" resource and persist this to database
+  var themes = {
+    "debug": {
+      "theme": "http://hook.io/themes/debug/index.html",
+      "presenter": "http://hook.io/themes/debug/index.js"
+    },
+    "simple": {
+      "theme": "http://hook.io/themes/simple/index.html",
+      "presenter": "http://hook.io/themes/simple/index.js"
+    },
+    "simple-form": {
+      "theme": "http://hook.io/themes/simple-form/index.html",
+      "presenter": "http://hook.io/themes/simple-form/index.js"
+    },
+    "none": {
+      "theme": "http://hook.io/themes/none/index.html",
+      "presenter": "http://hook.io/themes/none/index.js"
+    },
+    "custom": {
+      "theme": "",
+      "presenter": ""
+    }
+  };
+
+  $(document).ready(function(){
+    $('.cronDiv').croneditor();
+    $('input[name="cronActive"]').click(function(){
+      if($(this).prop('checked')) {
+        $('.cronRow').show();
+      } else {
+        $('.cronRow').hide();
+      }
+    });
+    
+    $('.themeSelect').change(function(e){
+      var val = themes[$(this).val()];
+      console.log(val)
+      $('#theme').attr('value', val.theme);
+      $('#presenter').attr('value', val.presenter);
+    });
+    
+    $('.deleteLink').on('click', function(){
+      var name = $(this).attr('data-name');
+      var result = confirm('Are you certain you want to destroy:\n\n' + name);
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    
+  });
+  
+  /*
+  $('#cronString').keydown(function(){
+    var job = new cron.CronTime($(this).val());
+    var start = new Date();
+    var next = job._getNextDateFrom(start);
+    $('#estimateRun').val(next);
+  });
+  */
+  
+</script>
+<!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
+<div style="font-size:22px;height:800px;text-align: left;">
+  <h1>Admin</h2>
+  <br/>
+  <h2><strong>Manage <span class="hookName">your Hook</span> here</strong></h2>
+  <form method="post" action="/admin">
+    <table class="table-condensed hookTable" style="font-size:22px;">
+      <tr>
+        <td align="left" style="min-width: 225px;">Hook Name</td>
+        <td colspan="2"><input disabled="DISABLED" type="text" class="hookName" id="hookName" name="hookName" placeholder="name of hook" size="40"/></td>
+      </tr>
+      <tr>
+        <td align="left">Hook Source Code:</td>
+        <td colspan="2"><input type="text" class="hookSource" id="hookSource" name="hookSource" value="n/a" size="40"/></td>
+      </tr>
+
+      <!--
+      <tr>
+        <td align="left">Theme Selector</td>
+        <td colspan="2"><span class="red">TODO</span></td>
+      </tr>
+      -->
+
+      <tr>
+        <td align="left">Hook Run Count</td>
+        <td colspan="2"><span class="hookRan">n/a</span></td>
+      </tr>
+
+      <tr>
+        <td align="left">Hook Status</td>
+        <td colspan="2">
+          <select class="status" name="status">
+            <option value="active">Active</option>
+            <option value="disabled">Disabled</option>
+          </select>
+          </td>
+      </tr>
+      
+      <tr>
+        <td colspan="3" align="left">
+          <input type="checkbox" name="cronActive" id="cronActive" class="cronActive"/>&nbsp;&nbsp;&nbsp;Cron Task activated for this Hook</td>
+      </tr>
+      <tr class="cronRow">
+        <td colspan="3"><div class="cronDiv"></div></td>
+      </tr>
+
+      <tr>
+        <td colspan="3" align="left"><input type="checkbox" class="isPublic" id="isPublic" name="isPublic" value="true">&nbsp;&nbsp;&nbsp;Display Hook in public Hook registry</td>
+      </tr>
+
+
+      <tr>
+        <td colspan="3">
+          Danger Zone
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left">Delete Hook</td>
+        <td colspan="2">
+          <span class="red"><a class="deleteLink" href="">Delete</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn">
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <br/>
+  <br/>
+</div>
