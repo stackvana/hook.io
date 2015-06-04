@@ -19,6 +19,10 @@ var github = new GitHubApi({
     timeout: 5000
 });
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 module['exports'] = function view (opts, callback) {
   var params = opts.request.resource.params;
   var req = opts.request,
@@ -41,7 +45,7 @@ module['exports'] = function view (opts, callback) {
     $('#edit').remove();
   }
   */
-  
+  console.log('running debut theme')
   if (params.edit) {
     return res.redirect(301, "/edit?hook=" + req.params.username + "/" + req.params.hook);
   }
@@ -123,7 +127,7 @@ module['exports'] = function view (opts, callback) {
    }
  }
 
-  $('.counter').html('<em>' + req.hook.name + ' has run ' + req.hook.ran.toString() + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
+  $('.counter').html('<em>' + req.hook.name + ' has run ' + numberWithCommas(req.hook.ran.toString()) + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
   
   $('.hookResult').remove();

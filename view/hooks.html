@@ -28,6 +28,9 @@
   .navBar {
     margin-bottom:0px;
   }
+  .megaRow .mega-octicon {
+    font-size: 64px;
+  }
 
 </style>
 
@@ -50,10 +53,13 @@
   <div class="navBar">
     <div class="userBar">
       <table>
-        <tr>
-          <td><a href="/new">Create new Hook</a></td>
-          <td><a href="/env">Manage Hook Environment Variables</a></td>
-          <td><a href="/referrals">Manage Referrals</a></td>
+        <tr class="megaRow">
+          <td align="left">
+          <a href="/new" title="Create New Hook"><span class="mega-octicon octicon-plus"></span></a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="/env" title="Manage Enviroment Variables"><span class="mega-octicon octicon-settings"></span></a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="/referrals" title="Manage Affilates / Referrals"><span class="mega-octicon octicon-broadcast"></span></a></td>
         </tr>
       </table>
       
