@@ -28,7 +28,13 @@
   };
 
   $(document).ready(function(){
+
     $('.cronDiv').croneditor();
+
+    if(!$('input[name="cronActive"]').is(':checked')) {
+      $('.cronRow').hide();
+    }
+
     $('input[name="cronActive"]').click(function(){
       if($(this).prop('checked')) {
         $('.cronRow').show();
@@ -72,70 +78,61 @@
   <br/>
   <h2><strong>Manage <span class="hookName">your Hook</span> here</strong></h2>
   <form method="post" action="/admin">
-    <table class="table-condensed hookTable" style="font-size:22px;">
-      <tr>
-        <td align="left" style="min-width: 225px;">Hook Name</td>
-        <td colspan="2"><input disabled="DISABLED" type="text" class="hookName" id="hookName" name="hookName" placeholder="name of hook" size="40"/></td>
-      </tr>
-      <tr>
-        <td align="left">Hook Source Code:</td>
-        <td colspan="2"><input type="text" class="hookSource" id="hookSource" name="hookSource" value="n/a" size="40"/></td>
-      </tr>
+    <div class="hookTable" style="font-size:22px;">
+      <div class="form-group">
+        <label for="hookName">Hook Name</label>
+        <input disabled="DISABLED" type="text" class="form-control hookName" id="hookName" placeholder="name of hook" size="40">
+      </div>
+      <div class="form-group">
+        <label for="hookSource">Hook Run Count</label>
+        <input type="text" class="form-control hookRan" id="hookSource" value="n/a" size="40">
+      </div>
 
-      <!--
-      <tr>
-        <td align="left">Theme Selector</td>
-        <td colspan="2"><span class="red">TODO</span></td>
-      </tr>
-      -->
+      <div class="form-group">
+        <label for="hookSource">Hook Source Code</label>
+        <input type="text" class="form-control hookSource" id="hookSource" value="n/a" size="80">
+      </div>
 
-      <tr>
-        <td align="left">Hook Run Count</td>
-        <td colspan="2"><span class="hookRan">n/a</span></td>
-      </tr>
+      <div class="form-group">
+        <label for="status">Hook Status</label>
+        <select class="form-control status" name="status">
+          <option value="active">Active</option>
+          <option value="disabled">Disabled</option>
+        </select>
 
-      <tr>
-        <td align="left">Hook Status</td>
-        <td colspan="2">
-          <select class="status" name="status">
-            <option value="active">Active</option>
-            <option value="disabled">Disabled</option>
-          </select>
-          </td>
-      </tr>
-      
-      <tr>
-        <td colspan="3" align="left">
-          <input type="checkbox" name="cronActive" id="cronActive" class="cronActive"/>&nbsp;&nbsp;&nbsp;Cron Task activated for this Hook</td>
-      </tr>
-      <tr class="cronRow">
-        <td colspan="3"><div class="cronDiv"></div></td>
-      </tr>
+      </div>
+      <div class="form-group">
+        <label for="hookSource">Hook Source Code</label>
+        <input type="text" class="form-control hookSource" id="hookSource" value="n/a" size="80">
+      </div>
 
-      <tr>
-        <td colspan="3" align="left"><input type="checkbox" class="isPublic" id="isPublic" name="isPublic" value="true">&nbsp;&nbsp;&nbsp;Display Hook in public Hook registry</td>
-      </tr>
+      <div class="form-group">
+        <input type="checkbox" class="cronActive" id="cronActive" name="cronActive">
+        <label for="hookSource">Cron Task activated for this Hook</label>
+      </div>
 
+      <div class="form-group cronRow">
+        <div class="cronDiv"></div>
+      </div>
 
-      <tr class="danger">
-        <td colspan="3">
-          Danger Zone
-        </td>
-      </tr>
+      <div class="form-group">
+        <input type="checkbox" class="isPublic" id="isPublic" name="isPublic">
+        <label for="isPublic">Display Hook in public Hook registry</label>
+      </div>
 
-      <tr>
-        <td align="left">Delete Hook</td>
-        <td colspan="2">
-          <span class="red"><a class="deleteLink" href="">Delete</span>
-        </td>
-      </tr>
+      <div class="form-group danger">
+        Danger Zone
+      </div>
 
-      <tr>
-        <td colspan="3">
-          <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn">
-        </td>
-      </tr>
-    </table>
+      <div class="form-group">
+        Delete Hook <span class="red"><a class="deleteLink" href="">Delete</span>
+      </div>
+
+      <div class="form-group">
+        <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn">
+      </div>
+
+    </div>
   </form>
 
   <br/>

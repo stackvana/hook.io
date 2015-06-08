@@ -38,7 +38,7 @@
     "stripe": "^3.3.4",
     "through2": "^0.6.3",
     "trycatch": "^1.5.11",
-    "view": "0.6.x"
+    "view": "0.7.x"
   },
   "devDependencies": {
     "gulp-rename": "*",

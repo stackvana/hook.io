@@ -89,7 +89,7 @@ module['exports'] = function view (opts, callback) {
 
     function finish () {
 
-      $('.hookRan').html(numberWithCommas(req.hook.ran));
+      $('.hookRan').attr('value', numberWithCommas(req.hook.ran));
       $('.hookName').attr('value', req.hook.name);
 
       $('.hookSource').attr('value', req.hook.gist);
@@ -106,18 +106,18 @@ module['exports'] = function view (opts, callback) {
       if (req.hook.isPublic === true) {
         $('.isPublic').attr('checked', 'CHECKED');
       }
-      
+
       if (typeof req.hook.status !== 'undefined') {
         $('.status').prepend('<option value="' + req.hook.status + '">' + req.hook.status + '</option>')
       }
 
       $('.deleteLink').attr('href', '/' + req.hook.owner + "/" + req.hook.name + "?delete=true");
-      $('.deleteLink').attr('data-name',  + req.hook.owner + "/" + req.hook.name);
+      $('.deleteLink').attr('data-name', (req.hook.owner + "/" + req.hook.name));
 
       $('form').attr('action', '/admin?owner=' + req.hook.owner + "&name=" + req.hook.name);
 
       self.parent.components.themeSelector.present({ theme: req.hook.theme, presenter: req.hook.presenter }, function(err, html){
-        var el = $('.table-condensed > tr').eq(1);
+        var el = $('.table-condensed > tr').eq(6);
         el.after(html);
         callback(null, $.html());
       });
