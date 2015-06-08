@@ -24,7 +24,7 @@
   <p>To add a Theme View, simply set the <strong>Hook.theme</strong> property to url of the Theme HTML.</p>
   
   <p>Here is an example of a Hook which uses the "simple" theme:</p>
-  <script src="https://gist.github.com/Marak/607ccd5106b099b8047f.js"></script>
+  <div data-gist="607ccd5106b099b8047f">Loading...</div>
   <p>This HTML file can be hosted <strong>anywhere</strong>. If required, <a href="http://gist.github.com">Github Gist</a> provides free hosting for assets and HTML.</p>
 
   <p>Once a Theme HTML file is specified, the Hook will use that file for rendering output.</p>
@@ -33,7 +33,7 @@
   <p>By default, a <strong>{{key.value}}</strong> style replacement will be performed on the Theme HTML using the completed <strong>Hook</strong> object.</p>
 
   <p><strong>For example:</strong></p>
-  <script src="https://gist.github.com/Marak/f48cebe949acd148676f.js"></script>
+  <div data-gist="f48cebe949acd148676f">Loading...</div>
   <p>When the Hook runs, <strong>{{hook.output}}</strong> will be replaced with the outputted result of the Hook.</p>
   
   <p>To bypass these replacements, simply do not place any matching <strong>{{key.value}}</strong> tags in the Theme HTML.</p>
@@ -41,12 +41,10 @@
   <p> For most themes, this simple replacement style should be sufficient. If additional server-side rendering is required, a Hook Theme Presenter can be added.</p>
   <h2><strong>Hook Theme Presenter</strong></h2>
   
-  
   <p>The Hook Theme Presenter is an optional JavaScript method which is performed server-side on the rendered Theme View before it's piped to the response. When the Presenter method is run on hook.io, it becomes a <a href="http://github.com/bigcompany/view/">View class</a>. This will give the Presenter special properties which allow for server-side rendering of the Theme View with JavaScript.</p>
   
   <p><strong>For example:</strong></p>
-  <script src="https://gist.github.com/Marak/ed9a84b1f1cd7be73f5e.js"></script>
-  
+  <div data-gist="ed9a84b1f1cd7be73f5e">Loading...</div>
    <p>For full documentation on using the <strong>$</strong> object see: <a href="https://github.com/cheeriojs/cheerio">cheeriojs/cheerio</a></p>
    <p>For seeing how the <strong>View</strong> class is implemented see: <a href="http://github.com/bigcompany/view">bigcompany/view</a>
   <h2><strong>Important Tips</strong></h2>
