@@ -5,6 +5,7 @@ var forms = require('mschema-forms');
 var mustache = require('mustache');
 var mergeParams = require('./mergeParams');
 var bodyParser = require('body-parser');
+// var themes = require('../lib/resources/themes');
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -56,10 +57,12 @@ module['exports'] = function view (opts, callback) {
       // manually assign properties
 
       // strings
-      req.hook.gist = params.gist || req.hook.gist;
+      req.hook.gist = params.hookSource || req.hook.gist;
 
       req.hook.theme = params.theme || req.hook.theme;
       req.hook.presenter = params.presenter || req.hook.presenter;
+
+      // TODO: check to see if index.html file matches up with known theme
       req.hook.cron = params.cronString || req.hook.cron;
       req.hook.status = params.status || req.hook.status;
 
@@ -81,7 +84,8 @@ module['exports'] = function view (opts, callback) {
           // TODO: generic error handler
           return res.end(err.message);
         }
-        finish()
+        $('.formStatus').html('Saved!');
+        finish();
       });
     }
 
@@ -116,8 +120,8 @@ module['exports'] = function view (opts, callback) {
 
       $('form').attr('action', '/admin?owner=' + req.hook.owner + "&name=" + req.hook.name);
 
-      self.parent.components.themeSelector.present({ theme: req.hook.theme, presenter: req.hook.presenter }, function(err, html){
-        var el = $('.table-condensed > tr').eq(6);
+      self.parent.components.themeSelector.present({ theme: req.hook.theme, presenter: req.hook.presenter, hook: req.hook }, function(err, html){
+        var el = $('.hookTable > div').eq(4);
         el.after(html);
         callback(null, $.html());
       });

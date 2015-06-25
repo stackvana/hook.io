@@ -45,7 +45,6 @@
     
     $('.themeSelect').change(function(e){
       var val = themes[$(this).val()];
-      console.log(val)
       $('#theme').attr('value', val.theme);
       $('#presenter').attr('value', val.presenter);
     });
@@ -59,7 +58,7 @@
         return false;
       }
     });
-    
+
   });
   
   /*
@@ -74,9 +73,8 @@
 </script>
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;">
-  <h1>Admin</h2>
-  <br/>
-  <h2><strong>Manage <span class="hookName">your Hook</span> here</strong></h2>
+  <span class="formStatus success"></span>  <br/>
+  <h2><strong>Manage <span class="hookName">your Hook</span></strong></h2>
   <form method="post" action="/admin">
     <div class="hookTable" style="font-size:22px;">
       <div class="form-group">
@@ -85,12 +83,12 @@
       </div>
       <div class="form-group">
         <label for="hookSource">Hook Run Count</label>
-        <input type="text" class="form-control hookRan" id="hookSource" value="n/a" size="40">
+        <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
       </div>
 
       <div class="form-group">
         <label for="hookSource">Hook Source Code</label>
-        <input type="text" class="form-control hookSource" id="hookSource" value="n/a" size="80">
+        <input type="text" class="form-control hookSource" id="hookSource" name="hookSource" value="n/a" size="80">
       </div>
 
       <div class="form-group">
