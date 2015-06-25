@@ -39,7 +39,7 @@ input[type="text"] {
   width: 600px;
 }
 
-input[name="cronActive"] {
+input[type="checkbox"] {
   cursor: pointer;
 }
 
@@ -62,6 +62,9 @@ input[name="cronActive"] {
   font-weight: normal;
 }
 
+.tiny {
+  font-size: 16px;
+}
 
 </style>
 <link href="/css/jquery-ui.css" rel="stylesheet">
@@ -102,16 +105,23 @@ input[name="cronActive"] {
         $('.cronRow').hide();
       }
     });
-    
+
+    $('input[name="useTheme"]').click(function(){
+      if($(this).prop('checked')) {
+        $('.themeSelector').show();
+      } else {
+        $('.themeSelector').hide();
+      }
+    });
+
     $('.themeSelect').change(function(e){
       var val = themes[$(this).val()];
       console.log(val)
       $('#theme').attr('value', val.theme);
       $('#presenter').attr('value', val.presenter);
     });
-    
   });
-  
+
   /*
   $('#cronString').keydown(function(){
     var job = new cron.CronTime($(this).val());
@@ -124,53 +134,70 @@ input[name="cronActive"] {
 </script>
 
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
-<div style="font-size:22px;height:800px;text-align: left;">
-  <h1>Create Hook</h1>
-  <br/>
-  <h2><strong>To create a new hook, first specify the source code as a <a href="/gist">Github Gist</a>.</strong></h2>
-  <form method="GET" action="https://gist.github.com/new">
-    <p><a href="https://gist.github.com/new" target="_blank" tabindex="1" id="fork" name="fork" type="submit">Create new Github Gist</p></p>
-  </form>
-  <br/>
-  <h2><strong>Paste the Github Gist URL below as the Hook's source code.</strong></h2>
-  <form method="post" action="/new">
-    <table class="table-condensed hookTable" style="font-size:22px;">
-      <tr>
-        <td align="left" style="min-width: 225px;">Hook Name</td>
-        <td colspan="2"><input type="text" id="name" name="name" placeholder="name of hook" size="40"/></td>
-      </tr>
-      <tr>
-        <td align="left">Hook Source Code:</td>
-        <td colspan="2"><input type="text" id="gist" name="gist" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="40"/></td>
-      </tr>
-      <tr>
-        <td align="left">Active Cron</td>
-        <td colspan="2">
-          <input type="checkbox" name="cronActive"/>
-          <span style="font-size:14px;">If checked, the Hook will run as a scheduled task. see: <a href="http://hook.io/cron">hook.io/cron</a></span></td>
-      </tr>
-      <tr class="cronRow">
-        <td colspan="3"><div class="cronDiv"></div></td>
-      </tr>
-      <tr>
-        <td colspan="3">
-          <input tabindex="1" id="create" name="create" type="submit" value="Create new Hook"/ class="btn">
-        </td>
-      </tr>
-    </table>
+<div style="font-size:22px;height:800px;text-align: left;" class="container">
+  <form method="post" action="/new" role="form" class="well">
+    <legend><h2>New Hook</h2></legend>
+
+
+    <div class="form-group">
+      <label for="name">Hook Name</label>
+      <input class="form-control" type="text" id="name" name="name" placeholder="name of hook" size="40"/>    
+    </div>
+
+    <div class="form-group">
+      <label for="gist">Hook Source Code</label>
+      <input type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
+
+      <div class="tiny">
+        <em>The source code of the Hook will be specified as a <a href="/gist">Github Gist</a>.</em><br/>
+        <a href="https://gist.github.com/new" target="_blank" tabindex="1" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
+      </div>
+    </div>
+
+    <!--
+    <div class="form-group">
+      <label for="status">Hook Status</label>
+      <select class="form-control status" name="status">
+        <option value="active">Active</option>
+        <option value="disabled">Disabled</option>
+      </select>
+    </div>
+    -->
+
+    <div class="form-group">
+      <input type="checkbox" class="useTheme" id="useTheme" name="useTheme" title="If checked, a visual theme will be applied to the output of your Hook">
+      <label for="hookSource">Use a Theme for this Hook</label>
+    </div>
+
+
+    <div class="themeSelector well"></div>
+
+    <div class="form-group">
+      <input type="checkbox" class="cronActive" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
+      <label for="hookSource">Cron Task activated for this Hook</label>
+    </div>
+
+    <div class="form-group cronRow">
+      <div class="cronDiv"></div>
+    </div>
+
+    <div class="form-group">
+      <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">
+      <label for="isPublic">Display Hook in public Hook registry</label>
+    </div>
+    <input tabindex="1" id="create" name="create" type="submit" value="Create new Hook"/ class="btn">
   </form>
 
   <br/>
 
-  <h2><strong>To fork an existing hook you can fork the echo example below.</strong></h2>
+  <h3>Not sure how to get started? Here is a basic echo example below.</h3>
 
   <form method="GET" action="/Marak/echo">
     <input tabindex="1" id="fork" name="fork" type="submit" value="Fork This Hook"/ class="btn">
   </form>
 
-  <script src="https://gist.github.com/Marak/357645b8a17daeb17458.js"></script>
-  
-  
+  <div data-gist="357645b8a17daeb17458">Loading...</div>
+
   <br/>
   <br/>
 </div>

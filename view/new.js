@@ -103,8 +103,8 @@ module['exports'] = function view (opts, callback) {
     }
 
     self.parent.components.themeSelector.present({}, function(err, html){
-      var el = $('.table-condensed > tr').eq(1);
-      el.after(html);
+      var el = $('.themeSelector')
+      el.html(html);
       callback(null, $.html());
     })
 
