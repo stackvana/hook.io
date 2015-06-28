@@ -4,6 +4,7 @@ module['exports'] = {
     https: true,
     roots: ["127.0.0.1", "localhost", "hook.io", "www.hook.io"]
   },
+  baseUrl: "http://dev.hook.io:9999",
   couch: {
     "database": "hook",
     "type": "couchdb",
