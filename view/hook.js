@@ -34,7 +34,11 @@ module['exports'] = function view (opts, callback) {
   opts.res = res;
   return hook.runHook(opts, function (err, result){
     if (err) {
-      return res.end(err.message);
+      if (Array.isArray(err)) {
+        return res.end(JSON.stringify(err, true, 2));
+      } else {
+        return res.end(err.message);
+      }
     }
     return res.end(result.output);
   });
