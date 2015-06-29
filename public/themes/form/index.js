@@ -14,11 +14,13 @@ module['exports'] = function view (opts, callback) {
   var $ = this.$;
   var run = params.run;
   $('title').html(req.params.username + "/" + req.params.hook);
-  $('.hookTitle').html(req.params.hook + ' hook');
+  
+  
+//  $('.themeSelector').append('<option>' + req.hook.theme + '</option>')
   
   var gist = opts.gist || params.gist;
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
-
+  
   if (result.output !== null) {
 
    if (result.headers && result.headers.code === 500) {
@@ -36,22 +38,34 @@ module['exports'] = function view (opts, callback) {
   
    $('.hookOutput').html('<textarea cols="80" rows="10" class="hookOutput">' + result.output + '</textarea>');
 
+   // return callback(null, $.html());
+
   }
 
+
+ var strParams = '';
+ var ignoreParams = ['hook', 'subhook', 'username', 'format', 'run'];
+ for (var p in params) {
+   if (ignoreParams.indexOf(p) === -1) {
+     strParams += ("&" + p + "=" + encodeURI(params[p]));
+   }
+ }
+
+  // $('.hookResult').remove();
   showForm(callback);
   function showForm (cb) {
     var formSchema = req.hook.mschema || {};
-
-    for (var p in formSchema) {
-      if(typeof params[p] !== 'undefined') {
-        formSchema[p].default = params[p];
-      }
-    }
 
     formSchema.run = {
       "type": "string",
       "default": "true",
       "format": "hidden"
+    };
+
+    formSchema.format = {
+      "type": "string",
+      "default": "friendly",
+      "enum": ["raw", "friendly"]
     };
 
     formSchema.theme = {
@@ -60,10 +74,21 @@ module['exports'] = function view (opts, callback) {
       "default": params.theme
     };
 
+
+    var themeSelect = '<form class="themeForm" action="" method="GET">\
+    Switch Theme: <select class="themeSelector" name="theme">\
+      <option value="simple-form">simple-form</option>\
+      <option value="">custom</option>\
+      <option value="debug">debug</option>\
+      <option value="form">form</option>\
+      <option value="none">none</option>\
+    </select></form>';
+    
+
     forms.generate({
       type: "generic",
       form: {
-        legend: 'hook input',
+        legend: req.hook.name + ' form',
         submit: "Submit",
         action: ""
       },

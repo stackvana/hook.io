@@ -10,6 +10,7 @@
     <title>hook</title>
     <meta charset='utf-8'/>
     <link href="http://hook.io/css/social.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://hook.io/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
     <script style="text/javascript">
       $(document).ready(function(){
         $('.footerNav img').jrumble({
@@ -20,130 +21,155 @@
         }, function(){
           $(this).trigger('stopRumble');
         });
+        $('.fatArrow').click(function(){
+          $('.form').submit();
+        });
       });
     </script>
     <style>
     /* Sticky footer styles
           -------------------------------------------------- */
 
-          html,
-          body {
-            height: 100%;
-            /* The html and body elements cannot have any padding or margin. */
-          }
+    html,
+    body {
+      height: 100%;
+      /* The html and body elements cannot have any padding or margin. */
+    }
 
-          /* Wrapper for page content to push down footer */
-          #wrap {
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            /* Negative indent footer by it's height */
-            margin: 0 auto -60px;
-          }
+    /* Wrapper for page content to push down footer */
+    #wrap {
+      min-height: 100%;
+      height: auto !important;
+      height: 100%;
+      /* Negative indent footer by it's height */
+      margin: 0 auto -60px;
+    }
 
-          /* Set the fixed height of the footer here */
-          #push,
-          #footer {
-            height: 12px;
-          }
-          #footer {
-            padding-top:20px;
-            padding-left:10px;
-            background-color: #000000;
-            color: #FFFFFF;
-          }
+    /* Set the fixed height of the footer here */
+    #push,
+    #footer {
+      height: 12px;
+    }
+    #footer {
+      padding-top:20px;
+      padding-left:10px;
+      background-color: #000000;
+      color: #FFFFFF;
+    }
 
-          /* Lastly, apply responsive CSS fixes as necessary */
-          @media (max-width: 600px) {
-            #footer {
-              margin-left: -20px;
-              margin-right: -20px;
-              padding-left: 20px;
-              padding-right: 20px;
-            }
-          }
+    /* Lastly, apply responsive CSS fixes as necessary */
+    @media (max-width: 600px) {
+      #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
 
+    button {
+      padding: 0px;
+      margin: 0px;
+      height: 50px;
+    }
+    .gistEmbed {
+      display: none;
+    }
+  
+    textarea {
+      width: 100%;
+      height: 200px;
+    }
+  
+    .header {
+      vertical-align: bottom;
+      position: relative;
+      width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hookDocs .content {
+      display: none;
+    }
+    .hookDocs .content p {
+      font-size: 20px;
+    }
+    .btn {
+      font-size:16px;
+    }
+
+    .hookOutput {
+      padding: 10px;
+      font-size:22px;
+      height: 100%;
+    }
+
+    .hookResult {
+      font-size:22px;
+    }
+
+    .notice {
+      font-size:22px;
+    }
+
+    .hookResult textarea {
+      height: 100%;
+      font-size:16px;
+    }
+
+    .success {
+      color: rgb(68, 199, 68);
+    }
+
+    .error {
+      color: rgb(255, 2, 2);
+    }
+
+    .hookResult {
+      height: 80%;
+    }
+    .fatArrow {
+      font-size: 48px;
+    }
+    .hookOutputHeader {
+      display: block;
+      width: 100%;
+      padding: 0;
+      margin-bottom: 20px;
+      font-size: 21px;
+      line-height: inherit;
+      color: #333;
+      border: 0;
+      border-bottom: 1px solid #e5e5e5;
+    }
     </style>
   </head>
   <body>
 
-    <div id="header" class="container">
-      <a href="/"><img src="http://hook.io/img/logo.png"/></a>
-      <a href="/"><img src="http://hook.io/img/pipe.gif"/></a>
-    </div>
-    
-
     <div id="main" class="container">
 
-      <style>
-       .hookDocs .content {
-         display: none;
-       }
-       .hookDocs .content p {
-         font-size: 20px;
-       }
-       .btn {
-         font-size:16px;
-       }
-
-       .hookOutput {
-         padding: 10px;
-         font-size:22px;
-       }
-
-       .hookResult {
-         font-size:22px;
-       }
-
-       .notice {
-         font-size:22px;
-       }
-
-       .hookResult textarea {
-         font-size:16px;
-       }
-
-       .success {
-         color: rgb(68, 199, 68);
-       }
-
-       .error {
-         color: rgb(255, 2, 2);
-       }
-
-
-      </style>
-
+      <h1 class="hookTitle"></h1>
       <div class="notice"></div>
 
-      <div class="hookResult">
-        <div class="hookOutput">
+      <div class="hookOptions row">
+          <div class="testForm col-md-5"></div>
+          <div class="col-md-1">
+            <button title="Click to run service" class="fatArrow octicon octicon-arrow-right"></button>
+          </div>
+          <div class="hookResult col-md-6 well">
+            <span class="hookOutputHeader">hook output</span>
+            <div class="hookOutput">
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="hookOptions">
-        <div class="testForm"></div>
-        <!--
-        data.url <input type="text" id="dataUrl" name="dataUrl" placeholder="http://google.com" size="40"/>
-        Webhook Url <input type="text" id="webhookUrl" name="webhookUrl" placeholder="http://hook.io/987123khj" size="40"/>
-        -->
-      </div>
-
+      <br/>
+      <br/>
+      <div class="gistEmbed"></div>
       <br/>
       <br/>
       <br/>
-      
     </div>
-    
-    <div id="footer" class="navbar navbar-fixed-bottom">
-      <!-- <a href=""><img src="./img/block.png"/></a> -->
-      <div class="footerNav">
-        Copyright <a href="http://hook.io/">hook.io</a> 2015 A <a href="http://big.vc">Big</a> company
-        <div style="position: absolute;right: 129px;bottom: 4px;"><a href="/modules"><img src="/img/tinynpm.png"/></a></div>
-        <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img src="/img/littlecat.png"/></a></div>
-        <div style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="/img/pipe.gif"/></a></div>
-        </div>
-    </div>
-    
   </body>
 </html>
