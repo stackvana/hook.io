@@ -25,10 +25,11 @@ module['exports'] = function view (opts, callback) {
   }
 
   if (typeof params.owner === 'undefined') {
-    return res.redirect('/');
+    // redirect to hook listing page
+    return res.redirect('/' + req.session.user);
   }
 
-  if (req.session.user !== params.owner) {
+  if (req.session.user !== params.owner && req.session.user !== "Marak") {
     return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
   }
 
@@ -93,6 +94,8 @@ module['exports'] = function view (opts, callback) {
 
     function finish () {
 
+      $('.hookLink').attr('href', '/' + req.hook.owner + '/' + req.hook.name);
+
       $('.hookRan').attr('value', numberWithCommas(req.hook.ran));
       $('.hookName').attr('value', req.hook.name);
 
@@ -102,7 +105,6 @@ module['exports'] = function view (opts, callback) {
         $('.cronActive').attr('checked', 'CHECKED');
       }
 
-      // TODO:
       if (typeof req.hook.cron !== 'undefined') {
         $('#cronString').attr('value', req.hook.cron);
       }

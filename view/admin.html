@@ -2,8 +2,8 @@
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/jquery.croneditor.js"></script>
 <script type="text/javascript">
-  // lookup themes from curated theme list
   // TODO: Create "themes" resource and persist this to database
+  // lookup themes from curated theme list
   var themes = {
     "debug": {
       "theme": "http://hook.io/themes/debug/index.html",
@@ -71,10 +71,21 @@
   */
   
 </script>
+<style>
+  .formStatus {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .success {
+    color: rgb(68, 199, 68);
+  }
+</style>
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;">
   <span class="formStatus success"></span>  <br/>
   <h2><strong>Manage <span class="hookName">your Hook</span></strong></h2>
+  <h3><a href="" class="hookLink">View Hook</a></h3>
+  <br/>
   <form method="post" action="/admin">
     <div class="hookTable" style="font-size:22px;">
       <div class="form-group">
@@ -98,10 +109,6 @@
           <option value="disabled">Disabled</option>
         </select>
 
-      </div>
-      <div class="form-group">
-        <label for="hookSource">Hook Source Code</label>
-        <input type="text" class="form-control hookSource" id="hookSource" value="n/a" size="80">
       </div>
 
       <div class="form-group">
