@@ -28,6 +28,7 @@ module['exports'] = function view (opts, callback) {
       resource: domain,
       action: '/domains',
       params: req.resource.params,
+      query: { owner: req.user.username },
       useLayout: false,
       form: {
         create: {
