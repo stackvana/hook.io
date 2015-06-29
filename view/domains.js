@@ -54,7 +54,10 @@ module['exports'] = function view (opts, callback) {
           description: 'The Hook to point your domain to. Example: /Marak/echo',
           required: true,
           minLength: 1,
-          maxLength: 50
+          maxLength: 50,
+          formatter: function (str) {
+            return '<a href="' + str + '">' + str + '</a>';
+          }
         }
       }
     }, function (err, result){
