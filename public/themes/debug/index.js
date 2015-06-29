@@ -1,4 +1,3 @@
-var hook = require('../../lib/resources/hook');
 var request = require('hyperquest');
 var GitHubApi = require('github');
 var dateFormat = require('dateformat');
@@ -6,7 +5,8 @@ var forms = require('mschema-forms');
 var mustache = require('mustache');
 
 // load docs html as file
-var docs = require('fs').readFileSync(__dirname + '/../../view/docs.html').toString();
+// TODO: load docs as http request
+var docs = require('fs').readFileSync(__dirname + '/../../../view/docs.html').toString();
 
 var github = new GitHubApi({
     // required
@@ -45,12 +45,14 @@ module['exports'] = function view (opts, callback) {
     $('#edit').remove();
   }
   */
-  console.log('running debut theme')
+  if (params.theme) {
+    $('.theme').attr('value', params.theme);
+  }
   if (params.edit) {
-    return res.redirect(301, "/edit?hook=" + req.params.username + "/" + req.params.hook);
+    return res.redirect(301, "/admin?owner=" + req.params.username + "&hook=" + req.params.hook);
   }
 
-  if (params.run) {
+  if (true) {
     // check result.headers for content type
     // if the content type is not text, display binary file message
    if (result.headers && result.headers.headers && typeof result.headers.headers['Content-Type'] !== "undefined") {
@@ -71,8 +73,8 @@ module['exports'] = function view (opts, callback) {
      $('.hookResult .message').removeClass('success');
    }
 
-   $('.sourceCode').remove();
-   $('.hookOptions').remove();
+   // $('.sourceCode').remove();
+   // $('.hookOptions').remove();
    $('.hookParams').html(JSON.stringify(result.params, true, 2));
 
    var Datauri = require('datauri'),
@@ -114,7 +116,7 @@ module['exports'] = function view (opts, callback) {
 
    $('.hookHeaders').html(JSON.stringify(result.headers, true, 2));
    $('.hookDebugOutput').html(JSON.stringify(result.debug, true, 2));    
-   return callback(null, $.html());
+   //return callback(null, $.html());
 
   }
 
@@ -130,7 +132,7 @@ module['exports'] = function view (opts, callback) {
   $('.counter').html('<em>' + req.hook.name + ' has run ' + numberWithCommas(req.hook.ran.toString()) + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
   
-  $('.hookResult').remove();
+  //$('.hookResult').remove();
   if(typeof params.forked !== "undefined") {
     $('.notice').html('<strong>You just forked a Hook!</strong> <br/> <a href="' + gist + '">Click here to view the Gist</a>');
   }
@@ -156,6 +158,13 @@ module['exports'] = function view (opts, callback) {
     enum: ["friendly", "raw"],
     default: "friendly"
   };
+
+  formSchema.theme = {
+    "type": "string",
+    "format": "hidden",
+    "default": params.theme
+  };
+
   forms.generate({
     type: "generic",
     form: {

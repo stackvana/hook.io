@@ -1,3 +1,6 @@
 module['exports'] = function view (opts, cb) {
-  cb(null, $.html());
+  opts.response.writeHead(200, {
+    "Content-Type": "text/plain"
+  });
+  cb(null, opts.output);
 };

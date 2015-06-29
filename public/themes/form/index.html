@@ -8,6 +8,7 @@
     <link href="http://hook.io/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
     <link href="http://hook.io/css/font-awesome.css" media="all" rel="stylesheet" type="text/css" />
     <link href="http://hook.io/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://hook.io/themes/debug/css/jumbotron-narrow.css" media="all" rel="stylesheet" 
     <title>hook</title>
     <meta charset='utf-8'/>
     <link href="http://hook.io/css/social.css" media="all" rel="stylesheet" type="text/css" />
@@ -41,10 +42,15 @@
         $('.fatArrow').click(function(){
           $('.form').submit();
         });
-        
-        $('.forkHook').click(function(){
-          $('.form').append('<input name="fork" type="hidden" value="true"/>');
-          $('.form').submit();
+
+        $('.forkButton').click(function(){
+          var str = "fork=true";
+          if (document.location.search === "") {
+            str = "?" + str;
+          } else {
+            str = "&" + str;
+          }
+          document.location = document.location + str;
         });
 
       });
@@ -192,6 +198,7 @@
     </style>
   </head>
   <body>
+    <div class="container">
     <div id="header" class="header">
         <div style="float: left;bottom: 10px;">
           <a href="http://hook.io"><img alt="hook.io" src="http://hook.io/img/logo.png"/></a>
@@ -208,8 +215,8 @@
           <form class="themeForm" action="" method="GET">
           Change Theme: <select class="themeSelector" name="theme">
             <option value="form">form</option>
-            <option value="simple-form">simple-form</option>
             <option value="debug">debug</option>
+            <option value="simple-form">simple-form</option>
             <!-- ><option value="">custom</option> -->
             <option value="none">none</option>
             </select>
@@ -217,7 +224,7 @@
         </div>
         <div>
            <button class="viewCode">View Source Code</button> 
-           <button class="forkHook">Fork this Hook</button>
+           <button class="forkButton">Fork this Hook</button>
          </div>
         <div>
           <div class="gistEmbed"></div>
@@ -257,6 +264,7 @@
         <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img src="http://hook.io/img/littlecat.png"/></a></div>
         <div style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="http://hook.io/img/pipe.gif"/></a></div>
         </div>
+    </div>
     </div>
   </body>
 </html>

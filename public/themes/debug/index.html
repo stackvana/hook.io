@@ -22,6 +22,10 @@
         }, function(){
           $(this).trigger('stopRumble');
         });
+        
+        $('.themeSelector').on("change", function(){
+          $('.themeForm').submit();
+        });
       });
     </script>
     <style>
@@ -99,6 +103,11 @@
               white-space: pre;
           }
           
+          .selectTheme {
+            float: right;
+            padding-right: 15px;
+          }
+          
     </style>
   </head>
   <body>
@@ -127,21 +136,41 @@
         });
 
         // toggle the display of documentation / help
-        $('.docs').click(function(){
+        $('.docsButton').click(function(){
           if($('.hookDocs .content').css("display") === "none") {
             $('.hookDocs .content').slideDown(800, function(){
-              $('.docs').val('Hide Documentation');
+              $('.docsButton').html('Hide Documentation');
             });
           } else {
             $('.hookDocs .content').slideUp(400, function(){
-              $('.docs').val('Show Documentation');
+              $('.docsButton').html('Show Documentation');
             });
           }
         });
 
         $('.codeButton').click(function(){
           $('body').scrollTo('.source')
-        })
+        });
+
+        $('.forkButton').click(function(){
+          var str = "fork=true";
+          if (document.location.search === "") {
+            str = "?" + str;
+          } else {
+            str = "&" + str;
+          }
+          document.location = document.location + str;
+        });
+
+        $('.editButton').click(function(){
+          var str = "admin=true";
+          if (document.location.search === "") {
+            str = "?" + str;
+          } else {
+            str = "&" + str;
+          }
+          document.location = document.location + str;
+        });
 
 
         // switch location.hash for opening docs as link
@@ -220,15 +249,26 @@
        }
       </style>
 
-      <div class="wrapper">
-        <form method="GET" class="hookForm">
-          <input tabindex="2" name="docs" type="button" value="Show Documentation" class="btn docs"/>
-          <input tabindex="3" name="code" type="button" value="View Code" class="btn code codeButton"/>
-          <input tabindex="4" id="fork" name="fork" type="submit" value="Fork this Hook" class="btn fork"/>
-          <input tabindex="5" id="edit" name="edit" type="submit" value="Edit this Hook" class="btn edit"/>
-          <input type="hidden" name="format" value="friendly"/>
+      <div class="wrapper" align="left">
+          <button tabindex="2" name="code" class="codeButton" type="button">View Source Code</button>
+          <button tabindex="3" name="fork" class="forkButton" type="button">Fork this Hook</button>
+          <button tabindex="4" name="docs" class="docsButton" type="button">Show Documentation</button>
+          <button tabindex="5" name="edit" class="editButton" type="button">Edit this Hook</button>
+          
+          <div class="selectTheme" align="right">
+            <form class="themeForm" action="" method="GET">
+            Change Theme: <select class="themeSelector" name="theme">
+              <option value="debug">debug</option>
+              <option value="form">form</option>
+              <option value="simple-form">simple-form</option>
+              <!-- ><option value="">custom</option> -->
+              <option value="none">none</option>
+              </select>
+            </form>
+          </div>
+          
+          
           <div class="hookDocs"></div>
-        </form>
       </div>
       <div class="notice"></div>
       <div class="wrapper">
@@ -261,15 +301,18 @@
       </div>
       </div>
       <div class="hookOptions">
+        <h2>Run Hook again</h2>
+        
         <div class="testForm"></div>
         <!--
         data.url <input type="text" id="dataUrl" name="dataUrl" placeholder="http://google.com" size="40"/>
         Webhook Url <input type="text" id="webhookUrl" name="webhookUrl" placeholder="http://hook.io/987123khj" size="40"/>
         -->
+        <a class="source" name="source"/>
+        <div class="gistEmbed"></div>
+        <p><em>Rendered with the <a href="https://github.com/bigcompany/hook.io/tree/master/public/themes/debug">Debug Theme</a></em></p>
+        
       </div>
-      <a class="source" name="source"/>
-      <div class="gistEmbed"></div>
-      <p><em>Rendered with the <a href="https://github.com/bigcompany/hook.io/tree/master/public/themes/debug">Debug Theme</a></em></p>
 
       <br/>
       <br/>
@@ -280,9 +323,9 @@
       <!-- <a href=""><img src="./img/block.png"/></a> -->
       <div class="footerNav">
         Copyright <a href="http://hook.io/">hook.io</a> 2015 A <a href="http://big.vc">Big</a> company
-        <div style="position: absolute;right: 129px;bottom: 4px;"><a href="/modules"><img src="/img/tinynpm.png"/></a></div>
-        <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img src="/img/littlecat.png"/></a></div>
-        <div style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="/img/pipe.gif"/></a></div>
+        <div style="position: absolute;right: 129px;bottom: 4px;"><a href="/modules"><img src="http://hook.io/img/tinynpm.png"/></a></div>
+        <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img src="http://hook.io/img/littlecat.png"/></a></div>
+        <div style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="http://hook.io/img/pipe.gif"/></a></div>
         </div>
     </div>
   </div>
