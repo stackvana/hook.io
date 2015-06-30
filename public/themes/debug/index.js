@@ -6,7 +6,7 @@ var mustache = require('mustache');
 
 // load docs html as file
 // TODO: load docs as http request
-var docs = require('fs').readFileSync(__dirname + '/../../../view/docs.html').toString();
+// var docs = require('fs').readFileSync(__dirname + '/../../../view/docs.html').toString();
 
 var github = new GitHubApi({
     // required
@@ -35,7 +35,7 @@ module['exports'] = function view (opts, callback) {
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
   $('.gist').html('<a href="' + gist + '">' + gist + '</a>');
 
-  $('.hookDocs').html(docs);
+  // $('.hookDocs').html(docs);
   $('.hookDocs .docsHeader').remove();
 
   /* TODO: req has no passport session in worker, session info should be forwarded

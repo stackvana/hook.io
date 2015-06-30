@@ -136,6 +136,7 @@
         });
 
         // toggle the display of documentation / help
+        /*
         $('.docsButton').click(function(){
           if($('.hookDocs .content').css("display") === "none") {
             $('.hookDocs .content').slideDown(800, function(){
@@ -147,6 +148,7 @@
             });
           }
         });
+        */
 
         $('.codeButton').click(function(){
           $('body').scrollTo('.source')
@@ -252,7 +254,7 @@
       <div class="wrapper" align="left">
           <button tabindex="2" name="code" class="codeButton" type="button">View Source Code</button>
           <button tabindex="3" name="fork" class="forkButton" type="button">Fork this Hook</button>
-          <button tabindex="4" name="docs" class="docsButton" type="button">Show Documentation</button>
+  <!--        <button tabindex="4" name="docs" class="docsButton" type="button">Show Documentation</button> -->
           <button tabindex="5" name="edit" class="editButton" type="button">Edit this Hook</button>
           
           <div class="selectTheme" align="right">
