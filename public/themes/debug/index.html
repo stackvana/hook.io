@@ -155,23 +155,11 @@
         });
 
         $('.forkButton').click(function(){
-          var str = "fork=true";
-          if (document.location.search === "") {
-            str = "?" + str;
-          } else {
-            str = "&" + str;
-          }
-          document.location = document.location + str;
+          document.location = $(this).attr('data-url');
         });
 
         $('.editButton').click(function(){
-          var str = "admin=true";
-          if (document.location.search === "") {
-            str = "?" + str;
-          } else {
-            str = "&" + str;
-          }
-          document.location = document.location + str;
+          document.location = $(this).attr('data-url');
         });
 
 

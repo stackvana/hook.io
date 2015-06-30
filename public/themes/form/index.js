@@ -51,6 +51,8 @@ module['exports'] = function view (opts, callback) {
    }
  }
 
+ $('.forkButton').attr('data-url', 'http://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
+
   // $('.hookResult').remove();
   showForm(callback);
   function showForm (cb) {

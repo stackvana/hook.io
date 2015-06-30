@@ -49,7 +49,7 @@ module['exports'] = function view (opts, callback) {
     $('.theme').attr('value', params.theme);
   }
   if (params.edit) {
-    return res.redirect(301, "/admin?owner=" + req.params.username + "&hook=" + req.params.hook);
+    return res.redirect(301, config.baseUrl + "/admin?owner=" + req.params.username + "&hook=" + req.params.hook);
   }
 
   if (true) {
@@ -120,7 +120,6 @@ module['exports'] = function view (opts, callback) {
 
   }
 
-
  var strParams = '';
  var ignoreParams = ['hook', 'subhook', 'username', 'format', 'run'];
  for (var p in params) {
@@ -128,6 +127,9 @@ module['exports'] = function view (opts, callback) {
      strParams += ("&" + p + "=" + encodeURI(params[p]));
    }
  }
+
+ $('.forkButton').attr('data-url', 'http://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
+ $('.editButton').attr('data-url', 'http://hook.io/' + req.hook.owner + "/" + req.hook.name + "?admin=true");
 
   $('.counter').html('<em>' + req.hook.name + ' has run ' + numberWithCommas(req.hook.ran.toString()) + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
