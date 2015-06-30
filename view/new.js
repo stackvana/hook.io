@@ -30,6 +30,13 @@ module['exports'] = function view (opts, callback) {
       // do not recreate hooks that already exist with that name
       params.owner = user || "Marak"; // hardcode Marak for testing
       
+      if (typeof params.theme === 'string' && params.theme.length === 0) {
+        delete params.theme;
+      }
+      if (typeof params.presenter === 'string' && params.presenter.length === 0) {
+        delete params.presenter;
+      }
+
       var query = { name: params.name, owner: req.user.username };
       return hook.find(query, function(err, results){
         if (results.length > 0) {
