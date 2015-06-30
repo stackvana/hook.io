@@ -1,63 +1,46 @@
 <style>
   .customTheme {
-    display: none;
+    /* display: none; */
   }
   .predefinedTheme {
     display: block;
   }
-  .cronRow {
-    display: none;
-  }
   .themeSelector {
-    display: none;
+    /* display: none; */
   }
   .themeSelector label {
     font-size: 18px;
   }
+  .themeSelect {
+    width: 150px;
+  }
+  p.superTiny {
+    font-size: 18px;
+  }
 </style>
 
- <h3>Select Theme</h3>
- <p class="tiny">A theme is a great way to customize the appearance of your hook.</p>
- <div class="form-group">
-   <label><input type="radio" class="themeType" name="themeType" value="predefined" checked="CHECKED">Pre-defined Theme</label>
-   <label><input type="radio" class="themeType" name="themeType" value="custom">Custom Theme</label>
- </div>
+<h3>Select a Theme to customize the appearance of the Hook</h3>
+<p class="superTiny">Themes use a View-Presenter pattern. <a href="http://hook.io/themes">Read more</a>.</p>
+<p class="superTiny">Theme rendering can be bypassed by requesting the hook with <code>application/json</code> content-type or specifying the <code>format</code> parameter to raw</p>
 
- <div class="form-group predefinedTheme">
-   <select class="themeSelect form-control" name="themeSelect">
-     <option value="debug">Choose theme...</option>
-     <option value="debug">debug</option>
-     <option value="simple">simple</option>
-     <option value="simple-form">simple-form</option>
-     <option value="none">none</option>
-     <option value="custom">custom</option>
-   </select>
- </div>
- 
- <div class="form-group customTheme">
-   <label for="theme">View</label>
-   <input class="form-control" type="text" id="theme" name="theme" value="http://hook.io/themes/debug/index.html" size="40"/>
- </div>
+<div class="form-group predefinedTheme">
+ <select class="themeSelect form-control" name="themeSelect">
+   <!-- <option value="form">Choose theme...</option> -->
+   <option value="debug">debug</option>
+   <option value="form">form</option>
+   <option value="simple">simple</option>
+   <option value="simple-form">simple-form</option>
+   <option value="none">none</option>
+   <option value="custom">custom</option>
+ </select>
+</div>
 
- <div class="form-group customTheme">
-   <label for="presenter">Presenter</label>
-   <input class="form-control" type="text" id="presenter" name="presenter" value="http://hook.io/themes/debug/index.js" size="40"/> 
-  </div>
+<div class="form-group customTheme">
+ <label for="theme">View</label>
+ <input class="form-control" type="text" id="theme" name="theme" value="http://hook.io/themes/debug/index.html" size="40"/>
+</div>
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('.themeType').on('click', function () {
-      var el = this,
-          val = $(el).attr('value');
-
-      if (val === "predefined") {
-        $('.predefinedTheme').show();
-        $('.customTheme').hide();
-      } else {
-        $('.predefinedTheme').hide();
-        $('.customTheme').show();
-      }
-    });
-    $('.themeType').click();
-  });
-</script>
+<div class="form-group customTheme">
+ <label for="presenter">Presenter</label>
+ <input class="form-control" type="text" id="presenter" name="presenter" value="http://hook.io/themes/debug/index.js" size="40"/> 
+</div>

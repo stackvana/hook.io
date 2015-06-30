@@ -1,31 +1,7 @@
 var hook = require("../lib/resources/hook")
 var bodyParser = require('body-parser');
 var config = require('../config');
-
-// lookup themes from curated theme list
-// TODO: Create "themes" resource and persist this to database
-var themes = {
-  "debug": {
-    "theme": config.defaultTheme,
-    "presenter": config.defaultPresenter
-  },
-  "simple": {
-    "theme": "http://hook.io/themes/simple/index.html",
-    "presenter": "http://hook.io/themes/simple/index.js"
-  },
-  "simple-form": {
-    "theme": "http://hook.io/themes/simple-form/index.html",
-    "presenter": "http://hook.io/themes/simple-form/index.js"
-  },
-  "none": {
-    "theme": "http://hook.io/themes/none/index.html",
-    "presenter": "http://hook.io/themes/none/index.js"
-  },
-  "custom": {
-    "theme": "",
-    "presenter": ""
-  }
-};
+var themes = require('../lib/resources/themes');
 
 module['exports'] = function view (opts, callback) {
   var req = opts.request,

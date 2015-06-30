@@ -106,14 +106,6 @@ input[type="checkbox"] {
       }
     });
 
-    $('input[name="useTheme"]').click(function(){
-      if($(this).prop('checked')) {
-        $('.themeSelector').show();
-      } else {
-        $('.themeSelector').hide();
-      }
-    });
-
     $('.themeSelect').change(function(e){
       var val = themes[$(this).val()];
       console.log(val)
@@ -163,12 +155,6 @@ input[type="checkbox"] {
       </select>
     </div>
     -->
-
-    <div class="form-group">
-      <input type="checkbox" class="useTheme" id="useTheme" name="useTheme" title="If checked, a visual theme will be applied to the output of your Hook">
-      <label for="hookSource">Use a Theme for this Hook</label>
-    </div>
-
 
     <div class="themeSelector well"></div>
 
