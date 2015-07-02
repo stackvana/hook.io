@@ -13,6 +13,7 @@ module['exports'] = {
   "contentful-management": "0.1.1",
   "cron-parser": "0.4.5",
   "datauri": "0.5.5",
+  "esri-proj-codes": "1.0.0",
   "fraktur": "1.0.0",
   "dateformat": "1.0.8",
   "debug": "2.1.0",
