@@ -92,6 +92,15 @@
   <br/>
   <form method="post" action="/admin">
     <div class="hookTable" style="font-size:22px;">
+
+      <div class="form-group">
+        <label for="mode">Hook Mode</label>
+        <select class="form-control mode" name="mode">
+          <option value="Development">Development</option>
+          <option value="Production">Production</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="hookName">Hook Name</label>
         <input disabled="DISABLED" type="text" class="form-control hookName" id="hookName" placeholder="name of hook" size="40">
@@ -112,7 +121,6 @@
           <option value="active">Active</option>
           <option value="disabled">Disabled</option>
         </select>
-
       </div>
 
       <div class="form-group">

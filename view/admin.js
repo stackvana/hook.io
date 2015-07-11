@@ -51,6 +51,7 @@ module['exports'] = function view (opts, callback) {
   });
 
   function presentView () {
+
     if (params.save) {
       // update the hook
       // at this point, auth should have already taken place, so we can just call Hook.save
@@ -60,8 +61,9 @@ module['exports'] = function view (opts, callback) {
       // strings
       req.hook.gist = params.hookSource || req.hook.gist;
 
-      req.hook.theme = params.theme || req.hook.theme;
-      req.hook.presenter = params.presenter || req.hook.presenter;
+      req.hook.theme = params.theme;
+      req.hook.presenter = params.presenter;
+      req.hook.mode = params.mode;
 
       // TODO: check to see if index.html file matches up with known theme
       req.hook.cron = params.cronString || req.hook.cron;
@@ -79,7 +81,6 @@ module['exports'] = function view (opts, callback) {
       } else {
         req.hook.isPublic = false;
       }
-
       return req.hook.save(function(err, result){
         if (err) {
           // TODO: generic error handler
@@ -115,6 +116,10 @@ module['exports'] = function view (opts, callback) {
 
       if (typeof req.hook.status !== 'undefined') {
         $('.status').prepend('<option value="' + req.hook.status + '">' + req.hook.status + '</option>')
+      }
+
+      if (typeof req.hook.mode !== 'undefined') {
+        $('.mode').prepend('<option value="' + req.hook.mode + '">' + req.hook.mode + '</option>')
       }
 
       $('.deleteLink').attr('href', '/' + req.hook.owner + "/" + req.hook.name + "?delete=true");
