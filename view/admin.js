@@ -1,5 +1,6 @@
 var hook = require('../lib/resources/hook');
 var cache = require('../lib/resources/cache');
+var metric = require('../lib/resources/metric');
 var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
@@ -99,7 +100,11 @@ module['exports'] = function view (opts, callback) {
         });
       });
     } else {
-      finish(req.hook);
+      // get latest metric
+      metric.get('/' + req.hook.owner + "/" + req.hook.name + "/hits", function(err, count){
+        req.hook.ran = count;
+        finish(req.hook);
+      });
     }
 
     function finish (h) {

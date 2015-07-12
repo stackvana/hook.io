@@ -131,7 +131,7 @@ module['exports'] = function view (opts, callback) {
  $('.forkButton').attr('data-url', 'http://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
  $('.editButton').attr('data-url', 'http://hook.io/' + req.hook.owner + "/" + req.hook.name + "?admin=true");
 
-  $('.counter').html('<em>' + req.hook.name + ' has run ' + numberWithCommas(req.hook.ran.toString()) + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
+  // $('.counter').html('<em>' + req.hook.name + ' has run ' + numberWithCommas(req.hook.ran.toString()) + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
   
   //$('.hookResult').remove();
@@ -179,7 +179,7 @@ module['exports'] = function view (opts, callback) {
       $('.testForm').html(result);
       $('form legend').append('&nbsp;&nbsp;&nbsp;<button title="Run This Hook" class="run-icon mega-octicon octicon-playback-play"/>')
       
-      $('form legend').append('<div class="counter"><em>Ran ' + req.hook.ran.toString() + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em></div>');
+      // $('form legend').append('<div class="counter"><em>Ran ' + req.hook.ran.toString() + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em></div>');
       
       // load gist embed based on incoming gist url parameter
       $('#gistUrl').attr('value', gist);

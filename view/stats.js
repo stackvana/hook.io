@@ -1,4 +1,5 @@
 var user = require('../lib/resources/user'),
+    metric = require('../lib/resources/metric'),
     hook = require('../lib/resources/hook'),
     request = require('request');
 
@@ -8,29 +9,28 @@ function numberWithCommas(x) {
 
 module['exports'] = function view (opts, callback) {
   var $ = this.$;
-  user.all(function(err, results){
-    $('.activeUsers').html(results.length)
-    hook.all(function(err, results){
-      $('.activeServices').html(results.length);
-      var count = 0;
-      results.forEach(function(h){
-        count += h.ran;
-      });
-      $('.totalRun').html(numberWithCommas(count));
-      request('https://api.github.com/repos/bigcompany/hook.io', {
-        headers: {
-          "User-Agent": "hook.io stats"
-        },
-        json: true
-      }, function (err, res, output) {
-        if (err) {
-          console.log(err.message);
-        }
-        callback(null, $.html());
+  metric.get('/user/count', function(err, userCount){
+    $('.activeUsers').html(userCount.toString())
+    metric.get('/hook/count', function(err, hookCount){
+      metric.get('/hook/totalHits', function(err, m){
+        $('.activeServices').html(hookCount.toString());
+        var count = m.toString();
+        $('.totalRun').html(numberWithCommas(count));
+        request('https://api.github.com/repos/bigcompany/hook.io', {
+          headers: {
+            "User-Agent": "hook.io stats"
+          },
+          json: true
+        }, function (err, res, output) {
+          if (err) {
+            console.log(err.message);
+          }
+          callback(null, $.html());
+        });
       });
     });
   });
 };
 
 // cache this page to only reload every 60 seconds
-module['exports'].cache = 60000;
+// module['exports'].cache = 60000; // TODO: make longer
