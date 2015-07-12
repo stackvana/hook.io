@@ -34,7 +34,7 @@ module['exports'] = function view (opts, callback) {
     return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
   }
 
-  // fetch the hook
+  // fetch the latest version of hook ( non-cached )
   hook.find({ owner: params.owner, name: params.name }, function (err, result) {
     if (err) {
       return res.end(err.message);
@@ -72,13 +72,13 @@ module['exports'] = function view (opts, callback) {
       data.status = params.status || req.hook.status;
 
       // booleans
-      if(typeof params.cronActive !== 'undefined') {
+      if (typeof params.cronActive !== 'undefined') {
         data.cronActive = true;
       } else {
         data.cronActive = false;
       }
 
-      if(typeof params.isPublic !== 'undefined') {
+      if (typeof params.isPublic !== 'undefined') {
         data.isPublic = true;
       } else {
         data.isPublic = false;
@@ -95,48 +95,48 @@ module['exports'] = function view (opts, callback) {
         }
         cache.set(key, result, function(){
           $('.formStatus').html('Saved!');
-          finish();
+          finish(result);
         });
       });
+    } else {
+      finish(req.hook);
     }
 
-    finish();
+    function finish (h) {
 
-    function finish () {
+      $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
 
-      $('.hookLink').attr('href', '/' + req.hook.owner + '/' + req.hook.name);
+      $('.hookRan').attr('value', numberWithCommas(h.ran));
+      $('.hookName').attr('value', h.name);
 
-      $('.hookRan').attr('value', numberWithCommas(req.hook.ran));
-      $('.hookName').attr('value', req.hook.name);
+      $('.hookSource').attr('value', h.gist);
 
-      $('.hookSource').attr('value', req.hook.gist);
-
-      if (req.hook.cronActive === true) {
+      if (h.cronActive === true) {
         $('.cronActive').attr('checked', 'CHECKED');
       }
 
-      if (typeof req.hook.cron !== 'undefined') {
-        $('#cronString').attr('value', req.hook.cron);
+      if (typeof h.cron !== 'undefined') {
+        $('#cronString').attr('value', h.cron);
       }
 
-      if (req.hook.isPublic === true) {
+      if (h.isPublic === true) {
         $('.isPublic').attr('checked', 'CHECKED');
       }
 
-      if (typeof req.hook.status !== 'undefined') {
-        $('.status').prepend('<option value="' + req.hook.status + '">' + req.hook.status + '</option>')
+      if (typeof h.status !== 'undefined') {
+        $('.status').prepend('<option value="' + h.status + '">' + h.status + '</option>')
       }
 
-      if (typeof req.hook.mode !== 'undefined') {
-        $('.mode').prepend('<option value="' + req.hook.mode + '">' + req.hook.mode + '</option>')
+      if (typeof h.mode !== 'undefined') {
+        $('.mode').prepend('<option value="' + h.mode + '">' + h.mode + '</option>')
       }
 
-      $('.deleteLink').attr('href', '/' + req.hook.owner + "/" + req.hook.name + "?delete=true");
-      $('.deleteLink').attr('data-name', (req.hook.owner + "/" + req.hook.name));
+      $('.deleteLink').attr('href', '/' + h.owner + "/" + h.name + "?delete=true");
+      $('.deleteLink').attr('data-name', (h.owner + "/" + h.name));
 
-      $('form').attr('action', '/admin?owner=' + req.hook.owner + "&name=" + req.hook.name);
+      $('form').attr('action', '/admin?owner=' + h.owner + "&name=" + h.name);
 
-      self.parent.components.themeSelector.present({ theme: req.hook.theme, presenter: req.hook.presenter, hook: req.hook }, function(err, html){
+      self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h }, function(err, html){
         var el = $('.hookTable > div').eq(4);
         el.after(html);
         callback(null, $.html());
