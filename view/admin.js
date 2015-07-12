@@ -86,7 +86,7 @@ module['exports'] = function view (opts, callback) {
 
       data.id = req.hook.id;
 
-      var key = req.hook.owner + "/" + req.hook.name;
+      var key = '/hook/' + req.hook.owner + "/" + req.hook.name;
 
       return hook.update(data, function(err, result){
         if (err) {
