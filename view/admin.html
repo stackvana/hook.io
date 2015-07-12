@@ -1,4 +1,11 @@
-<link href="/css/jquery-ui.css" rel="stylesheet">
+<link href="/css/jquery-ui.css" rel="stylesheet"/>
+
+<style>
+  .hookTable .smaller  {
+    font-size: 16px;
+    padding-top:8px;
+  }
+</style>
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/jquery.croneditor.js"></script>
 <script type="text/javascript">
@@ -87,7 +94,7 @@
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;">
   <span class="formStatus success"></span>  <br/>
-  <h2><strong>Manage <span class="hookName">your Hook</span></strong></h2>
+  <h2><strong>Manage <span class="hookName"> Hook</span></strong></h2>
   <h3><a href="" class="hookLink">View Hook</a></h3>
   <br/>
   <form method="post" action="/admin">
@@ -99,6 +106,7 @@
           <option value="Development">Development</option>
           <option value="Production">Production</option>
         </select>
+        <p class="smaller"><strong>Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
       </div>
 
       <div class="form-group">
