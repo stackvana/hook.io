@@ -52,7 +52,7 @@
     /* text-align: center; */
   }
   .loginBar {
-    padding-top:10px;
+   /* padding-top:10px; */
   }
   .loginBar .curls input {
     margin-bottom:5px;
@@ -74,6 +74,10 @@
   
   .welcome {
     font-size: 36px;
+  }
+  
+  .splash .hookStats {
+    font-size: 40px;
   }
   
 </style>
@@ -126,6 +130,20 @@ $('document').ready(function(){
   //$('.splashImage img').hoverIntent(loadSplashSection);
   $('.splashImage img').click(loadSplashSection);
   
+  function checkStats () {
+    // TODO: add real-time info for other metrics
+    $.get('/metrics/hook/totalHits', function(res){
+      $('.totalRun').html(numberWithCommas(res.toString()));
+      setTimeout(checkStats, 500);
+    });
+  };
+
+  function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  checkStats();
+  
 
 });
 </script>
@@ -135,6 +153,9 @@ $('document').ready(function(){
     <div class="splash"><p>The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms. These services are built around business capabilities and are independently deployable by fully automated deployment machinery.</p></div>
     
     <div class="splash loginBar">
+      
+      <p class="hookStats">Hooks executed: <span class="totalRun">loading...</span></p>
+      
       <a href="/login" class="btn btn-social btn-github"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
             <!--
             <div style="font-size:26px;padding-left:2px;padding-top:10px;padding-left: 0px;padding-right: 0px;">Try running these:</div>

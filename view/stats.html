@@ -4,6 +4,21 @@
     <h3>Community Forks</h3>\
     <iframe src="https://ghbtns.com/github-btn.html?user=bigcompany&repo=hook.io&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>');
   });
+
+  function checkStats () {
+    // TODO: add real-time info for other metrics
+    $.get('/metrics/hook/totalHits', function(res){
+      $('.totalRun').html(numberWithCommas(res.toString()));
+      setTimeout(checkStats, 1000);
+    });
+  };
+
+  function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  checkStats();
+
 </script>
 
 <div align="left" style="font-size:22px;">
