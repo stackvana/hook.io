@@ -1,4 +1,6 @@
 var user = require('../lib/resources/user');
+var cache = require("../lib/resources/cache");
+
 var bodyParser = require('body-parser');
 module['exports'] = function view (opts, callback) {
   var req = opts.request, res = opts.response;
@@ -54,7 +56,10 @@ module['exports'] = function view (opts, callback) {
             if (err) {
               return res.end(err.message);
             }
-            showEnv();
+            // update user cache
+            cache.set('/user/' + _user.name, _user, function(){
+              showEnv();
+            });
           });
         } else {
           showEnv();
