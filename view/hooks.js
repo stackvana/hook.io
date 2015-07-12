@@ -28,9 +28,9 @@ module['exports'] = function view (opts, callback) {
   });
 
   // if current user is not owner, filter out private hooks
-  opts.hooks = opts.hooks.filter(function(item){
-    return item.owner !== req.user.username.toLowerCase() && item.isPublic === true;
-  });
+  //  opts.hooks = opts.hooks.filter(function(item){
+  //    return item.isPublic === undefined || (item.owner !== req.user.username.toLowerCase() && item.isPublic === true);
+  //  });
 
   for (var h in opts.hooks) {
     // TODO: add ability to delete hooks https://github.com/bigcompany/hook.io/issues/47
