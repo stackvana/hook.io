@@ -28,6 +28,7 @@
     "npm": "*",
     "passport": "^0.2.1",
     "passport-github": "^0.1.5",
+    "redis": "0.12.1",
     "request": "^2.48.0",
     "resource": "^0.5.3",
     "resource-email": "0.5.x",

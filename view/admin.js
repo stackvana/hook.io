@@ -1,4 +1,5 @@
 var hook = require('../lib/resources/hook');
+var cache = require('../lib/resources/cache');
 var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
@@ -57,37 +58,45 @@ module['exports'] = function view (opts, callback) {
       // at this point, auth should have already taken place, so we can just call Hook.save
 
       // manually assign properties
+      var data = {};
 
       // strings
-      req.hook.gist = params.hookSource || req.hook.gist;
+      data.gist = params.hookSource || req.hook.gist;
 
-      req.hook.theme = params.theme;
-      req.hook.presenter = params.presenter;
-      req.hook.mode = params.mode;
+      data.theme = params.theme;
+      data.presenter = params.presenter;
+      data.mode = params.mode;
 
       // TODO: check to see if index.html file matches up with known theme
-      req.hook.cron = params.cronString || req.hook.cron;
-      req.hook.status = params.status || req.hook.status;
+      data.cron = params.cronString || req.hook.cron;
+      data.status = params.status || req.hook.status;
 
       // booleans
       if(typeof params.cronActive !== 'undefined') {
-        req.hook.cronActive = true;
+        data.cronActive = true;
       } else {
-        req.hook.cronActive = false;
+        data.cronActive = false;
       }
 
       if(typeof params.isPublic !== 'undefined') {
-        req.hook.isPublic = true;
+        data.isPublic = true;
       } else {
-        req.hook.isPublic = false;
+        data.isPublic = false;
       }
-      return req.hook.save(function(err, result){
+
+      data.id = req.hook.id;
+
+      var key = req.hook.owner + "/" + req.hook.name;
+
+      return hook.update(data, function(err, result){
         if (err) {
           // TODO: generic error handler
           return res.end(err.message);
         }
-        $('.formStatus').html('Saved!');
-        finish();
+        cache.set(key, result, function(){
+          $('.formStatus').html('Saved!');
+          finish();
+        });
       });
     }
 
