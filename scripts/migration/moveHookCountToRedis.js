@@ -21,16 +21,17 @@ client.keys("*", function(err, res){
 
 */
 
-
-user.all(function(err, users){
-  hook.all(function(err, hooks){
-    hooks.forEach(function(h){
-      var key = h.owner + "/" + h.name + "/hits";
-      console.log( h.ran);
-      metric.incrby(key, h.ran);
-      //metric.incrby('/hook/totalHits', h.ran)
+metric.client.flushall(function(){
+  user.all(function(err, users){
+    hook.all(function(err, hooks){
+      hooks.forEach(function(h){
+        var key = "/" + h.owner + "/" + h.name + "/hits";
+        console.log( h.ran);
+        metric.incrby(key, h.ran);
+        //metric.incrby('/hook/totalHits', h.ran)
+      });
+      metric.set('/hook/count', hooks.length);
     });
-    metric.set('/hook/count', hooks.length);
+    metric.set('/user/count', users.length);
   });
-  metric.set('/user/count', users.length);
 });
