@@ -45,16 +45,14 @@
 
     <a name="running"></a>
     <h2><strong>Running a Hook</strong></h2>
-    <p>To run a hook you can click the <input name="run" type="submit" value="Run this Hook"/ class="btn run"> button.</p>
-    <p>You can also specify the <strong>run</strong> parameter as a query string variable or form field when accessing the Hook URL and the Hook will execute.</p>
-    <p><strong>Important:</strong> If you access a Hook from a non-browser source ( no text/html Accept header ), the hook will execute without specifying the <strong>run</strong> parameter. This behavior is achieved through routing incoming HTTP requests based on their accepted Content-Type ( see <a href="#accept">Content-Type Routing</a> )</p>
+    <p>Hooks are automatically executed when an HTTP request is sent to the Hook's url.</p>
+    <p>This HTTP request can be sent from any source ( such as the browser, custom application, or the command line).</p>
     <hr/>
 
     <a name="forking"></a>
     <h2><strong>Forking a Hook</strong></h2>
-    <p>To fork a Hook simply click the <input tabindex="2" name="fork" type="submit" value="Fork This Hook"/ class="btn fork"> button.</p>
-    <p>You will be taken to a new page where you can start customizing your Fork.</p>
-
+    <p>To fork another Hook, simply add the query string parameter <code>?fork=true</code> to the Hook you want to fork.</p>
+    <p>By specifying the <code>fork</code> parameter, you will be taken to a new page where you can start customizing your Fork.</p>
     <a name="data"></a>
     <hr/>
     <h2><strong>Sending data to the Hook</strong></h2>
@@ -167,6 +165,9 @@
     <p><strong>text/html</strong><br/>Returns a friendly HTML landing page ( useful for humans )</p>
     <p><strong>*/*</strong><br/>Executes the hook and returns the response type specified in the Hook  ( useful for programs )</p>
     <p>Accept Header Routing can be overridden by setting <em>Hook.params.format</em> to <em>raw</em>. 
-  
+  <br/>
+  <br/>
+  <br/>
+  <br/>
   </div>
 </div>

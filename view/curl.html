@@ -16,6 +16,8 @@
 
 <p>Curl is useful not only for debugging simple requests, but also connecting your Hooks directly to the Unix Toolchain through standard Unix Pipes.</p>
 
+<!-- TODO: add link and explanation to command line tool -->
+
 <h2><strong>Simple GET Request</strong></h2>
 
 <p>To perform a simple HTTP Get request with query string variables try the following command:</p>
@@ -32,6 +34,17 @@
 
 <p>
   <input type="text" value="curl --data 'foo=bar&hello=there' http://hook.io/Marak/echo"/>
+</p>
+
+<br/>
+
+<h2><strong>Simple JSON Post</strong></h2>
+
+<p>To perform a simple HTTP JSON POST with some data fields try the following command:</p>
+
+<p>
+  <input type="text" value="curl -H &quot;Content-Type: application/json&quot; -X POST -d '{&quot;foo&quot;:&quot;bar&quot;,&quot;hello&quot;:&quot;there&quot;}' http://echo.hook.io
+  "/>
 </p>
 
 <br/>
