@@ -58,6 +58,12 @@ module['exports'] = function view (opts, callback) {
   function showForm (cb) {
     var formSchema = req.hook.mschema || {};
 
+    for (var p in formSchema) {
+      if(typeof params[p] !== 'undefined') {
+        formSchema[p].default = params[p];
+      }
+    }
+
     formSchema.run = {
       "type": "string",
       "default": "true",
