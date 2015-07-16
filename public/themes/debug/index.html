@@ -104,11 +104,75 @@
           }
           
           .selectTheme {
-            float: right;
-            padding-right: 15px;
           }
-          
+
+     .hookDocs .content {
+       display: none;
+     }
+     .hookDocs .content p {
+       font-size: 20px;
+     }
+
+     .hookOutput {
+       font-size:14px;
+     }
+
+     .hookDebugOutput {
+       width: 550px;
+     }
+
+     .hookOptions {
+       text-align: left;
+       font-size:26px;
+     }
+
+     .hookOptions legend {
+       font-size:36px;
+     }
+
+     .hookResult {
+       font-size:22px;
+       text-align: left;
+     }
+
+     .notice {
+       font-size:22px;
+     }
+
+     .hookResult textarea {
+       font-size:16px;
+       width: 100%;
+     }
+
+     h2 span.success {
+       color: rgb(68, 199, 68);
+     }
+
+     h2 span.message.error{
+       color: rgb(255, 2, 2);
+     }
+
+     .hookForm {
+       text-align: left;
+       width: 500px;
+     }
+
+     .testForm {
+       text-align: left;
+       width: 500px;
+     }
+
+     .gistEmbed {
+     }
+
+     p.smaller {
+       font-size: 16px;
+     }
+      div {
+       /* font-size: 18px; */
+     }
     </style>
+
   </head>
   <body>
 
@@ -135,6 +199,16 @@
           alert($('#dataUrl').val());
         });
 
+        $('.codeButton').click(function(){
+           if ($('.codeButton').html() === "View Source Code") {
+             $('.codeButton').html('Hide Source Code')
+             $('.gistEmbed').show();
+           } else {
+             $('.codeButton').html('View Source Code');
+             $('.gistEmbed').hide();
+           }
+         });
+
         // toggle the display of documentation / help
         /*
         $('.docsButton').click(function(){
@@ -150,9 +224,6 @@
         });
         */
 
-        $('.codeButton').click(function(){
-          $('body').scrollTo('.source')
-        });
 
         $('.forkButton').click(function(){
           document.location = $(this).attr('data-url');
@@ -183,128 +254,119 @@
       });
       </script>
 
-      <style>
-       .hookDocs .content {
-         display: none;
-       }
-       .hookDocs .content p {
-         font-size: 20px;
-       }
-       .btn {
-         font-size:16px;
-       }
 
-       .hookOutput {
-         /* padding: 10px; */
-         font-size:22px;
-       }
+      <div class="container-fluid">
 
-       .hookOptions {
-         text-align: left;
-         font-size:26px;
-       }
-       
-       .hookOptions legend {
-         font-size:36px;
-       }
-
-       .hookResult {
-         font-size:22px;
-         text-align: left;
-       }
-
-       .notice {
-         font-size:22px;
-       }
-
-       .hookResult textarea {
-         font-size:16px;
-         width: 100%;
-       }
-
-       h1.success {
-         color: rgb(68, 199, 68);
-       }
-
-       h1.message.error{
-         color: rgb(255, 2, 2);
-       }
-
-       .hookForm {
-         text-align: left;
-       }
-
-       .gistEmbed {
-         text-align: left;
-       }
-      </style>
-
-      <div class="wrapper" align="left">
-          <button tabindex="2" name="code" class="codeButton" type="button">View Source Code</button>
-          <button tabindex="3" name="fork" class="forkButton" type="button">Fork this Hook</button>
-  <!--        <button tabindex="4" name="docs" class="docsButton" type="button">Show Documentation</button> -->
-          <button tabindex="5" name="edit" class="editButton" type="button">Edit this Hook</button>
-          
-          <div class="selectTheme" align="right">
-            <form class="themeForm" action="" method="GET">
-            Change Theme: <select class="themeSelector" name="theme">
-              <option value="debug">debug</option>
-              <option value="form">form</option>
-              <option value="simple-form">simple-form</option>
-              <!-- ><option value="">custom</option> -->
-              <option value="none">none</option>
-              </select>
-            </form>
+      
+      <div class="row">
+        <div class="col-md-12" align="left">
+          <div>
+            <h2>This is the landing page for the <span class="hookName">{{h.name}}</span> service.</h2>
           </div>
-          
-          
-          <div class="hookDocs"></div>
+          <div>
+            This URL is a fully qualified web-service. If you access this same page from a non-browser source or with a <code>Content-Type: application/json</code> HTTP header you will get a JSON response.
+          </div>
+          <br/>
+          <div>For documentation on using <a href="http://hook.io/curl">cURL</a> to access this page click here: <a href="http://hook.io/curl/">http://hook.io/curl</a></div>
+          <br/>
+          <p class="smaller"><strong>Note:</strong> Accessing this service url will cause the Hook to run.</p>
+        </div>
       </div>
-      <div class="notice"></div>
-      <div class="wrapper">
-      <div class="hookResult">
-        <h1 class="message success">Success!</h1>
-        <h2>Hook Output</h2>
-        <div class="viewRaw">
-          <p><em>The output of this Hook has been rendered in a browser friendly format. You can adjust this format by changing the "format" parameter.</em></p> 
-        </div>
-        <div class="binaryFileLink">
-          <p>It looks like the hook returned a response of type <strong><span class="contentType">contentType</span></strong>.</p>
-          <p><em>Since this is not text/html the friendly page format cannot render it.</em></p>
-          <p>Try rendering the page in the raw format?</p>
-        </div>
 
-        <div class="hookOutput">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="smaller" align="left"><em>The output of this Hook has been rendered in the browser friendly <a href="http://hook.io/themes">Debug Theme</a>. This is completely optional! If you access this same service url from <a href="http://hook.io/curl">cURL</a>, you will get a non-html response. 
+         </div>
         </div>
-
-        <h2>Hook.req.params</h2>
-        <textarea cols="80" rows="4" class="hookParams"></textarea>
-        <h2>Hook.res.headers</h2>
-        <textarea cols="80" rows="4" class="hookHeaders"></textarea>
-        <br/>
-        <p><em><strong>Note:</strong> When running hooks from this friendly view, all hook responses are fully buffered.</p>
-        <hr/>
-        <h2>Hook Debug Console</h2>
-        <textarea cols="80" rows="10" class="hookDebugOutput"></textarea>
-        <br/>
-        <br/>
-      </div>
-      </div>
-      <div class="hookOptions">
-        <h2>Run Hook again</h2>
-        
-        <div class="testForm"></div>
-        <!--
-        data.url <input type="text" id="dataUrl" name="dataUrl" placeholder="http://google.com" size="40"/>
-        Webhook Url <input type="text" id="webhookUrl" name="webhookUrl" placeholder="http://hook.io/987123khj" size="40"/>
-        -->
-        <a class="source" name="source"/>
-        <div class="gistEmbed"></div>
-        <p><em>Rendered with the <a href="https://github.com/bigcompany/hook.io/tree/master/public/themes/debug">Debug Theme</a></em></p>
-        
       </div>
 
       <br/>
+      <div class="row">
+        <div class="col-md-12" align="left">
+          <form class="themeForm" action="" method="GET">
+            <div class="selectTheme" align="left">
+              You can create a <a href="http://hook.io/themes">custom theme</a> or select a predefined theme using this drop-down select box <strong>Theme:</strong> <select class="themeSelector" name="theme">
+                 <option value="debug">debug</option>
+                 <option value="form">form</option>
+                 <option value="simple-form">simple-form</option>
+                 <!-- ><option value="">custom</option> -->
+                 <option value="none">none</option>
+                 </select>
+             </div>
+         </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h2><span class="message success">Hook just executed successfully!</span></h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h2><a href="#testForm">Test Hook using a Form</a></h2>
+        </div>
+        <div class="col-md-6">
+          <h2><a href="?format=raw">View Raw Response</a></h2>
+        </div>
+      </div>
+
+      <div class="row" align="left">
+        <div class="col-md-12">
+          <h2>Hook Source Code</h2>
+          <div class="gistEmbed"></div>
+        </div>
+      </div>
+
+      <div class="row" align="left">
+         <div class="col-md-12">
+           <div class="notice"></div>
+           <div class="hookResult">
+             <div class="binaryFileLink">
+               <p>It looks like the hook returned a response of type <strong><span class="contentType">contentType</span></strong>.</p>
+               <p><em>Since this is not text/html the friendly page format cannot render it.</em></p>
+               <p>Try rendering the page in the raw format?</p>
+             </div>
+           </div>
+         </div>
+       </div>
+
+      <div class="row" align="left">
+        <div class="col-md-12">
+          <h2>Hook Output</h2>
+          <p class="smaller">The Hook wrote the following data to the HTTP response:</p>
+          <div class="hookOutput"></div>
+        </div>
+      </div>
+
+      <a name="testForm"/>
+
+      <br/>
+
+      <div class="row" align="left">
+        <div class="col-md-12">
+          <h2>Test Hook</h2>
+          <div class="testForm"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12" align="left">
+          <h2>Hook Debug Console</h2>
+          <p class="smaller">Calling <code>hook.debug()</code> inside the Hook will output to the Debug Console</p>
+          <textarea cols="80" rows="10" class="hookDebugOutput"></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12" align="left">
+          <p><em>Rendered with the <a href="https://github.com/bigcompany/hook.io/tree/master/public/themes/debug">Debug Theme</a></em></p>
+        </div>
+      </div>
+
+      </div>
+
       <br/>
 
    </div>

@@ -38,13 +38,13 @@ module['exports'] = function view (opts, callback) {
   // $('.hookDocs').html(docs);
   $('.hookDocs .docsHeader').remove();
 
-  /* TODO: req has no passport session in worker, session info should be forwarded
+  /* TODO: req has no passport session in worker, session info should be forwarded */
   if (req.session.user && req.session.user === req.params.username) {
     $('#fork').remove();
   } else {
     $('#edit').remove();
   }
-  */
+
   if (params.theme) {
     $('.theme').attr('value', params.theme);
   }
@@ -118,6 +118,9 @@ module['exports'] = function view (opts, callback) {
    $('.hookDebugOutput').html(JSON.stringify(result.debug, true, 2));    
    //return callback(null, $.html());
 
+   $('.hookName').html(req.hook.name);
+   // $('.httpMethod').html(req.method.toUpperCase());
+
   }
 
  var strParams = '';
@@ -149,6 +152,12 @@ module['exports'] = function view (opts, callback) {
 
   var formSchema = req.hook.mschema || {};
 
+  for (var p in formSchema) {
+    if(typeof params[p] !== 'undefined') {
+      formSchema[p].default = params[p];
+    }
+  }
+
   formSchema.run = {
     "type": "string",
     "default": "true",
@@ -170,7 +179,7 @@ module['exports'] = function view (opts, callback) {
   forms.generate({
     type: "generic",
     form: {
-      legend: req.hook.owner + "/" + req.hook.name,
+      legend: req.hook.name + ' test form',
       submit: "Test Hook",
       action: "/" + req.params.username + "/" + req.params.hook
     },
