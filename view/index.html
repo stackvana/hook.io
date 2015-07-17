@@ -20,6 +20,19 @@
     margin-top: 2px;
     margin-left: 16px;
   }
+
+  .gist {
+    width: 500px;
+  }
+
+  div.line {
+    height: 16px;
+    margin-top: 0.39px;
+  }
+
+  .gist-file div {
+/*    line-height: 0.7em; */
+  }
   .splashImage img {
     /*
     height: 60px;
@@ -30,8 +43,9 @@
     cursor: pointer;
     margin: 8px;
   }
-  ul {
-    list-style-type: binary;
+  .features {
+    list-style-type: disc;
+    padding-left: 15px;
   }
   .splashSections > div {
     /* width: 565px; */
@@ -57,6 +71,7 @@
   .loginBar .curls input {
     margin-bottom:5px;
   }
+
   
   .curls input {
     width: 368px;
@@ -75,9 +90,21 @@
   .welcome {
     font-size: 36px;
   }
-  
+
   .splash .hookStats {
-    font-size: 40px;
+    font-size: 32px;
+  }
+
+  .splash code, pre {
+    padding: 5px;
+    margin: 5px;
+    width: 500px;
+  }
+  .splash ul {
+    list-style-type: disc;
+  }
+  .deploymentsLink {
+    color: black;
   }
   
 </style>
@@ -89,7 +116,6 @@ $('document').ready(function(){
   $.fn.random = function() {
     return this.eq(Math.floor(Math.random() * this.length));
   }          
-
 
   $('.splashImage img').jrumble({
      speed: 100
@@ -143,164 +169,138 @@ $('document').ready(function(){
   }
 
   checkStats();
-  
+
 
 });
 </script>
 
-    <h1 style="margin-top: 2px;font-size:32px;" class="splash"><em>Build and deploy HTTP microservices in seconds</em></h1>
+<br/>
 
-    <div class="splash"><p>The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms. These services are built around business capabilities and are independently deployable by fully automated deployment machinery.</p></div>
-    
-    <div class="splash loginBar">
-      
-      <p class="hookStats">Hooks executed: <span class="totalRun">loading...</span></p>
-      
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12" align="center">
       <a href="/login" class="btn btn-social btn-github"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
-            <!--
-            <div style="font-size:26px;padding-left:2px;padding-top:10px;padding-left: 0px;padding-right: 0px;">Try running these:</div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-12" align="center">
+      <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8" align="left">
+      <h3>Creating a microservice is as simple as:</h3>
+      <link rel="stylesheet" href="/css/ghmarkdown.css">
+      <div id="gist24367968" class="gist">
+      <div class="gist-file">
+        <div class="gist-data gist-syntax">
+          <div class="file-data">
+            <table cellpadding="0" cellspacing="0" class="lines highlight">
+              <tbody>
+                <tr>
+                  <td class="line-numbers">
+                    <span class="line-number" id="file-echohook-js-L1" rel="file-echohook-js-L1">1</span>
+                    <span class="line-number" id="file-echohook-js-L2" rel="file-echohook-js-L2">2</span>
+                    <span class="line-number" id="file-echohook-js-L3" rel="file-echohook-js-L3">3</span>
+                    <span class="line-number" id="file-echohook-js-L4" rel="file-echohook-js-L4">4</span>
+                    <span class="line-number" id="file-echohook-js-L5" rel="file-echohook-js-L5">5</span>
+                    <span class="line-number" id="file-echohook-js-L6" rel="file-echohook-js-L6">6</span>
+                    <span class="line-number" id="file-echohook-js-L7" rel="file-echohook-js-L7">7</span>
+                    <span class="line-number" id="file-echohook-js-L8" rel="file-echohook-js-L8">8</span>
+                    <span class="line-number" id="file-echohook-js-L9" rel="file-echohook-js-L9">9</span>
+                    <span class="line-number" id="file-echohook-js-L10" rel="file-echohook-js-L10">10</span>
+                    <span class="line-number" id="file-echohook-js-L11" rel="file-echohook-js-L11">11</span>
+                  </td>
+                  <td class="line-data">
+                    <pre class="line-pre"><div class="line" id="file-echohook-js-LC1"><span             class="pl-sv">module</span>[<span class="pl-s1"><span class="pl-pds">'</span>exports<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-st">function</span> <span class="pl-en">echo</span> (<span class="pl-vpf">hook</span>) {
+                    </div><div class="line" id="file-echohook-js-LC2">  <span class="pl-c">// Access to real Node.js HTTP Request and Response objects!</span>
+                    </div><div class="line" id="file-echohook-js-LC3">  <span class="pl-s">var</span> req <span class="pl-k">=</span> hook.req,
+                    </div><div class="line" id="file-echohook-js-LC4">      res <span class="pl-k">=</span> hook.res;
+                    </div><div class="line" id="file-echohook-js-LC5">&nbsp;
+                    </div><div class="line" id="file-echohook-js-LC6">  <span class="pl-c">// Intelligent Request parameter parsing</span>
+                    </div><div class="line" id="file-echohook-js-LC7">  <span class="pl-s">var</span> params <span class="pl-k">=</span> hook.params;
+                    </div><div class="line" id="file-echohook-js-LC8">&nbsp;
+                    </div><div class="line" id="file-echohook-js-LC9">  <span class="pl-c">// Echo back what was sent</span>
+                    </div><div class="line" id="file-echohook-js-LC10">  hook.res.end(JSON.stringify(params, <span class="pl-c1">true</span>, <span class="pl-c1">2</span>));
+                    </div><div class="line" id="file-echohook-js-LC11">};
+                    </div></pre>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div>
-            <input style="font-size:12px;" type="text" value="curl --data 'foo=bar&hello=there' http://hook.io/Marak/echo" size="60"/>
-            <input style="font-size:12px;" type="text" value="echo 'foo' | curl --header 'content-type: application/octet-stream'  --data-binary @- http://hook.io/Marak/transform" size="60"/>
-            <input style="font-size:12px;" type="text" value="curl http://hook.io/Marak/isTheWebsiteDown?url=http://google.com" size="60"/>
-      </div>
-      -->
     </div>
-    
-    <div class="splash splashImage" style="margin-top: 2px;">
-      <!-- copyright for images 
-        penguin-variant is copyrighted by Larry Ewing and Simon Budig (penguin-variant.sk also by Anja Gerwinski), redistribution is free but has to include this Copyright notice.
-        jstiny - logo.js -The MIT License (MIT) Copyright (c) 2011 Christopher Williams <chris@iterativedesigns.com> 
-        tinynpm - (c) npmjs.org 
-        setuptocat - (c) Github
-      -->
-      <a href="/javascript"><img title="JavaScript!" alt="JavaScript!" width="80" height="70" src="/img/jstiny.png" id="splash-javascript"></a>
-      <a href="/modules"><img title="Node.js" alt="Node.js" width="135" height="45" src="/img/node.png" id="splash-node"></a>
-      <a href="/modules"><img title="Node Package Manager" alt="npm" width="135" height="45" src="/img/tinynpm.png" id="splash-npm"></a>
-      <a href="/gist"><img title="Github" alt="Github" width="112" height="75" src="/img/setuptocat.png" id="splash-github"></a>
-      <a href="/curl"><img title="Unix" alt="Unix" width="85" height="75" src="/img/penguin-variant.png" id="splash-unix"></a>
+    <h4>Try this service LIVE in action @ <a href="http://echo.hook.io/">http://echo.hook.io/</a></h4>
     
     </div>
-    <div class="splash"><h2><a href="/login">Sign in now to deploy your first microservice</a></h2></div>
-
-
-    <div class="userBar">
-      <span class="welcome"></span><br/>
-      <a href="/new">Create Hook</a><br/>
-      <a href="/Marak" class="yourHooks">My Hooks</a><br/>
-      <a href="/domains" class="yourDomains">Custom Domains</a><br/>
-      <a href="/account" class="yourAccount">Account Information</a><br/>
-      <a href="/billing" class="yourBilling">Billing Information</a><br/>
-      <a href="/affiliates" class="yourAffiliates">Affiliates Program</a><br/>
-      <a href="/logout">Logout</a>
-
+    <div class="col-md-4" align="left">
+      <h3>Full Featured</h3>
+      <ul class="features">
+        <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
+        <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
+        <li><a href="http://hook.io/docs#schema">Input Validators</a></li>
+        <li><a href="http://hook.io/cron">Cron Tasks</a></li>
+        <li><a href="http://hook.io/docs#cache">Caching Controls</a></li>
+        <!-- <li><a href="http://hook.io/docs#metrics">Metrics</a></li> -->
+        <li><a href="http://hook.io/themes">Theming Engine</a></li>
+        <li><a href="http://hook.io/docs#forms">Form Generator</a></li>
+        <li><a href="https://hook.io/">HTTPS</a></li>
+        <li><a href="http://hook.io/domains">Custom Domains</a></li>
+        <li><a href="http://hook.io/curl">Unix Pipe Integration</a></li>
+      </ul>
     </div>
-    <div class="userSplash"></div>
-
-    <!--
-    <div class="splash">
-
-            <div class="splashSections">
-              <div class="tagLines">
-                <ul>
-                  <li>No downloads required</li>
-                  <li><a href="/pricing">Free for Developers</a></li>
-                  <li>Direct access to HTTP request and response streams</li>
-                  <li>Services can be <a href="http://hook.io/Marak/merge">composed</a> using <a href="http://hook.io/Marak/transform">streams</a> and <a href="http://hook.io/Marak/pipe">pipes</a></li>
-                  <li>Custom <a href="http://hook.io/themes">Themes</a></li>
-                  <li>Works great with <a href="http://hook.io/curl">Curl</a> and other Unix tools</li>
-                  <li>Source code hosting provided by <a href="/gist">Github</a></li>
-                </ul>
-              </div>
-              <div class="splash-javascript">
-
-              </div>
-              <div class="splash-node">
-                <p>
-                  <strong>Native Node.js Module Support</strong>
-                </p>
-                <p>hook.io supports the Node.js API out of the box.</p> 
-                <p>This is useful for performing a variety of basic operations.</p>
-
-                <p><strong>API Documentation</strong></p>
-                <p><a href="http://nodejs.org/api/">nodejs.org/api</a></p>
-              </div>
-              <div class="splash-npm">
-                <p><strong>NPM Module Support</strong></p>
-                <p>
-                 <a href="https://www.npmjs.org/">NPM</a> delivers support for thousands of modules.
-                </p>
-
-                <p>
-                 A curated list of packages is available for hosted Hooks.
-                </p>
-                <p><strong>Modules</strong></p>
-                <p>
-                   <a href="http://hook.io/modules#modules">hook.io/modules</a>
-                </p>
-
-              </div>
-              <div class="splash-github">
-                <p><strong>The source code for a Hook is stored as a <a href="http://github.com">Github</a> Gist.</strong></p>
-                <p><a href="http://gist.github.com">Gist</a> is a free service for hosting small snippets of code.</p>
-                <p>This allows for seamless revisions, code-highlighting, source history, and shareability through forking.</p>
-              </div>
-              <div class="splash-unix">
-                <p><strong>The <a href="http://en.wikipedia.org/wiki/Unix_philosophy">Unix Philosophy</a></strong></p>
-                <p>hook.io works very nicely with the Terminal, Unix Pipes, and all existing Unix tools.</p>
-                <p>Hooks can accept <a href="http://en.wikipedia.org/wiki/Standard_streams">STDOUT</a> from tools such as Curl.</p>
-                <p><strong>Examples</strong></p>
-                <p><a href="http://hook.io/curl">hook.io/curl</a></p> 
-              </div>
-
-            </div>
-    </div>
-    -->
-    <!--
-    <h4><strong>Try it now: </strong> <input type="text" value="curl --data 'foo=bar&hello=there' http://hook.io/Marak/echo" size="58"/></h4>
-    -->
-    <div style="height:160px;">
-
-      <table class="lowerNav">
-        <!--
-        <tr valign="bottom">
-          <td align="center">
-            <a href="/gist"><img src="./img/setuptocat.png"/></a> <br/>
-            <h3><a href="/gist">Integrated Github Gist</a></h3>
-          </td>
-          <td align="center">
-            <a href="/modules"><img src="./img/npm.png"/></a> <br/>
-            <h3><a href="/modules">Integrated Node Package Manager</a></h3>
-          </td>
-        </tr>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="splash splashImage" style="margin-top: 2px;">
+        <!-- copyright for images 
+          penguin-variant is copyrighted by Larry Ewing and Simon Budig (penguin-variant.sk also by Anja Gerwinski), redistribution is free but has to include this Copyright notice.
+          jstiny - logo.js -The MIT License (MIT) Copyright (c) 2011 Christopher Williams <chris@iterativedesigns.com> 
+          tinynpm - (c) npmjs.org 
+          setuptocat - (c) Github
         -->
-        <tr valign="bottom">
-          <td align="center">
-            <h3><a href="/pricing">Pricing</a></h3>
-          </td>
-          <td align="center">
-            <h3><a href="/docs">Documentation</a></h3>
-          </td>
-          <td align="center">
-            <h3><a href="http://github.com/bigcompany/hook.io/issues">Support</a></h3>
-          </td>
-        </tr>
+        <a href="/javascript"><img title="JavaScript!" alt="JavaScript!" width="80" height="70" src="/img/jstiny.png" id="splash-javascript"></a>
+        <a href="/modules"><img title="Node.js" alt="Node.js" width="135" height="45" src="/img/node.png" id="splash-node"></a>
+        <a href="/modules"><img title="Node Package Manager" alt="npm" width="135" height="45" src="/img/tinynpm.png" id="splash-npm"></a>
+        <a href="/gist"><img title="Github" alt="Github" width="112" height="75" src="/img/setuptocat.png" id="splash-github"></a>
+        <a href="/curl"><img title="Unix" alt="Unix" width="85" height="75" src="/img/penguin-variant.png" id="splash-unix"></a>
 
-        <tr valign="bottom">
-          <td align="center">
-            <h3><a href="/curl">Unix Pipe Integration</a> / <a href="/cron">Cron</a></h3>
-          </td>
-          
-          <td align="center">
-            <h3><a href="/examples">Examples</a></h3>
-          </td>
-          <td align="center">
-            <h3><a href="/themes">Themes</a></h3>
-          </td>
-        </tr>
+      </div>
 
-      </table>
+      <br/>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="lowerNav">
+            <tr valign="bottom">
+              <td align="center">
+                <h3><a href="/pricing">Pricing</a></h3>
+              </td>
+              <td align="center">
+                <h3><a href="/examples">Examples</a></h3>
+              </td>
+              <td align="center">
+                <h3><a href="http://github.com/bigcompany/hook.io/issues">Support</a></h3>
+              </td>
+            </tr>
 
+            <tr valign="bottom">
+              <td align="center">
+                &nbsp;
+              </td>
+
+              <td align="center">
+                <h3><a href="/docs">Documentation</a></h3>
+              </td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+      <br/><br/><br/>
     </div>
-    
+  </div>
+
+</div>

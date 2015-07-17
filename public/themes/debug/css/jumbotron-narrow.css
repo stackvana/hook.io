@@ -46,13 +46,12 @@ body {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   padding-right: 60px;
-  padding-left: 60px;
   padding-top: 0px;
 }
 
 .jumbotron .btn {
-/*  padding: 14px 24px; */
-/*  font-size: 21px; */
+  padding: 14px 24px;
+  font-size: 21px;
 }
 
 /* Supporting marketing content */
@@ -74,7 +73,7 @@ body {
   }
   /* Space out the masthead */
   .header {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {

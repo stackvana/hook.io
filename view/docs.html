@@ -28,6 +28,8 @@
           <li><a href="#domains">Setting Custom Domains</a></li>
         -->
         <li><a href="#accept">Content-Type Routing</a></li>
+        <li><a href="#cache">Cache Controls</a></li>
+        <!-- <li><a href="#metrics">Hook Metrics</a></li> -->
       </ul>
     </p>
     <hr/>
@@ -41,7 +43,6 @@
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - URL of the Theme that will render the output of the Hook, see: <a href="http://hook.io/themes">Themes</a></p>
     <p>Once a Hook is created the browser will redirect to the landing page for that Hook.</p>
     <hr/>
-
 
     <a name="running"></a>
     <h2><strong>Running a Hook</strong></h2>
@@ -115,7 +116,7 @@
     <p><strong>Important:</strong> For performance reasons, changes made to the Hook schema will not appear in the User Interface until the Hook has been run once. The schema is applied to the Hook immediately when the gist is updated, just the User Interface will lag behind. This performance setting may be configurable in the future. The work-around is to simply run the Hook once to update the UI with new schema data.</p>
     <hr/>
 
-    <a name="forms"></a>
+    <a name="forms"/>
     <h2><strong>Using Schema Based Forms</strong></h2>
     <p>Through the use of <a href="https://github.com/mschema/mschema-forms">mschema-forms</a>, all Hooks have the ability to auto-generate an HTML form element populated with input fields matching that Hook's <strong>Hook.schema</strong></p>
 
@@ -166,6 +167,28 @@
     <p><strong>*/*</strong><br/>Executes the hook and returns the response type specified in the Hook  ( useful for programs )</p>
     <p>Accept Header Routing can be overridden by setting <em>Hook.params.format</em> to <em>raw</em>. 
   <br/>
+  
+  <a name="cache"></a>
+  <h2><strong>Cache Controls</strong></h2>
+  <p>To ensure optimal execution speeds, hook.io can cache your Hook's source code and assets in memory.</p>
+  <p>Currently, these caching controls can be toggled by setting the <code>mode</code> property in the Hook's admin page to either <code>Production</code> or <code>Development</code>.</p>
+
+  <p>In <code>Development</code> mode, all Hook source code will be pulled from it's original source on every request. This is useful for Hooks which are in active development.</p>
+  <p>In <code>Production</code> mode, all Hook source code will be cached in memory. This ensures much faster execution speeds, but also means that any updates to the Hook's external sources will not be immediately loaded.</p>
+  <br/>
+  
+  <!--
+  <a name="metrics"></a>
+  <h2><strong>Hook Metrics</strong></h2>
+  <p>Hook.io provides a basic API endpoint for accessing historical information on Hook metrics.</p>
+  <p>This is useful for giving an insight as to how the Hook is performing.</p>
+  <p>Currently the following metrics are available:</p>
+  <ul>
+    <li>/metrics/hook/Marak/echo/totalHits</li>
+  </ul>
+  -->
+
+  
   <br/>
   <br/>
   <br/>

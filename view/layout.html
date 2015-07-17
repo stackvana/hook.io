@@ -11,12 +11,15 @@
     <script type="text/javascript" src="/js/jquery.hoverIntent.js"></script>
     <script type="text/javascript" src="/js/jquery.scrollTo.js"></script>
     <script type="text/javascript" src="/js/gist-async.min.js"></script>
+    <!-- <script type="text/javascript" src="/js/clippy.min.js"></script> -->
     <link href="/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.css" media="all" rel="stylesheet" type="text/css" />
     <link href="/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
     <link href="/themes/debug/css/jumbotron-narrow.css" media="all" rel="stylesheet" type="text/css" />
     <link href="/css/social.css" media="all" rel="stylesheet" type="text/css" />
     <link href="/css/custom.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- <link href="/css/clippy.css" media="all" rel="stylesheet" type="text/css" /> -->
     <script style="text/javascript">
       $(document).ready(function(){
         $('.footerNav img').jrumble({
@@ -27,14 +30,11 @@
         }, function(){
           $(this).trigger('stopRumble');
         });
-
         // load the github social async ( after page loads and is ready )
         // there is no need to wait for 3rd party sites to respond before our page loads...
         $('.githubSocialButtons').html('<iframe src="https://ghbtns.com/github-btn.html?user=bigcompany&repo=hook.io&type=star&count=true&v=2" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>\
         <iframe src="https://ghbtns.com/github-btn.html?user=bigcompany&repo=hook.io&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>');
-
       });
-
     </script>
     <style>
     /* Sticky footer styles
@@ -57,6 +57,8 @@
             margin: 0 auto -60px;
           }
 
+          .merlin {
+          }
           /* Set the fixed height of the footer here */
           #push,
           #footer {
@@ -96,7 +98,6 @@
               white-space: pre;
           }
           .btn-github {
-            margin-left: 10px;
             width: 290px;
             padding: 0px;
           }
@@ -123,7 +124,10 @@
   <body>
 
     <div class="container">
-
+    
+    <div align="center">
+      <h1 style="margin-top: 2px;font-size:24px;" class="splash"><em>Deploy JavaScript HTTP microservices in seconds!</em></h1>
+    </div>
     <div id="header" class="header">
       <div style="float: left;bottom: 10px;">
         <a href="/"><img alt="hook.io" src="/img/logo.png"/></a>
@@ -134,6 +138,7 @@
     </div>
 
     <div class="yield jumbotron" align="center"></div>
+
 
     <div id="footer" class="navbar navbar-fixed-bottom">
       <!-- <a href=""><img src="./img/block.png"/></a> -->
