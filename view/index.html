@@ -13,18 +13,33 @@
     margin-left: 5px;
     list-style-image: url('/img/little-sideways-pipe-grey.gif');
   }
+
+/*  
   .splashImage {
     padding-top: 10px;
-    /* text-align: left; */
-    /* width: 600px; */
     margin-top: 2px;
     margin-left: 16px;
   }
+*/
 
   .gist {
     width: 500px;
   }
-
+  .hookOutput {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: monospace;
+    height: 200px;
+    color: black;
+    border: solid;
+    border-width: 1px;
+    box-shadow: 10px 10px 5px #888888;
+    display: none;
+    padding: 10px;
+  }
+  .codeButton {
+   /* display: none; */
+  }
   div.line {
     height: 16px;
     margin-top: 0.39px;
@@ -46,6 +61,7 @@
   .features {
     list-style-type: disc;
     padding-left: 15px;
+    font-size: 16px;
   }
   .splashSections > div {
     /* width: 565px; */
@@ -105,9 +121,26 @@
   }
   .deploymentsLink {
     color: black;
+    font-size: 32px;
+  }
+  .totalRun {
+    font-style: italic;
+    font-size: 32px;
+    
+  }
+  
+  button {
+    font-size: 22px;
   }
   
 </style>
+
+<!-- Create a simple CodeMirror instance -->
+<link rel="stylesheet" href="/js/codemirror.css">
+<script src="/js/codemirror.js"></script>
+<script src="/js/javascript.js"></script>
+
+
 
 <script type="text/javascript">
 
@@ -116,6 +149,29 @@ $('document').ready(function(){
   $.fn.random = function() {
     return this.eq(Math.floor(Math.random() * this.length));
   }          
+
+  $('.runButton').on('click', function(){
+    $('.CodeMirror').css('opacity', 0.4);
+    $.post('/Marak/gateway', { source: editor.getValue() }, function (res){
+      $('.CodeMirror').css('opacity', 1);
+      $('.CodeMirror').hide();
+//      $('.runButton').hide();
+//      $('.codeButton').show();
+      
+      $('.hookOutput').html(res);
+      $('.hookOutput').show();
+      console.log(res)
+    });
+  });
+
+  $('.codeButton').on('click', function(){
+    $('.CodeMirror').show();
+//    $('.runButton').show();
+//    $('.codeButton').hide();
+    $('.hookOutput').hide();
+    
+  });
+
 
   $('.splashImage img').jrumble({
      speed: 100
@@ -170,74 +226,54 @@ $('document').ready(function(){
 
   checkStats();
 
+  editor = CodeMirror.fromTextArea($('textarea').get(0), {
+    lineNumbers: true
+  });
 
 });
+var editor;
 </script>
 
 <br/>
 
+
 <div class="container-fluid loginBar">
   <div class="row">
+    
     <div class="col-md-12" align="center">
-      <a href="/login" class="btn btn-social btn-github"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
+      <a href="/login" class="btn btn-social btn-github" style="padding: 14px 24px;font-size: 21px;"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
     </div>
   </div>
   <br/>
   <div class="row">
     <div class="col-md-12" align="center">
       <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
+      
     </div>
   </div>
+  <!-- <h2>Try it now!</h2> -->
+  
   <div class="row">
     <div class="col-md-8" align="left">
-      <h3>Creating a microservice is as simple as:</h3>
-      <link rel="stylesheet" href="/css/ghmarkdown.css">
-      <div id="gist24367968" class="gist">
-      <div class="gist-file">
-        <div class="gist-data gist-syntax">
-          <div class="file-data">
-            <table cellpadding="0" cellspacing="0" class="lines highlight">
-              <tbody>
-                <tr>
-                  <td class="line-numbers">
-                    <span class="line-number" id="file-echohook-js-L1" rel="file-echohook-js-L1">1</span>
-                    <span class="line-number" id="file-echohook-js-L2" rel="file-echohook-js-L2">2</span>
-                    <span class="line-number" id="file-echohook-js-L3" rel="file-echohook-js-L3">3</span>
-                    <span class="line-number" id="file-echohook-js-L4" rel="file-echohook-js-L4">4</span>
-                    <span class="line-number" id="file-echohook-js-L5" rel="file-echohook-js-L5">5</span>
-                    <span class="line-number" id="file-echohook-js-L6" rel="file-echohook-js-L6">6</span>
-                    <span class="line-number" id="file-echohook-js-L7" rel="file-echohook-js-L7">7</span>
-                    <span class="line-number" id="file-echohook-js-L8" rel="file-echohook-js-L8">8</span>
-                    <span class="line-number" id="file-echohook-js-L9" rel="file-echohook-js-L9">9</span>
-                    <span class="line-number" id="file-echohook-js-L10" rel="file-echohook-js-L10">10</span>
-                    <span class="line-number" id="file-echohook-js-L11" rel="file-echohook-js-L11">11</span>
-                  </td>
-                  <td class="line-data">
-                    <pre class="line-pre"><div class="line" id="file-echohook-js-LC1"><span             class="pl-sv">module</span>[<span class="pl-s1"><span class="pl-pds">'</span>exports<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-st">function</span> <span class="pl-en">echo</span> (<span class="pl-vpf">hook</span>) {
-                    </div><div class="line" id="file-echohook-js-LC2">  <span class="pl-c">// Access to real Node.js HTTP Request and Response objects!</span>
-                    </div><div class="line" id="file-echohook-js-LC3">  <span class="pl-s">var</span> req <span class="pl-k">=</span> hook.req,
-                    </div><div class="line" id="file-echohook-js-LC4">      res <span class="pl-k">=</span> hook.res;
-                    </div><div class="line" id="file-echohook-js-LC5">&nbsp;
-                    </div><div class="line" id="file-echohook-js-LC6">  <span class="pl-c">// Intelligent Request parameter parsing</span>
-                    </div><div class="line" id="file-echohook-js-LC7">  <span class="pl-s">var</span> params <span class="pl-k">=</span> hook.params;
-                    </div><div class="line" id="file-echohook-js-LC8">&nbsp;
-                    </div><div class="line" id="file-echohook-js-LC9">  <span class="pl-c">// Echo back what was sent</span>
-                    </div><div class="line" id="file-echohook-js-LC10">  hook.res.end(JSON.stringify(params, <span class="pl-c1">true</span>, <span class="pl-c1">2</span>));
-                    </div><div class="line" id="file-echohook-js-LC11">};
-                    </div></pre>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="btn-group" role="group">
+      <button class="runButton btn btn-primary">Deploy Service</button>
+      <button class="codeButton btn btn-default">Edit Code</button>
+      <button class="saveButton btn btn-default">Save Code to Github</button>
       </div>
-    </div>
-    <h4>Try this service LIVE in action @ <a href="http://echo.hook.io/">http://echo.hook.io/</a></h4>
-    
+      <textarea>module['exports'] = function echo (hook) {
+  // Access Node.js HTTP Request and Response objects
+  var req = hook.req,
+      res = hook.res;
+  // Use NPM Modules
+  var faker = require('faker'); 
+  res.write('<strong>hello</strong> ');
+  res.write(req.headers["x-forwarded-for"] + '<br/>');
+  res.end(faker.hacker.phrase());
+};</textarea>
+      <div class="hookOutput"></div>
     </div>
     <div class="col-md-4" align="left">
-      <h3>Full Featured</h3>
+      <h2 style="font-size:22px;">Full Featured</h2>
       <ul class="features">
         <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
         <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
@@ -253,55 +289,15 @@ $('document').ready(function(){
       </ul>
     </div>
   </div>
+  <br/>
+
   <div class="row">
     <div class="col-md-12">
-      <div class="splash splashImage" style="margin-top: 2px;">
-        <!-- copyright for images 
-          penguin-variant is copyrighted by Larry Ewing and Simon Budig (penguin-variant.sk also by Anja Gerwinski), redistribution is free but has to include this Copyright notice.
-          jstiny - logo.js -The MIT License (MIT) Copyright (c) 2011 Christopher Williams <chris@iterativedesigns.com> 
-          tinynpm - (c) npmjs.org 
-          setuptocat - (c) Github
-        -->
-        <a href="/javascript"><img title="JavaScript!" alt="JavaScript!" width="80" height="70" src="/img/jstiny.png" id="splash-javascript"></a>
-        <a href="/modules"><img title="Node.js" alt="Node.js" width="135" height="45" src="/img/node.png" id="splash-node"></a>
-        <a href="/modules"><img title="Node Package Manager" alt="npm" width="135" height="45" src="/img/tinynpm.png" id="splash-npm"></a>
-        <a href="/gist"><img title="Github" alt="Github" width="112" height="75" src="/img/setuptocat.png" id="splash-github"></a>
-        <a href="/curl"><img title="Unix" alt="Unix" width="85" height="75" src="/img/penguin-variant.png" id="splash-unix"></a>
-
-      </div>
-
-      <br/>
-      <div class="row">
-        <div class="col-md-12">
-          <table class="lowerNav">
-            <tr valign="bottom">
-              <td align="center">
-                <h3><a href="/pricing">Pricing</a></h3>
-              </td>
-              <td align="center">
-                <h3><a href="/examples">Examples</a></h3>
-              </td>
-              <td align="center">
-                <h3><a href="http://github.com/bigcompany/hook.io/issues">Support</a></h3>
-              </td>
-            </tr>
-
-            <tr valign="bottom">
-              <td align="center">
-                &nbsp;
-              </td>
-
-              <td align="center">
-                <h3><a href="/docs">Documentation</a></h3>
-              </td>
-            </tr>
-
-          </table>
-        </div>
-      </div>
-      <br/><br/><br/>
+      <h2><a href="/examples"><em>More Example Microservices</a></em></h2>
     </div>
   </div>
+
+  <br/>
 
 </div>
 

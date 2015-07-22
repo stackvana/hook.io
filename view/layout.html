@@ -62,7 +62,8 @@
           /* Set the fixed height of the footer here */
           #push,
           #footer {
-            height: 12px;
+            /*height: 12px;*/
+            font-size: 18px;
           }
           #footer {
             padding-top:20px;
@@ -81,6 +82,10 @@
             }
           }
           
+          .githubSocialButtons {
+            position: relative;
+            top: 2px;
+          }
           .header {
             vertical-align: bottom;
             position: relative;
@@ -141,15 +146,19 @@
 
 
     <div id="footer" class="navbar navbar-fixed-bottom">
+      <div style="position:relative;bottom:7px;">
+      <div style="float:left;">
+        Copyright <a href="http://hook.io/">hook.io</a> 2015
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="githubSocialButtons"></span>
+      </div>
+      <div style="float:right;">
+        <a href="/pricing">Pricing</a> |
+        <a href="/docs">Documentation</a> |
+        <a href="http://github.com/bigcompany/hook.io/issues">Support</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      </div>
       <!-- <a href=""><img src="./img/block.png"/></a> -->
-      <div class="footerNav">
-        Copyright <a href="http://hook.io/">hook.io</a> 2015 A <a href="http://big.vc">Big</a> company
-        <div style="position: absolute;left: 280px;bottom: 5px;" class="githubSocialButtons"></div>
-        <div title="Node Package Manager" style="position: absolute;right: 129px;bottom: 4px;"><a href="/modules"><img alt="npm modules" src="/img/tinynpm.png"/></a></div>
-        <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img title="Support" alt="Support" src="/img/littlecat.png"/></a></div>
-        <div title="My Hooks" style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="/img/pipe.gif"/></a></div>
-        </div>
-    </div>
     </div>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
