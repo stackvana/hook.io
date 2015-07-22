@@ -45,6 +45,7 @@ module['exports'] = function view (opts, callback) {
         }
         params.cron = params.cronString;
 
+        // TODO: filter params for only specified resource fields?
         return hook.create(params, function(err, result){
           if (err) {
             return callback(null, err.message);
@@ -83,6 +84,11 @@ module['exports'] = function view (opts, callback) {
         });
         
       });
+    }
+
+    if (typeof req.session.gistLink === 'string') {
+      // todo: after created, unset gistSource so it doesn't keep popping up
+      $('.gist').attr('value', req.session.gistLink);
     }
 
     self.parent.components.themeSelector.present({}, function(err, html){

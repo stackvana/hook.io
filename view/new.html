@@ -66,10 +66,17 @@ input[type="checkbox"] {
   font-size: 16px;
 }
 
+.themeRow {
+  display: none;
+}
+
 </style>
 <link href="/css/jquery-ui.css" rel="stylesheet">
+
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/jquery.croneditor.js"></script>
+<script src="/js/jquery.twinkle-0.8.0.js"></script>
+
 <script type="text/javascript">
   // lookup themes from curated theme list
   // TODO: Create "themes" resource and persist this to database
@@ -102,6 +109,7 @@ input[type="checkbox"] {
 
   $(document).ready(function(){
     $('.cronDiv').croneditor();
+
     $('input[name="cronActive"]').click(function(){
       if($(this).prop('checked')) {
         $('.cronRow').show();
@@ -110,6 +118,31 @@ input[type="checkbox"] {
       }
     });
 
+    $('input[name="themeActive"]').click(function(){
+      if($(this).prop('checked')) {
+        $('.themeRow').show();
+      } else {
+        $('.themeRow').hide();
+      }
+    });
+
+    var options = {
+      effect: 'drops',
+      effectOptions: {
+        radius: 80,
+        duration: 1500,
+        width: 2,
+        count: 3,
+        delay: 100
+      }
+    };
+    
+    var p = $('#name').position();
+    $.twinkle($('#name'), p.left + 15, p.top + 20, options);
+    $('#name').focus();
+    
+    // $('label[for="name"]').twinkle(options);
+    
     $('.themeSelect').change(function(e){
       var val = themes[$(this).val()];
       console.log(val)
@@ -132,16 +165,16 @@ input[type="checkbox"] {
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
   <form method="post" action="/new" role="form" class="well">
-    <legend><h2>New Hook</h2></legend>
+    <legend><h2>Create new Hook</h2></legend>
 
 
     <div class="form-group">
-      <label for="name">Hook Name</label>
+      <label for="name">Name</label>
       <input class="form-control" type="text" id="name" name="name" placeholder="name of hook" size="40"/>    
     </div>
 
     <div class="form-group">
-      <label for="gist">Hook Source Code</label>
+      <label for="gist">Source Code</label>
       <input type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
 
       <div class="tiny">
@@ -160,7 +193,13 @@ input[type="checkbox"] {
     </div>
     -->
 
-    <div class="themeSelector well"></div>
+
+    <div class="form-group">
+      <input type="checkbox" class="themeActive" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
+      <label for="hookSource">Apply a Theme to this Hook's output</label>
+    </div>
+
+    <div class="themeSelector well themeRow"></div>
 
     <div class="form-group">
       <input type="checkbox" class="cronActive" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
@@ -170,16 +209,18 @@ input[type="checkbox"] {
     <div class="form-group cronRow">
       <div class="cronDiv"></div>
     </div>
-
+    <!-- 
     <div class="form-group">
       <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">
       <label for="isPublic">Display Hook in public Hook registry</label>
     </div>
+    -->
     <input tabindex="1" id="create" name="create" type="submit" value="Create new Hook"/ class="btn">
   </form>
 
   <br/>
 
+  <!--
   <h3>Not sure how to get started? Here is a basic echo example below.</h3>
 
   <form method="GET" action="/Marak/echo">
@@ -187,7 +228,7 @@ input[type="checkbox"] {
   </form>
 
   <div data-gist="357645b8a17daeb17458">Loading...</div>
-
+  -->
   <br/>
   <br/>
 </div>

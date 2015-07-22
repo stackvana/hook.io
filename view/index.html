@@ -25,6 +25,16 @@
   .gist {
     width: 500px;
   }
+  
+  .btn-group {
+    box-shadow: 10px 10px 5px #888888;
+    margin-bottom: 10px;
+  }
+  
+  .btn-default:hover {
+    background-color: #CCEEF9;
+  }
+
   .hookOutput {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -88,7 +98,6 @@
     margin-bottom:5px;
   }
 
-  
   .curls input {
     width: 368px;
   }
@@ -133,63 +142,111 @@
     font-size: 22px;
   }
   
+  .loadingImg  {
+    display: none;
+    height: 48px;
+    width: 48px;
+  }
+  
+  .callToAction {
+    font-size: 20px;
+  }
 </style>
 
 <!-- Create a simple CodeMirror instance -->
 <link rel="stylesheet" href="/js/codemirror.css">
 <script src="/js/codemirror.js"></script>
 <script src="/js/javascript.js"></script>
-
+<script src="/js/jquery.twinkle-0.8.0.js"></script>
 
 
 <script type="text/javascript">
 
 $('document').ready(function(){
   
+  function deployCode () {
+    var now = new Date().getTime();
+
+    $.post('/Marak/gateway', { source: editor.getValue() }, function (res){
+
+      var done = new Date().getTime();
+
+      function finish () {
+//        $('.loadingImg').hide();
+        $('.loadingImg').hide();
+
+        $('.CodeMirror').css('opacity', 1);
+        $('.hookOutput').css('opacity', 1);
+
+        $('.CodeMirror').hide();
+        $('.hookOutput').html(res);
+        $('.hookOutput').show();
+        console.log(res)
+      };
+      if (done - now < 500) {
+        setTimeout(function(){
+          finish();
+        }, 500)
+      } else {
+        finish();
+      }
+
+    });
+  };
+  
+  function saveToGithub () {
+    $('textarea').val(editor.getValue())
+    $('form').submit();
+    /*
+    $.post('/gist', { source: editor.getValue() }, function (res){
+      console.log(res);
+    });
+    */
+  };
+  
   $.fn.random = function() {
     return this.eq(Math.floor(Math.random() * this.length));
   }          
 
+  $('.saveButton').on('click', function(){
+    // post current code to be forked / saved in current session
+    saveToGithub();
+  });
+
   $('.runButton').on('click', function(){
     $('.CodeMirror').css('opacity', 0.4);
-    $.post('/Marak/gateway', { source: editor.getValue() }, function (res){
-      $('.CodeMirror').css('opacity', 1);
-      $('.CodeMirror').hide();
-//      $('.runButton').hide();
-//      $('.codeButton').show();
-      
-      $('.hookOutput').html(res);
-      $('.hookOutput').show();
-      console.log(res)
-    });
+    $('.hookOutput').css('opacity', 0.4);
+    $('.loadingImg').show();
+    
+    deployCode();
+
   });
 
+  // only twinkle once
+  var codeTwinkled = false;
   $('.codeButton').on('click', function(){
     $('.CodeMirror').show();
-//    $('.runButton').show();
-//    $('.codeButton').hide();
+    editor.focus();
+    if (!codeTwinkled) {
+      codeTwinkled = true;
+      editor.setCursor(6,13);
+      var c = editor.cursorCoords();
+      var options = {
+        effect: 'drops',
+        effectOptions: {
+          radius: 80,
+          duration: 1500,
+          width: 2,
+          count: 3,
+          delay: 100
+        }
+      };
+      $.twinkle($('body'), c.left, c.top, options);
+    }
     $('.hookOutput').hide();
-    
   });
 
 
-  $('.splashImage img').jrumble({
-     speed: 100
-   });
-
-   setInterval(function(){
-     var el = $('.splashImage img').random();
-     el.trigger('startRumble');
-     setTimeout(function(){
-       el.trigger('stopRumble');
-     }, 1000)
-   }, 5000);
-
-   $('.splashImage img').hover(function(){
-     $(this).trigger('startRumble');
-   }, function(){
-     $(this).trigger('stopRumble');
-   });
 
 
   var loadHeaderSection = function loadHeaderSection () {
@@ -229,6 +286,21 @@ $('document').ready(function(){
   editor = CodeMirror.fromTextArea($('textarea').get(0), {
     lineNumbers: true
   });
+  
+    
+  setTimeout(function(){
+    var options = {
+      effect: 'drops',
+      effectOptions: {
+        radius: 160,
+        duration: 1500,
+        width: 2,
+        count: 3,
+        delay: 100
+      }
+    };
+    $('.runButton').twinkle(options);
+  }, 400);
 
 });
 var editor;
@@ -239,10 +311,16 @@ var editor;
 
 <div class="container-fluid loginBar">
   <div class="row">
-    
-    <div class="col-md-12" align="center">
+    <div class="col-md-3" align="center">
+      <span class="callToAction"><a href="http://hook.io/login">Free for Developers!</a></span>
+    </div>
+    <div class="col-md-6" align="center">
       <a href="/login" class="btn btn-social btn-github" style="padding: 14px 24px;font-size: 21px;"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
     </div>
+    <div class="col-md-3" align="center">
+      <span class="callToAction"><a href="http://hook.io/pricing">Pay what you want pricing!</a></span>
+    </div>
+    
   </div>
   <br/>
   <div class="row">
@@ -260,7 +338,9 @@ var editor;
       <button class="codeButton btn btn-default">Edit Code</button>
       <button class="saveButton btn btn-default">Save Code to Github</button>
       </div>
-      <textarea>module['exports'] = function echo (hook) {
+      &nbsp;&nbsp;&nbsp;&nbsp;<img src="/img/default.svg" class="loadingImg"/>
+      <form action="/gist" method="POST">
+      <textarea name="source">module['exports'] = function echo (hook) {
   // Access Node.js HTTP Request and Response objects
   var req = hook.req,
       res = hook.res;
@@ -270,30 +350,33 @@ var editor;
   res.write(req.headers["x-forwarded-for"] + '<br/>');
   res.end(faker.hacker.phrase());
 };</textarea>
+    </form>
       <div class="hookOutput"></div>
     </div>
     <div class="col-md-4" align="left">
-      <h2 style="font-size:22px;">Full Featured</h2>
-      <ul class="features">
-        <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
-        <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
-        <li><a href="http://hook.io/docs#schema">Input Validators</a></li>
-        <li><a href="http://hook.io/cron">Cron Tasks</a></li>
-        <li><a href="http://hook.io/docs#cache">Caching Controls</a></li>
-        <!-- <li><a href="http://hook.io/docs#metrics">Metrics</a></li> -->
-        <li><a href="http://hook.io/themes">Theming Engine</a></li>
-        <li><a href="http://hook.io/docs#forms">Form Generator</a></li>
-        <li><a href="https://hook.io/">HTTPS</a></li>
-        <li><a href="http://hook.io/domains">Custom Domains</a></li>
-        <li><a href="http://hook.io/curl">Unix Pipe Integration</a></li>
-      </ul>
+      <div>
+        <h2 style="font-size:22px;">Full Featured</h2>
+        <ul class="features">
+          <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
+          <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
+          <li><a href="http://hook.io/docs#schema">Input Validators</a></li>
+          <li><a href="http://hook.io/cron">Cron Tasks</a></li>
+          <li><a href="http://hook.io/modules">NPM Modules</a></li>
+          <!-- <li><a href="http://hook.io/docs#metrics">Metrics</a></li> -->
+          <li><a href="http://hook.io/themes">Theming Engine</a></li>
+          <li><a href="http://hook.io/docs#forms">Form Generator</a></li>
+          <li><a href="https://hook.io/">HTTPS</a></li>
+          <li><a href="http://hook.io/domains">Custom Domains</a></li>
+          <li><a href="http://hook.io/curl">Unix Pipe Integration</a></li>
+        </ul>
+      </div>
     </div>
   </div>
   <br/>
 
   <div class="row">
     <div class="col-md-12">
-      <h2><a href="/examples"><em>More Example Microservices</a></em></h2>
+      <h2><a href="/examples"><em>Show Me More Example Microservices</a></em></h2>
     </div>
   </div>
 
