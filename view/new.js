@@ -66,7 +66,7 @@ module['exports'] = function view (opts, callback) {
             }
             hook.attemptToRequireUntrustedHook(opts, function(err, _module){
               if (err) {
-                return opts.res.end(hook.formatError(err))
+                return opts.res.end(err.message)
               }
               h.mschema = _module.schema;
               h.theme = _module.theme;
