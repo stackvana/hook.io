@@ -34,6 +34,9 @@ sudo make install
 # install couchdb
 sudo apt-get install couchdb -y
 
+# install redis
+sudo apt-get install redis-server -y
+
 # at this stage, you will want to edit couch's default config
 # TODO: automate this
 nano /etc/couchdb/default.ini

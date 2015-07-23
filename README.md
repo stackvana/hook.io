@@ -6,7 +6,7 @@
 To start using hook.io visit the website at [http://hook.io](http://hook.io). Here you will find many examples and documentation on how to use hook.io
 
 
-**Built with:** [Node.js](http://nodejs.org), [CouchDB](http://couchdb.com), and [Github Gist](http://gist.github.com). [Node Package Manager](http://npmjs.org) modules are fully supported.
+**Built with:** [Node.js](http://nodejs.org), [CouchDB](http://couchdb.com), [Redis](http://redis.io), and [Github Gist](http://gist.github.com). [Node Package Manager](http://npmjs.org) modules are fully supported.
 
 Architectural details can be found a bit further down.
 
