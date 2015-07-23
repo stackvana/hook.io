@@ -14,6 +14,8 @@ module['exports'] = {
     "host": "localhost"
   },
   github: {
+    accessName: "",
+    accessToken: "",
     // working github tokens are given
     // these are dedicated for hook.io testing
     // don't use these in production as they may be revoked and refeshed at anytime
