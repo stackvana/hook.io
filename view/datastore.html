@@ -1,0 +1,48 @@
+<style>
+  .api {
+    font-size: 22px;
+    list-style: none;
+  }
+</style>
+<div align="left">
+  <h1>Datastore<h1>
+
+  <h2>A powerful key-value database for storing and retrieving persistent data from a Hook</h2>
+  <p>
+    Hook.io's Datastore API allows the developer to seamlessly set and retrieve documents from a persistent datastore using unique keys.
+  </p>
+
+  <div class="last">
+    <h2>Your latests records</h2>
+    <ul class="lastKeys">
+      <li>list items go here</li>
+    </ul>
+  </div>
+
+  <h2>API</h2>
+  <ul class="api">
+    <li>hook.datastore.set(<em>key, value, callback</em>)</li>
+    <li>hook.datastore.get(<em>key, callback</em>)</li>
+    <li>hook.datastore.del(<em>key, callback</em>)</li>
+    <li>hook.datastore.exists(<em>key, callback</em>)</li>
+    <li>hook.datastore.recent(<em>callback</em>)</li>
+  </ul>
+
+  <p>This Datastore API is powered internally by Redis, so any native Redis commands could become availble. If you require an additional method not listed please <a href="http://github.com/bigcompany/hook.io/issues">file a support issue</a>.</p>
+
+  <h2>Limitations</h2>
+  <p>Currently, free development accounts are limited to 1,000 unique documents per account. If you require additional documents you will need to upgrade to a paid account.</p>
+
+  <h2>Example:</h3>
+  <pre>
+    <code>
+hook.datastore.set('mykey', 'myvalue', function(err, result){});
+
+hook.datastore.set('/foo/anotherKey', { foo: "bar" }, function(err, result){});
+
+hook.datastore.get('mykey', function(err, result){});
+
+hook.datastore.incr('myCount', function(err, result){});
+    </code>
+  </pre>
+</div>
