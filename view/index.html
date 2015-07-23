@@ -167,7 +167,7 @@ $('document').ready(function(){
   function deployCode () {
     var now = new Date().getTime();
 
-    $.post('/Marak/gateway', { source: editor.getValue() }, function (res){
+    $.post('http://gateway.hook.io/', { source: editor.getValue() }, function (res){
 
       var done = new Date().getTime();
 
