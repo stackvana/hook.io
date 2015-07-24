@@ -8,6 +8,8 @@ var mustache = require('mustache');
 var mergeParams = require('./mergeParams');
 var bodyParser = require('body-parser');
 // var themes = require('../lib/resources/themes');
+var server = require('../lib/server');
+
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -41,7 +43,7 @@ module['exports'] = function view (opts, callback) {
       return res.end(err.message);
     }
     if (result.length === 0) {
-      return handle404(req, res);
+      return server.handle404(req, res);
     }
     req.hook = result[0];
     bodyParser()(req, res, function bodyParsed(){
