@@ -102,7 +102,7 @@ module['exports'] = function view (opts, callback) {
     } else {
       // get latest metric
       metric.get('/' + req.hook.owner + "/" + req.hook.name + "/hits", function(err, count){
-        req.hook.ran = count;
+        req.hook.ran = count || 0;
         finish(req.hook);
       });
     }
