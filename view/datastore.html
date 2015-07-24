@@ -5,7 +5,7 @@
   }
 </style>
 <div align="left">
-  <h1>Datastore<h1>
+  <h1>Cloud Datastore<h1>
 
   <h2>A powerful key-value database for storing and retrieving persistent data from a Hook</h2>
   <p>
@@ -28,21 +28,13 @@
     <li>hook.datastore.recent(<em>callback</em>)</li>
   </ul>
 
-  <p>This Datastore API is powered internally by Redis, so any native Redis commands could become availble. If you require an additional method not listed please <a href="http://github.com/bigcompany/hook.io/issues">file a support issue</a>.</p>
+  <p>This Datastore API is powered internally by Redis, so any native <a href="http://redis.io/commands">Redis commands</a> could become available. If you require an additional method not listed please <a href="http://github.com/bigcompany/hook.io/issues">file a support issue</a>.</p>
 
   <h2>Limitations</h2>
-  <p>Currently, free development accounts are limited to 1,000 unique documents per account. If you require additional documents you will need to upgrade to a paid account.</p>
+  <p>Currently free development accounts are limited to 1,000 unique documents per account. If you require more than 1,000 documents you can updgrade to a <a href="/billing">paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
 
-  <h2>Example:</h3>
-  <pre>
-    <code>
-hook.datastore.set('mykey', 'myvalue', function(err, result){});
-
-hook.datastore.set('/foo/anotherKey', { foo: "bar" }, function(err, result){});
-
-hook.datastore.get('mykey', function(err, result){});
-
-hook.datastore.incr('myCount', function(err, result){});
-    </code>
-  </pre>
+  <h2>Datastore Example:</h3> <br/><br/>
+  <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
+  <br/>
+  <br/>
 </div>
