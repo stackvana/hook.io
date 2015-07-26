@@ -22,6 +22,10 @@ module['exports'] = function view (opts, callback) {
       return callback(null, JSON.stringify(result, true, 2));
     });
   } else {
+    $('.last').remove();
+    return callback(null, $.html());
+    
+    /* TODO: 
     datastore.recent(function(err, keys){
       if (err) {
         return callback(err.message);
@@ -35,6 +39,7 @@ module['exports'] = function view (opts, callback) {
       $('.lastKeys').html(str);
       return callback(null, $.html());
     });
+    */
   }
 
 };
