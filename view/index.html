@@ -460,8 +460,8 @@ var editor;
           </div>
         -->
       </div>
-      <!-- gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
-      <form action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
+      <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
+      <form action="http://gateway.hook.io" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="source" id="source">// A simple hello world microservice 
 // Click "Deploy Service" to deploy this code
 // Service will respond to HTTP requests with a string
