@@ -9,7 +9,7 @@ module['exports'] = function view (opts, callback) {
       params = req.resource.params;
 
   if (typeof params.signedMeUp !== "undefined" || typeof params.s !== "undefined") {
-    req.session.referredBy = req.params.username;
+    req.session.referredBy = req.params.owner;
     return res.redirect("/");
   }
   
