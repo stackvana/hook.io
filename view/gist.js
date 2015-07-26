@@ -10,12 +10,13 @@ module['exports'] = function view (opts, callback) {
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){
       var params = req.resource.params;
-      console.log('gist got params', params);
       // if no session, check if source exists
       // if source exists, save it to the current session in new variable
       // set redirect action back to this page with session variable
-      if (typeof params.source !== 'undefined' && !req.isAuthenticated()) {
+      if (typeof params.source !== 'undefined') {
         req.session.gistSource = params.source;
+      }
+      if (!req.isAuthenticated()) {
         req.session.redirectTo = "/gist";
         return res.redirect('/login');
       }

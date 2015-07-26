@@ -1,3 +1,8 @@
+<!-- 
+    this entire file is sloppy. 
+    please open up a pull request at https://github.com/bigcompany/hook.io to clean it up
+    source @ https://github.com/bigcompany/hook.io/blob/master/view/index.html 
+-->
 <style>
   .userBar {
     font-size: 26px;
@@ -21,7 +26,20 @@
     margin-left: 16px;
   }
 */
+  iframe {
+    padding: 0px;
+    margin: 0px;
+  }
+  .gatewayForm {
+    padding: 0px;
+    margin: 0px;
+  }
 
+  .saveForm {
+    padding: 0px;
+    margin: 0px;
+  }
+  
   .gist {
     width: 500px;
   }
@@ -35,17 +53,18 @@
     background-color: #CCEEF9;
   }
 
-  .hookOutput {
+  .hookFrame {
     margin-top: 10px;
     margin-bottom: 10px;
     font-family: monospace;
-    height: 200px;
+    height: 210px;
     color: black;
     border: solid;
     border-width: 1px;
     box-shadow: 10px 10px 5px #888888;
     display: none;
     padding: 10px;
+    width: 100%;
   }
   .codeButton {
    /* display: none; */
@@ -78,14 +97,6 @@
     font-size: 22px;
     text-align: left;
   }
-
-  .userSplash {
-    background-image: url('/img/robotcat.png');
-    width: 360px;
-    height: 342px;
-    float: left;
-    /* margin-left: 100px; */
-   }
 
   .examples {
     /* width: 580px; */
@@ -151,6 +162,39 @@
   .callToAction {
     font-size: 20px;
   }
+  
+  .selectSnippet {
+    height: 39px;
+    margin: 0px;
+    padding: 0px;  
+  }
+  
+  .prevSnippet {
+    /* display: none; */
+  }
+  
+  .transport .octicon {
+    font-size: 28px;
+  }
+
+  .transport {
+    color: black;
+    border: solid;
+    border-width: 1px;
+    box-shadow: 10px 10px 5px #888888;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 10px;
+    width: 100%;
+  }
+  .transportControl {
+    padding-bottom: 10px;
+    margin-right: 10px;
+    font-size: 22px;
+    float: left;
+    padding-top: 5px;  
+  }
+
 </style>
 
 <!-- Create a simple CodeMirror instance -->
@@ -164,44 +208,45 @@
 
 $('document').ready(function(){
   
-  function deployCode () {
-    var now = new Date().getTime();
-
-    $.post('http://gateway.hook.io/', { source: editor.getValue() }, function (res){
-
-      var done = new Date().getTime();
-
-      function finish () {
-//        $('.loadingImg').hide();
-        $('.loadingImg').hide();
-
-        $('.CodeMirror').css('opacity', 1);
-        $('.hookOutput').css('opacity', 1);
-
-        $('.CodeMirror').hide();
-        $('.hookOutput').html(res);
-        $('.hookOutput').show();
-        console.log(res)
-      };
-      if (done - now < 500) {
-        setTimeout(function(){
-          finish();
-        }, 500)
-      } else {
-        finish();
-      }
-
+  var request = null, snippetLoading = false;
+  
+  function loadSnippet (src) {
+    // don't stack ajax requests...just cancel the last one :-)
+    if (snippetLoading) {
+      request.abort();
+    }
+    snippetLoading = true;
+    showCode();
+    editor.setValue("loading...");
+    loadingSnippet();
+    request = $.get('http://hook.io' + src + '/source', function (res) {
+      snippetLoaded();
+      editor.setValue(res);
     });
   };
   
+  $('.hookFrame').on("load", function() {
+    snippetLoaded();
+    $('.CodeMirror').hide();
+    $('.hookFrame').show();
+  });
+  
+  var deployingCode = false;
+  
+  function deployCode () {
+    if (snippetLoading) {
+      // do not attempt to deploy code if a new snippet is still loading...
+      return false;
+    }
+    var now = new Date().getTime();
+    $('#source').val(editor.getValue());
+    $('.gatewayForm').submit();
+    return;
+  };
+  
   function saveToGithub () {
-    $('textarea').val(editor.getValue())
-    $('form').submit();
-    /*
-    $.post('/gist', { source: editor.getValue() }, function (res){
-      console.log(res);
-    });
-    */
+    $('.gistSource').val(editor.getValue()); // name="source"
+    $('.saveForm').submit();
   };
   
   $.fn.random = function() {
@@ -213,40 +258,38 @@ $('document').ready(function(){
     saveToGithub();
   });
 
-  $('.runButton').on('click', function(){
+
+  function loadingSnippet () {
     $('.CodeMirror').css('opacity', 0.4);
-    $('.hookOutput').css('opacity', 0.4);
+    $('.hookFrame').css('opacity', 0.4);
     $('.loadingImg').show();
-    
+  };
+
+  function snippetLoaded () {
+    snippetLoading = false;
+    $('.loadingImg').hide();
+    $('.CodeMirror').css('opacity', 1);
+    $('.hookFrame').css('opacity', 1);
+  };
+
+
+  $('.runButton').on('click', function(){
+    loadingSnippet();
     deployCode();
-
   });
 
-  // only twinkle once
-  var codeTwinkled = false;
-  $('.codeButton').on('click', function(){
+  function showCode () {
     $('.CodeMirror').show();
+    editor.setCursor(0,0);
     editor.focus();
-    if (!codeTwinkled) {
-      codeTwinkled = true;
-      editor.setCursor(6,13);
-      var c = editor.cursorCoords();
-      var options = {
-        effect: 'drops',
-        effectOptions: {
-          radius: 80,
-          duration: 1500,
-          width: 2,
-          count: 3,
-          delay: 100
-        }
-      };
-      $.twinkle($('body'), c.left, c.top, options);
-    }
-    $('.hookOutput').hide();
+    editor.refresh();
+    $('.hookFrame').hide();
+  };
+  function showResult () {};
+
+  $('.codeButton').on('click', function(){
+    showCode();
   });
-
-
 
 
   var loadHeaderSection = function loadHeaderSection () {
@@ -299,8 +342,35 @@ $('document').ready(function(){
         delay: 100
       }
     };
-    $('.runButton').twinkle(options);
+    // $('.runButton').twinkle(options);
   }, 400);
+
+  $('.selectSnippet').on('change', function(){
+    // var item = $(this)
+    loadSnippet($('.selectSnippet').val());
+  });
+
+  $('.nextSnippet').on('click', function() {
+    $('.prevSnippet').show();
+    var index = $('.selectSnippet').prop('selectedIndex');
+    var next = index + 1;
+    if (next === $('.selectSnippet option').length) {
+      next = 0;
+    }
+    $('.selectSnippet').prop('selectedIndex', next).change();
+    return false;
+  });
+
+  $('.prevSnippet').on('click', function(){
+    var index = $('.selectSnippet').prop('selectedIndex');
+    var prev = index - 1;
+    if (prev === -1) {
+      prev = $('.selectSnippet option').length - 1;
+    }
+    $('.selectSnippet').prop('selectedIndex', prev).change();
+    return false;
+  });
+  // loadSnippet();
 
 });
 var editor;
@@ -309,8 +379,21 @@ var editor;
 <br/>
 
 
-<div class="container-fluid loginBar">
-  <div class="row">
+<div class="container-fluid">
+
+  <div class="userBar">
+    <span class="welcome"></span><br/>
+    <a href="/new">Create Hook</a><br/>
+    <a href="/Marak" class="yourHooks">My Hooks</a><br/>
+    <a href="/datastore" class="yourDatastore">My Datastore</a><br/>
+    <a href="/domains" class="yourDomains">Custom Domains</a><br/>
+    <a href="/account" class="yourAccount">Account Information</a><br/>
+    <a href="/billing" class="yourBilling">Billing Information</a><br/>
+    <a href="/affiliates" class="yourAffiliates">Affiliates Program</a><br/>
+    <a href="/logout">Logout</a>
+  </div>
+
+  <div class="row loginBar">
     <div class="col-md-3" align="center">
       <span class="callToAction"><a href="http://hook.io/login">Free for Developers!</a></span>
     </div>
@@ -323,7 +406,7 @@ var editor;
     
   </div>
   <br/>
-  <div class="row">
+  <div class="row loginBar">
     <div class="col-md-12" align="center">
       <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
       
@@ -333,32 +416,73 @@ var editor;
   
   <div class="row">
     <div class="col-md-8" align="left">
-      <div class="btn-group" role="group">
-      <button class="runButton btn btn-primary">Deploy Service</button>
-      <button class="codeButton btn btn-default">Edit Code</button>
-      <button class="saveButton btn btn-default">Save Code to Github</button>
+      <h2>Interactive Microservice Tutorial</h2>
+
+      <div class="btn-group transport" role="group">
+        <select name="selectSnippet" class="selectSnippet btn btn-default">
+          <option value="/Marak/examples/helloWorld">hello world</option>
+          <option value="/Marak/examples/simpleHttpRequest">send outgoing http requests</option>
+          <option value="/Marak/examples/requestParameters">access incoming request data</option>
+          <option value="/Marak/examples/inputSchema">add input schemas</option>
+          <option value="/Marak/examples/transformStream">transform streaming requests</option>
+          <option value="/Marak/examples/pipeHook">pipe streaming requests</option>
+          <option value="/Marak/examples/mergeStreams">merge streams</option>
+          <option value="/Marak/examples/datastore">use the cloud datastore</option>
+          <option value="/Marak/examples/imageResize">resize images</option>
+          <option value="/Marak/examples/fakeData">generate fake data</option>
+          <!--
+          <option value="/Marak/coin">get crypto-currency prices</option>
+          <option value="/Marak/geoip">lookup requests geoip</option>
+          -->
+          <!-- <option value="/Marak/markdown">render markdown</option> -->
+          <!-- <option value="/Marak/spellcheck">spellcheck words</option> -->
+        </select>
+        <div class="transportControl">&nbsp;
+          <a class="prevSnippet" href="#prev"><span class="octicon octicon-playback-rewind"></span>
+          Prev</a>
+        </div>
+        <div class="transportControl">
+          <a class="nextSnippet" href="#next">
+          Next&nbsp;<span class="octicon octicon-playback-fast-forward"></span></a>
+        </div>
+        <div class="transportControl">
+          <!-- /gist endpoint is used for creating new gists from source code as string -->
+          <form class="saveForm" action="/gist" method="POST">
+            <input name="source" class="gistSource" type="hidden"/>
+            <button class="runButton btn btn-primary">Deploy Service</button>
+            <button class="codeButton btn btn-default">Edit Service</button>
+            <button class="saveButton btn btn-default">Save Service to Github</button>
+          </form>
+        </div>
+        <!--
+          <div class="transportControl">
+            <img src="/img/default.svg" class="loadingImg"/>
+          </div>
+        -->
       </div>
-      &nbsp;&nbsp;&nbsp;&nbsp;<img src="/img/default.svg" class="loadingImg"/>
-      <form action="/gist" method="POST">
-      <textarea name="source">module['exports'] = function echo (hook) {
-  // Access Node.js HTTP Request and Response objects
-  var req = hook.req,
-      res = hook.res;
-  // Use NPM Modules
-  var faker = require('faker'); 
-  res.write('<strong>hello</strong> ');
-  res.write(req.headers["x-forwarded-for"] + '<br/>');
-  res.end(faker.hacker.phrase());
+      <!-- gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
+      <form action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
+      <textarea name="source" id="source">// A simple hello world microservice 
+// Click "Deploy Service" to deploy this code
+// Service will respond to HTTP requests with a string
+module['exports'] = function helloWorld (hook) {
+  // hook.req is a Node.js http.IncomingMessage
+  var host = hook.req.host;
+  // hook.res is a Node.js httpServer.ServerResponse
+  // Respond to the request with a simple string
+  hook.res.end(host + ' says, "Hello world!"');
 };</textarea>
     </form>
-      <div class="hookOutput"></div>
+      <iframe name="hookFrame" class="hookFrame" src=""></iframe>
+      <!-- <div class="hookOutput"></div> -->
     </div>
     <div class="col-md-4" align="left">
-      <div>
-        <h2 style="font-size:22px;">Full Featured</h2>
+      <div class="featuresDiv">
+        <h2>Full Featured</h2>
         <ul class="features">
           <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
           <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
+          <li><a href="http://hook.io/datastore">Cloud Datastore</a></li>
           <li><a href="http://hook.io/docs#schema">Input Validators</a></li>
           <li><a href="http://hook.io/modules">NPM Modules</a></li>
           <li><a href="http://hook.io/cron">Cron Tasks</a></li>
@@ -374,25 +498,7 @@ var editor;
   </div>
   <br/>
 
-  <div class="row">
-    <div class="col-md-12">
-      <h2><a href="/examples"><em>Show Me More Example Microservices</a></em></h2>
-    </div>
-  </div>
-
   <br/>
 
 </div>
 
-<div class="userBar">
-  <span class="welcome"></span><br/>
-  <a href="/new">Create Hook</a><br/>
-  <a href="/Marak" class="yourHooks">My Hooks</a><br/>
-  <a href="/domains" class="yourDomains">Custom Domains</a><br/>
-  <a href="/account" class="yourAccount">Account Information</a><br/>
-  <a href="/billing" class="yourBilling">Billing Information</a><br/>
-  <a href="/affiliates" class="yourAffiliates">Affiliates Program</a><br/>
-  <a href="/logout">Logout</a>
-
-</div>
-<div class="userSplash"></div>

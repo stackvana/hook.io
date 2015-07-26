@@ -55,13 +55,48 @@ module['exports'] = function view (opts, callback) {
   // end curl signups
   //
 
+  // Render a cURL friendly response
+  if (req.headers.accept === "*/*") {
+    // TODO: move curl welcome screen to new module
+    var message = "Greetings " + req.connection.remoteAddress.toString() + '\n';
+    message += "Thank you for cURLing hook.io! \n\n"
+    message += "We understand that not everyone is super thrilled to use a 'web-browser',\n";
+    message += "so we also provide terminal services for accessing our hosting platform.\n\n";
+
+    message += "Here are some tricks to start! \n\n";
+    message += "cURL us back later for a more comprehensive terminal interface with ssh support. \n\n";
+
+    message += "Sign up for a free hook.io account!\n\n".underline;
+    message += "  curl http://hook.io?signup=youremail@marak.com  \n\n";
+
+    message += "Send Query String Data\n\n".underline;
+    message += "  curl --data 'foo=bar&hello=there' http://echo.hook.io/ \n\n";
+    
+    message += "Post JSON Data\n\n".underline;
+    message += "  curl -H \"Content-Type: application/json\" -X POST -d '{\"foo\":\"bar\",\"hello\":\"there\"}' http://echo.hook.io \n\n";
+
+    message += "Pipe and Transform Data\n\n".underline;
+    message += "  echo 'foo' | curl --header 'content-type: application/octet-stream' --data-binary @- http://transform.hook.io/ \n\n";
+
+    message += "Pipe JavaScript Functions to the Cloud\n\n".underline;
+    message += "  Note: This example requires a echo.js microservice file\n";
+    message += "  See:  http://echo.hook.io/source for example source code\n\n";
+   
+    message += "  cat echo.js | curl --data-urlencode source@- http://gateway.hook.io\n\n";
+
+    message += "Pipe Binary Data As Multipart Form Upload\n\n".underline;
+    message += "  Note: This example requires a cat.png image file.\n\n";
+    message += "  cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' http://image.rotate.hook.io/ > upsidedown-cat.png \n\n";
+
+    return res.end(message);
+  }
   if (typeof user === "undefined") {
     $('.userBar').remove();
-    $('.userSplash').remove();
   } else {
     $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
     $('.loginBar').remove();
-    $('.tagline').remove();
+    $('.featuresDiv').remove();
+    //    $('.tagline').remove();
     $('.yourHooks').attr("href", "/" + user);
     $('.splash').remove();
   }
