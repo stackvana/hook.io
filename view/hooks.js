@@ -7,7 +7,7 @@ module['exports'] = function view (opts, callback) {
       params = req.resource.params;
 
   if (typeof params.signedMeUp !== "undefined" || typeof params.s !== "undefined") {
-    req.session.referredBy = req.params.username;
+    req.session.referredBy = req.params.owner;
     return res.redirect("/");
   }
 
@@ -17,7 +17,7 @@ module['exports'] = function view (opts, callback) {
 
   // if there is no referral set, assign one based on the owner of the current hook
   if (typeof req.session.referredBy === "undefined") {
-    req.session.referredBy = req.params.username;
+    req.session.referredBy = req.params.owner;
   }
 
   // sort hooks alphabetically by name
@@ -35,7 +35,7 @@ module['exports'] = function view (opts, callback) {
   for (var h in opts.hooks) {
     // TODO: add ability to delete hooks https://github.com/bigcompany/hook.io/issues/47
     var hookLink = "/" + opts.hooks[h].owner + "/" + opts.hooks[h].name + "";
-    if (req.user && req.params.username.toLowerCase() === req.user.username.toLowerCase()) {
+    if (req.user && req.params.owner.toLowerCase() === req.user.username.toLowerCase()) {
       $('.hooks').append('<tr><td class="col-md-8"><a href="' + hookLink + '">' + opts.hooks[h].name + '</a></td><td class="col-md-4" align="right"><a href="' + hookLink + '?admin=true"><span class="mega-octicon octicon-home" style="min-width: 32px;"></span></a>&nbsp;&nbsp;<a class="deleteLink" data-name="' + opts.hooks[h].owner + "/" + opts.hooks[h].name +'" href="' + hookLink + '?delete=true"><span class="mega-octicon octicon-trashcan" style="min-width: 32px;"></span></a></td></tr>')
     } else {
       $('.hooks').append('<tr><td><a href="' + hookLink + '">' + opts.hooks[h].name + '</a></td></tr>')

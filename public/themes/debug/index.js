@@ -30,7 +30,7 @@ module['exports'] = function view (opts, callback) {
       result = opts;
   var $ = this.$;
   var run = params.run;
-  $('title').html(req.params.username + "/" + req.params.hook);
+  $('title').html(req.params.owner + "/" + req.params.hook);
   var gist = opts.gist || params.gist;
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
   $('.gist').html('<a href="' + gist + '">' + gist + '</a>');
@@ -39,7 +39,7 @@ module['exports'] = function view (opts, callback) {
   $('.hookDocs .docsHeader').remove();
 
   /* TODO: req has no passport session in worker, session info should be forwarded */
-  if (req.session.user && req.session.user === req.params.username) {
+  if (req.session.user && req.session.user === req.params.owner) {
     $('#fork').remove();
   } else {
     $('#edit').remove();
@@ -49,7 +49,7 @@ module['exports'] = function view (opts, callback) {
     $('.theme').attr('value', params.theme);
   }
   if (params.edit) {
-    return res.redirect(301, config.baseUrl + "/admin?owner=" + req.params.username + "&hook=" + req.params.hook);
+    return res.redirect(301, config.baseUrl + "/admin?owner=" + req.params.owner + "&hook=" + req.params.hook);
   }
 
   if (true) {
@@ -181,7 +181,7 @@ module['exports'] = function view (opts, callback) {
     form: {
       legend: req.hook.name + ' test form',
       submit: "Test Hook",
-      action: "/" + req.params.username + "/" + req.params.hook
+      action: "/" + req.params.owner + "/" + req.params.hook
     },
     schema: formSchema,
     }, function (err, result){

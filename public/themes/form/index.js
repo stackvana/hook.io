@@ -13,7 +13,7 @@ module['exports'] = function view (opts, callback) {
 
   var $ = this.$;
   var run = params.run;
-  $('title').html(req.params.username + "/" + req.params.hook);
+  $('title').html(req.params.owner + "/" + req.params.hook);
   
   
 //  $('.themeSelector').append('<option>' + req.hook.theme + '</option>')

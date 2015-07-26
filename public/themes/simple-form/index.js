@@ -13,7 +13,7 @@ module['exports'] = function view (opts, callback) {
 
   var $ = this.$;
   var run = params.run;
-  $('title').html(req.params.username + "/" + req.params.hook);
+  $('title').html(req.params.owner + "/" + req.params.hook);
   $('.hookTitle').html(req.params.hook + ' hook');
   
   var gist = opts.gist || params.gist;
