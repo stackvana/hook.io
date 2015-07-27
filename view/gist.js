@@ -21,7 +21,7 @@ module['exports'] = function view (opts, callback) {
         return res.redirect('/login');
       }
       // check for session, if exists, create gist
-      if (req.isAuthenticated()) {
+      if (req.isAuthenticated() && typeof req.session.gistSource !== 'undefined') {
         $('.gistSplash').remove();
         if (typeof req.session.gistSource !== 'undefined') {
           $('.gistSource').html(req.session.gistSource);
@@ -37,8 +37,9 @@ module['exports'] = function view (opts, callback) {
           callback(null, $.html());
         }
       } else {
-        $('.gistForm').remove();
-        callback(null, $.html());
+        return res.redirect('/');
+        //$('.gistForm').remove();
+        //callback(null, $.html());
       }
 
     });
