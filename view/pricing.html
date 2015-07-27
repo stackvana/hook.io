@@ -1,20 +1,37 @@
 <div style="font-size:22px;text-align:left;">
   <h1>Pricing</h1>
   <br/>
-  <h2>Free for Developers!</h2>
-  <p>
-    Accounts used for development purposes are free.</p> 
-  <p>Currently there are no limitations on developer accounts, so have fun!</p>
-  <p>In the future we will limit certain resources and production features for development accounts.
-  </p>
+  <h2>Free to use! Pay what you choose pricing!</h2>
+  <p>As an initial way to help fund this <a href="http://github.com/bigcompany/hook.io">100% open-source project</a>, we allow you to choose how much you want to pay every month.</p>
+  <p>The more you choose to pay, the better we can make the service in the future.</p>
+  <p>We appreciate you using the platform and hope that you will make the decision to help support hook.io with a paid account!</p>
+  <form action="/billing" method="POST">
+    <input
+        type="submit"
+        id="addPaymentMethod"
+        class="well"
+        value="Click to Add Payment Method"
+        data-image="/img/pipe.gif"
+        data-amount="500"
+        data-currency="usd"
+        data-name="hook.io hosting"
+        data-description="1 Month Basic Hosting ($5.00)"
+    />
+  </form>
+  <h2>Free Account Limitations</h2>
+  <ul>
+    <li>No Private Hooks</li>
+    <li>Limited to 50 <a href="http://hook.io/logs">Log</a> entries Hook</li>
+    <li>Limited to 100 <a href="http://hook.io/datastore">Cloud Datastore</a> documents</li>
+    <li>Fifteen second time-out on all service requests</li>
+  </ul>
   <br/>
-
-  <h2>Basic</h2>
-  <p>
-    Basic Hook hosting starts at $5.00 USD per month. <!-- We accept Bitcoin, Peercoin, Litecoin and Dogecoin --></p>
+  <h2>Paid Accounts</h2>
+  <p>There are currently no specific technical limitations on paid accounts.</p> 
+  <p>In the near future we will most likely apply limitations based on usage with the option to upgrade.</p>
+  <p>Our goal is to maintain a fair and transparent pricing model which accurately charges users for their actual costs.</p>
     <p>
     <form action="/billing" method="POST">
-      <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
       <input
           type="submit"
           id="addPaymentMethod"
@@ -38,11 +55,12 @@
   <p>Basic Support and <strong>full SSH access is given to your dedicated machine</strong>.</p> 
   <p>Several zones are available. Operating system is Ubuntu 14.04 ( Trusty ).</p>
   -->
-  <br/>
+  <!--
   <h2>Disk Space</h2>
   <p>A small amount of disk space is available for hooks to read and write to using Node's fs module.</p>
   <p>This space should be considered temporary and not for use in storing files for any period of time.</p>
-
+  -->
+  <!--
   <br/>
   <h2>Usage Limitations</h2>
 
@@ -52,8 +70,6 @@
 
   <p>If you are interested in hosting for larger projects please contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
 </div>
-
+  -->
   <br/>
-
-<br/>
-<br/>
+  
