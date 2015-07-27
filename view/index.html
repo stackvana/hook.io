@@ -38,6 +38,9 @@
   .saveForm {
     padding: 0px;
     margin: 0px;
+    float: right;
+    position: relative;
+    left: 5px;
   }
   
   .gist {
@@ -241,12 +244,13 @@ $('document').ready(function(){
     var now = new Date().getTime();
     $('#source').val(editor.getValue());
     $('.gatewayForm').submit();
-    return;
+    return false;
   };
   
   function saveToGithub () {
     $('.gistSource').val(editor.getValue()); // name="source"
     $('.saveForm').submit();
+    return false;
   };
   
   $.fn.random = function() {
@@ -394,16 +398,9 @@ var editor;
   </div>
 
   <div class="row loginBar">
-    <div class="col-md-3" align="center">
-      <span class="callToAction"><a href="http://hook.io/login">Free for Developers!</a></span>
-    </div>
-    <div class="col-md-6" align="center">
+    <div class="col-md-12" align="center">
       <a href="/login" class="btn btn-social btn-github" style="padding: 14px 24px;font-size: 21px;"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
     </div>
-    <div class="col-md-3" align="center">
-      <span class="callToAction"><a href="http://hook.io/pricing">Pay what you want pricing!</a></span>
-    </div>
-    
   </div>
   <br/>
   <div class="row loginBar">
@@ -447,10 +444,10 @@ var editor;
         </div>
         <div class="transportControl">
           <!-- /gist endpoint is used for creating new gists from source code as string -->
-          <form class="saveForm" action="/gist" method="POST">
             <input name="source" class="gistSource" type="hidden"/>
             <button class="runButton btn btn-primary">Deploy Service</button>
             <button class="codeButton btn btn-default">Edit Service</button>
+          <form name="saveForm" id="saveForm" class="saveForm" action="/gist" method="POST">
             <button class="saveButton btn btn-default">Save Service to Github</button>
           </form>
         </div>
@@ -461,7 +458,7 @@ var editor;
         -->
       </div>
       <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
-      <form action="http://gateway.hook.io" method="POST" target="hookFrame" class="gatewayForm">
+      <form name="gatewayForm" id="gatewayForm" action="http://gateway.hook.io" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="source" id="source">// A simple hello world microservice 
 // Click "Deploy Service" to deploy this code
 // Service will respond to HTTP requests with a string
@@ -482,16 +479,19 @@ module['exports'] = function helloWorld (hook) {
         <ul class="features">
           <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
           <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
+          <li><a href="http://hook.io/git">Git Deploy Code Updates</a></li>
           <li><a href="http://hook.io/datastore">Cloud Datastore</a></li>
+          <li><a href="http://hook.io/logs">Logging</a></li>
           <li><a href="http://hook.io/docs#schema">Input Validators</a></li>
           <li><a href="http://hook.io/modules">NPM Modules</a></li>
           <li><a href="http://hook.io/cron">Cron Tasks</a></li>
           <!-- <li><a href="http://hook.io/docs#metrics">Metrics</a></li> -->
           <li><a href="http://hook.io/themes">Theming Engine</a></li>
           <li><a href="http://hook.io/docs#forms">Form Generator</a></li>
-          <li><a href="https://hook.io/">HTTPS</a></li>
-          <li><a href="http://hook.io/domains">Custom Domains</a></li>
+          <li><a href="https://hook.io/ssl">SSL / HTTPS</a></li>
+          <li><a href="http://hook.io/docs#domains">Custom Domains</a></li>
           <li><a href="http://hook.io/curl">Unix Pipe Integration</a></li>
+          <li><a href="http://github.com/bigcompany/hook.io">100% open-source</a></li>
         </ul>
       </div>
     </div>
