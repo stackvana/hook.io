@@ -260,6 +260,7 @@ $('document').ready(function(){
   $('.saveButton').on('click', function(){
     // post current code to be forked / saved in current session
     saveToGithub();
+    return false;
   });
 
 
@@ -280,6 +281,7 @@ $('document').ready(function(){
   $('.runButton').on('click', function(){
     loadingSnippet();
     deployCode();
+    return false;
   });
 
   function showCode () {
@@ -444,10 +446,10 @@ var editor;
         </div>
         <div class="transportControl">
           <!-- /gist endpoint is used for creating new gists from source code as string -->
-            <input name="source" class="gistSource" type="hidden"/>
             <button class="runButton btn btn-primary">Deploy Service</button>
             <button class="codeButton btn btn-default">Edit Service</button>
           <form name="saveForm" id="saveForm" class="saveForm" action="/gist" method="POST">
+            <input name="source" class="gistSource" type="hidden"/>
             <button class="saveButton btn btn-default">Save Service to Github</button>
           </form>
         </div>
@@ -479,7 +481,7 @@ module['exports'] = function helloWorld (hook) {
         <ul class="features">
           <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
           <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
-          <li><a href="http://hook.io/git">Git Deploy Code Updates</a></li>
+          <!-- <li><a href="http://hook.io/git">Git Deploy Code Updates</a></li> -->
           <li><a href="http://hook.io/datastore">Cloud Datastore</a></li>
           <li><a href="http://hook.io/logs">Logging</a></li>
           <li><a href="http://hook.io/docs#schema">Input Validators</a></li>
