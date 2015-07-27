@@ -12,26 +12,29 @@
     <h2><strong>Getting Started</strong></h2>
     <p>A Hook is represented by a unique URL.</p>
     <p>The Hook can be executed by sending HTTP requests to the this URL.</p>
+    <p>To see live examples of using Hooks visit the: <a href="http://hook.io">Interactive Microservice Tutorial</a></p>
     <p>
       <ul style="font-size:22px;">
         <li><a href="#creating">Creating a Hook</a></li>
+        <li><a href="#forking">Forking an existing Hook</a></li>
         
         <li><a href="#running">Running a Hook</a></li>
-        <li><a href="#forking">Viewing Hook Source Code</a></li>
+        <li><a href="#viewsource">Viewing Hook Source Code</a></li>
+        <li><a href="#admin">Accessing Hook Admin Panel</a></li>
         
-        <li><a href="#forking">Forking a Hook</a></li>
+        <li><a href="#logs">Hook Debugging and Logs</a></li>
         <li><a href="#data">Sending Data to a Hook</a></li>
+
         <li><a href="#code">Editing a Hook</a></li>
         <li><a href="#hook">Accessing the Hook object</a></li>
         <li><a href="#schema">Specifying Hook Schema</a></li>
         <li><a href="#datastore">Using the Cloud Datastore</a></li>
         <li><a href="#forms">Hook Schema Form Generator</a></li>
         <li><a href="#env">Setting Hook Environment</a></li>
-        <!--
-          <li><a href="#domains">Setting Custom Domains</a></li>
-        -->
+        <li><a href="#domains">Setting Custom Domains</a></li>
         <li><a href="#accept">Content-Type Routing</a></li>
         <li><a href="#cache">Cache Controls</a></li>
+        <li><a href="#ssl">SSL / HTTPS</a></li>
         <!-- <li><a href="#metrics">Hook Metrics</a></li> -->
       </ul>
     </p>
@@ -40,11 +43,21 @@
     <a name="creating"></a>
     <h2><strong>Creating a Hook</strong></h2>
     <p>To create a Hook visit: <a href="http://hook.io/new">http://hook.io/new</a></p>
-    <p>On this page, the following propreties can be specified to create a Hook:</p>
+    <p>On this page, the following properties can be specified to create a Hook:</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name</strong> <em>required</em> - Name of hook</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Gist</strong> <em>required</em> - Source code of the Hook as a Github Gist</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - URL of the Theme that will render the output of the Hook, see: <a href="http://hook.io/themes">Themes</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - A View-Presenter that will render the output of the Hook, see: <a href="http://hook.io/themes">Themes</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cron</strong> <em>optional</em> - Run this Hook on a Cron schedule, see: <a href="http://hook.io/cron">Cron</a></p>
+
+
+    <a name="forking"></a>
+    <h2><strong>Forking an existing Hook</strong></h2>
+    <p>To fork another Hook, simply add the query string parameter <code>?fork=true</code> to the Hook you want to fork.</p>
+    <p>By specifying the <code>fork</code> parameter, you will be taken to a new page where you can start customizing your Fork.</p>
+
     <p>Once a Hook is created the browser will redirect to the landing page for that Hook.</p>
+    
+    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo?fork=true">http://hook.io/Marak/echo?fork=true</a>
     <hr/>
 
     <a name="running"></a>
@@ -53,10 +66,30 @@
     <p>This HTTP request can be sent from any source ( such as the browser, custom application, or the command line).</p>
     <hr/>
 
-    <a name="forking"></a>
-    <h2><strong>Forking a Hook</strong></h2>
-    <p>To fork another Hook, simply add the query string parameter <code>?fork=true</code> to the Hook you want to fork.</p>
-    <p>By specifying the <code>fork</code> parameter, you will be taken to a new page where you can start customizing your Fork.</p>
+    <a name="viewsource"></a>
+    <h2><strong>View Hook Source</strong></h2>
+    <p>To view the source code of any Hook simply attach <code>/source</code> to the Hook service url.</p>
+    <p>This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
+    
+    <p><strong>Source Code:</strong> <a href="http://hook.io/Marak/echo/source">http://hook.io/Marak/echo/source</a></p>
+    <p><strong>View:</strong> <a href="http://hook.io/Marak/echo/view">http://hook.io/Marak/echo/source</a></p>
+    <p><strong>Presenter:</strong> <a href="http://hook.io/Marak/echo/presenter">http://hook.io/Marak/echo/presenter</a></p>
+
+    <p>If you require the source code of a Hook to remain private, upgrade to a paid account and set the Hook to <code>Private</code>
+
+    <a name="admin"></a>
+    <h2><strong>Hook Admin Panel</strong></h2>
+    <p>To access the Adminsitration page for a Hook simply attach <code>/admin</code> to the Hook service url.</p>
+    <p>This will only work for Hooks which you own.</p>
+
+    <a name="logs"></a>
+    <hr/>
+    <h2><strong>Hook Debugging and Logs</strong></h2>
+    <p>hook.io provides a streaming logging service which Hook's can write to with <code>console.log</code></p>
+    <p>Streaming log endpoints are available for consumption on all Hook service urls as <code>/logs</code>. This allows for real-time monitoring of a Hook's logging output.</p>
+    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo/logs">http://hook.io/Marak/echo/logs</a>
+      <p>Complete logging documentation can be found at <a href="http://hook.io/logs">http://hook.io/logs</a>
+
     <a name="data"></a>
     <hr/>
     <h2><strong>Sending data to the Hook</strong></h2>
@@ -80,11 +113,14 @@
     <a name="code"></a>
     <h2><strong>Editing Hook source code</strong></h2>
     <p>The source code for a Hook is a <a href="/gist">Github Gist</a></p>
+    <p>There are currently two options available for editing the source code of a Hook.</p>
+    <h3>Git Deploy Updates</h3>
+    <p>To update the source code of a Hook using Git, you simply need to clone the Gist source code to your local development machine, commit changes, and push back to the Gist.</p>
+    <p>The location of a Hook's git endpoints can be found on it's <code>/admin</code> page.</p>
+    <h3>Edit source on gist.github.com</h3>
+    <p>It's also possible to simply edit the source directly on the gist.github.com website using Github's web editor.</p>
     <p>
-      You can edit the Hook Source Code by clicking on the bottom of it's embedded Github Gist.
-    </p>
-    <p>
-      If you want to edit a Hook which you do not own, you can <a href="#forking">Fork It</a>.
+      <em>If you want to edit a Hook which you do not own, you can <a href="#forking">Fork It</a>.</em>
     </p>
     <hr/>
 
@@ -92,7 +128,9 @@
     <h2><strong>Accessing the Hook object inside your code</strong></h2>
     <p>Every hook receives a <strong>Hook</strong> object as it's first argument.</p>
     <p>
-      <strong>Hook.debug</strong> - Logging method for sending debug messages to the debug console <br/>
+      <!-- 
+      deprecated in favor of `console.log` <strong>Hook.debug</strong> - Logging method for sending debug messages to the debug console <br/>
+      -->
       <strong>Hook.params</strong> - Incoming HTTP request data ( query string and form fields )<br/>
       <strong>Hook.req</strong> - Incoming <a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a> stream <br/>
       <strong>Hook.res</strong> - Outgoing <a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">httpServer.ServerResponse</a> stream<br/>
@@ -148,15 +186,12 @@
     <p>After you have updated your environment variables they will be available in your hook's <strong>Hook.env</strong> </p>
     <hr/>
 
-    <!--
     <a name="domains"></a>
     <h2><strong>Setting Custom Domains</strong></h2>
-    <p>To set up a Custom Domains for your Hooks visit: <a href="/domains">http://hook.io/domains</a></p>
-    <p>Custom domains such as <strong>www.marak.com</strong> and <strong>marak.com</strong> can be assigned to your account.</p> 
-    <p>This is useful for running hooks directly on your own domains.</p>
-    <p>TODO: add more domains docs. After you have added a Custom Domain any traffic sent to <strong>hook.io</strong> will be forwarded to your main hook landing page.</p>
+    <p>Custom domains are a great way to brand the appearance of your service with it's own unique domain name.</p>
+    <p>To add a Custom Domain, you will first need to set the domains <code>A record</code> to <code>104.131.145.24</code> ( which is the ip address of hook.io ).</p>
+    <p>After setting the <code>A record</code> in your domain's DNS manager, simply visit: <a href="/domains">http://hook.io/domains</a> to complete the process by mapping any of your Hooks to the Custom Domain.</p>
     <hr/>
-    -->
 
     <a name="accept"></a>
     <h2><strong>Content-Type Routing</strong></h2>
@@ -189,6 +224,13 @@
   <p>In <code>Development</code> mode, all Hook source code will be pulled from it's original source on every request. This is useful for Hooks which are in active development.</p>
   <p>In <code>Production</code> mode, all Hook source code will be cached in memory. This ensures much faster execution speeds, but also means that any updates to the Hook's external sources will not be immediately loaded.</p>
   <br/>
+  
+  <a name="ssl"></a>
+  <h2><strong>SSL / HTTPS</strong></h2>
+
+  <p>Currently, <code>HTTPS</code> is supported on hook.io through a single shared <code>SSL</code> certificate.</p>
+  <p>All URLs and services on the site are available over <code>HTTPS</code></p>
+  <p>If you require a custom <code>SSL</code> certificate for your microservices, please contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
   
   <!--
   <a name="metrics"></a>
