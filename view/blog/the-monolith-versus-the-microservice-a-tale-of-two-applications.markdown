@@ -29,7 +29,7 @@ The problem with this monolithic approach is that since every route is sharing t
 
 The **Monolith** approach to application design leads to having to worry about the global state of the entire application any time a single route is modified.
 
-The **Microservice** approach to application design offers a clear path improving the stability and scalability of an application by isolating services into distinct composable units.
+The **Microservice** approach to application design offers a clear path to improving the stability and scalability of an application by isolating it's services into distinct composable units.
 
 ## A New Company Builds A Web Application
 
@@ -37,7 +37,7 @@ A brand new technology company emerges. They must build a new web application to
 
 **The application must contain the following sections:**
 
-<pre>/       - Index / Company homepage
+<pre>/       - Index / Company Homepage
 /about  - Information About the Company
 /signup - Sign Up for Company Product
 </pre>
@@ -156,7 +156,7 @@ module['exports'] = server;
 ### Worker
 
 
-Second, they built the `worker` component, which will be used to execute services. Workers receive incoming HTTP requests from the server and execute service source code in response to these requests.
+Second, they built the `worker` component, which is used to execute services. Workers receive incoming HTTP requests from the server and execute service source code in response to these requests.
 
 The team chooses to use the <a href="https://npmjs.org/package/run-service">run-service</a> npm module which acts a thin layer of abstraction for executing untrusted source code in response to incoming HTTP requests. 
 
@@ -196,7 +196,7 @@ The `signup` page is displaying a timeout error. The error stated that the total
 
 The team was also able to fix the `signup` page without ever having to take down the application, or the `index` and `about` sections. Since all routes are isolated, they were able to modify `signup.js` without taking down the front-facing server or any other pages.
 
-On launch, the same key customer was able to access the site and retrieve information about the product. The customer was unable to signup for the service, but came back the next day and succeeding in signing up. This key customer was crucial to the early success of the business and the new company was able to succeed.
+On launch, the same key customer was able to access the site and retrieve information about the product. The customer was unable to signup for the service, but came back the next day and was able to sign up. This key customer was crucial to the early success of the business and the new company was able to succeed.
 
 ## Conclusion
 
