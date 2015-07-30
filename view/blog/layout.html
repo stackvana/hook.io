@@ -18,6 +18,7 @@
     <link href="/themes/debug/css/jumbotron-narrow.css" media="all" rel="stylesheet" type="text/css" />
     <link href="/css/social.css" media="all" rel="stylesheet" type="text/css" />
     <link href="/css/custom.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="/css/hljs.css" media="all" rel="stylesheet" type="text/css" />
 
     <!-- <link href="/css/clippy.css" media="all" rel="stylesheet" type="text/css" /> -->
     <script style="text/javascript">
@@ -90,13 +91,13 @@
             vertical-align: bottom;
             position: relative;
             width: 600px;
-            margin-left: auto;
-            margin-right: auto;
             padding-bottom: 10px;
+            text-align: left;
           }
-          .jumbotron {
+          .post {
             background-color: #FFFFFF;
             padding-bottom: 0px;
+            padding-left: 0px !important;
           }
           .gist pre,
           .gist code {
@@ -107,12 +108,37 @@
             width: 290px;
             padding: 0px;
           }
+          
+          .post {
+            text-align: left;
+          }
+          .post h1 {
+            font-size: 44px;
+            text-decoration: underline;
+          }
+
+          .post h2 {
+            text-decoration: underline;
+            font-size: 38px;
+          }
+
+          .post h3 {
+            font-size: 32px;
+          }
+          
+          .posts {
+            font-size: 22px;
+          }
+          
+          .posts {
+            list-style: none;
+            padding-left: 0px;
+          }
+
 
           h1, h2, h3 {
-            padding-top: 0px;
+            padding-top: 10px;
             padding-bottom: 5px;
-            margin-top: 0px;
-            margin-bottom: 5px;
           }
 
           iframe {
@@ -131,8 +157,8 @@
 
     <div class="container">
     
-    <div align="center">
-      <h1 style="margin-top: 2px;font-size:24px;" class="splash"><em>Build and Deploy JavaScript HTTP microservices in seconds!</em></h1>
+    <div align="left">
+      <h1 style="margin-top: 2px;font-size:24px;" class="splash"><em>all things microservice, the hook.io microservice blog</em></h1>
     </div>
     <div id="header" class="header">
       <div style="float: left;bottom: 10px;">
@@ -143,7 +169,7 @@
       </div>
     </div>
 
-    <div class="yield jumbotron" align="center"></div>
+    <div class="yield jumbotron post"></div>
 
 
     <div id="footer" class="navbar navbar-fixed-bottom">
@@ -155,10 +181,10 @@
       <div style="float:right;">
         <a href="/pricing">Pricing</a> |
         <a href="/docs">Documentation</a> |
-        <a href="http://github.com/bigcompany/hook.io/issues">Support</a> |
-        <a href="/blog">Blog</a>
+        <a href="http://github.com/bigcompany/hook.io/issues">Support</a>
+        <a href="/blog/feed"><img src="/img/feedSmall.png"/></a>
+        &nbsp;
         
-        &nbsp;&nbsp;&nbsp;&nbsp;
       </div>
       </div>
       <!-- <a href=""><img src="./img/block.png"/></a> -->
