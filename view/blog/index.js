@@ -15,5 +15,5 @@ module['exports'] = function view (opts, callback) {
   callback(null, $.html());
 };
 
-// cache this page to only reload every 60 seconds
-// module['exports'].cache = 60000; // TODO: make longer
+// cache this page indefintely
+module['exports'].cache = 0;
