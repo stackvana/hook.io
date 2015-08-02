@@ -27,6 +27,7 @@
     "mschema": "^0.5.4",
     "mschema-forms": "*",
     "mustache": "^0.8.2",
+    "node-slug": "0.0.2",
     "npm": "*",
     "passport": "^0.2.1",
     "passport-github": "^0.1.5",
