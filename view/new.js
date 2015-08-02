@@ -89,6 +89,8 @@ module['exports'] = function view (opts, callback) {
     if (typeof req.session.gistLink === 'string') {
       // todo: after created, unset gistSource so it doesn't keep popping up
       $('.gist').attr('value', req.session.gistLink);
+    } else {
+      $('.gistStatus').remove();
     }
 
     self.parent.components.themeSelector.present({}, function(err, html){

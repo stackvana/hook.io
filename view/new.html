@@ -24,6 +24,9 @@
     background-image: url('img/loading.gif');
 }
 
+.error {
+  background-color: red;
+}
 .cronRow {
   display: none;
 }
@@ -78,6 +81,16 @@ input[type="checkbox"] {
 <script src="/js/jquery.twinkle-0.8.0.js"></script>
 
 <script type="text/javascript">
+
+  // client-side slugify
+  // the server-side slugify code is much more robust covering much utf
+  function slugify(text) {
+    return text.toString().toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+  }
+
   // lookup themes from curated theme list
   // TODO: Create "themes" resource and persist this to database
   var themes = {
@@ -115,6 +128,17 @@ input[type="checkbox"] {
         $('.cronRow').show();
       } else {
         $('.cronRow').hide();
+      }
+    });
+
+    $('#name').on('keyup', function(){
+      var v = $(this).val();
+      var s = slugify($(this).val());
+      if (v !== s) {
+        $(this).addClass('error');
+        $(this).val(s);
+      } else {
+        $(this).removeClass('error');
       }
     });
 
@@ -165,12 +189,19 @@ input[type="checkbox"] {
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
   <form method="post" action="/new" role="form" class="well">
-    <legend><h2>Create new Hook</h2></legend>
+    <legend><h2>Create New Hook Service</h2></legend>
 
-
+    <div class="gistStatus">Hey there! We just created a new Gist on Github using your account: <a href="">here</a><br/>
+      <br/>
+      The Gist will now be associated with the Hook service once you've completed this form.
+    </div>
+    </br>
     <div class="form-group">
-      <label for="name">Name</label>
-      <input class="form-control" type="text" id="name" name="name" placeholder="name of hook" size="40"/>    
+      <label for="name">Hook Path</label>
+      <input class="form-control" type="text" id="name" name="name" placeholder="test-hook" size="40"/>
+      <div class="tiny">
+        <em>The path where the hook service will exist. Cannot contain non-url safe characters.</em>
+      </div>
     </div>
 
     <div class="form-group">
