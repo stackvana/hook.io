@@ -7,8 +7,8 @@ module['exports'] = function view (opts, callback) {
   var feedOptions = {
       title: 'all things microservice, the hook.io microservice blog',
       description: 'a blog about everything microservice related, maintained by the hook.io hosting platform',
-      feed_url: 'http://hook.io/blog/feed',
-      site_url: 'http://hook.io',
+      feed_url: 'https://hook.io/blog/feed',
+      site_url: 'https://hook.io',
       managingEditor: 'hook.io',
       webMaster: 'hook.io',
       copyright: '2015 hook.io',

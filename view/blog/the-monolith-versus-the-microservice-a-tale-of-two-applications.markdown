@@ -3,7 +3,7 @@
   var data = {
     title: "The Monolith versus The Microservice, A Tale of Two Applications",
     description: "",
-    url: "http://hook.io/blog/the-monolith-versus-the-microservice-a-tale-of-two-applications",
+    url: "https://hook.io/blog/the-monolith-versus-the-microservice-a-tale-of-two-applications",
     guid: "the-monolith-versus-the-microservice-a-tale-of-two-applications",
     author: "Marak",
     date: "Wed Jul 29 2015 15:38:30 GMT-0700 (PDT)"
@@ -212,6 +212,6 @@ Instead of a programming error, the server could have just as easily ran out of 
 
 Moving forward, I highly suggest you begin to migrate towards integrating microservices into your stack.
 
-Looking for an easy way to get your microservices hosted online? Check out [http://hook.io](http://hook.io).
+Looking for an easy way to get your microservices hosted online? Check out [https://hook.io](https://hook.io).
 
 <br/>

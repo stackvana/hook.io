@@ -131,8 +131,8 @@ module['exports'] = function view (opts, callback) {
    }
  }
 
- $('.forkButton').attr('data-url', 'http://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
- $('.editButton').attr('data-url', 'http://hook.io/' + req.hook.owner + "/" + req.hook.name + "?admin=true");
+ $('.forkButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
+ $('.editButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?admin=true");
 
   // $('.counter').html('<em>' + req.hook.name + ' has run ' + numberWithCommas(req.hook.ran.toString()) + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');

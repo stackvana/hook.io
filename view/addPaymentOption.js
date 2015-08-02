@@ -7,7 +7,7 @@ module['exports'] = function addPaymentOption (opts, cb) {
       <script \
         src="https://checkout.stripe.com/checkout.js" class="stripe-button" \
         data-key="" \
-        data-image="http://hook.io/img/pipe.gif" \
+        data-image="https://hook.io/img/pipe.gif" \
         data-name="hook.io hosting" \
         data-description="1 Month Basic Hosting ($5.00)" \
         data-amount="500" \

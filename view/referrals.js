@@ -20,7 +20,7 @@ module['exports'] = function view (opts, callback) {
     if (results.length > 0) {
       $('.referrals').html('');
       results.forEach(function(u){
-        $('.referrals').append('<a href="http://hook.io/' + u.name + '">' + u.name +  '</a>' + '<br/>')
+        $('.referrals').append('<a href="https://hook.io/' + u.name + '">' + u.name +  '</a>' + '<br/>')
       });
     }
     callback(null, $.html().replace(/\{\{username\}\}/g, req.user.username));

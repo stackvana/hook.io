@@ -29,7 +29,7 @@ module['exports'] = function view (opts, callback) {
   // enables curl signups
   // EASYTODO: move this into separate module
   //
-  // curl http://hook.io?signup=youremail@marak.com
+  // curl https://hook.io?signup=youremail@marak.com
   if (typeof params.signup !== "undefined" && params.signup.length > 0) { // TODO: email validation
     // TODO: this should be part of mschema. see: https://github.com/mschema/mschema/issues/10
     if(!address.regex.test(params.signup)) { // test email regex
@@ -67,7 +67,7 @@ module['exports'] = function view (opts, callback) {
     message += "cURL us back later for a more comprehensive terminal interface with ssh support. \n\n";
 
     message += "Sign up for a free hook.io account!\n\n".underline;
-    message += "  curl http://hook.io?signup=youremail@marak.com  \n\n";
+    message += "  curl https://hook.io?signup=youremail@marak.com  \n\n";
 
     message += "Send Query String Data\n\n".underline;
     message += "  curl --data 'foo=bar&hello=there' http://echo.hook.io/ \n\n";

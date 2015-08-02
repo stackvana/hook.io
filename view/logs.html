@@ -15,16 +15,16 @@
 
   <h2>Accessing Hook Logs</h2>
   <p>To access the logs for a Hook simply attach <code>/logs</code> to the end of the Hook service url.</p>
-  <p><strong>For example:</strong> <a href="http://hook.io/Marak/echo/logs">http://hook.io/Marak/echo/logs</a></p>
+  <p><strong>For example:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a></p>
   <p>The logging endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
 
     <h3>Streaming logs</h3>
     <p>To access streaming logs, request the logging endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
-    <p><strong>Example: </strong><code>curl -N http://hook.io/Marak/echo/logs</code></p>
+    <p><strong>Example: </strong><code>curl -N https://hook.io/Marak/echo/logs</code></p>
 
     <h3>Plain Text Logs</h3>
     <p>To access plain text logs, request the logging endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
-    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" http://hook.io/Marak/echo/logs</code></p>
+    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/Marak/echo/logs</code></p>
 
   <h2>Writing to Hook Logs</h2>
   <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>

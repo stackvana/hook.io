@@ -12,7 +12,7 @@
     <h2><strong>Getting Started</strong></h2>
     <p>A Hook is represented by a unique URL.</p>
     <p>The Hook can be executed by sending HTTP requests to this URL.</p>
-    <p>To see live examples of using Hooks visit the: <a href="http://hook.io">Interactive Microservice Tutorial</a></p>
+    <p>To see live examples of using Hooks visit the: <a href="https://hook.io">Interactive Microservice Tutorial</a></p>
     <p>
       <ul style="font-size:22px;">
         <li><a href="#creating">Creating a Hook</a></li>
@@ -42,12 +42,12 @@
 
     <a name="creating"></a>
     <h2><strong>Creating a Hook</strong></h2>
-    <p>To create a Hook visit: <a href="http://hook.io/new">http://hook.io/new</a></p>
+    <p>To create a Hook visit: <a href="https://hook.io/new">https://hook.io/new</a></p>
     <p>On this page, the following properties can be specified to create a Hook:</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name</strong> <em>required</em> - Name of hook</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Gist</strong> <em>required</em> - Source code of the Hook as a Github Gist</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - A View-Presenter that will render the output of the Hook, see: <a href="http://hook.io/themes">Themes</a></p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cron</strong> <em>optional</em> - Run this Hook on a Cron schedule, see: <a href="http://hook.io/cron">Cron</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - A View-Presenter that will render the output of the Hook, see: <a href="https://hook.io/themes">Themes</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cron</strong> <em>optional</em> - Run this Hook on a Cron schedule, see: <a href="https://hook.io/cron">Cron</a></p>
 
 
     <a name="forking"></a>
@@ -57,7 +57,7 @@
 
     <p>Once a Hook is created the browser will redirect to the landing page for that Hook.</p>
     
-    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo?fork=true">http://hook.io/Marak/echo?fork=true</a>
+    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo?fork=true">https://hook.io/Marak/echo?fork=true</a>
     <hr/>
 
     <a name="running"></a>
@@ -71,9 +71,9 @@
     <p>To view the source code of any Hook simply attach <code>/source</code> to the Hook service url.</p>
     <p>This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
     
-    <p><strong>Source Code:</strong> <a href="http://hook.io/Marak/echo/source">http://hook.io/Marak/echo/source</a></p>
-    <p><strong>View:</strong> <a href="http://hook.io/Marak/echo/view">http://hook.io/Marak/echo/view</a></p>
-    <p><strong>Presenter:</strong> <a href="http://hook.io/Marak/echo/presenter">http://hook.io/Marak/echo/presenter</a></p>
+    <p><strong>Source Code:</strong> <a href="https://hook.io/Marak/echo/source">https://hook.io/Marak/echo/source</a></p>
+    <p><strong>View:</strong> <a href="https://hook.io/Marak/echo/view">https://hook.io/Marak/echo/view</a></p>
+    <p><strong>Presenter:</strong> <a href="https://hook.io/Marak/echo/presenter">https://hook.io/Marak/echo/presenter</a></p>
 
     <p>If you require the source code of a Hook to remain private, upgrade to a paid account and set the Hook to <code>Private</code>
 
@@ -87,8 +87,8 @@
     <h2><strong>Hook Debugging and Logs</strong></h2>
     <p>hook.io provides a streaming logging service which Hook's can write to with <code>console.log</code></p>
     <p>Streaming log endpoints are available for consumption on all Hook service urls as <code>/logs</code>. This allows for real-time monitoring of a Hook's logging output.</p>
-    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo/logs">http://hook.io/Marak/echo/logs</a>
-      <p>Complete logging documentation can be found at <a href="http://hook.io/logs">http://hook.io/logs</a>
+    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a>
+      <p>Complete logging documentation can be found at <a href="https://hook.io/logs">https://hook.io/logs</a>
 
     <a name="data"></a>
     <hr/>
@@ -96,13 +96,13 @@
     <p>Data can be sent to a Hook through the query string or posted to the Hook through forms or binary data transfers.</p>
     <h3><strong>Query String Data</strong></h3>
     <p>To add a parameter via query string simply append it to the url of the Hook</p>
-    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo?foo=bar&hello=there&run=true">http://hook.io/Marak/echo?foo=bar&hello=there&run=true</a></p>
+    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo?foo=bar&hello=there&run=true">https://hook.io/Marak/echo?foo=bar&hello=there&run=true</a></p>
     <p>Nested parameters are also supported.</p>
-    <p><strong>Example:</strong> <a href="http://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true">http://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
+    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true">https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
 
     <h3><strong>Form Data</strong></h3>
     <p>Data can also be sent via form POST</p>
-    <p><strong>Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' http://hook.io/Marak/echo" size="60"/></p>
+    <p><strong>Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' https://hook.io/Marak/echo" size="60"/></p>
     <p><em>Notice that we don't specify the <strong>run</strong> parameter in the Curl example? This is because the hook is being called from a non-browser source ( no text/html Accept header ) and will automatically execute.</em></p>
 
     <h3><strong>Streaming Data</strong></h3>
@@ -149,7 +149,7 @@
     
     <p>This is useful for storing persistent information which you may want to retrieve later ( such as a user signup ).</p>
 
-    <p>More information about using the cloud datastore can be found here <a href="http://hook.io/datastore">http://hook.io/datastore</a></p> 
+    <p>More information about using the cloud datastore can be found here <a href="https://hook.io/datastore">https://hook.io/datastore</a></p> 
 
     <a name="schema"></a>
     <h2><strong>Specifying Optional Schema</strong></h2>
@@ -180,7 +180,7 @@
     <hr/>
     <a name="env"></a>
     <h2><strong>Setting Hook Environment Variables</strong></h2>
-    <p>To set Hook Environment variables visit: <a href="/env">http://hook.io/env</a></p>
+    <p>To set Hook Environment variables visit: <a href="/env">https://hook.io/env</a></p>
     <p>Arbitrary key / value pairs can be set on your account so that all your Hooks will have access to the pairs in the <strong>Hook.env</strong> variable.</p> 
     <p>This is useful for protecting private authorization credentials from public view ( such as an API key or password ).</p>
     <p>After you have updated your environment variables they will be available in your hook's <strong>Hook.env</strong> </p>
@@ -190,7 +190,7 @@
     <h2><strong>Setting Custom Domains</strong></h2>
     <p>Custom domains are a great way to brand the appearance of your service with it's own unique domain name.</p>
     <p>To add a Custom Domain, you will first need to set the domains <code>A record</code> to <code>104.131.145.24</code> ( which is the ip address of hook.io ).</p>
-    <p>After setting the <code>A record</code> in your domain's DNS manager, simply visit: <a href="/domains">http://hook.io/domains</a> to complete the process by mapping any of your Hooks to the Custom Domain.</p>
+    <p>After setting the <code>A record</code> in your domain's DNS manager, simply visit: <a href="/domains">https://hook.io/domains</a> to complete the process by mapping any of your Hooks to the Custom Domain.</p>
     <hr/>
 
     <a name="accept"></a>

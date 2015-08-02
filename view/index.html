@@ -219,13 +219,15 @@ $('document').ready(function(){
     showCode();
     editor.setValue("loading...");
     loadingSnippet();
-    request = $.get('http://hook.io' + src + '/source', function (res) {
+    request = $.get('https://localhost' + src + '/source', function (res) {
       snippetLoaded();
       editor.setValue(res);
     });
   };
   
   $('.hookFrame').on("load", function() {
+    //alert('loaded');
+    //console.log($(this).attr('src'))
     snippetLoaded();
     $('.CodeMirror').hide();
     $('.hookFrame').show();
@@ -332,21 +334,6 @@ $('document').ready(function(){
   editor = CodeMirror.fromTextArea($('textarea').get(0), {
     lineNumbers: true
   });
-  
-    
-  setTimeout(function(){
-    var options = {
-      effect: 'drops',
-      effectOptions: {
-        radius: 160,
-        duration: 1500,
-        width: 2,
-        count: 3,
-        delay: 100
-      }
-    };
-    // $('.runButton').twinkle(options);
-  }, 400);
 
   $('.selectSnippet').on('change', function(){
     // var item = $(this)
@@ -373,7 +360,9 @@ $('document').ready(function(){
     $('.selectSnippet').prop('selectedIndex', prev).change();
     return false;
   });
-  // loadSnippet();
+  //loadSnippet();
+  loadingSnippet();
+  deployCode();
 
 });
 var editor;
@@ -457,7 +446,7 @@ var editor;
         -->
       </div>
       <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
-      <form name="gatewayForm" id="gatewayForm" action="http://gateway.hook.io" method="POST" target="hookFrame" class="gatewayForm">
+      <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="source" id="source">// A simple hello world microservice 
 // Click "Deploy Service" to deploy this code
 // Service will respond to HTTP requests with a string
@@ -469,27 +458,27 @@ module['exports'] = function helloWorld (hook) {
   hook.res.end(host + ' says, "Hello world!"');
 };</textarea>
     </form>
-      <iframe name="hookFrame" class="hookFrame" src=""></iframe>
+      <iframe name="hookFrame" class="hookFrame"></iframe>
       <!-- <div class="hookOutput"></div> -->
     </div>
     <div class="col-md-4" align="left">
       <div class="featuresDiv">
         <h2>Full Featured</h2>
         <ul class="features">
-          <li><a href="http://hook.io/docs#data">JSON / Query String / Multipart</a></li>
-          <li><a href="http://hook.io/docs#data">Binary Data / Streaming Data</a></li>
-          <!-- <li><a href="http://hook.io/git">Git Deploy Code Updates</a></li> -->
-          <li><a href="http://hook.io/datastore">Cloud Datastore</a></li>
-          <li><a href="http://hook.io/logs">Logging</a></li>
-          <li><a href="http://hook.io/docs#schema">Input Validators</a></li>
-          <li><a href="http://hook.io/modules">NPM Modules</a></li>
-          <li><a href="http://hook.io/cron">Cron Tasks</a></li>
-          <!-- <li><a href="http://hook.io/docs#metrics">Metrics</a></li> -->
-          <li><a href="http://hook.io/themes">Theming Engine</a></li>
-          <li><a href="http://hook.io/docs#forms">Form Generator</a></li>
+          <li><a href="https://hook.io/docs#data">JSON / Query String / Multipart</a></li>
+          <li><a href="https://hook.io/docs#data">Binary Data / Streaming Data</a></li>
+          <!-- <li><a href="https://hook.io/git">Git Deploy Code Updates</a></li> -->
+          <li><a href="https://hook.io/datastore">Cloud Datastore</a></li>
+          <li><a href="https://hook.io/logs">Logging</a></li>
+          <li><a href="https://hook.io/docs#schema">Input Validators</a></li>
+          <li><a href="https://hook.io/modules">NPM Modules</a></li>
+          <li><a href="https://hook.io/cron">Cron Tasks</a></li>
+          <!-- <li><a href="https://hook.io/docs#metrics">Metrics</a></li> -->
+          <li><a href="https://hook.io/themes">Theming Engine</a></li>
+          <li><a href="https://hook.io/docs#forms">Form Generator</a></li>
           <li><a href="https://hook.io/ssl">SSL / HTTPS</a></li>
-          <li><a href="http://hook.io/docs#domains">Custom Domains</a></li>
-          <li><a href="http://hook.io/curl">Unix Pipe Integration</a></li>
+          <li><a href="https://hook.io/docs#domains">Custom Domains</a></li>
+          <li><a href="https://hook.io/curl">Unix Pipe Integration</a></li>
           <li><a href="http://github.com/bigcompany/hook.io">100% open-source</a></li>
         </ul>
       </div>
