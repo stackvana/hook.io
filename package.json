@@ -2,7 +2,7 @@
   "name": "hook.io",
   "version": "1.0.0",
   "description": "microservice and webhook hosting platform",
-  "main": "server.js",
+  "main": "index.js",
   "directories": {
     "example": "examples"
   },
