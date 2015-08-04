@@ -20,6 +20,7 @@
     "github": "^0.2.2",
     "hyperquest": "^1.0.1",
     "hook.io-datastore": "https://github.com/bigcompany/hook.io-datastore/tarball/master",
+    "hook.io-logs": "https://github.com/bigcompany/hook.io-logs/tarball/master",
     "jugglingdb-nano": "https://github.com/Marak/nano-adapter/tarball/master",
     "merge-stream": "^0.1.8",
     "mime": "^1.2.11",
