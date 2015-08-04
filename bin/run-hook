@@ -1,0 +1,230 @@
+#!/bin/node
+
+/*
+  Spawns a service as a child process
+  
+  Takes in a JavaScript microservice as a string over argv,
+  runs it using `run-service` module, and pipes results to STDOUT
+  
+  **Note: This script is intended to be run inside a chroot jail**
+  
+  Microservices are expected to take in two streams ( input / output )
+
+  In most cases these input / output streams will be http req / res.
+
+  HTTP Request Input <=> process.stdin
+  HTTP Response Output <=> process.stdout
+  
+  Arguments:
+
+    -c - The source code of the service
+    -s - Meta-data about the service
+    -e - The environment config to run the service in
+    -v - The virtual machine config to run the service in
+
+*/
+
+// parse incoming command line arguments
+var argv = require('minimist')(process.argv.slice(2));
+
+if (typeof argv.c === "undefined" || argv.c.length === 0) {
+  console.log('Source code required. Please pass in -c option');
+  process.exit();
+}
+
+var request = require('hyperquest');
+
+var service = argv.s;
+
+// Punch DNS lookup, because copying BIND and system resolver into the chroot is much files to copy, 
+// this uses node's built-in resolver ( perhaps c-ares ? )
+var _dns=require('dns');
+var net=require('net');
+_dns.lookup = function (domain,family, callback) {
+    if (arguments.length === 2) {
+        callback = family;
+        family = 0;
+    } else if (!family) {
+        family = 0;
+    } else {
+        family = +family;
+        if (family !== 4 && family !== 6) {
+            throw new Error('invalid argument: `family` must be 4 or 6');
+        }
+    }
+
+    if (!domain) {
+        callback(null, null, family === 6 ? 6 : 4);
+        return {};
+    }
+    if (process.platform == 'win32' && domain == 'localhost') {
+        callback(null, '127.0.0.1', 4);
+        return {};
+    }
+
+    var matchedFamily = net.isIP(domain);
+    if (matchedFamily) {
+        callback(null, domain, matchedFamily);
+        return {};
+    }
+
+    if(family==4){
+        _dns.resolve4(domain,function(err , list){
+            callback && callback(err,(list && list.length?list[0]:''),4);
+        });
+    }else if(family==6){
+        _dns.resolve6(domain,function(err , list){
+            callback && callback(err,(list && list.length?list[0]:''),6);
+        });
+    }else{
+        _dns.resolve4(domain,function(err , list){
+            if(err){
+                return _dns.resolve6(domain,function(err2 , list2){
+                    callback && callback(err2,(list2 && list2.length?list2[0]:''),6);
+                });
+            }
+            callback && callback(err,(list && list.length?list[0]:''),4);
+        });
+    }
+}
+
+
+// require the `run-service` module to execute services
+var rs = require('run-service');
+
+// create a new writable stream to wrap / handle STDOUT
+var Writable = require('stream').Writable;
+var output = Writable();
+
+// anytime output is written to, write the result to the command line
+output._write = function (chunk, enc, next) {
+  process.stdout.write(chunk);
+  //  console.log(chunk); // TODO: remove string?
+  next();
+};
+
+// Mock out http response.writeHead
+output.writeHead = function (code, headers) {
+  var message = {
+    "type": "writeHead",
+    "payload": {
+      "code": code,
+      "headers": headers
+    }
+  };
+  // use STDERR as a channel for sending out of stream information ( like setting headers )
+  console.error(JSON.stringify(message));
+  //console.log(chunk.toString());
+  // hook.res.writeHead(200, { 'Content-Type': 'image/png' });
+};
+
+// Capture any stream errors
+output.on('error', function(err){
+  console.error(JSON.stringify({ type: "error", payload: { error: err.message } }));
+  process.exit();
+});
+
+// When the response has been ended, exit the process
+output.end = function end (data) {
+  if (typeof data !== 'undefined') {
+    console.log(data);
+  }
+  console.error(JSON.stringify({ type: "end" }));
+  process.exit();
+};
+
+// Custom errorHandler for `run-service` execution
+function errorHandler (err) {
+  console.error(JSON.stringify({ type: "error", payload: { error: err.message } }));
+  process.exit();
+};
+
+// parse the incoming service env from argv
+var env = JSON.parse(argv.e);
+
+// Map some familiar HTTP request information to input stream ( services need this data )
+process.stdin.headers = env.input.headers;
+process.stdin.host = env.input.host;
+process.stdin.url = env.input.url;
+process.stdin.connection = env.input.connection;
+
+// TODO: all custom env that hook.io is passing in should be configurable / not part of this project
+// Customize the service a bit ( TODO: remove these and make configurable )
+var open = function open (url) {
+  return request(url, {
+    "headers": {
+      "accept": "*/*"
+    }
+  });
+};
+
+var post = function post (url) {
+  return request.post(url, {
+    "headers": {
+      "accept": "*/*"
+    }
+  });
+};
+
+var logs = require('hook.io-logs');
+var debugOutput = [];
+
+// A simple debug utility for inspecting data from inside a running hook
+var debug = function debug (arg) {
+  // create log entry
+  var entry = {
+    time: new Date(),
+    data: JSON.stringify(arg),
+    ip : process.stdin.connection.remoteAddress
+  };
+  // push entry to log datasource
+  logs.push("/" + service.owner + "/" + service.name, entry, function(err, res) {
+    if (err) {
+      console.log('Error pushing log entry to datasource! ', err.message);
+    }
+  });
+  // push entry into temporary buffer for use in immediate request response
+  debugOutput.push(entry);
+};
+
+
+/*
+// Remark: Let's put a special rule for the gateway hook,
+// since the gateway allows arbitrary code and that can call the datastore...
+// and the gateway owner is "Marak"...then all anonymous data would be keyed to Hook owner "Marak"
+// since that would probably mess up Marak's account, we create a special key for anonymous
+// datastore requests coming from gateway.hook.io
+*/
+var _root = service.owner;
+if (service.owner === "Marak" && service.name === "gateway") {
+ _root = "anonymous";
+}
+
+// Wrap datastore so that all entries are keyed to owner of hook
+var Datastore = require('hook.io-datastore').Datastore;
+var datastore = new Datastore({ root: _root });
+//_env.datastore = datastore;
+
+// run the service
+rs({
+  service: argv.c,
+  env: {
+    req: process.stdin,
+    res: output,
+    params: env.params,
+    datastore: datastore,
+    debug: debug,
+    open: open,
+    post: post
+  },
+  vm: {
+    console: {
+      log: debug
+    },
+   __dirname: __dirname,
+   require: require
+ },
+ errorHandler: errorHandler
+})(function (err, result){
+ if(err) throw err;
+});

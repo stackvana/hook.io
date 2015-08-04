@@ -1,6 +1,10 @@
 # install.sh - will bootstrap an ubuntu machine to run hook.io
 # TODO: replace this script with a Dockerfile
 
+cd ..
+cd ..
+cd ..
+
 # update apt-get
 apt-get -y update
 
@@ -8,13 +12,13 @@ apt-get -y update
 apt-get -y install git-core
 
 # get latest stable node as tar
-wget https://github.com/joyent/node/tarball/v0.11.16
+wget https://github.com/joyent/node/tarball/v0.12.7
 
 # extract latest node
-tar xf v0.11.16
+tar xf v0.12.7
 
 # change directory into node
-cd joyent-node-afeb6e1
+cd joyent-node-bf88623
 
 # install some missing deps
 apt-get -y install g++ curl libssl-dev apache2-utils
@@ -26,32 +30,39 @@ apt-get -y install g++ curl libssl-dev apache2-utils
 apt-get -y install make
 
 # make node
-sudo make
+make
 
 # install node
-sudo make install
+make install
 
 # install couchdb
-sudo apt-get install couchdb -y
+apt-get install couchdb -y
 
 # install redis
-sudo apt-get install redis-server -y
+apt-get install redis-server -y
+
+# start redis as service
+redis-server
 
 # at this stage, you will want to edit couch's default config
 # TODO: automate this
+  # bind_address = 0.0.0.0
+  # [couch_httpd_auth]
+  # require_valid_user = true
 nano /etc/couchdb/default.ini
 
 # start couch as service
 start couchdb
 
 # fix admin party for couch
-
 # create hook database on couch
+# http://localhost:5984/_utils/
 
-# clone hook.io main repo
-git clone https://github.com/bigcompany/hook.io
+# cd into main hook.io main repo
 cd hook.io
-sudo npm install
+
+# install hook.io deps
+npm install
 
 # update configuration data with new production information
 nano config/index.js 
@@ -65,12 +76,14 @@ make install
 # install user modules
 cd ..
 cd hook.io
-sudo npm install npm
+npm install npm
 cd modules
-sudo node install.js
+node install.js
 
 # run custom builds scripts /modules/builds
+# TODO: automate
+# see: /modules/builds folder for individual package build instructions
 
 # start production
-sudo sh scripts/start-production.sh
+sh scripts/start-production.sh
 
