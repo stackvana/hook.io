@@ -134,9 +134,9 @@ If you only need to test your Hook code, you can run `./bin/test-hook` without h
 
 Before setting up a private hook.io server, you should try the free hosted version at [https://hook.io](https://hook.io)
 
-Setting up a private hook.io server is easy! You'll want to clone this repository, install the dependencies, and run the `start.sh` script. There currently are not detailed installation instructions and you will need to configure a few dependencies ( such as couchdb and github api ).
+Setting up a private hook.io server at this time will not be easy. You'll need to clone this repository, install the dependencies, and run the `start.sh` script. There currently are not detailed installation instructions and you will need to configure a few dependencies ( such as couchdb, redis, and github api ) and pull a few other dependencies from `master`.
 
-If you want to run Hooks without any additional dependencies, try running `./bin/test-hook`.
+In the near future, we will improve the process of setting up a local hook.io server.
 
 ## Workers
 
