@@ -1,9 +1,9 @@
-<img src="http://hook.io/img/logo.png"></img>
+<img src="https://hook.io/img/logo.png"></img>
 ## Open-Source Microservice Hosting Platform 
 
 ### Build and deploy HTTP microservices in seconds
 
-To start using hook.io visit the website at [http://hook.io](http://hook.io). Here you will find many examples and documentation on how to use hook.io
+To start using hook.io visit the website at [https://hook.io](https://hook.io). Here you will find many examples and documentation on how to use hook.io
 
 
 **Built with:** [Node.js](http://nodejs.org), [CouchDB](http://couchdb.com), [Redis](http://redis.io), and [Github Gist](http://gist.github.com). [Node Package Manager](http://npmjs.org) modules are fully supported.
@@ -30,7 +30,7 @@ hook.io is an open-source hosting platform for webhooks and microservices. The m
 You should want to use hook.io if it can make your life as a developer easier.
 
 
-The most *basic use-case* for hook.io is quick and free webhook hosting. You can instantly create a [simple hook](http://hook.io/Marak/echo) which parses the incoming parameters of an HTTP request and performs arbitrary actions on it. For instance: Send an SMS message every-time the Hook is requested as a webpage. Since NPM is supported, you can re-use any existing library from the extensive [NPM module repository](http://npmjs.org). You can also configure Hooks to be executed on a schedule using a [Cron pattern](http://hook.io/cron).
+The most *basic use-case* for hook.io is quick and free webhook hosting. You can instantly create a [simple hook](https://hook.io/Marak/echo) which parses the incoming parameters of an HTTP request and performs arbitrary actions on it. For instance: Send an SMS message every-time the Hook is requested as a webpage. Since NPM is supported, you can re-use any existing library from the extensive [NPM module repository](http://npmjs.org). You can also configure Hooks to be executed on a schedule using a [Cron pattern](https://hook.io/cron).
 
 
 
@@ -38,17 +38,17 @@ At this point, we will take note that Hooks are [fully streaming](https://github
 
 
 
-More *advanced use-cases* for hook.io would be replacing individual parts of your application with microservices. Instead of adding a new route or module to your application , you could instead create a Hook responsible for only one unit of functionality and call it using a regular HTTP request from inside your existing application. One specific example could be building a Hook with a [custom theme](http://hook.io/themes) which acts perfectly as a stand-alone sign-up form. This sign-up form can then be loaded server-side in your application using one HTTP get request. It might sound complicated at first, but integrating microservices with your existing application is actually very easy. In the upcoming weeks we'll work on releasing specific guides for separating application functionalities into microservices.
+More *advanced use-cases* for hook.io would be replacing individual parts of your application with microservices. Instead of adding a new route or module to your application , you could instead create a Hook responsible for only one unit of functionality and call it using a regular HTTP request from inside your existing application. One specific example could be building a Hook with a [custom theme](https://hook.io/themes) which acts perfectly as a stand-alone sign-up form. This sign-up form can then be loaded server-side in your application using one HTTP get request. It might sound complicated at first, but integrating microservices with your existing application is actually very easy. In the upcoming weeks we'll work on releasing specific guides for separating application functionalities into microservices.
 
 
 
-An *even more advanced usage* would be building a suite of Hooks and composing them to create new and unique applications! Since every Hook understands Standard In and Standard Out and Hooks can [easily call other Hooks](http://hook.io/Marak/merge) from inside each other, there are an endless amount of combinations to be made. This composability enables the foundation for [Flow-based Programming](http://en.wikipedia.org/wiki/Flow-based_programming) without imposing any specific rules for composition. A specific example could be building a Hook ( called "tar" ) responsible for taking in STDIN and streaming out a compressed tar file. Once this Hook is created, you could easily pipe the results of another Hook ( such as an image downloader ) into the "tar" Hook. These Hooks don't exist yet, but I am certain someone will build them in the near future.
+An *even more advanced usage* would be building a suite of Hooks and composing them to create new and unique applications! Since every Hook understands Standard In and Standard Out and Hooks can [easily call other Hooks](https://hook.io/Marak/merge) from inside each other, there are an endless amount of combinations to be made. This composability enables the foundation for [Flow-based Programming](http://en.wikipedia.org/wiki/Flow-based_programming) without imposing any specific rules for composition. A specific example could be building a Hook ( called "tar" ) responsible for taking in STDIN and streaming out a compressed tar file. Once this Hook is created, you could easily pipe the results of another Hook ( such as an image downloader ) into the "tar" Hook. These Hooks don't exist yet, but I am certain someone will build them in the near future.
 
 
 
 ## Unix Pipes!
 
-hook.io is very friendly with Unix Pipes. Using STDOUT and STDIN you can connect hook.io to your existing Unix Tool chain. The best way to explain this concept is to review the [Curl examples](http://hook.io/curl).
+hook.io is very friendly with Unix Pipes. Using STDOUT and STDIN you can connect hook.io to your existing Unix Tool chain. The best way to explain this concept is to review the [Curl examples](https://hook.io/curl).
 
 
 
@@ -57,7 +57,7 @@ Here is one specific example of using hook.io to flip a cat upside-down with `ca
 
 
 ```
-cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' http://hook.io/Marak/image/rotate > upsidedown-cat.png
+cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' https://hook.io/Marak/image/rotate > upsidedown-cat.png
 ```
 
 
@@ -74,7 +74,7 @@ The core software architecture of hook.io is Resource-View-Presenter ( RVP ).
 
 Resources are created using the npm [resource](http://npmjs.org/package/resource) module.
 
-View-Presenters are created using the npm [view](http://npmjs.org/package/view) module with regular HTML, CSS, and JavaScript. The same View-Presenter pattern is also used to implement custom theming for Hooks see: [hook.io/themes](http://hook.io/themes)
+View-Presenters are created using the npm [view](http://npmjs.org/package/view) module with regular HTML, CSS, and JavaScript. The same View-Presenter pattern is also used to implement custom theming for Hooks see: [hook.io/themes](https://hook.io/themes)
 
 
 ## Dependency Tree
@@ -102,7 +102,7 @@ The front-facing server is responsible for serving static content, maintaining u
 
 Workers are responsible for executing user-submitted source code and piping their responses through the front-facing server to the client.
 
-At this point, we will take note that communication between the Hook and client remains streaming throughout the entire architecture. This gives hook.io the ability to perform complex tasks like [transcoding large video streams](http://hook.io/Marak/transcodeVideo) without worrying about clogging up any parts of the system with large memory buffers.
+At this point, we will take note that communication between the Hook and client remains streaming throughout the entire architecture. This gives hook.io the ability to perform complex tasks like [transcoding large video streams](https://hook.io/Marak/transcodeVideo) without worrying about clogging up any parts of the system with large memory buffers.
 
 Hook Servers and Hook Workers are immutable and stateless to ensure stability of the platform. They are designed to fail fast and restart fast. [mon](http://github.com/tj/mon) is used as a process supervisor.
 
@@ -114,7 +114,7 @@ Source code for Hooks is currently stored on Github as Github Gists. I'd imagine
 
 ## Creating new Hooks
 
-It's very simple. Go to [http://hook.io/new](http://hook.io/new)
+It's very simple. Go to [https://hook.io/new](https://hook.io/new)
 
 ## Support
 
@@ -132,7 +132,7 @@ If you only need to test your Hook code, you can run `./bin/test-hook` without h
 
 ## Setting up a private hook.io
 
-Before setting up a private hook.io server, you should try the free hosted version at [http://hook.io](http://hook.io)
+Before setting up a private hook.io server, you should try the free hosted version at [https://hook.io](https://hook.io)
 
 Setting up a private hook.io server is easy! You'll want to clone this repository, install the dependencies, and run the `start.sh` script. There currently are not detailed installation instructions and you will need to configure a few dependencies ( such as couchdb and github api ).
 
