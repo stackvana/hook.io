@@ -46,7 +46,7 @@
     "resource-user": "0.5.x",
     "rss": "^1.1.1",
     "run-remote-service": "1.x.x",
-    "run-service": "1.x.x",
+    "run-service": "https://github.com/bigcompany/run-service/tarball/master",
     "slug": "^0.8.0",
     "stream-body-parser": "0.0.1",
     "stream-buffers": "^1.1.0",
