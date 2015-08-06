@@ -14,8 +14,12 @@ module['exports'] = function view (opts, callback) {
 
  // if not logged in, kick out
  if (!req.isAuthenticated()) {
+   $('.domains').remove();
    req.session.redirectTo = "/domains";
-   return res.redirect('/login');
+   return callback(null, $.html());
+   //return res.redirect('/login');
+ } else {
+   $('.loginBar').remove();
  }
 
  bodyParser()(req, res, function bodyParsed() {
