@@ -7,7 +7,7 @@ var forms = require('mschema-forms');
 var mustache = require('mustache');
 var mergeParams = require('./mergeParams');
 var bodyParser = require('body-parser');
-// var themes = require('../lib/resources/themes');
+var themes = require('../lib/resources/themes');
 var server = require('../lib/server');
 
 
@@ -144,13 +144,14 @@ module['exports'] = function view (opts, callback) {
 
       $('form').attr('action', '/admin?owner=' + h.owner + "&name=" + h.name);
 
-      self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h }, function(err, html){
+      self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h, themes: themes }, function(err, html){
         var el = $('.hookTable > div').eq(4);
         el.after(html);
-        callback(null, $.html());
+        var out = $.html();
+        out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
+        return callback(null, out);
       });
 
-      return callback(null, $.html());
     }
 
   }
