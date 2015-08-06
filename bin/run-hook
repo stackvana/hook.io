@@ -36,59 +36,6 @@ var request = require('hyperquest');
 
 var service = argv.s;
 
-// Punch DNS lookup, because copying BIND and system resolver into the chroot is much files to copy, 
-// this uses node's built-in resolver ( perhaps c-ares ? )
-var _dns=require('dns');
-var net=require('net');
-_dns.lookup = function (domain,family, callback) {
-    if (arguments.length === 2) {
-        callback = family;
-        family = 0;
-    } else if (!family) {
-        family = 0;
-    } else {
-        family = +family;
-        if (family !== 4 && family !== 6) {
-            throw new Error('invalid argument: `family` must be 4 or 6');
-        }
-    }
-
-    if (!domain) {
-        callback(null, null, family === 6 ? 6 : 4);
-        return {};
-    }
-    if (process.platform == 'win32' && domain == 'localhost') {
-        callback(null, '127.0.0.1', 4);
-        return {};
-    }
-
-    var matchedFamily = net.isIP(domain);
-    if (matchedFamily) {
-        callback(null, domain, matchedFamily);
-        return {};
-    }
-
-    if(family==4){
-        _dns.resolve4(domain,function(err , list){
-            callback && callback(err,(list && list.length?list[0]:''),4);
-        });
-    }else if(family==6){
-        _dns.resolve6(domain,function(err , list){
-            callback && callback(err,(list && list.length?list[0]:''),6);
-        });
-    }else{
-        _dns.resolve4(domain,function(err , list){
-            if(err){
-                return _dns.resolve6(domain,function(err2 , list2){
-                    callback && callback(err2,(list2 && list2.length?list2[0]:''),6);
-                });
-            }
-            callback && callback(err,(list && list.length?list[0]:''),4);
-        });
-    }
-}
-
-
 // require the `run-service` module to execute services
 var rs = require('run-service');
 
