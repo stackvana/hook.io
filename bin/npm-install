@@ -1,0 +1,26 @@
+#!/usr/local/bin/node
+
+// parse incoming command line arguments
+var argv = require('minimist')(process.argv.slice(2));
+
+if (typeof argv.p === "undefined" || argv.p.length === 0) {
+  console.log('Packages parameter required. Please pass in -p argument');
+  process.exit();
+}
+
+var packages;
+
+try {
+  packages = JSON.parse(argv.p);  
+} catch (err) {
+  console.log('Invalid -p argument. Not JSON' + err.message);
+  process.exit();
+}
+
+var npm = require("../lib/resources/npm");
+
+npm.install("/Users/chroot/", { packages: packages }, function(err, res){
+  if (err) {
+    console.error(err.message)
+  }
+});
