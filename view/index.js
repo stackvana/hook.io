@@ -1,3 +1,4 @@
+var config = require('../config');
 var slug = require('slug');
 slug.defaults.modes['rfc3986'] = {
     replacement: '-',      // replace spaces with replacement
@@ -90,6 +91,8 @@ module['exports'] = function view (opts, callback) {
 
     return res.end(message);
   }
+  // TODO: gateway.hook.io for production
+  $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway');
   if (typeof user === "undefined") {
     $('.userBar').remove();
   } else {
