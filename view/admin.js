@@ -112,6 +112,7 @@ module['exports'] = function view (opts, callback) {
     function finish (h) {
 
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
+      $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
       $('.hookName').attr('value', h.name);
