@@ -4,7 +4,7 @@ module['exports'] = {
     https: true,
     roots: ["127.0.0.1", "localhost", "hook.io", "www.hook.io"]
   },
-  baseUrl: "http://dev.hook.io:9999",
+  baseUrl: "https://localhost",
   couch: {
     "database": "hook",
     "type": "couchdb",
@@ -30,5 +30,6 @@ module['exports'] = {
     publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
   },
   sslKeyDirectory: __dirname + '/../ssl/',
+  useChroot: false,
   customDomains: true
 };
