@@ -23,7 +23,6 @@
     -v - The virtual machine config to run the service in
 
 */
-
 /*
 // Punch DNS lookup, because copying BIND and system resolver into the chroot is much files to copy, 
 // this uses node's built-in resolver ( perhaps c-ares ? )
@@ -44,7 +43,6 @@ if (typeof argv.c === "undefined" || argv.c.length === 0) {
 var request = require('hyperquest');
 
 var service = argv.s;
-
 // require the `run-service` module to execute services
 var rs = require('run-service');
 
@@ -170,6 +168,7 @@ rs({
     res: output,
     params: env.params,
     datastore: datastore,
+    isStreaming: env.isStreaming,
     debug: debug,
     open: open,
     post: post
