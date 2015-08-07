@@ -73,7 +73,7 @@ module['exports'] = function view (opts, callback) {
               h.presenter = _module.presenter;
               h.save(function(){
                 // redirect to new hook friendly page
-                return res.redirect('/' + h.owner + "/" + h.name + "?created=true");
+                return res.redirect('/' + h.owner + "/" + h.name + "");
                 //return callback(null, JSON.stringify(result, true, 2));
               });
               
