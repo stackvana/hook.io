@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/bin/node
 
 /*
   Spawns a service as a child process
@@ -23,7 +23,7 @@
     -v - The virtual machine config to run the service in
 
 */
-/*
+
 // Punch DNS lookup, because copying BIND and system resolver into the chroot is much files to copy, 
 // this uses node's built-in resolver ( perhaps c-ares ? )
 var _dns=require('dns');
@@ -31,7 +31,6 @@ var dns = require('native-dns');
 
 var net=require('net');
 _dns.lookup = dns.lookup;
-*/
 // parse incoming command line arguments
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -121,27 +120,11 @@ var post = function post (url) {
   });
 };
 
-var logs = require('hook.io-logs');
-var debugOutput = [];
-
-// A simple debug utility for inspecting data from inside a running hook
+// Send logs to stderr as JSON message
 var debug = function debug (arg) {
-  // create log entry
-  var entry = {
-    time: new Date(),
-    data: JSON.stringify(arg),
-    ip : process.stdin.connection.remoteAddress
-  };
-  // push entry to log datasource
-  logs.push("/" + service.owner + "/" + service.name, entry, function(err, res) {
-    if (err) {
-      console.log('Error pushing log entry to datasource! ', err.message);
-    }
-  });
-  // push entry into temporary buffer for use in immediate request response
-  debugOutput.push(entry);
+  console.error(JSON.stringify({ type: "log", payload: { entry: arg } }));
+  return;
 };
-
 
 /*
 // Remark: Let's put a special rule for the gateway hook,
