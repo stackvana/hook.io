@@ -30,6 +30,7 @@ module['exports'] = {
     publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
   },
   sslKeyDirectory: __dirname + '/../ssl/',
+  chrootDirectory: '/Users/chroot',
   useChroot: false,
   customDomains: true
 };
