@@ -47,7 +47,7 @@
     "resource-user": "0.5.x",
     "rimraf": "^2.4.2",
     "rss": "^1.1.1",
-    "run-remote-service": "1.x.x",
+    "run-remote-service": "https://github.com/bigcompany/run-remote-service/tarball/master",
     "run-service": "https://github.com/bigcompany/run-service/tarball/master",
     "slug": "^0.8.0",
     "stream-body-parser": "0.0.1",
