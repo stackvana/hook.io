@@ -24,6 +24,7 @@
 
 */
 
+/* TODO: make dns punch config ( useful for dev )
 // Punch DNS lookup, because copying BIND and system resolver into the chroot is much files to copy, 
 // this uses node's built-in resolver ( perhaps c-ares ? )
 var _dns=require('dns');
@@ -31,6 +32,8 @@ var dns = require('native-dns');
 
 var net=require('net');
 _dns.lookup = dns.lookup;
+*/
+
 // parse incoming command line arguments
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -158,7 +161,8 @@ rs({
   },
   vm: {
     console: {
-      log: debug
+      log: debug,
+      error: debug
     },
    __dirname: __dirname,
    require: require
