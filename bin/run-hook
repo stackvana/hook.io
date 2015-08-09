@@ -24,7 +24,7 @@
 
 */
 
-/* TODO: make dns punch config ( useful for dev )
+// TODO: make DNS punch configurable ( useful for dev )
 // Punch DNS lookup, because copying BIND and system resolver into the chroot is much files to copy, 
 // this uses node's built-in resolver ( perhaps c-ares ? )
 var _dns=require('dns');
@@ -32,8 +32,6 @@ var dns = require('native-dns');
 
 var net=require('net');
 _dns.lookup = dns.lookup;
-*/
-
 // parse incoming command line arguments
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -47,6 +45,8 @@ var request = require('hyperquest');
 var service = argv.s;
 // require the `run-service` module to execute services
 var rs = require('run-service');
+
+var psr = require('parse-service-request');
 
 // create a new writable stream to wrap / handle STDOUT
 var Writable = require('stream').Writable;
@@ -100,10 +100,13 @@ function errorHandler (err) {
 var env = JSON.parse(argv.e);
 
 // Map some familiar HTTP request information to input stream ( services need this data )
+process.stdin.method = env.input.method;
 process.stdin.headers = env.input.headers;
 process.stdin.host = env.input.host;
 process.stdin.url = env.input.url;
 process.stdin.connection = env.input.connection;
+process.stdin.resource = { params: {}};
+
 
 // TODO: all custom env that hook.io is passing in should be configurable / not part of this project
 // Customize the service a bit ( TODO: remove these and make configurable )
@@ -144,30 +147,33 @@ if (service.owner === "Marak" && service.name === "gateway") {
 // Wrap datastore so that all entries are keyed to owner of hook
 var Datastore = require('hook.io-datastore').Datastore;
 var datastore = new Datastore({ root: _root });
-//_env.datastore = datastore;
 
-// run the service
-rs({
-  service: argv.c,
-  env: {
-    req: process.stdin,
-    res: output,
-    params: env.params,
-    datastore: datastore,
-    isStreaming: env.isStreaming,
-    debug: debug,
-    open: open,
-    post: post
-  },
-  vm: {
-    console: {
-      log: debug,
-      error: debug
+psr(process.stdin, output, function(req, res, fields){
+  for (var p in fields) {
+    env.params[p] = fields[p];
+  }
+  rs({
+    service: argv.c,
+    env: {
+      req: req,
+      res: res,
+      params: env.params,
+      datastore: datastore,
+      isStreaming: env.isStreaming,
+      debug: debug,
+      open: open,
+      post: post
     },
-   __dirname: __dirname,
-   require: require
- },
- errorHandler: errorHandler
-})(function (err, result){
- if(err) throw err;
+    vm: {
+      console: {
+        log: debug,
+        error: debug
+      },
+     __dirname: __dirname,
+     require: require
+   },
+   errorHandler: errorHandler
+  })(function (err, result){
+    errorHandler(err);
+  });
 });
