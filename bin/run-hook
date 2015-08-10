@@ -157,6 +157,7 @@ psr(process.stdin, output, function(req, res, fields){
     env: {
       req: req,
       res: res,
+      env: env.env,
       params: env.params,
       datastore: datastore,
       isStreaming: env.isStreaming,
