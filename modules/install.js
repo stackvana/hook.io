@@ -3,16 +3,40 @@
   Beware: resource / view / big / resource-http / etc
 */
 var npm = require("npm");
+var m = require('../lib/resources/modules');
 var modules = require('./modules');
 var fs = require("fs");
 var colors = require('colors');
 
-var arr = Object.keys(modules);
+  var arr = Object.keys(modules);
 
+  function _install () {
+
+    if(arr.length === 0) {
+      console.log('DONE'.blue);
+      process.exit();
+    }
+
+    var p = arr.pop();
+    m.install(p, function(err, r){
+      if (err) {
+        console.log('ERROR'.red, err.message, p);
+        return;
+      }
+      console.log('INSTALLED'.green, p);
+      _install();
+    });
+  };
+
+_install();
+
+return;
+// legacy module installer code
 npm.load({ exit: false }, function (err) {
  if (err) throw err;
  checkPackage();
 });
+
 
 function checkPackage () {
   if (arr.length === 0) {

@@ -25,7 +25,6 @@ module['exports'] = {
   "gm": "1.17.0",
   "hyperquest": "1.0.1",
   "irc": "0.3.7",
-  "jugglingdb-nano": "0.0.3-pre",
   "map-async": "0.1.1",
   "map-sync": "0.1.1",
   "marked": "0.3.3",
