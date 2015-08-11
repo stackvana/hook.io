@@ -86,9 +86,9 @@ input[type="checkbox"] {
   // the server-side slugify code is much more robust covering much utf
   function slugify(text) {
     return text.toString().toLowerCase()
-      .replace(/\s+/g, '-')           // Replace spaces with -
-      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+      .replace(/\s+/g, '-');           // Replace spaces with -
+//      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+//      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
   }
 
   // lookup themes from curated theme list
@@ -196,11 +196,21 @@ input[type="checkbox"] {
       The Gist will now be associated with the Hook service once you've completed this form.
     </div>
     </br>
+    
+    
     <div class="form-group">
-      <label for="name">Hook Path</label>
+      <label for="name">Hook Name</label>
       <input class="form-control" type="text" id="name" name="name" placeholder="test-hook" size="40"/>
       <div class="tiny">
-        <em>The path where the hook service will exist. Cannot contain non-url safe characters.</em>
+        <em>The name of the hook service will exist. Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="name">Hook Path</label>
+      <input class="form-control" type="text" id="path" name="path" placeholder="/:id" size="40"/>
+      <div class="tiny">
+        <em>The path where the hook service will exist. Can contain <code>/:foo/bar/:baz</code> style parameter routing. Route parameters will populate in <code>Hook.params</code> scope inside the service.</em>
       </div>
     </div>
 
