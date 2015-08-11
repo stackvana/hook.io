@@ -60,6 +60,8 @@ output._write = function (chunk, enc, next) {
   next();
 };
 
+
+// TODO: move response mocking code to separate module
 // Mock out http response.writeHead
 output.writeHead = function (code, headers) {
   var message = {
@@ -73,6 +75,101 @@ output.writeHead = function (code, headers) {
   console.error(JSON.stringify(message));
   //console.log(chunk.toString());
   // hook.res.writeHead(200, { 'Content-Type': 'image/png' });
+};
+
+output.addTrailers = function (headers) {
+  var message = {
+    "type": "addTrailers",
+    "payload": {
+      "headers": headers
+    }
+  };
+  console.error(JSON.stringify(message));
+};
+
+output.removeHeader = function (name) {
+  var message = {
+    "type": "removeHeader",
+    "payload": {
+      "name": name
+    }
+  };
+  console.error(JSON.stringify(message));
+};
+
+output.setHeader = function (name, value) {
+  var message = {
+    "type": "setHeader",
+    "payload": {
+      "name": name,
+      "value": value
+    }
+  };
+  console.error(JSON.stringify(message));
+};
+
+output.setTimeout = function (msecs, cb) {
+  // TODO: add optional callback argument?
+  var message = {
+    "type": "setTimeout",
+    "payload": {
+      "msecs": msecs
+    }
+  };
+  console.error(JSON.stringify(message));
+};
+
+output.sendDate = function (value) {
+  var message = {
+    "type": "sendDate",
+    "payload": {
+      "value": value
+    }
+  };
+  console.error(JSON.stringify(message));
+};
+
+output.statusMessage = function (value) {
+  var message = {
+    "type": "statusMessage",
+    "payload": {
+      "value": value
+    }
+  };
+  console.error(JSON.stringify(message));
+};
+
+// Using Object.defineProperty
+Object.defineProperty(output, 'statusCode', {
+  set: function(value) {
+    var message = {
+      "type": "statusCode",
+      "payload": {
+        "value": value
+      }
+    };
+    console.error(JSON.stringify(message));
+  }
+});
+
+output.writeContinue = function () {
+  var message = {
+    "type": "writeContinue",
+    "payload": {
+    }
+  };
+  console.error(JSON.stringify(message));
+};
+
+output.writeHead = function (code, headers) {
+  var message = {
+    "type": "writeHead",
+    "payload": {
+      "code": code,
+      "headers": headers
+    }
+  };
+  console.error(JSON.stringify(message));
 };
 
 // Capture any stream errors
