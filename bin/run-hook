@@ -27,11 +27,11 @@
 // TODO: make DNS punch configurable ( useful for dev )
 // Punch DNS lookup, because copying BIND and system resolver into the chroot is much files to copy, 
 // this uses node's built-in resolver ( perhaps c-ares ? )
-var _dns=require('dns');
-var dns = require('native-dns');
+//var _dns=require('dns');
+//var dns = require('native-dns');
+//var net=require('net');
+//_dns.lookup = dns.lookup;
 
-var net=require('net');
-_dns.lookup = dns.lookup;
 // parse incoming command line arguments
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -60,22 +60,8 @@ output._write = function (chunk, enc, next) {
   next();
 };
 
-
 // TODO: move response mocking code to separate module
-// Mock out http response.writeHead
-output.writeHead = function (code, headers) {
-  var message = {
-    "type": "writeHead",
-    "payload": {
-      "code": code,
-      "headers": headers
-    }
-  };
-  // use STDERR as a channel for sending out of stream information ( like setting headers )
-  console.error(JSON.stringify(message));
-  //console.log(chunk.toString());
-  // hook.res.writeHead(200, { 'Content-Type': 'image/png' });
-};
+// use STDERR as a channel for sending out of stream information ( like setting headers )
 
 output.addTrailers = function (headers) {
   var message = {
@@ -224,8 +210,15 @@ var post = function post (url) {
 };
 
 // Send logs to stderr as JSON message
-var debug = function debug (arg) {
-  console.error(JSON.stringify({ type: "log", payload: { entry: arg } }));
+var debug = function debug () {
+  var args = [];
+  for (var a in arguments) {
+    args.push(arguments[a]);
+  }
+  if (args.length === 1) {
+    args = args[0];
+  }
+  console.error(JSON.stringify({ type: "log", payload: { entry: args } }));
   return;
 };
 
