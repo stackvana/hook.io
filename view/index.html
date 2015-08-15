@@ -219,27 +219,33 @@ $('document').ready(function(){
     showCode();
     editor.setValue("loading...");
     loadingSnippet();
-    request = $.get('https://localhost' + src + '/source', function (res) {
+    request = $.get('https://hook.io' + src + '/source', function (res) {
       snippetLoaded();
       editor.setValue(res);
     });
   };
-  
-  $('.hookFrame').on("load", function() {
-    //alert('loaded');
-    //console.log($(this).attr('src'))
-    snippetLoaded();
-    $('.CodeMirror').hide();
-    $('.hookFrame').show();
-  });
-  
+
+  // the only reason this boolean currently exists is to prevent,
+  // a firefox bug which causes the iframe load event to trigger on,
+  // document ready even though it has no src and the form has not submitted to it
   var deployingCode = false;
   
+  $('.hookFrame').on("load", function() {
+    if (deployingCode) {
+      snippetLoaded();
+      $('.CodeMirror').hide();
+      $('.hookFrame').show();
+      deployingCode = false;
+    }
+  });
+
+
   function deployCode () {
     if (snippetLoading) {
       // do not attempt to deploy code if a new snippet is still loading...
       return false;
     }
+    deployingCode = true;
     var now = new Date().getTime();
     $('#source').val(editor.getValue());
     $('.gatewayForm').submit();
@@ -360,9 +366,7 @@ $('document').ready(function(){
     $('.selectSnippet').prop('selectedIndex', prev).change();
     return false;
   });
-  //loadSnippet();
-  loadingSnippet();
-  deployCode();
+  showCode();
 
 });
 var editor;
@@ -405,16 +409,16 @@ var editor;
 
       <div class="btn-group transport" role="group">
         <select name="selectSnippet" class="selectSnippet btn btn-default">
-          <option value="/Marak/examples/helloWorld">hello world</option>
-          <option value="/Marak/examples/simpleHttpRequest">send outgoing http requests</option>
-          <option value="/Marak/examples/requestParameters">access incoming request data</option>
-          <option value="/Marak/examples/inputSchema">add input schemas</option>
-          <option value="/Marak/examples/transformStream">transform streaming requests</option>
-          <option value="/Marak/examples/pipeHook">pipe streaming requests</option>
-          <option value="/Marak/examples/mergeStreams">merge streams</option>
-          <option value="/Marak/examples/datastore">use the cloud datastore</option>
-          <option value="/Marak/examples/imageResize">resize images</option>
-          <option value="/Marak/examples/fakeData">generate fake data</option>
+          <option value="/Marak/examples-helloWorld">hello world</option>
+          <option value="/Marak/examples-simpleHttpRequest">send outgoing http requests</option>
+          <option value="/Marak/examples-requestParameters">access incoming request data</option>
+          <option value="/Marak/examples-inputSchema">add input schemas</option>
+          <option value="/Marak/examples-transformStream">transform streaming requests</option>
+          <option value="/Marak/examples-pipeHook">pipe streaming requests</option>
+          <option value="/Marak/examples-mergeStreams">merge streams</option>
+          <option value="/Marak/examples-datastore">use the cloud datastore</option>
+          <option value="/Marak/examples-imageResize">resize images</option>
+          <option value="/Marak/examples-fakeData">generate fake data</option>
           <!--
           <option value="/Marak/coin">get crypto-currency prices</option>
           <option value="/Marak/geoip">lookup requests geoip</option>
