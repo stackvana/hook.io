@@ -120,6 +120,7 @@ module['exports'] = function view (opts, callback) {
     function finish (h) {
 
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
+      $('.hookLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs");
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
@@ -135,7 +136,6 @@ module['exports'] = function view (opts, callback) {
       }
 
       if (typeof h.cron !== 'undefined') {
-        console.log('h', h.cron)
         $('#cronString').attr('value', h.cron);
       }
 
