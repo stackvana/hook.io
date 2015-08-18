@@ -45,6 +45,8 @@
     <p>To create a Hook visit: <a href="https://hook.io/new">https://hook.io/new</a></p>
     <p>On this page, the following properties can be specified to create a Hook:</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name</strong> <em>required</em> - Name of hook</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Path</strong> <em>optional</em> - url regex route for the hook. Supports named parameters, splats, and groups.</p>
+    
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Gist</strong> <em>required</em> - Source code of the Hook as a Github Gist</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - A View-Presenter that will render the output of the Hook, see: <a href="https://hook.io/themes">Themes</a></p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cron</strong> <em>optional</em> - Run this Hook on a Cron schedule, see: <a href="https://hook.io/cron">Cron</a></p>
@@ -52,12 +54,12 @@
 
     <a name="forking"></a>
     <h2><strong>Forking an existing Hook</strong></h2>
-    <p>To fork another Hook, simply add the query string parameter <code>?fork=true</code> to the Hook you want to fork.</p>
+    <p>To fork another Hook, simply add <code>/fork</code> to the url of the Hook you want to fork.</p>
     <p>By specifying the <code>fork</code> parameter, you will be taken to a new page where you can start customizing your Fork.</p>
 
     <p>Once a Hook is created the browser will redirect to the landing page for that Hook.</p>
     
-    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo?fork=true">https://hook.io/Marak/echo?fork=true</a>
+    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo/fork">https://hook.io/Marak/echo/fork</a>
     <hr/>
 
     <a name="running"></a>
@@ -72,6 +74,8 @@
     <p>This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
     
     <p><strong>Source Code:</strong> <a href="https://hook.io/Marak/echo/source">https://hook.io/Marak/echo/source</a></p>
+    <p><strong>Logs:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a></p>
+    <p><strong>Resource:</strong> <a href="https://hook.io/Marak/echo/resource">https://hook.io/Marak/echo/resource</a></p>
     <p><strong>View:</strong> <a href="https://hook.io/Marak/echo/view">https://hook.io/Marak/echo/view</a></p>
     <p><strong>Presenter:</strong> <a href="https://hook.io/Marak/echo/presenter">https://hook.io/Marak/echo/presenter</a></p>
 
@@ -79,14 +83,14 @@
 
     <a name="admin"></a>
     <h2><strong>Hook Admin Panel</strong></h2>
-    <p>To access the Adminsitration page for a Hook simply attach <code>/admin</code> to the Hook service url.</p>
+    <p>To access the Administration page for a Hook simply attach <code>/admin</code> to the Hook service url.</p>
     <p>This will only work for Hooks which you own.</p>
 
     <a name="logs"></a>
     <hr/>
     <h2><strong>Hook Debugging and Logs</strong></h2>
-    <p>hook.io provides a streaming logging service which Hook's can write to with <code>console.log</code></p>
-    <p>Streaming log endpoints are available for consumption on all Hook service urls as <code>/logs</code>. This allows for real-time monitoring of a Hook's logging output.</p>
+    <p>hook.io provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simple call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
+    <p>Streaming log endpoints are available for real-time consumption on all Hook service urls as <code>/logs</code>.</p>
     <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a>
       <p>Complete logging documentation can be found at <a href="https://hook.io/logs">https://hook.io/logs</a>
 
@@ -103,7 +107,6 @@
     <h3><strong>Form Data</strong></h3>
     <p>Data can also be sent via form POST</p>
     <p><strong>Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' https://hook.io/Marak/echo" size="60"/></p>
-    <p><em>Notice that we don't specify the <strong>run</strong> parameter in the Curl example? This is because the hook is being called from a non-browser source ( no text/html Accept header ) and will automatically execute.</em></p>
 
     <h3><strong>Streaming Data</strong></h3>
     <p>To send streaming data to the hook, simply open up a streaming http request.</p>

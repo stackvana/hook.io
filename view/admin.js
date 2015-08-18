@@ -168,7 +168,7 @@ module['exports'] = function view (opts, callback) {
         var el = $('.hookTable > div').eq(4);
         el.after(html);
         var out = $.html();
-        h.cron = h.cron || "* * * * * *";
+        h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
         return callback(null, out);

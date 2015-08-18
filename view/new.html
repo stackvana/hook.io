@@ -24,6 +24,10 @@
     background-image: url('img/loading.gif');
 }
 
+label {
+  cursor: hand;
+}
+
 .error {
   background-color: red;
 }
@@ -78,7 +82,6 @@ input[type="checkbox"] {
 
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/jquery.croneditor.js"></script>
-<script src="/js/jquery.twinkle-0.8.0.js"></script>
 
 <script type="text/javascript">
 
@@ -162,10 +165,8 @@ input[type="checkbox"] {
     };
     
     var p = $('#name').position();
-    $.twinkle($('#name'), p.left + 15, p.top + 20, options);
     $('#name').focus();
     
-    // $('label[for="name"]').twinkle(options);
     
     $('.themeSelect').change(function(e){
       var val = themes[$(this).val()];
@@ -195,9 +196,7 @@ input[type="checkbox"] {
       <br/>
       The Gist will now be associated with the Hook service once you've completed this form.
     </div>
-    </br>
-    
-    
+
     <div class="form-group">
       <label for="name">Hook Name</label>
       <input class="form-control" type="text" id="name" name="name" placeholder="test-hook" size="40"/>
@@ -207,7 +206,7 @@ input[type="checkbox"] {
     </div>
     
     <div class="form-group">
-      <label for="name">Hook Path</label>
+      <label for="path">Hook Path</label>
       <input class="form-control" type="text" id="path" name="path" placeholder="/:id" size="40"/>
       <div class="tiny">
         <em>The path where the hook service will exist. Can contain <code>/:foo/bar/:baz</code> style parameter routing. Route parameters will populate in <code>Hook.params</code> scope inside the service.</em>
@@ -237,14 +236,14 @@ input[type="checkbox"] {
 
     <div class="form-group">
       <input type="checkbox" class="themeActive" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
-      <label for="hookSource">Apply a Theme to this Hook's output</label>
+      <label for="themeActive">Apply a Theme to this Hook's output</label>
     </div>
 
     <div class="themeSelector well themeRow"></div>
 
     <div class="form-group">
       <input type="checkbox" class="cronActive" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
-      <label for="hookSource">Cron Task activated for this Hook</label>
+      <label for="cronActive">Cron Task activated for this Hook</label>
     </div>
 
     <div class="form-group cronRow">
