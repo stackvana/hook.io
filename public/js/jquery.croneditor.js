@@ -1,33 +1,32 @@
+// Custom fork of https://github.com/marak/cron-editor that disables seconds,
+// since hook.io currently has a minimum 60 second resolution on crons
+
 $.fn.croneditor = function(opts) {
 
+  opts = opts || {};
   var el = this;
   
   // Write the HTML template to the document
   $(el).html(tmpl);
 
-  var cronArr = ["*", "*", "*", "*", "*", "*"];
+  var cronArr = ["*", "*", "*", "*", "*"];
+  if (typeof opts.value === "string") {
+    cronArr = opts.value.split(' ');
+  }
 
   $( ".tabs" ).tabs({
     activate: function( event, ui ) {
       switch ($(ui.newTab).attr('id')) {
 
-        // Seconds
-        case 'button-second-every':
-          cronArr[0] = "*/1";
-        break;
-        case 'button-second-n':
-          cronArr[0] = "*/" + $( "#tabs-second .slider" ).slider("value");
-        break;
-
         // Minutes
         case 'button-minute-every':
-          cronArr[1] = "*/1";
+          cronArr[0] = "*";
         break;
         case 'button-minute-n':
-          cronArr[1] = "*/" + $( "#tabs-minute .slider" ).slider("value");
+          cronArr[0] = "*/" + $( "#tabs-minute .slider" ).slider("value");
         break;
         case 'button-minute-each':
-          cronArr[1] = "*";
+          cronArr[0] = "*";
           // TODO: toggle off selected minutes on load
           //$('.tabs-minute-format input[checked="checked"]').click()
           $('.tabs-minute-format').html('');
@@ -36,43 +35,43 @@ $.fn.croneditor = function(opts) {
 
         // Hours
         case 'button-hour-every':
-           cronArr[2] = "*/1";
+           cronArr[1] = "*";
         break;
         case 'button-hour-n':
-          cronArr[2] = "*/" + $( "#tabs-hour .slider" ).slider("value");
+          cronArr[1] = "*/" + $( "#tabs-hour .slider" ).slider("value");
         break;
         case 'button-hour-each':
-          cronArr[2] = "*";
+          cronArr[1] = "*";
           $('.tabs-hour-format').html('');
           drawEachHours();
          break;
 
          // Days
          case 'button-day-every':
-            cronArr[3] = "*";
+            cronArr[2] = "*";
          break;
          case 'button-day-each':
-           cronArr[3] = "*";
+           cronArr[2] = "*";
            $('.tabs-day-format').html('');
            drawEachDays();
           break;
 
           // Months
           case 'button-month-every':
-             cronArr[4] = "*";
+             cronArr[3] = "*";
           break;
           case 'button-month-each':
-            cronArr[4] = "*";
+            cronArr[3] = "*";
             $('.tabs-month-format').html('');
             drawEachMonths();
            break;
 
            // Weeks
            case 'button-week-every':
-              cronArr[5] = "*";
+              cronArr[4] = "*";
            break;
            case 'button-week-each':
-             cronArr[5] = "*";
+             cronArr[4] = "*";
              $('.tabs-week-format').html('');
              drawEachWeek();
             break;
@@ -86,7 +85,6 @@ $.fn.croneditor = function(opts) {
   function drawCron () {
 
     var newCron = cronArr.join(' ');
-    newCron = newCron.substr(2, newCron.length);
     $('#cronString').val(newCron);
     // TODO: add back next estimated cron time
     /*
@@ -111,25 +109,15 @@ $.fn.croneditor = function(opts) {
 
   $('#clear').click(function(){
     $('#cronString').val('* * * * *');
-    cronArr = ["*","*","*","*","*", "*"];
+    cronArr = ["*","*","*","*","*"];
     
-  });
-
-  $( "#tabs-second .slider" ).slider({
-    min: 1,
-    max: 59,
-    slide: function( event, ui ) {
-      cronArr[0] = "*/" + ui.value;
-      $('#tabs-second-n .preview').html('Every ' + ui.value + ' seconds');
-      drawCron();
-    }
   });
 
   $( "#tabs-minute .slider" ).slider({
     min: 1,
     max: 59,
     slide: function( event, ui ) {
-      cronArr[1] = "*/" + ui.value;
+      cronArr[0] = "*/" + ui.value;
       $('#tabs-minute-n .preview').html('Every ' + ui.value + ' minutes');
       drawCron();
     }
@@ -139,7 +127,7 @@ $.fn.croneditor = function(opts) {
     min: 1,
     max: 23,
     slide: function( event, ui ) {
-      cronArr[2] = "*/" + ui.value;
+      cronArr[1] = "*/" + ui.value;
       $('#tabs-hour-n .preview').html('Every ' + ui.value + ' Hours');
       drawCron();
     }
@@ -164,21 +152,21 @@ $.fn.croneditor = function(opts) {
 
     $('.tabs-minute-format input[type="checkbox"]').click(function(){
       var newItem = $(this).attr('id').replace('minute-check', '');
-      if(cronArr[1] === "*") {
-        cronArr[1] = $(this).attr('id').replace('minute-check', '');
+      if(cronArr[0] === "*") {
+        cronArr[0] = $(this).attr('id').replace('minute-check', '');
       } else {
 
         // if value already in list, toggle it off
-        var list = cronArr[1].split(',');
+        var list = cronArr[0].split(',');
         if (list.indexOf(newItem) !== -1) {
           list.splice(list.indexOf(newItem), 1);
-          cronArr[1] = list.join(',');
+          cronArr[0] = list.join(',');
         } else {
           // else toggle it on
-          cronArr[1] = cronArr[1] + "," + newItem;
+          cronArr[0] = cronArr[0] + "," + newItem;
         }
-        if(cronArr[1] === "") {
-          cronArr[1] = "*";
+        if(cronArr[0] === "") {
+          cronArr[0] = "*";
         }
       }
       drawCron();
@@ -206,21 +194,21 @@ $.fn.croneditor = function(opts) {
 
     $('.tabs-hour-format input[type="checkbox"]').click(function(){
       var newItem = $(this).attr('id').replace('hour-check', '');
-      if(cronArr[2] === "*") {
-        cronArr[2] = $(this).attr('id').replace('hour-check', '');
+      if(cronArr[1] === "*") {
+        cronArr[1] = $(this).attr('id').replace('hour-check', '');
       } else {
 
         // if value already in list, toggle it off
-        var list = cronArr[2].split(',');
+        var list = cronArr[1].split(',');
         if (list.indexOf(newItem) !== -1) {
           list.splice(list.indexOf(newItem), 1);
-          cronArr[2] = list.join(',');
+          cronArr[1] = list.join(',');
         } else {
           // else toggle it on
-          cronArr[2] = cronArr[2] + "," + newItem;
+          cronArr[1] = cronArr[1] + "," + newItem;
         }
-        if(cronArr[2] === "") {
-          cronArr[2] = "*";
+        if(cronArr[1] === "") {
+          cronArr[1] = "*";
         }
       }
       drawCron();
@@ -247,21 +235,21 @@ $.fn.croneditor = function(opts) {
 
     $('.tabs-day-format input[type="checkbox"]').click(function(){
       var newItem = $(this).attr('id').replace('day-check', '');
-      if(cronArr[3] === "*") {
-        cronArr[3] = $(this).attr('id').replace('day-check', '');
+      if(cronArr[2] === "*") {
+        cronArr[2] = $(this).attr('id').replace('day-check', '');
       } else {
 
         // if value already in list, toggle it off
-        var list = cronArr[3].split(',');
+        var list = cronArr[2].split(',');
         if (list.indexOf(newItem) !== -1) {
           list.splice(list.indexOf(newItem), 1);
-          cronArr[3] = list.join(',');
+          cronArr[2] = list.join(',');
         } else {
           // else toggle it on
-          cronArr[3] = cronArr[3] + "," + newItem;
+          cronArr[2] = cronArr[2] + "," + newItem;
         }
-        if(cronArr[3] === "") {
-          cronArr[3] = "*";
+        if(cronArr[2] === "") {
+          cronArr[2] = "*";
         }
 
       }
@@ -289,21 +277,21 @@ $.fn.croneditor = function(opts) {
 
     $('.tabs-month-format input[type="checkbox"]').click(function(){
       var newItem = $(this).attr('id').replace('month-check', '');
-      if(cronArr[4] === "*") {
-        cronArr[4] = $(this).attr('id').replace('month-check', '');
+      if(cronArr[3] === "*") {
+        cronArr[3] = $(this).attr('id').replace('month-check', '');
       } else {
 
         // if value already in list, toggle it off
-        var list = cronArr[4].split(',');
+        var list = cronArr[3].split(',');
         if (list.indexOf(newItem) !== -1) {
           list.splice(list.indexOf(newItem), 1);
-          cronArr[4] = list.join(',');
+          cronArr[3] = list.join(',');
         } else {
           // else toggle it on
-          cronArr[4] = cronArr[4] + "," + newItem;
+          cronArr[3] = cronArr[3] + "," + newItem;
         }
-        if(cronArr[4] === "") {
-          cronArr[4] = "*";
+        if(cronArr[3] === "") {
+          cronArr[3] = "*";
         }
 
       }
@@ -329,21 +317,21 @@ $.fn.croneditor = function(opts) {
 
     $('.tabs-week-format input[type="checkbox"]').click(function(){
       var newItem = $(this).attr('id').replace('week-check', '');
-      if(cronArr[5] === "*") {
-        cronArr[5] = $(this).attr('id').replace('week-check', '');
+      if(cronArr[4] === "*") {
+        cronArr[4] = $(this).attr('id').replace('week-check', '');
       } else {
 
         // if value already in list, toggle it off
-        var list = cronArr[5].split(',');
+        var list = cronArr[4].split(',');
         if (list.indexOf(newItem) !== -1) {
           list.splice(list.indexOf(newItem), 1);
-          cronArr[5] = list.join(',');
+          cronArr[4] = list.join(',');
         } else {
           // else toggle it on
-          cronArr[5] = cronArr[5] + "," + newItem;
+          cronArr[4] = cronArr[4] + "," + newItem;
         }
-        if(cronArr[5] === "") {
-          cronArr[5] = "*";
+        if(cronArr[4] === "") {
+          cronArr[4] = "*";
         }
 
       }
@@ -357,7 +345,7 @@ $.fn.croneditor = function(opts) {
   drawEachHours();
   drawEachDays();
   drawEachMonths();
-
+  drawCron();
 };
 
 // HTML Template for plugin

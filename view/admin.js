@@ -121,6 +121,10 @@ module['exports'] = function view (opts, callback) {
 
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
       $('.hookLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs");
+      $('.hookSource').attr('href', '/' + h.owner + '/' + h.name + "/source");
+      $('.hookResource').attr('href', '/' + h.owner + '/' + h.name + "/resource");
+      $('.hookView').attr('href', '/' + h.owner + '/' + h.name + "/view");
+      $('.hookPresenter').attr('href', '/' + h.owner + '/' + h.name + "/presenter");
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
@@ -139,6 +143,10 @@ module['exports'] = function view (opts, callback) {
         $('#cronString').attr('value', h.cron);
       }
 
+      $('.isPublic').attr('checked', 'CHECKED');
+      $('.isPublic').attr('DISABLED', 'DISABLED');
+      $('.isPublic').attr('title', 'Private Hooks require a paid account.');
+      
       if (h.isPublic === true) {
         $('.isPublic').attr('checked', 'CHECKED');
       }
@@ -160,6 +168,7 @@ module['exports'] = function view (opts, callback) {
         var el = $('.hookTable > div').eq(4);
         el.after(html);
         var out = $.html();
+        h.cron = h.cron || "* * * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
         return callback(null, out);

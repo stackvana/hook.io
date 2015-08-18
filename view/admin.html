@@ -4,6 +4,12 @@
   .hookTable .smaller  {
     font-size: 16px;
     padding-top:8px;
+``  }
+  .error {
+    background-color: red;
+  }
+  label {
+    cursor: hand;
   }
 </style>
 <script src="/js/jquery-ui.js"></script>
@@ -15,7 +21,7 @@
 
   $(document).ready(function(){
 
-    $('.cronDiv').croneditor({ cron: "{{hook.cron}}"});
+    $('.cronDiv').croneditor({ "value": "{{hook.cron}}"});
 
     if(!$('input[name="cronActive"]').is(':checked')) {
       $('.cronRow').hide();
@@ -45,6 +51,28 @@
       }
     });
 
+
+    // client-side slugify
+    // the server-side slugify code is much more robust covering much utf
+    function slugify(text) {
+      return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/\//g, '-');           // Replace / with -
+        //      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+    }
+
+    $('#name').on('keyup', function(){
+      var v = $(this).val();
+      var s = slugify($(this).val());
+      if (v !== s) {
+        $(this).addClass('error');
+        $(this).val(s);
+      } else {
+        $(this).removeClass('error');
+      }
+    });
+
   });
   
   /*
@@ -70,9 +98,8 @@
 <div style="font-size:22px;height:800px;text-align: left;">
   <span class="formStatus success"></span>  <br/>
   <h2><strong>Manage <span class="hookName"> Hook</span></strong></h2>
-  <h3><a href="" class="hookLink">View Hook</a></h3>
-  <h3><a href="" class="hookLogs">Service Logs</a></h3>
-  <h3><a href="" class="hookRefresh">Refresh Cache</a></h3>
+  <h3><a href="" class="hookLink">Run Hook</a>&nbsp;|&nbsp;<a href="" class="hookLogs">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh">Refresh Cache</a></h3>
+  <h3><a href="" class="hookSource">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter">Presenter</a></h3>
   <br/>
   <form method="post" action="/admin">
     <div class="hookTable" style="font-size:22px;">
@@ -89,7 +116,7 @@
       <div class="form-group">
         <label for="name">Hook Name</label>
         <input type="text" class="form-control name" id="name" name="name" placeholder="name of hook" size="40">
-        <p class="smaller"><strong>Warning:</strong> Changing the name of the Hook will alter the url used to access it.</p>
+        <p class="smaller"><strong>Warning:</strong> Changing the name of the Hook will alter the url used to access it as well as resetting all metrics and log data for the Hook.</p>
       </div>
 
       <div class="form-group">
@@ -122,8 +149,8 @@
       </div>
 
       <div class="form-group">
-        <input type="checkbox" class="cronActive" id="cronActive" name="cronActive">
-        <label for="hookSource">Cron Task activated for this Hook</label>
+        <input type="checkbox" class="cronActive" id="cronActive" name="cronActive"/>
+        <label for="cronActive">Cron Task activated for this Hook</label>
       </div>
 
       <div class="form-group cronRow">
@@ -132,15 +159,13 @@
 
       <div class="form-group">
         <input type="checkbox" class="isPublic" id="isPublic" name="isPublic">
-        <label for="isPublic">Display Hook in public Hook registry</label>
+        <label for="isPublic">Hook and Source Code are Public</label><br/>
+        <em class="smaller">Private Hooks require a Paid Account</em>
       </div>
 
       <div class="form-group danger">
-        Danger Zone
-      </div>
-
-      <div class="form-group">
-        Delete Hook <span class="red"><a class="deleteLink" href="">Delete</span>
+        Danger Zone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="background-color:white;">||<a class="red deleteLink" href="">Delete Hook</a>||</span>
       </div>
 
       <div class="form-group">
