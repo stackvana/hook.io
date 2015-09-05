@@ -1,5 +1,6 @@
 var hook = require("../lib/resources/hook")
 var bodyParser = require('body-parser');
+var mergeParams = require('merge-params');
 var config = require('../config');
 var themes = require('../lib/resources/themes');
 
@@ -14,19 +15,24 @@ module['exports'] = function view (opts, callback) {
     req.session.redirectTo = "/new";
     return res.redirect('/login');
   }
+
   var user = req.user.username;
+
+  var boot = {
+    owner: user
+  };
+
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     var params = req.resource.params;
     var gist = params.gist;
-    // load gist embed based on incoming gist url parameter
 
-    if (params.create) {
-      
+    if (req.method === "POST") {
+
       if (params.name.length === 0) {
         return res.end('Hook name is required!');
       }
-      
+
       // do not recreate hooks that already exist with that name
       params.owner = user || "Marak"; // hardcode Marak for testing
       
@@ -41,48 +47,55 @@ module['exports'] = function view (opts, callback) {
       return hook.find(query, function(err, results){
         if (results.length > 0) {
           var h = results[0];
-          return res.redirect('/' + h.owner + "/" + h.name + "?alreadyExists=true");
+          return res.end('Hook already exists ' + '/' + h.owner + "/" + h.name);
+          //return res.redirect('/' + h.owner + "/" + h.name + "?alreadyExists=true");
         }
         params.cron = params.cronString;
+        if (params.hookSource === "editor") {
+            delete params.gist;
+            params.source = params.codeEditor;
+        }
 
         // TODO: filter params for only specified resource fields?
         return hook.create(params, function(err, result){
           if (err) {
             return callback(null, err.message);
           }
-          
+
           var h = result;
           req.hook = h;
-          
-          // fetch the hook from github and check if it has a schema / theme
-          // if so, attach it to the hook document
 
-          opts.gist = gist;
-          opts.req = opts.request;
-          opts.res = opts.response;
-          hook.fetchHookSourceCodeFromGithub(opts, function(err, code){
-            if (err) {
-              return opts.res.end(err.message);
-            }
-            hook.attemptToRequireUntrustedHook(opts, function(err, _module){
+          if (params.hookSource === "editor") {
+             // the source of the hook is coming from the code editor
+             return res.redirect('/' + h.owner + "/" + h.name + "");
+          } else {
+            // the source of the hook is coming from a github gist
+            opts.gist = gist;
+            opts.req = opts.request;
+            opts.res = opts.response;
+            // fetch the hook from github and check if it has a schema / theme
+            // if so, attach it to the hook document
+            // TODO: can we remove this? it seems like this logic should be in the Hook.runHook execution chain...
+            hook.fetchHookSourceCode(opts, function(err, code){
               if (err) {
-                return opts.res.end(err.message)
+                return opts.res.end(err.message);
               }
-              h.mschema = _module.schema;
-              h.theme = _module.theme;
-              h.presenter = _module.presenter;
-              h.save(function(){
-                // redirect to new hook friendly page
-                return res.redirect('/' + h.owner + "/" + h.name + "");
-                //return callback(null, JSON.stringify(result, true, 2));
+              hook.attemptToRequireUntrustedHook(opts, function(err, _module){
+                if (err) {
+                  return opts.res.end(err.message)
+                }
+                h.mschema = _module.schema;
+                h.theme = _module.theme;
+                h.presenter = _module.presenter;
+                h.save(function(){
+                  // redirect to new hook friendly page
+                  return res.redirect('/' + h.owner + "/" + h.name + "");
+                  //return callback(null, JSON.stringify(result, true, 2));
+                });
               });
-              
             });
-            
-          });
-          
+          }
         });
-        
       });
     }
 
@@ -96,43 +109,11 @@ module['exports'] = function view (opts, callback) {
     self.parent.components.themeSelector.present({}, function(err, html){
       var el = $('.themeSelector')
       el.html(html);
-      callback(null, $.html());
+      var out = $.html();
+      out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+      callback(null, out);
     })
 
   });
 
 };
-
-
-//
-// Middleware for merging all querystring / request.body and route parameters,
-// into a common scope bound to req.resource.params
-//
-function mergeParams (req, res, next) {
-
-  req.resource = req.resource || {};
-  req.resource.params = {};
-  req.body = req.body || {};
-
-  //
-  // Iterate through all the querystring and request.body values and
-  // merge them into a single "data" argument
-  //
-  if (typeof req.params === 'object') {
-    Object.keys(req.params).forEach(function (p) {
-      req.resource.params[p] = req.param(p);
-    });
-  }
-
-  if (typeof req.query === 'object') {
-    Object.keys(req.query).forEach(function (p) {
-      req.resource.params[p] = req.query[p];
-    });
-  }
-
-  Object.keys(req.body).forEach(function (p) {
-    req.resource.params[p] = req.body[p];
-  });
-
-  next();
-}
