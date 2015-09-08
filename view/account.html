@@ -40,12 +40,16 @@
     border: black;
   }
 
+  .status {
+    font-size: 32px;
+  }
+
 </style>
 
 </script>
 <div id="main" class="container">
-  <h2><a href="/referrals" class="yourReferrals">Referral Links</a></h2>
-  
+  <!-- <h2><a href="/referrals" class="yourReferrals">Referral Links</a></h2> -->
+  <div class="status"></div>
   <div class="userForm"></div>
   <form action="/billing" method="post">
     <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>

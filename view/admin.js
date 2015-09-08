@@ -162,8 +162,6 @@ module['exports'] = function view (opts, callback) {
       $('.deleteLink').attr('href', '/' + h.owner + "/" + h.name + "?delete=true");
       $('.deleteLink').attr('data-name', (h.owner + "/" + h.name));
 
-  //    $('form').attr('action', '/admin?owner=' + h.owner + "&name=" + h.name);
-
       self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h, themes: themes }, function(err, html){
         var el = $('.hookTable > div').eq(4);
         el.after(html);

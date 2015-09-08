@@ -17,6 +17,10 @@ module['exports'] = function view (opts, callback) {
   var $ = this.$;
   var req = opts.request, res = opts.response;
 
+  req.user = {
+    username: req.session.username
+  };
+
   // if not logged in, kick out
   if (!req.isAuthenticated()) { 
     req.session.redirectTo = "/account";
@@ -27,9 +31,10 @@ module['exports'] = function view (opts, callback) {
     mergeParams(req, res, function(){});
 
     var params = req.resource.params;
+
     //$('.addPaymentOption').html(addPaymentOption());
 
-    user.find({ name: req.user.username }, function(err, results) {
+    user.find({ name: req.session.user }, function(err, results) {
 
       if (err) {
         return callback(null, err.message);
@@ -39,20 +44,46 @@ module['exports'] = function view (opts, callback) {
       }
 
       var _user = results[0];
-
       $('.myHooks').attr('href', '/' + _user.name);
 
-      // display user info in account form
-      // TODO: if form post data, attempt to update user account information
-      showUserForm(_user, function(err, result){
-        $('.userForm').html(result);
-        callback(null, $.html());
-      });
-
+      if (req.method === "POST") {
+        // attempt to save
+        if (typeof params.email !== "undefined" && params.email.length > 3) {
+          _user.email = params.email;
+          if (typeof params.password !== 'undefined' && typeof params.confirmPassword !== 'undefined') {
+            if (params.password.length > 0) {
+              if (params.password !== params.confirmPassword) {
+                return res.end('passwords do not match!');
+              }
+              _user.password = params.password;
+            }
+          }
+          return user.update(_user, function(err, result){
+            if (err) {
+              return res.end(err.message);
+            }
+            // display user info in account form
+            // TODO: if form post data, attempt to update user account information
+            showUserForm(_user, function(err, result){
+              $('.userForm').html(result);
+              $('.status').html('Account Information Updated!');
+              callback(null, $.html());
+            });
+          });
+        } else {
+          return res.end('email parameter cannot be empty');
+        }
+      } else {
+        // display user info in account form
+        // TODO: if form post data, attempt to update user account information
+        showUserForm(_user, function(err, result){
+          $('.userForm').html(result);
+          callback(null, $.html());
+        });
+      }
     });
 
   });
-
 
 };
 
@@ -71,7 +102,7 @@ function showUserForm (user, cb) {
   formSchema.name.disabled = true;
 
   formSchema.email.default = user.email || "";
-  formSchema.email.disabled = true;
+  // formSchema.email.disabled = true;
 
   formSchema.run = {
     "type": "string",
@@ -79,8 +110,17 @@ function showUserForm (user, cb) {
     "format": "hidden"
   };
 
+  formSchema.password = {
+    "type": "string",
+    "format": "password"
+  };
+  formSchema.confirmPassword = {
+    "type": "string",
+    "format": "password"
+  };
+
   forms.generate({
-    type: "read-only",
+    type: "generic",
     form: {
       legend: "Account Information",
       submit: "Save",

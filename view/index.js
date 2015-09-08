@@ -26,6 +26,7 @@ module['exports'] = function view (opts, callback) {
       res = opts.response,
       params = req.resource.params,
       user = req.session.user;
+
   //
   // enables curl signups
   // EASYTODO: move this into separate module
@@ -95,14 +96,25 @@ module['exports'] = function view (opts, callback) {
   $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway');
   if (typeof user === "undefined") {
     $('.userBar').remove();
+    callback(null, this.$.html());
   } else {
-    $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
-    $('.loginBar').remove();
-    $('.featuresDiv').remove();
-    //    $('.tagline').remove();
-    $('.yourHooks').attr("href", "/" + user);
-    $('.splash').remove();
+    var query = { name: user };
+    return userResource.find(query, function(err, results){
+      console.log(err, results[0])
+      var u = results[0];
+      if(typeof u.email === "undefined" || u.email.length === 0) {
+        // do nothing, we have the email
+      } else {
+        $('.emailReminder').remove();
+      }
+      $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
+      $('.loginBar').remove();
+      $('.featuresDiv').remove();
+      // $('.tagline').remove();
+      $('.yourHooks').attr("href", "/" + user);
+      $('.splash').remove();
+      callback(null, $.html());
+    });
   }
 
-  callback(null, this.$.html());
 };
