@@ -98,9 +98,9 @@ module['exports'] = function view (opts, callback) {
     $('.userBar').remove();
     callback(null, this.$.html());
   } else {
+    user = user.toLowerCase();
     var query = { name: user };
     return userResource.find(query, function(err, results){
-      console.log(err, results[0])
       var u = results[0];
       if(typeof u.email === "undefined" || u.email.length === 0) {
         // do nothing, we have the email

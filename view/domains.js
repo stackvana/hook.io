@@ -25,14 +25,14 @@ module['exports'] = function view (opts, callback) {
  bodyParser()(req, res, function bodyParsed() {
    mergeParams(req, res, function (){});
 
-   req.resource.params.owner = req.user.username;
+   req.resource.params.owner = req.session.user;
 
    var middle = forms.generate({
       view: 'grid-with-form',
       resource: domain,
       action: '/domains',
       params: req.resource.params,
-      query: { owner: req.user.username },
+      query: { owner: req.session.user },
       useLayout: false,
       form: {
         create: {

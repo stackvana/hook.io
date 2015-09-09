@@ -36,9 +36,8 @@ module['exports'] = function signup (opts, cb) {
       type = "email";
     }
     var query = {};
+    email = email.toLowerCase();
     query[type] = email;
-    console.log('qqq', query)
-    // TODO: nameOrEmail check for correct creation field
     return user.find(query, function(err, results){
       if (err) {
         return res.end(err.stack);
@@ -63,11 +62,16 @@ module['exports'] = function signup (opts, cb) {
             return res.end(err.stack);
           }
           // todo: set token here
-          return res.send('valid');
+          req.login(result, function(err){
+            if (err) {
+              return res.end(err.message);
+            }
+            req.session.user = result.name.toLowerCase();
+            return res.end('valid');
+          });
         });
       }
     });
-    cb(null, $.html());
   });
 
 };

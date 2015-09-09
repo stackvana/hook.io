@@ -98,7 +98,7 @@ module['exports'] = function view (opts, callback) {
              }
 
             billing.create({
-              owner: req.user.username,
+              owner: req.session.user,
               stripeID: customer.id,
               amount: params.amount,
               plan: _plan
@@ -111,7 +111,7 @@ module['exports'] = function view (opts, callback) {
 
                // console.log('added to plan', err, charge);
                $('.status').html('Billing Information Added! Thank you!');
-               billing.find({ owner: req.user.username }, function (err, results) {
+               billing.find({ owner: req.session.user }, function (err, results) {
                  if (err) {
                    $('.status').html(err.message);
                    return callback(err, $.html());
@@ -125,7 +125,7 @@ module['exports'] = function view (opts, callback) {
         }
       );
     } else {
-      billing.find({ owner: req.user.username }, function (err, results) {
+      billing.find({ owner: req.session.user }, function (err, results) {
         if (err) {
           return callback(null, err.message);
         }

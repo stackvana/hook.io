@@ -16,7 +16,7 @@ module['exports'] = function view (opts, callback) {
     return res.redirect('/login');
   }
 
-  var user = req.user.username;
+  var user = req.session.user;
 
   var boot = {
     owner: user
@@ -43,7 +43,7 @@ module['exports'] = function view (opts, callback) {
         delete params.presenter;
       }
 
-      var query = { name: params.name, owner: req.user.username };
+      var query = { name: params.name, owner: req.session.user };
       return hook.find(query, function(err, results){
         if (results.length > 0) {
           var h = results[0];

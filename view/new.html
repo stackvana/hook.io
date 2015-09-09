@@ -1,4 +1,18 @@
 <style>
+
+#hookForm h1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+#hookForm h2 {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 10px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
 .cron-button {
     height: 16px;
     padding-left: 20px;
@@ -56,14 +70,6 @@
 code {
   padding: 0px;
   margin: 0px;
-}
-
-h2 {
-  margin: 0px;
-  padding: 0px;
-  margin-bottom: 10px;
-  font-size: 32px;
-  font-weight: 700;
 }
 
 label {
@@ -189,10 +195,6 @@ input[type="checkbox"] {
   width: 100%;
 }
 
-.btn {
-  margin-top: 10px;
-}
-
 .sourcesHolder {
   color: black;
   background-color: #f5f5f5;
@@ -211,7 +213,6 @@ input[type="checkbox"] {
 }
 
 .cronDiv {
-  background-color: white;
   width: 100%;
 }
 
@@ -247,6 +248,19 @@ body legend {
   font-weight: bold;
 }
 
+.codeEditorHolder .btn {
+  width: 120px;
+}
+
+.btn {
+  margin-top: 10px;
+  width: 200px;
+}
+
+.btn:hover {
+  font-weight: bold;
+}
+
 .hookFrame {
   background-color: white;
   margin-top: 10px;
@@ -260,6 +274,10 @@ body legend {
   display: none;
   padding: 10px;
   width: 100%;
+}
+
+.cronClear {
+  margin-bottom: 10px;
 }
 
 </style>
@@ -366,7 +384,7 @@ body legend {
       var now = new Date().getTime();
       $('#source').val(editor.getValue());
       $('.gatewayForm').submit();
-      $('iframe').show();
+      //    $('iframe').show();
       return false;
     };
 
@@ -386,6 +404,7 @@ body legend {
       var name = $('#name').val();
       if (name.length === 0) {
         $('#name').addClass('error').focus();
+        $('#name').attr('placeholder', 'name is required...')
         //alert('name required');
         return false;
       }
@@ -407,7 +426,9 @@ body legend {
         $(this).addClass('error');
         $(this).val(s);
       } else {
-        $(this).removeClass('error');
+        if(v.length !== 0) {
+          $(this).removeClass('error');
+        }
       }
       drawHookLinks();
     });
@@ -435,7 +456,6 @@ body legend {
     $('#name').focus();
     $('.themeSelect').change(function(e){
       var val = themes[$(this).val()];
-      console.log(val)
       $('#theme').attr('value', val.theme);
       $('#presenter').attr('value', val.presenter);
     });
@@ -449,7 +469,7 @@ body legend {
     var path = $('#path').val();
     if(name.length === 0 && path.length === 0) {
       //$('.hookLinks .admin').html('');
-      return;
+      //return;
     }
 
     if (name.length === 0) {
@@ -481,7 +501,7 @@ body legend {
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
   <form id="hookForm" method="POST" action="/new" role="form">
-    <legend><h1>Create New Hook Service</h1></legend>
+    <legend><h1>Create New Microservice</h1></legend>
 
     <div class="gistStatus">Hey there! We just created a new Gist on Github using your account: <a href="">here</a><br/>
       <br/>
@@ -489,7 +509,7 @@ body legend {
     </div>
 
     <div class="hookHolder">
-      <h2>Service</h2>
+      <h2>Service Information</h2>
       <div class="form-group">
         <label for="name">Name</label>
         <input tabindex="1" class="form-control" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
@@ -501,7 +521,7 @@ body legend {
         <label for="path">Route</label>
         <input tabindex="2" class="form-control" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
         <div class="tiny">
-          <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope.</em><br/>
+          <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
           <button tabindex="3" type="button" class="routeTipsButton btn small-btn">Route Formatting Help</button>
         </div>
 
@@ -558,15 +578,15 @@ body legend {
           </tr>
           <tr>
             <td><strong>Admin ( login required )</strong></td>
-            <td class="admin">https://hook.io/Marak/hook-name/admin</td>
+            <td class="admin">https://hook.io/marak/hook-name/admin</td>
           </tr>
           <tr>
             <td><strong>Source Code</strong></td>
-            <td class="source">https://hook.io/Marak/hook-name/source</td>
+            <td class="source">https://hook.io/marak/hook-name/source</td>
           </tr>
           <tr>
             <td><strong>Logs</strong></td>
-            <td class="logs">https://hook.io/Marak/hook-name/logs</td>
+            <td class="logs">https://hook.io/marak/hook-name/logs</td>
           </tr>
           <!--
           <tr>

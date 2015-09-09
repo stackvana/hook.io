@@ -21,7 +21,6 @@ module['exports'] = function resetPassword (opts, cb) {
       var u = results[0];
       req.session.sessionID = uuid();
       req.session.user = u.name;
-      console.log('loggin in ', u)
       req.login(u, function(){
         req.session.user = u.name;
         // TODO: We could invalidate / regenerate user.token here to make login tokens one-time use only
@@ -43,6 +42,7 @@ module['exports'] = function resetPassword (opts, cb) {
 
   var query = {};
   query[type] = nameOrEmail;
+  nameOrEmail = nameOrEmail.toLowerCase();
   user.reset({ query: query }, function (err, u) {
     if (typeof u.email === "undefined" || u.email.length === 0) {
       // else, no email was found, no password can be sent

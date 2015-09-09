@@ -12,7 +12,7 @@ module['exports'] = function view (opts, callback) {
     return callback(null, $.html());
   }
 
-  var datastore = new Datastore({ root: req.user.username });
+  var datastore = new Datastore({ root: req.session.user });
 
   if (typeof params.key !== 'undefined') {
     datastore.get(params.key, function(err, result){

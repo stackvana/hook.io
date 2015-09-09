@@ -22,6 +22,7 @@ module['exports'] = function view (opts, callback) {
 
   parseRequest(req, res, function(err, params){
     if (params.name && params.password) {
+      params.name = params.name.toLowerCase();
       user.find({ name: params.name }, function (err, results) {
         if (err) {
           return res.end(err.message);
@@ -40,12 +41,13 @@ module['exports'] = function view (opts, callback) {
           if (err) {
             return res.end(err.message);
           }
-          req.session.user = u.name;
+          req.session.user = u.name.toLowerCase();
           return res.end('valid');
         });
       });
     } else {
-      callback(null, $.html());
+      res.redirect('/');
+      // callback(null, $.html());
     }
   });
 

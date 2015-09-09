@@ -1,5 +1,3 @@
-<br/>
-<br/>
 <!-- 
     this entire file is sloppy. 
     please open up a pull request at https://github.com/bigcompany/hook.io to clean it up
@@ -352,6 +350,10 @@
     margin: 0px;
   }
   .tuts {
+    font-size: 24px;
+  }
+  .scrollForMore {
+    font-size: 32px;
   }
 </style>
 
@@ -474,7 +476,7 @@ $('document').ready(function(){
               $('#emailLogin').val('Create New Account');
             break;
             case 'exists':
-              alert('wtf bbq');
+              alert('exists');
             break;
             case 'email-sent':
               $('.resetPasswordHolder').html('A password reset link has been emailed to you.')
@@ -662,13 +664,10 @@ $('document').ready(function(){
         "email": $('#email').val()
       },
       success: function(res){
-        alert(res);
-        if (res === "saved") {
-          $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
-        }
+        $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
       },
       error: function (err) {
-        alert('error' + err)
+        alert('error' + err);
       }
     })
     return false;
@@ -761,6 +760,10 @@ $('document').ready(function(){
     return false;
   });
 
+
+  $('#updateEmail').on('submit', function(){
+    return false;
+  });
   $('.prevSnippet').on('click', function(){
     var index = $('.selectSnippet').prop('selectedIndex');
     var prev = index - 1;
@@ -775,8 +778,6 @@ $('document').ready(function(){
 });
 var editor;
 </script>
-
-<br/>
 
 <div class="container-fluid">
 
@@ -804,6 +805,7 @@ var editor;
   </div>
 
   <div class="row loginBar">
+    <br/>
     <div class="col-md-8" align="center">
       <div class="loginHolder">
         <form action="/signup" id="loginForm">
@@ -824,11 +826,13 @@ var editor;
           <input type="submit" class="btn" value="Sign in with Github"/>
         </form>
         <br/>
-        <div><h3><a href="/pricing">Paid Accounts Available!</a></h3></div>
+        <div><h2><a href="/pricing">Paid Accounts Available!</a></h2></div>
         <br/>
       </div>
       <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
-      <p>Scroll Down For More!</p>
+      <br/>
+      <p class"scrollForMore">Scroll Down For More!</p>
+      <br/>
     </div>
     <div class="col-md-4" align="left">
       <div class="featuresDiv">
@@ -855,7 +859,8 @@ var editor;
   </div>
   <div class="row">
     <div class="col-md-12" align="left">
-      <h2 class="tuts">Interactive Microservice Tutorial</h2>
+      <br/>
+      <h2 class="tuts">Click "Deploy Service" to instantly deploy your first Microservice!</h2>
       <div class="btn-group transport" role="group">
         <select name="selectSnippet" class="selectSnippet btn btn-default">
           <option value="/Marak/examples-helloWorld">hello world</option>

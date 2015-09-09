@@ -15,7 +15,7 @@ module['exports'] = function view (opts, callback) {
 
     var params = req.resource.params;
   
-    user.find({ name: req.user.username }, function(err, results) {
+    user.find({ name: req.session.user }, function(err, results) {
 
       if (err) {
         return callback(null, err.message);
