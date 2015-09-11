@@ -49,18 +49,24 @@ module['exports'] = function resetPassword (opts, cb) {
       return res.end(err.message);
     }
 
-    // if user was found, check to see if they have an email
-
+    // TODO: move template to /emails folder
     // TODO: use before / after resource hooks for user.reset action
+    var ip = req.connection.remoteAddress.toString();
+    // TODO: add ip address, requested from: ' + ip
+    var link = config.baseUrl + "/reset?t=" + u.token;
+    var tmpl = 'A password reset for your hook.io account was requested.' + '<br/><br/>';
+    tmpl += (' Account Name: ' + u.name + '<br/>');
+    tmpl += (' Reset Link: <a href="' + link + '">' + link + '</a><br/>');
+    // if user was found, check to see if they have an email
     email.send({
       //provider: 'sendgrid',
-      provider: 'mock',
-      //api_user: "abc",
-      //api_key: "1234",
+      provider: config.email.provider,
+      api_user: config.email.api_user,
+      api_key: config.email.api_key,
       to: u.email,
       from: "hookmaster@hook.io",
       subject: "hook.io password reset request",
-      html: 'this is a password reset' + config.baseUrl + "/reset?t=" + u.token
+      html: tmpl
     }, function (err, result) {
       if (err) {
         return res.end(err.message);

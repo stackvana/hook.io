@@ -29,6 +29,11 @@ module['exports'] = {
     secretKey: "sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV",
     publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
   },
+  email: {
+    "provider": "mock",
+    "api_user": "marak",
+    "api_key": "abcd"
+  },
   sslKeyDirectory: __dirname + '/../ssl/',
   chrootDirectory: '/Users/chroot',
   useChroot: true,
