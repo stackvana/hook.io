@@ -132,14 +132,15 @@ function showUserForm (user, cb) {
     "label": "Account Linked To Github"
   };
   */
-  /*
+  if (typeof user.hostingCredits !== "number") {
+    user.hostingCredits = 0;
+  }
   formSchema.hostingCredits = {
     "type": "number",
     "label": "hosting credits",
     "disabled": true,
     "default": user.hostingCredits
   }
-  */
 
   forms.generate({
     type: "generic",
