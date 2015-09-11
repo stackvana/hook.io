@@ -26,6 +26,9 @@
     text-align: left;
   }
 
+  .success  {
+    color: green;
+  }
   #addPaymentMethod {
     font-size: 36px;
     height: 120px;
@@ -48,23 +51,9 @@
 
 </script>
 <div id="main" class="container">
-  <!-- <h2><a href="/referrals" class="yourReferrals">Referral Links</a></h2> -->
+  <h2><a href="/billing" class="yourBilling">Billing Information</a></h2>
   <div class="status"></div>
   <div class="userForm"></div>
-  <form action="/billing" method="post">
-    <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
-    <input
-        type="submit"
-        id="addPaymentMethod"
-        class="well"
-        value="Add Payment Method"
-        data-image="/img/pipe.gif"
-        data-amount="500"
-        data-currency="usd"
-        data-name="hook.io hosting"
-        data-description="1 Month Basic Hosting ($5.00)"
-    />
-  </form>
   <!-- <div class="billingForm"></div> -->
   <!-- <div class="hooks"><a href="/hooks" class="myHooks">My Hooks</a></div> -->
   <form action="/account" method="POST"></form>

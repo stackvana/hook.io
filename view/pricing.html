@@ -1,75 +1,315 @@
-<div style="font-size:22px;text-align:left;">
+<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.aNote').on('click', function(){
+      if ($('.abuse').css('display') === "none") {
+        $('.abuse').show();
+      } else {
+        $('.abuse').hide();
+      }
+    });
+  });
+</script>
+<style>
+ .abuse {
+   display: none;
+ }
+ .aNote {
+   font-size: 18px;
+ }
+ .aNote:hover {
+   text-decoration: underline;
+   cursor: pointer;
+ }
+ .product .buy {
+   font-size: 28px;
+   padding: 10px;
+   width: 420px;
+   margin: 0px;
+ }
+ .product .buy:hover {
+   font-weight: 700;
+ }
+ 
+ .inner {
+   color: black;
+   background-color: white;
+   border: solid;
+   border-width: 1px;
+   padding-top: 10px;
+   padding-bottom: 5px;
+   padding-left: 20px;
+   padding-right: 20px;
+   width: 100%;
+   margin-bottom: 30px;
+ }
+ .holder {
+   color: black;
+   background-color: #f5f5f5;
+   border: solid;
+   border-width: 1px;
+   box-shadow: 10px 10px 5px #888888;
+   padding-top: 10px;
+   padding-bottom: 5px;
+   padding-left: 20px;
+   padding-right: 20px;
+   width: 100%;
+   margin-bottom: 30px;
+ }
+ 
+</style>
+<div style="font-size:22px;text-align:left;" class="product">
+
   <h1>Pricing</h1>
-  <br/>
-  <h2>Free to use! Pay what you choose pricing!</h2>
-  <p>As an initial way to help fund this <a href="http://github.com/bigcompany/hook.io">100% open-source project</a>, we currently allow you to choose how much you want to pay each month.</p>
-  <p>The more you choose to pay, the better we can make the service in the future.</p>
-  <p>We appreciate you using the platform and hope that you will make the decision to help support hook.io with a paid account!</p>
-  <form action="/billing" method="POST">
-    <input
-        type="submit"
-        id="addPaymentMethod"
-        class="well"
-        value="Click to Add Payment Method"
-        data-image="/img/pipe.gif"
-        data-amount="500"
-        data-currency="usd"
-        data-name="hook.io hosting"
-        data-description="1 Month Basic Hosting ($5.00)"
-    />
-  </form>
-  <h2>Free Account Limitations</h2>
+  <p>Paid accounts are available on several service levels.</p>
+  <h2>Available Service Plans</h2>
   <ul>
-    <li>No Private Hooks</li>
-    <li>Limited to 50 <a href="https://hook.io/logs">Log</a> entries per Hook</li>
-    <li>Limited to 100 <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
-    <li>15 second time-out on all service requests</li>
+    <li><a href="#free">Free Development Accounts</a></li>
+    <li><a href="#basic">Basic Hosting</a></li>
+    <li><a href="#bronze">Bronze Hosting</a></li>
+    <li><a href="#silver">Silver Hosting</a></li>
+    <li><a href="#gold">Gold Hosting</a></li>
+    <li><a href="#platinum">Platinum Hosting</a></li>
+    <li><a href="#dedicated">Dedicated Hosting</a></li>
   </ul>
-  <br/>
-  <h2>Paid Accounts</h2>
-  <p>There are currently no specific technical limitations on paid accounts.</p> 
-  <p>In the near future we will most likely apply limitations based on usage with the option to upgrade.</p>
-  <p>Our goal is to maintain a fair and transparent pricing model which accurately charges users for their actual costs.</p>
-    <p>
-    <form action="/billing" method="POST">
+  
+  <a name="free"/>
+  <div class="holder">
+    <h2>Free Development Accounts</h2>
+    
+    <p>You can <a href="/">sign up instantly</a> for a Free Development Account. This is a great way to get started with microservices.</p>
+    <h4>Get all the core features for free. Ideal for development and minimal traffic microservices.</h4>
+    <div class="inner">
+
+      <h3>Limitations</h3>
+      <ul>
+        <li>1,000 Microservice Requests Per Month</li>
+        <li>No Private Microservices</li>
+        <li>Limited to 10 <a href="https://hook.io/logs">Log</a> entries per Microservice</li>
+        <li>Limited to 100 <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
+        <li>15 second time-outs on all Microservice Requests</li>
+      </ul>
+
+    </div>
+    <span class="aNote"><em>Click for a message about circumventing Free Account Limitations</em></span> <br/><br/>
+
+    <div class="abuse">
+      <p>If you aren't able to pay for an account and you intend to take the time to try and do something clever to bypass any account limitations, please just email us instead and we'll give you a free account.</p>
+      <p>Why? Believe it or not, one of the primary technical goals of this platform is to minimize electrical usage. We care about the planet. If you abuse the free account API, you are most likely unintentionally wasting CPU and RAM.</p>
+      <p>If you feel a specific limitation should be adjusted or tweaked, please <a href="https://github.com/bigcompany/hook.io/issues/new">just let us know</a> and we'll do our best to fix it.</p>
+    </div>
+    
+  </div>
+  
+  <a name="basic"/>
+  <div class="holder">
+    <h2>Basic Hosting Plan - $5 Per Month</h2>
+    <h4>Private Hooks with Custom settings. Ideal for low traffic microservices.</h4>
+    <div class="inner">
+      <h3>Features</h3>
+      <ul>
+        <li>5,000 Microservice Requests Per Month</li>
+        <li>50 <a href="https://hook.io/logs">Log</a> entries per Microservice</li>
+        <li>500 <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
+        <li>Private Microservices</li>
+        <li>Configurable time-outs on all Microservice Requests</li>
+      </ul>
+    </div>
+    <form action="/billing" method="POST" align="center">
+      <!--
       <input
           type="submit"
           id="addPaymentMethod"
-          class="well"
-          value="Click to Add Payment Method"
+          value="Purchase Basic Hosting Plan"
           data-image="/img/pipe.gif"
           data-amount="500"
           data-currency="usd"
           data-name="hook.io hosting"
           data-description="1 Month Basic Hosting ($5.00)"
       />
+      -->
+      <button class="buy btn" data-amount="500" data-label="Basic Hosting" data-description="1 Month Basic Hosting ($5.00)" data-name="hook.io hosting">Purchase Basic Hosting Plan</button>
+
+      
     </form>
-    </p>
-  <!--
-  <h3>Dedicated Servers</h3>
-  <p>Dedicated Servers start at $50.00 USD per month</p>
-  <p>To request a dedicated server please <a href="/Marak/hook.io/dedicatedHostingSignup">fill out this form</a></p>
-  <p>The public <a href="https://hook.io">https://hook.io</a> site operates a highly scalable highly distributed architecture. Incoming requests are intelligently load balanced over HTTP to our pool of awaiting hooks servers</p>
+    
+  </div>
+
+
+  <a name="bronze"/>
+  <div class="holder">
+    <h2>Bronze Hosting Plan - $10 Per Month</h2>
+    <h4>Increased capacity. Ideal for medium to low traffic microservices.</h4>
+    <div class="inner">
+    
+      <h3>Features</h3>
+      <ul>
+        <li>10,000 Microservice Requests Per Month</li>
+        <li>50 <a href="https://hook.io/logs">Log</a> entries per Microservice</li>
+        <li>1000 <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
+        <li>Private Microservices</li>
+        <li>Configurable time-outs on all Microservice Requests</li>
+      </ul>
+    </div>
+    <form action="/billing" method="POST" align="center">
+      <button class="buy btn" data-amount="1000" data-label="Bronze Hosting" data-description="1 Month Bronze Hosting ($10.00)" data-name="hook.io hosting">Purchase Bronze Hosting Plan</button>
+    </form>
+  </div>
+
+  <a name="silver"/>
+  <div class="holder">
+    <h2>Silver Hosting Plan - $20 Per Month</h2>
+    <h4>Increased capacity. Priority Support. Custom SSL. Ideal for businesses.</h4>
+    <div class="inner">
+      <h3>Features</h3>
+      <ul>
+        <li>20,000 Microservice Requests Per Month</li>
+        <li>Priority Support</li>
+        <li>50 <a href="https://hook.io/logs">Log</a> entries per Microservice</li>
+        <li>1,500 <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
+        <li>Private Microservices</li>
+        <li>Custom SSL Certificates</li>
+        <li>Configurable time-outs on all Microservice Requests</li>
+      </ul>
+    </div>
+    <form action="/billing" method="POST" align="center">
+      <button class="buy btn" data-amount="2000" data-label="Silver Hosting" data-description="1 Month Silver Hosting ($20.00)" data-name="hook.io hosting">Purchase Silver Hosting Plan</button>
+    </form>
+  </div>
+
+  <a name="gold"/>
+  <div class="holder">
+    <h2>Gold Hosting Plan - $50 Per Month</h2>
+    <h4>High capacity. High-Priority Support. Ideal for high traffic services.</h4>
+    <div class="inner">
+      <h3>Features</h3>
+      <ul>
+        <li>100,000 Microservice Requests Per Month</li>
+        <li>High-Priority Support</li>
+        <li>100 <a href="https://hook.io/logs">Log</a> entries per Microservice</li>
+        <li>2,500 <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
+        <li>Private Microservices</li>
+        <li>Custom SSL Certificates</li>
+        <li>Configurable time-outs on all Microservice Requests</li>
+      </ul>
+    </div>
+    <form action="/billing" method="POST" align="center">
+      <button class="buy btn" data-amount="5000" data-label="Gold Hosting" data-description="1 Month Gold Hosting ($50.00)" data-name="hook.io hosting">Purchase Gold Hosting Plan</button>
+    </form>
+  </div>
+
+  <a name="platinum"/>
+  <div class="holder">
+    <h2>Platinum Hosting Plan - $100 Per Month</h2>
+    <h4>Most capacity. Dedicated Support. Ideal for high-traffic high-availability services.</h4>
+    <div class="inner">
+      <h3>Features</h3>
+      <ul>
+        <li>1,000,000+ Microservice Requests Per Month</li>
+        <li>Dedicated Support</li>
+        <li>100 <a href="https://hook.io/logs">Log</a> entries per Microservice</li>
+        <li>5,000 <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
+        <li>Private Microservices</li>
+        <li>Custom SSL Certificates</li>
+        <li>Configurable time-outs on all Microservice Requests</li>
+      </ul>
+    </div>
+    <form action="/billing" method="POST" align="center">
+      <button class="buy btn" data-amount="10000" data-label="Platinum Hosting" data-description="1 Month Platinum Hosting ($100.00)" data-name="hook.io hosting">Purchase Platinum Plan</button>
+    </form>
+  </div>
   
-  <p>If you require a private dedicated server, we can load balance incoming Hook requests over DNS to your dedicated hook.io server. This offers higher overall performance and lower latencies.</p>
-  <p>Basic Support and <strong>full SSH access is given to your dedicated machine</strong>.</p> 
-  <p>Several zones are available. Operating system is Ubuntu 14.04 ( Trusty ).</p>
-  -->
-  <!--
-  <h2>Disk Space</h2>
-  <p>A small amount of disk space is available for hooks to read and write to using Node's fs module.</p>
-  <p>This space should be considered temporary and not for use in storing files for any period of time.</p>
-  -->
-  <!--
+  <a name="dedicated"/>
+  <div class="holder">
+    <h2>Dedicated Hosting Plans - Starting at $200 Per Month</h2>
+    <h4>Get your own cloud. Free setup. Dedicated support. Ideal for large projects.</h4>
+    <div class="inner">
+      <h3>Features</h3>
+      <ul>
+        <li>Run your Microservices on a dedicated cloud</li>
+        <li>Ensures optimal performance conditions</li>
+        <li>Upwards of <strong>5,000 Microservice Requests Per Second</strong></li>
+        <li>Dedicated Support</li>
+        <li>Custom SSL Certificates</li>
+        <li>Configurable <a href="https://hook.io/logs">Log</a> entries per Microservice</li>
+        <li>Configurable max <a href="https://hook.io/datastore">Cloud Datastore</a> documents</li>
+        <li>Configurable time-outs on all Microservice Requests</li>
+      </ul>
+    </div>
+    
+    <h3>For dedicated hosting inquires please contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></h3>
+    
+  </div>
+
+  <p><em>Note: Any of these plans may change in the future with no notice. Our goal is to maintain a fair pricing model. New features will be added and service classes may be adjusted.</em></p>
   <br/>
-  <h2>Usage Limitations</h2>
-
-  <p>There are currently no specific technical limitations on usage.</p>
-
-  <p>The basic hosting plan should be sufficient for most small to mid-size projects.</p>
-
-  <p>If you are interested in hosting for larger projects please contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
-</div>
-  -->
   <br/>
+
+  <script type="text/javascript">
+    var amount, credits;
+    $(document).ready(function(){
+      var handler = StripeCheckout.configure({
+        key: 'pk_test_axAR0vF3Qam8zs09JE7t8ZIo',
+        image: 'https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png',
+        locale: 'auto',
+        token: function(token) {
+          $.ajax({
+            type: "POST",
+            url: '/billing',
+            data: {
+              "email": token.email,
+              "ajax": true,
+              "stripeToken": token.id,
+              "addCustomer": true,
+              "amount": amount // NOTE: All hosting credit amounts are manually reconciled against the monthly payment processor reports...please don't try to hack this open-source project... 
+            },
+            success: function(res){
+              
+              if (res === "paid") {
+                document.location = "/account?paid=true&plan=" + amount;
+                return;
+              }
+              alert(res);
+              // $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
+            },
+            error: function (err) {
+              alert('error' + err);
+            }
+          })
+
+          return false;
+
+        }
+      });
+
+      $('.buy').on('click', function(e) {
+        // Open Checkout with further options
+        //credits = Number($(this).attr('data-credits'));
+        //var discount = Number($(this).attr('data-discount'));
+        //amount = (credits - (credits * discount)) * 100;
+        
+        amount = $(this).attr('data-amount'),
+            desc = $(this).attr('data-description'),
+            label = $(this).attr('data-label');
+        handler.open({
+          name: 'hook.io',
+          description: desc,
+          currency: "usd",
+          amount: amount,
+          panelLabel: label
+        });
+        e.preventDefault();
+      });
+
+      // Close Checkout on page navigation
+      $(window).on('popstate', function() {
+        handler.close();
+      });  
+    });
+
+  </script>
+
+
   

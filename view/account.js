@@ -33,7 +33,7 @@ module['exports'] = function view (opts, callback) {
       $('.status').html('Please set your new password immediately!');
     }
     if (params.paid) {
-      $('.status').html('Thank you so much for supporting us! <br/> Your Hosting Credits have been issued. <br/> We will periodically email you with updates.');
+      $('.status').html('Thank you so much for supporting us! <br/> <span class="success">Your Hosting Credits have been issued!</span> <br/> We will periodically email you with updates.');
     }
 
     //$('.addPaymentOption').html(addPaymentOption());
