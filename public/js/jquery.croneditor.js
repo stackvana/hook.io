@@ -351,7 +351,7 @@ $.fn.croneditor = function(opts) {
 // HTML Template for plugin
 var tmpl = '<input type="text" id="cronString" name="cronString" value="* * * * *" size="80"/>\
 <br/>\
-<input type="button" value="Reset" id="clear"/>\
+<input type="button" value="Reset" id="clear" class="btn cronClear"/>\
 <br/>\
 <!-- TODO: add back next estimated time -->\
 <!-- <span>Will run next at:<em><span class="next"></span></em></span> -->\
