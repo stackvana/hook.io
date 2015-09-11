@@ -128,7 +128,6 @@ module['exports'] = function view (opts, callback) {
             _plan = _plan + "_" + (params.amount / 100);
           }
 
-          console.log('attempting to use plan', customer, _plan, params.stripeToken);
           createStripeSubscription(customer.id, {
              plan: _plan,
              source: params.stripeToken // source is the token created from checkout.js

@@ -44,6 +44,15 @@ module['exports'] = function view (opts, callback) {
     } else {
       name = params.name;
     }
+    
+    if (typeof params.owner === 'undefined' || params.owner.length === 0) {
+      return res.redirect(301, '/');
+    }
+
+    if (typeof name === 'undefined' || name.length === 0) {
+      return res.redirect(301, '/');
+    }
+
     // fetch the latest version of hook ( non-cached )
     hook.find({ owner: params.owner, name: name }, function (err, result) {
       if (err) {
@@ -142,6 +151,8 @@ module['exports'] = function view (opts, callback) {
 
       if (h.gist && h.gist.length > 5) {
         // do nothing
+        $('#gist').attr('value', h.gist);
+        
       } else {
         $('#editorSource').attr('checked', 'CHECKED');
         $('.gistUrlHolder').attr('style', 'display:none;');
