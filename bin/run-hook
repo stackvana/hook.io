@@ -184,6 +184,8 @@ var env = JSON.parse(argv.e);
 
 // Map some familiar HTTP request information to input stream ( services need this data )
 process.stdin.method = env.input.method;
+process.stdin.path = env.input.path;
+process.stdin.params = env.input.params;
 process.stdin.headers = env.input.headers;
 process.stdin.host = env.input.host;
 process.stdin.url = env.input.url;
