@@ -23,7 +23,14 @@ module['exports'] = function view (opts, callback) {
   parseRequest(req, res, function(err, params){
     if (params.name && params.password) {
       params.name = params.name.toLowerCase();
-      user.find({ name: params.name }, function (err, results) {
+      var type = "name";
+      // determine if username or email
+      if (params.name.search('@') !== -1) {
+        type = "email";
+      }
+      var query = {};
+      query[type] = params.name;
+      user.find(query, function (err, results) {
         if (err) {
           return res.end(err.message);
         }
