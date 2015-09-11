@@ -8,11 +8,13 @@ module['exports'] = function view (opts, callback) {
       res = opts.response,
       params = req.resource.params;
 
-  if (typeof params.signedMeUp !== "undefined" || typeof params.s !== "undefined") {
-    req.session.referredBy = req.params.owner;
-    return res.redirect("/");
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
   }
-  
+  if (req.session.user.toLowerCase() !== "marak") {
+    return res.redirect('/' + req.session.user);
+  }
+
   if (!opts.request.isAuthenticated()) { 
     $('.manageEnv').remove()
     $('.referrals').remove()
