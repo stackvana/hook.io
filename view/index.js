@@ -94,6 +94,7 @@ module['exports'] = function view (opts, callback) {
   }
   // TODO: gateway.hook.io for production
   $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway');
+
   if (typeof user === "undefined") {
     $('.userBar').remove();
     callback(null, this.$.html());
@@ -101,6 +102,12 @@ module['exports'] = function view (opts, callback) {
     user = user.toLowerCase();
     var query = { name: user };
     return userResource.find(query, function(err, results){
+      if (err) {
+        return res.end(err.message);
+      }
+      if (results.length === 0) {
+        return res.end('Unable to find user. This error should never happen. Please contact hookmaster@hook.io immediately.');
+      }
       var u = results[0];
       if(typeof u.email === "undefined" || u.email.length === 0) {
         // do nothing, we have the email

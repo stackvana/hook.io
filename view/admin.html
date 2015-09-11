@@ -94,87 +94,795 @@
     color: rgb(68, 199, 68);
   }
 </style>
+
+
+<style>
+
+#hookForm h1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+#hookForm h2 {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 10px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.cron-button {
+    height: 16px;
+    padding-left: 20px;
+    margin-left: 5px;
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    cursor: pointer;
+}
+.cron-button-save {
+    background-image: url('img/disk.png');
+}
+.cron-changed {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #fdd;
+}
+.cron-controls {
+    margin-left: 10px;
+    color: #c77;
+    font-size: 0.9em;
+}
+.cron-controls > span.cron-loading {
+    background-image: url('img/loading.gif');
+}
+
+.routeHint {
+  display: none;
+}
+
+.hookLinks {
+  width: 100%;
+  margin-top: 20px;
+  background-color: white;
+}
+.hookLinks td {
+  padding: 10px;
+  margin: 10px;
+}
+
+.routeExamples {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  border: solid;
+  border-width: 1px;
+}
+.routeExamples td {
+  padding: 10px;
+  margin: 10px;
+}
+.left {
+  width: 220px;
+}
+
+code {
+  padding: 0px;
+  margin: 0px;
+}
+
+label {
+  cursor: hand;
+}
+.hookFrame {
+  display: none;
+}
+.error {
+  background-color: red;
+}
+/* do not group these rules */
+.error::-webkit-input-placeholder {
+    color: white;
+}
+.error*:-moz-placeholder {
+    /* FF 4-18 */
+    color: white;
+}
+.error*::-moz-placeholder {
+    /* FF 19+ */
+    color: white;
+}
+.error*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white;
+}
+
+.cronRow {
+  display: none;
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.cronRow .tabs {
+  font-size:16px;
+}
+.cronRow #clear {
+  font-size:16px;
+}
+
+input[type="text"] {
+  width: 100%;
+  margin-right: 10px;
+  padding-right: 10px;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+#create {
+  margin-top: 10px;
+}
+
+.hookTable td {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.hookTable td input {
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.hookTable td span {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.tiny {
+  font-size: 16px;
+}
+
+.themeRow {
+  display: none;
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.hookHolder {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.hookHolder .form-control {
+  margin-bottom: 10px;
+}
+
+.hookHolder .form-group {
+  margin-bottom: 10px;
+}
+.gistUrlHolder {
+  padding-top: 10px;
+  width: 100%;
+}
+
+.dangerZone {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 20px;  
+}
+
+.sourcesHolder {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.sources {
+  margin-bottom: 0px;
+}
+
+.cronDiv {
+  width: 100%;
+}
+
+.codeEditorHolder {
+  display: none;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+}
+body .CodeMirror {
+  height: 280px;
+  box-shadow: none;
+  font-size: 14px;
+}
+.sourceHeader {
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+body legend {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.tiny .small-btn {
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 200px;
+}
+.tiny .small-btn:hover {
+  font-weight: bold;
+}
+
+.codeEditorHolder .btn {
+  width: 120px;
+  
+}
+
+.btn {
+  margin-top: 10px;
+  width: 200px;
+}
+
+.btn:hover {
+  font-weight: bold;
+}
+
+.hookFrame {
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: monospace;
+  height: 210px;
+  color: black;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  display: none;
+  padding: 10px;
+  width: 100%;
+}
+
+.cronClear {
+  margin-bottom: 10px;
+}
+
+.gistStatus {
+  display: none;
+}
+
+</style>
+<link href="/css/jquery-ui.css" rel="stylesheet">
+
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/jquery.croneditor.js"></script>
+
+<script type="text/javascript">
+
+  var boot = {{hook}};
+
+  // client-side slugify
+  // the server-side slugify code is much more robust covering much utf
+  function slugify(text) {
+    return text.toString().toLowerCase()
+      .replace(/\s+/g, '-');           // Replace spaces with -
+//      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+//      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+  }
+
+  // lookup themes from curated theme list
+  // TODO: Create "themes" resource and persist this to database
+  var themes = {
+    "debug": {
+      "theme": "https://hook.io/themes/debug/index.html",
+      "presenter": "https://hook.io/themes/debug/index.js"
+    },
+    "form": {
+      "theme": "https://hook.io/themes/form/index.html",
+      "presenter": "https://hook.io/themes/form/index.js"
+    },
+    "simple": {
+      "theme": "https://hook.io/themes/simple/index.html",
+      "presenter": "https://hook.io/themes/simple/index.js"
+    },
+    "simple-form": {
+      "theme": "https://hook.io/themes/simple-form/index.html",
+      "presenter": "https://hook.io/themes/simple-form/index.js"
+    },
+    "none": {
+      "theme": "https://hook.io/themes/none/index.html",
+      "presenter": "https://hook.io/themes/none/index.js"
+    },
+    "custom": {
+      "theme": "",
+      "presenter": ""
+    }
+  };
+
+  $(document).ready(function(){
+
+    var deployingCode = false, snippetLoading = false;
+
+    $('.hookFrame').on("load", function() {
+      if (deployingCode) {
+        //snippetLoaded();
+        $('.CodeMirror').hide();
+        $('.hookFrame').show();
+        deployingCode = false;
+      }
+    });
+    function showCode () {
+      $('.CodeMirror').show();
+      editor.setCursor(0,0);
+      //editor.focus();
+      editor.refresh();
+      $('.hookFrame').hide();
+    };
+
+    $('.codeButton').on('click', function(){
+      showCode();
+      return false;
+    });
+
+    $('#editorSource').on('click', function(){
+      $('.gistUrlHolder').hide();
+      $('.codeEditorHolder').show();
+      editor.refresh();
+    });
+
+
+    $('#gistSource').on('click', function(){
+      $('.codeEditorHolder').hide();
+      $('.gistUrlHolder').show();
+    });
+
+    $('.cronDiv').croneditor();
+
+    $('input[name="cronActive"]').click(function(){
+      if($(this).prop('checked')) {
+        $('.cronRow').show();
+      } else {
+        $('.cronRow').hide();
+      }
+    });
+
+    function deployCode () {
+      if (snippetLoading) {
+        // do not attempt to deploy code if a new snippet is still loading...
+        return false;
+      }
+      deployingCode = true;
+      var now = new Date().getTime();
+      $('#source').val(editor.getValue());
+      $('.gatewayForm').submit();
+      //    $('iframe').show();
+      return false;
+    };
+
+    $('.testButton').on('click', function(){
+      deployCode();
+      return false;
+    });
+
+    $('.saveButton').on('click', function(){
+    });
+
+    $('#name').on('click', function(){
+      $('#name').removeClass('error');
+    });
+
+    $('#hookForm').on('submit', function(){
+      var name = $('#name').val();
+      if (name.length === 0) {
+        $('#name').addClass('error').focus();
+        $('#name').attr('placeholder', 'name is required...')
+        //alert('name required');
+        return false;
+      }
+    });
+
+    $('.routeTipsButton').on('click', function(){
+      if ($('.routeHint').css('display') === "none") {
+        $('.routeHint').show();
+      } else {
+        $('.routeHint').hide();
+      }
+      return false;
+    });
+
+    $('#name, #path').on('keyup', function(){
+      var v = $(this).val();
+      var s = slugify($(this).val());
+      if (v !== s) {
+        $(this).addClass('error');
+        $(this).val(s);
+      } else {
+        if(v.length !== 0) {
+          $(this).removeClass('error');
+        }
+      }
+      drawHookLinks();
+    });
+
+    $('input[name="themeActive"]').click(function(){
+      if($(this).prop('checked')) {
+        $('.themeRow').show();
+      } else {
+        $('.themeRow').hide();
+      }
+    });
+
+    var options = {
+      effect: 'drops',
+      effectOptions: {
+        radius: 80,
+        duration: 1500,
+        width: 2,
+        count: 3,
+        delay: 100
+      }
+    };
+    
+    var p = $('#name').position();
+    $('#name').focus();
+    $('.themeSelect').change(function(e){
+      var val = themes[$(this).val()];
+      $('#theme').attr('value', val.theme);
+      $('#presenter').attr('value', val.presenter);
+    });
+    drawHookLinks();
+    
+    if (boot.source && boot.source.length > 0) {
+      editor.setValue(boot.source);
+      $('#editorSource').attr('checked', 'CHECKED');
+      $('.gistUrlHolder').hide();
+      $('.codeEditorHolder').show();
+      editor.refresh();
+    } else {
+      // do nothing
+    }
+  });
+
+
+  function drawHookLinks () {
+    var base = 'https://hook.io/' + boot.owner;
+    var name = $('#name').val();
+    var path = $('#path').val();
+    if(name.length === 0 && path.length === 0) {
+      //$('.hookLinks .admin').html('');
+      //return;
+    }
+
+    if (name.length === 0) {
+      name = "hook-name";
+    }
+
+    $('.hookLinks .home').html(base + '/' + name + '');
+    $('.hookLinks .admin').html(base + '/' + name + '/admin');
+    $('.hookLinks .source').html(base + '/' + name + '/source');
+    $('.hookLinks .logs').html(base + '/' + name + '/logs');
+
+    if (path.length > 1) {
+      $('.hookLinks .params').html(path);
+    }
+
+  };
+  /*
+  $('#cronString').keydown(function(){
+    var job = new cron.CronTime($(this).val());
+    var start = new Date();
+    var next = job._getNextDateFrom(start);
+    $('#estimateRun').val(next);
+  });
+  */
+  
+</script>
+
+
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
-<div style="font-size:22px;height:800px;text-align: left;">
-  <span class="formStatus success"></span>  <br/>
-  <h2><strong>Manage <span class="hookName"> Hook</span></strong></h2>
-  <h3><a href="" class="hookLink">Run Hook</a>&nbsp;|&nbsp;<a href="" class="hookLogs">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh">Refresh Cache</a></h3>
-  <h3><a href="" class="hookSource">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter">Presenter</a></h3>
-  <br/>
-  <form method="post" action="/admin">
-    <div class="hookTable" style="font-size:22px;">
+<div style="font-size:22px;height:800px;text-align: left;" class="container">
+
+  <form id="hookForm" method="POST" action="/admin" role="form">
+    <legend><h1>Manage Microservice</h1></legend>
+    <h3><a href="" class="hookLink">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh">Refresh Cache</a></h3>
+    <h3><a href="" class="hookSource">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter">Presenter</a></h3>
+    <br/>
+    <div class="gistStatus">Hey there! We just created a new Gist on Github using your account: <a href="">here</a><br/>
+      <br/>
+      The Gist will now be associated with the Hook service once you've completed this form.
+    </div>
+
+    <div class="hookHolder">
+      <h2>Service Information</h2>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input tabindex="1" class="form-control" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
+        <div class="tiny">
+          <em>Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="path">Route</label>
+        <input tabindex="2" class="form-control" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
+        <div class="tiny">
+          <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
+          <button tabindex="3" type="button" class="routeTipsButton btn small-btn">Route Formatting Help</button>
+        </div>
+
+        <div class="tiny routeHint">
+          <h4>Route Formatting</h4>
+          <table class="routeExamples" border="1">
+            <tr>
+              <td><code>:name</code></td>
+              <td>a named parameter to capture from the route</td>
+            </tr>
+            <tr>
+              <td><code>*splat</code></td>
+              <td>a wildcard splat to capture from the route</td>
+            </tr>
+            <tr>
+              <td><code>()</code></td>
+              <td>Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
+            </tr>
+            <tr>
+              <td><code>strings</code></td>
+              <td>Anything else. Interpolate static strings with params.</td>
+            </tr>
+          </table>
+
+          <h4>Route Examples</h4>
+          <div class="routeExamples">
+            <code>
+              /:id/create <br/>
+              /some/(optional/):thing <br/>
+              /users/:id/comments/:comment/rating/:rating <br/>
+              /*a/foo/*b <br/>
+              /books/*section/:title <br/>
+            </code>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="hookSource">Hook Run Count</label>
+          <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
+        </div>
+
+        <div class="form-group">
+          <label for="mode">Hook Mode</label>
+          <select class="form-control mode" name="mode">
+            <option value="Development">Development</option>
+            <option value="Production">Production</option>
+          </select>
+          <p class="smaller"><strong>Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+        </div>
+
+      </div>
 
       <div class="form-group">
-        <label for="mode">Hook Mode</label>
-        <select class="form-control mode" name="mode">
-          <option value="Development">Development</option>
-          <option value="Production">Production</option>
-        </select>
-        <p class="smaller"><strong>Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+        <label for="path">Service URLs</label>
+
+        <div class="tiny">
+          <em>The following URLs will be created to help manage the service.</em>
+        </div>
+
+        <table class="hookLinks" border="1">
+          <tr>
+            <td class="left"><strong>Home</strong></td>
+            <td class="home">https://hook.io/Marak/hook-name</td>
+          </tr>
+          <tr>
+            <td><strong>Optional Url Parameters</strong></td>
+            <td class="params">None</td>
+          </tr>
+          <tr>
+            <td><strong>Admin ( login required )</strong></td>
+            <td class="admin">https://hook.io/marak/hook-name/admin</td>
+          </tr>
+          <tr>
+            <td><strong>Source Code</strong></td>
+            <td class="source">https://hook.io/marak/hook-name/source</td>
+          </tr>
+          <tr>
+            <td><strong>Logs</strong></td>
+            <td class="logs">https://hook.io/marak/hook-name/logs</td>
+          </tr>
+          <!--
+          <tr>
+            <td>View</td>
+            <td>http://hook.io/Marak/echo/view</td>
+          </tr>
+          <tr>
+            <td>Presenter</td>
+            <td>http://hook.io/Marak/echo/presenter</td>
+          </tr>
+          <tr>
+            <td>Fork</td>
+            <td>http://hook.io/Marak/echo/fork</td>
+          </tr>
+          -->
+        </table>
+
+      </div>
+    </div>
+    <div class="sourcesHolder">
+      <h2>Hook Source</h2>
+      <div class="form-group sources">
+
+        <label for="gistSource">Github Gist</label>
+        <input tabindex="4" type="radio" checked="CHECKED" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
+        &nbsp;
+        <label for="editorSource">Code Editor</label>
+        <input tabindex="5" type="radio" value="editor" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
+
+      </div>
+      <div class="tiny">
+        <em>The source code to power the service. Can be provided as a Github Gist or as plain-text.</em>
       </div>
 
-      <div class="form-group">
-        <label for="name">Hook Name</label>
-        <input type="text" class="form-control name" id="name" name="name" placeholder="name of hook" size="40">
-        <p class="smaller"><strong>Warning:</strong> Changing the name of the Hook will alter the url used to access it as well as resetting all metrics and log data for the Hook.</p>
+      <div class="form-group gistUrlHolder">
+        <label for="gist">Gist Url</label>
+        <input tabindex="6" type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
+        <div class="tiny" style="padding-left:5px;padding-top:5px;">
+          <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="name">Hook Path</label>
-        <input type="text" class="form-control path" id="path" name="path" placeholder="path of hook" size="40">
-        <p class="smaller">Can contain <code>/:foo/bar/:baz</code> style parameter routing. Route parameters will populate in <code>Hook.params</code> scope inside the service.</p>
-      </div>
+            <div class="form-group codeEditorHolder">
+
+                <!-- Create a simple CodeMirror instance -->
+                <link rel="stylesheet" href="/js/codemirror.css">
+                <script src="/js/codemirror.js"></script>
+                <script src="/js/javascript.js"></script>
+                <script type="text/javascript">
+                </script>
+                <style>
+                  .CodeMirror {
+                    /* Set height, width, borders, and global font properties here */
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    font-family: monospace;
+                    height: 500px;
+                    color: black;
+                    border: solid;
+                    border-width: 1px;
+                    box-shadow: 10px 10px 5px #888888;
+                  }
+                </style>
+
+                  <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
+                  <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
+  console.log("Console messages are sent to /logs");
+  console.log(hook.params);
+  console.log(hook.req.path);
+  console.log(hook.req.method);
+  console.log(hook.env);
+  hook.res.end(JSON.stringify(hook.params, true, 2));
+};</textarea>
+                  <script type="text/javascript">
+                    var editor;
+                    editor = CodeMirror.fromTextArea($('textarea').get(0), {
+                      lineNumbers: true
+                    });
+                    editor.refresh();
+                    //editor.show();
+                  </script>
+                <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
+              </div>
+    </div>
+
+    <!--
+    <div class="form-group">
+      <label for="status">Hook Status</label>
+      <select class="form-control status" name="status">
+        <option value="active">Active</option>
+        <option value="disabled">Disabled</option>
+      </select>
+    </div>
+    -->
 
 
-      <div class="form-group">
-        <label for="hookSource">Hook Run Count</label>
-        <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
-      </div>
+    <div class="form-group">
+      <input tabindex="10" type="checkbox" class="themeActive" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
+      <label for="themeActive">Customize appearance of Hook with a Theme</label>
+    </div>
 
-      <input type="hidden" class="previousName" id="previousName" name="previousName" value="">
+    <div class="themeSelector well themeRow"></div>
 
-      <input type="hidden" class="owner" id="owner" name="owner" value="">
+    <div class="form-group">
+      <input tabindex="11" type="checkbox" class="cronActive" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
+      <label for="cronActive">Schedule Hook on a Timer using Cron</label>
+    </div>
 
-      <div class="form-group">
-        <label for="hookSource">Hook Source Code</label>
-        <input type="text" class="form-control hookSource" id="hookSource" name="hookSource" value="n/a" size="80">
-      </div>
+    <div class="form-group cronRow">
+      <h2>Hooks can be scheduled on a timer</h2>
 
-      <div class="form-group">
-        <label for="status">Hook Status</label>
-        <select class="form-control status" name="status">
-          <option value="active">Active</option>
-          <option value="disabled">Disabled</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <input type="checkbox" class="cronActive" id="cronActive" name="cronActive"/>
-        <label for="cronActive">Cron Task activated for this Hook</label>
-      </div>
-
-      <div class="form-group cronRow">
-        <div class="cronDiv"></div>
-      </div>
-
-      <div class="form-group">
-        <input type="checkbox" class="isPublic" id="isPublic" name="isPublic">
-        <label for="isPublic">Hook and Source Code are Public</label><br/>
-        <em class="smaller">Private Hooks require a Paid Account</em>
-      </div>
-
+      <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
+      <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
+      <p class="superTiny">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
+      <h3>Cron Pattern</h3>
+      <div class="cronDiv"></div>
+    </div>
+    
+    <div class="dangerZone">
       <div class="form-group danger">
         Danger Zone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style="background-color:white;">||<a class="red deleteLink" href="">Delete Hook</a>||</span>
       </div>
-
-      <div class="form-group">
-        <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn">
-      </div>
-
     </div>
+    <div class="form-group">
+      <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn">
+    </div>
+    
+    <!-- 
+    <div class="form-group">
+      <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">
+      <label for="isPublic">Display Hook in public Hook registry</label>
+    </div>
+    -->
   </form>
 
+
+
+  <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
+      <input type="hidden" name="source" id="source"/>
+  </form>
+
+  <br/>
+
+  <!--
+  <h3>Not sure how to get started? Here is a basic echo example below.</h3>
+
+  <form method="GET" action="/Marak/echo">
+    <input tabindex="1" id="fork" name="fork" type="submit" value="Fork This Hook"/ class="btn">
+  </form>
+
+  <div data-gist="357645b8a17daeb17458">Loading...</div>
+  -->
   <br/>
   <br/>
 </div>

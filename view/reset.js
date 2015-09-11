@@ -16,7 +16,7 @@ module['exports'] = function resetPassword (opts, cb) {
         return res.end(err.message);
       }
       if (results.length === 0) {
-        return res.end('Invalid account token');
+        return res.end('Invalid or expired account reset token.');
       }
       var u = results[0];
       req.session.sessionID = uuid();
@@ -24,7 +24,7 @@ module['exports'] = function resetPassword (opts, cb) {
       req.login(u, function(){
         req.session.user = u.name;
         // TODO: We could invalidate / regenerate user.token here to make login tokens one-time use only
-        return res.redirect(301, '/account');
+        return res.redirect(301, '/account?reset=true');
       });
     });
   }
@@ -43,10 +43,10 @@ module['exports'] = function resetPassword (opts, cb) {
   var query = {};
   query[type] = nameOrEmail;
   nameOrEmail = nameOrEmail.toLowerCase();
-  user.reset({ query: query }, function (err, u) {
-    if (typeof u.email === "undefined" || u.email.length === 0) {
-      // else, no email was found, no password can be sent
-      return res.end('email-missing');
+
+  user.reset({ query: query }, function (err, u ) {
+    if (err) {
+      return res.end(err.message);
     }
 
     // if user was found, check to see if they have an email
@@ -67,7 +67,8 @@ module['exports'] = function resetPassword (opts, cb) {
       }
       // if email is found, send reset password email
       // TODO: send partial email string back to user with ****** to show where email was sent
-      res.end('email-sent');
+      // TODO: obfuscate email to client with **** interpolation.
+      res.end('{ "res": "email-sent", "email": "' +  u.email + '"}');
     });
   })
 

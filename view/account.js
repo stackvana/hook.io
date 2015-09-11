@@ -17,20 +17,24 @@ module['exports'] = function view (opts, callback) {
   var $ = this.$;
   var req = opts.request, res = opts.response;
 
-  req.user = {
-    username: req.session.username
-  };
-
   // if not logged in, kick out
   if (!req.isAuthenticated()) { 
     req.session.redirectTo = "/account";
-    return res.redirect('/login');
+    // TODO: actual login screen, not just homepage login
+    return res.redirect('/');
   }
 
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
 
     var params = req.resource.params;
+
+    if (params.reset) {
+      $('.status').html('Please set your new password immediately!');
+    }
+    if (params.paid) {
+      $('.status').html('Thank you so much for supporting us! <br/> Your Hosting Credits have been issued. <br/> We will periodically email you with updates.');
+    }
 
     //$('.addPaymentOption').html(addPaymentOption());
 
@@ -118,6 +122,24 @@ function showUserForm (user, cb) {
     "type": "string",
     "format": "password"
   };
+
+  /*
+  formSchema.githubOAuth = {
+    "type": "string",
+    "disabled": true,
+    "enum": ["true", "false"],
+    "default": "false",
+    "label": "Account Linked To Github"
+  };
+  */
+  /*
+  formSchema.hostingCredits = {
+    "type": "number",
+    "label": "hosting credits",
+    "disabled": true,
+    "default": user.hostingCredits
+  }
+  */
 
   forms.generate({
     type: "generic",

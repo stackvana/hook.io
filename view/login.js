@@ -35,7 +35,17 @@ module['exports'] = function view (opts, callback) {
         var crypto = require('crypto');
         var hash = crypto.createHmac("sha512", u.salt).update(params.password).digest("hex");
         if (hash !== u.password) {
-          return res.end('invalid');
+          var r = {
+            res: "invalid",
+          };
+          if (u.githubOauth === true) {
+            r.res = "redirect";
+            r.url = "/login/github";
+            // if the user has already oauthed with github before,
+            // and is attempting to sign in with a bad password,
+            // lets just redirect them to the github auth! easy.
+          }
+          return res.end(JSON.stringify(r));
         }
         req.login(u, function(err){
           if (err) {

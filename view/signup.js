@@ -46,17 +46,30 @@ module['exports'] = function signup (opts, cb) {
         var str = "exists";
         return res.end(str);
       }
-      if (typeof params.password === "undefined" || typeof params.email === "undefined") {
+      
+      var data = {};
+      if (type === "email") {
+        data.email = email;
+        data.name = slug(email);
+      } else {
+        data.name = email;
+      }
+      
+      if (data.type === "name" && typeof params.password === "undefined" || typeof params.email === "undefined") {
         return res.end('available');
       } else {
-        var data = {};
-        if (type === "email") {
-          data.email = email;
-          data.name = slug(email);
-        } else {
-          data.name = email;
-        }
+
         data.password = params.password;
+        // todo: use user.signup
+        if (results.length === 0 && typeof params.password !== "undefined" && params.password.length !== 0 && (params.password === params.confirmPassword)) {
+          // ready to signup new user...
+          // do nothing?
+        } else {
+          // can't signup user, something wrong with first password
+          // somewhat non-descriptive error here
+          // client mostly handles this first
+          return res.end('available');
+        }
         return user.create(data, function (err, result){
           if (err) {
             return res.end(err.stack);

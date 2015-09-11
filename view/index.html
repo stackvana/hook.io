@@ -454,32 +454,28 @@ $('document').ready(function(){
          "email": $('#email').val()
        },
        success: function(res){
+         var obj;
+         try {
+           obj = JSON.parse(res);
+         } catch (err) {
+           // do nothing
+         }
+         if(typeof obj === "object") {
+           // a bit of a quickfix hack
+           // TODO: replace later with JSON only response
+           res = obj.res;
+         }
          switch (res) {
             case 'valid':
               // valid login, redirect to homepage
               document.location = "/";
             break;
-            case 'invalid':
-              $('#password').addClass('error');
-              $('#password').val('').focus();
-              $('#password').attr('placeholder', 'invalid password. try again...')
-              $('.resetPasswordHolder').show();
-              alert('invalid creds!');
-            break;
-            case 'available':
-              newAccount = true;
-              $('.passwordHolder').show();
-              $('#password').focus();
-              $('.resetPasswordHolder').hide();
-              $('#email').addClass('checkmark');
-              $('.confirmPasswordHolder').show();
-              $('#emailLogin').val('Create New Account');
-            break;
+
             case 'exists':
               alert('exists');
             break;
             case 'email-sent':
-              $('.resetPasswordHolder').html('A password reset link has been emailed to you.')
+              $('.resetPasswordHolder').html('A password reset link has been emailed to: ' + obj.email)
             break;
             case 'email-missing':
               $('.resetPasswordHolder').html('<span class="errorStatus">No email associated with this account. Please contact hookmaster@hook.io for additional support.</span>');
@@ -496,6 +492,11 @@ $('document').ready(function(){
     return false;
   });
   function signUp () {
+    if ($('#password').val() === "") {
+      $('#password').attr('placeholder', 'password cannot be blank...');
+      $('#password').addClass('error').focus();
+      return false;
+    }
     if ($('#password').val() !== $('#confirmPassword').val()) {
       $('#confirmPassword').attr('placeholder', 'passwords did not match...');
       $('#confirmPassword').val('');
@@ -508,7 +509,8 @@ $('document').ready(function(){
        url: '/signup',
        data: {
          "email": $('#email').val(),
-         "password": $('#password').val()
+         "password": $('#password').val(),
+         "confirmPassword": $('#confirmPassword').val()
        },
        success: function(res){
          switch (res) {
@@ -589,7 +591,26 @@ $('document').ready(function(){
           "password": $('#password').val()
         },
         success: function(res) {
+          var obj;
+          try {
+            obj = JSON.parse(res);
+          } catch (err) {
+            // do nothing
+          }
+
+          if(typeof obj === "object") {
+            // a bit of a quickfix hack
+            // TODO: replace later with JSON only response
+            res = obj.res;
+          }
+
            switch (res) {
+
+              case 'redirect':
+                // valid login, redirect to homepage
+                document.location = "/login/github";
+              break;
+
               case 'valid':
                 // valid login, redirect to homepage
                 document.location = "/";
@@ -664,7 +685,7 @@ $('document').ready(function(){
         "email": $('#email').val()
       },
       success: function(res){
-        $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
+        $('.emailReminder').html('<span class="tiny">Email set to: ' + $('#email').val() + "</span>");
       },
       error: function (err) {
         alert('error' + err);
@@ -725,7 +746,7 @@ $('document').ready(function(){
 
   //$('.splashImage img').hoverIntent(loadSplashSection);
   $('.splashImage img').click(loadSplashSection);
-  
+
   function checkStats () {
     // TODO: add real-time info for other metrics
     $.get('/metrics/hook/totalHits', function(res){
@@ -820,7 +841,7 @@ var editor;
           <div class="resetPasswordHolder">
             <input type="button" id="resetPassword" class="btn" name="resetPassword"  value="Reset Account Password"/>
           </div>
-          <input type="button" id="emailLogin" class="btn" value="Log in With Username or Email"/>
+          <input type="button" id="emailLogin" class="btn" value="Sign In With Username or Email"/>
         </form>
         <form action="/login/github" method="GET">
           <input type="submit" class="btn" value="Sign in with Github"/>

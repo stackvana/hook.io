@@ -32,10 +32,7 @@ module['exports'] = function view (opts, callback) {
     mergeParams(req, res, function(){});
     params = opts.request.resource.params;
 
-    if (typeof params.owner === 'undefined') {
-      // redirect to hook listing page
-      return res.redirect('/' + req.session.user);
-    }
+    params.owner = req.session.user;
 
     if (req.session.user !== params.owner && req.session.user !== "Marak") {
       return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
@@ -70,7 +67,15 @@ module['exports'] = function view (opts, callback) {
       var data = {};
 
       // strings
-      data.gist = params.hookSource || req.hook.gist;
+
+      data.gist = params.gist;
+
+      if (params.hookSource === "editor") {
+        delete params.gist;
+        params.source = params.codeEditor;
+      }
+
+      data.source = params.source;
       data.name = params.name;
       data.path = params.path;
 
@@ -128,12 +133,20 @@ module['exports'] = function view (opts, callback) {
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
-      $('.name').attr('value', h.name);
+      $('#name').attr('value', h.name);
       $('.owner').attr('value', h.owner);
-      $('.path').attr('value', h.path);
+      $('#path').attr('value', h.path);
       $('.previousName').attr('value', h.name);
 
       $('.hookSource').attr('value', h.gist);
+
+      if (h.gist && h.gist.length > 5) {
+        // do nothing
+      } else {
+        $('#editorSource').attr('checked', 'CHECKED');
+        $('.gistUrlHolder').attr('style', 'display:none;');
+        $('.codeEditorHolder').attr('style', 'display:block;');
+      }
 
       if (h.cronActive === true) {
         $('.cronActive').attr('checked', 'CHECKED');
@@ -163,12 +176,17 @@ module['exports'] = function view (opts, callback) {
       $('.deleteLink').attr('data-name', (h.owner + "/" + h.name));
 
       self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h, themes: themes }, function(err, html){
-        var el = $('.hookTable > div').eq(4);
-        el.after(html);
+        var el = $('.themeSelector')
+        el.html(html);
         var out = $.html();
         h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
+        var boot = {
+          owner: req.session.user,
+          source: h.source
+        };
+        out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
         return callback(null, out);
       });
 
