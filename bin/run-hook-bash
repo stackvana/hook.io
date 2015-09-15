@@ -1,0 +1,23 @@
+#!/bin/sh
+
+## very basic bash support
+## this language integration should be considered experimental
+## we will be adding more functionality and support for bash
+
+# TODO: replace with better argument parsing function
+
+# echo $1 # -c, the code
+_CODE=$2
+# echo $3 # -e, the environment
+_ENV=$4
+# echo $5 # -s, the service
+_SERVICE=$6
+
+# echo $_CODE
+# echo $_ENV
+# echo $_SERVICE
+
+# TODO: do something with $_ENV
+# TODO: do something with $_SERVICE
+
+eval "$_CODE"

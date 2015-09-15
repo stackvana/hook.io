@@ -42,6 +42,10 @@
     background-image: url('img/loading.gif');
 }
 
+.languages {
+  display: none;
+}
+
 .routeHint {
   display: none;
 }
@@ -612,8 +616,17 @@ body legend {
     </div>
     <div class="sourcesHolder">
       <h2>Hook Source</h2>
-      <div class="form-group sources">
 
+      <div class="form-group languages">
+        <label for="language">Programming Language</label>
+        <select name="language" id="language">
+          <option value="javascript">JavaScript ( full-featured )</option>
+          <option value="bash">Bash ( experimental )</option>
+          <option value="php">PHP ( experimental )</option>
+        </select>
+      </div>
+
+      <div class="form-group sources">
         <label for="gistSource">Github Gist</label>
         <input tabindex="4" type="radio" checked="CHECKED" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
         &nbsp;
