@@ -29,14 +29,18 @@
 
   $args = parseArgs($_SERVER['argv']);
 
-  //var_dump($args);
-  
   // code
   $code = $args["c"];
+
+  // env
+  $env = $args["e"];
+
+  // prepend $Hook variable code to user's service
+  // this variable provides data such as $Hook["params"]
+  $code = "$" . "Hook=" . var_export(json_decode($env, true), true) . ";" . $code;
+
+  // evaluate the source code, it's response will stream to STDOUT
   eval($code);
-  
-  // TODO: do something with env data
-  //echo $args["e"];
 
   // TODO: do something with service data
   // service
