@@ -9,8 +9,12 @@ module['exports'] = function view (opts, callback) {
   var post = self.parent['the-monolith-versus-the-microservice-a-tale-of-two-applications'];
   var getData = new Function(post.$('.data').html() + ' return data;');
   var data = getData();
+  $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
 
-  $('.posts').append('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
+  var post2 = self.parent['seeking-developer-community-managers'];
+  var getData = new Function(post2.$('.data').html() + ' return data;');
+  var data = getData();
+  $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
 
   callback(null, $.html());
 };

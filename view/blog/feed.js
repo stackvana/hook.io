@@ -18,10 +18,16 @@ module['exports'] = function view (opts, callback) {
 
   var feed = new RSS(feedOptions);
 
+  // TODO: multiple posts
+
+  var post2 = self.parent['seeking-developer-community-managers'];
+  var getData = new Function(post2.$('.data').html() + ' return data;');
+  var data = getData();
+  feed.item(data);
+
   var post = self.parent['the-monolith-versus-the-microservice-a-tale-of-two-applications'];
   var getData = new Function(post.$('.data').html() + ' return data;');
   var data = getData();
-  
   feed.item(data);
 
   var xml = feed.xml();
