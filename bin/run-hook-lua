@@ -1,0 +1,30 @@
+#!/usr/local/bin/lua
+
+-- print ("Hello World!")
+
+-- the binary
+-- print (arg[0])
+
+-- -c
+-- print (arg[1])
+
+-- the code
+-- print (arg[2])
+code = arg[2]
+
+-- -e
+-- print (arg[3])
+
+-- the env
+-- print (arg[4])
+Hook = arg[4]
+
+-- -s
+-- print (arg[5])
+
+-- the service
+-- print (arg[6])
+
+-- print (code)
+local func = assert(loadstring(code))
+func()
