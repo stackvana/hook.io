@@ -47,8 +47,27 @@
     font-size: 32px;
   }
 
+  .renameAccount {
+    margin-left: 20px;
+    font-size: 12px;
+  }
+  .warning {
+    color: red;
+  }
 </style>
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#name').after('<a class="renameAccount" href="#rename">Rename Account</a>');
+    var showing = false;
+    $('.renameAccount').on('click', function () {
+      $('#name').attr('disabled', null).focus();
+      if (!showing) {
+        showing = true;
+        $('.renameAccount').after('<br/><span class="warning">Warning: Changing account name will change the URLs of all existing services. It will also log you out of your current session.</span>')
+      }
+      return false;
+    });
+  });
 </script>
 <div id="main" class="container">
   <h2><a href="/billing" class="yourBilling">Billing Information</a></h2>
