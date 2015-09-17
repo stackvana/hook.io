@@ -16,6 +16,7 @@
     "body-parser": "^1.9.2",
     "busboy": "^0.2.9",
     "cheerio": "^0.17.0",
+    "coffee-script": "^1.10.0",
     "colors": "^1.0.3",
     "cron-parser": "^0.4.5",
     "datauri": "^0.5.5",
