@@ -1,0 +1,26 @@
+#!/usr/bin/python
+
+from sys import argv
+import json
+
+# print argv[0] # binary
+
+# print argv[1] # -c
+# print argv[2] # the code
+code = argv[2]
+
+# print argv[3] # -e
+# print argv[4] # the env
+envJSON = argv[4]
+Hook = json.loads(envJSON)
+Hook['req'] = Hook['input']
+## TODO: full mapping of http including streaming / multipart streaming
+
+# print argv[5] # -s
+# print argv[6] # the service
+# TODO: do something with service variable
+service = argv[6]
+
+# Execute the code as a string in ( this ) context
+# print code
+exec code

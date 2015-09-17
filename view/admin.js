@@ -34,7 +34,7 @@ module['exports'] = function view (opts, callback) {
 
     params.owner = req.session.user;
 
-    if (req.session.user !== params.owner && req.session.user !== "Marak") {
+    if (req.session.user !== params.owner && req.session.user !== "marak") {
       return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
     }
   
@@ -78,6 +78,8 @@ module['exports'] = function view (opts, callback) {
       // strings
 
       data.gist = params.gist;
+      data.language = params.language || "javascript";
+
 
       if (params.hookSource === "editor") {
         delete params.gist;
@@ -112,7 +114,6 @@ module['exports'] = function view (opts, callback) {
       data.id = req.hook.id;
 
       var key = '/hook/' + req.hook.owner + "/" + data.name;
-
       return hook.update(data, function(err, result){
         if (err) {
           // TODO: generic error handler
