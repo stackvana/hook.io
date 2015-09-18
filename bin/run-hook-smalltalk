@@ -1,7 +1,5 @@
 #!/usr/local/bin/gst
 
-"PackageLoader fileInPackage: 'Compiler'."
-
 array := Array new: 7.
 
 (1 to: Smalltalk getArgc) do: [ :i |

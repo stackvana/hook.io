@@ -7,8 +7,10 @@ $code = @ARGV[1];
 $env = @ARGV[3];
 
 # TODO: do something with $service
-$service = @ARGV[5];
-# print $code;
+# $service = @ARGV[5];
+
+$inject = @ARGV[5];
+eval $inject;
 
 # TODO: better error handling in user-code
 eval $code;

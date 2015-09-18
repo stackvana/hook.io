@@ -6,18 +6,12 @@
 
 # TODO: replace with better argument parsing function
 
-# echo $1 # -c, the code
 _CODE=$2
-# echo $3 # -e, the environment
-_ENV=$4
-# echo $5 # -s, the service
-_SERVICE=$6
-
-# echo $_CODE
-# echo $_ENV
-# echo $_SERVICE
+_INJECT=$6
 
 # TODO: do something with $_ENV
 # TODO: do something with $_SERVICE
 
+# echo "$_INJECT"
+eval "$_INJECT"
 eval "$_CODE"

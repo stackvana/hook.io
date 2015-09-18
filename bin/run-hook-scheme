@@ -1,7 +1,6 @@
 #!/usr/local/bin/scheme
 
 ;;; It may look like this doesn't do anything yet...
-;;; ...but for some reason the scheme binary is just magically working without any changes
+;;; ...but for some reason the tinyscheme binary works by passing in -c as code
 ;;;
-;;; I am assuming this is because the -c argument is being picked up by scheme and automatically evaluating the code
-;;; This behavior is *ok* for now, but will be changed in the future to use -e and -s args
+;;; This means we have prepared a scheme payload as a string which was passed here
