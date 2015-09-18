@@ -11,6 +11,9 @@
   label {
     cursor: hand;
   }
+  .languages {
+    display: none;
+  }
 </style>
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/jquery.croneditor.js"></script>
@@ -755,7 +758,7 @@ body legend {
       <div class="form-group languages">
         <label for="language">Programming Language</label>
         <select name="language" id="language">
-          <option value="javascript">JavaScript ( Fully Supported. Full-Featured. )</option>
+          <option value="javascript">JavaScript ( First-Class Support. Recommended. )</option>
           <option value="coffee-script">CoffeeScript ( Supported. Full-Featured. )</option>
           <option value="bash">Bash ( Experimental )</option>
           <option value="lua">lua ( Experimental )</option>
@@ -763,6 +766,9 @@ body legend {
           <option value="php">PHP ( Experimental )</option>
           <option value="python">python ( Experimental )</option>
           <option value="ruby">ruby ( Experimental )</option>
+          <option value="scheme">scheme ( Experimental )</option>
+          <option value="smalltalk">smalltalk ( Experimental )</option>
+          <option value="tcl">tcl ( Experimental )</option>
         </select>
       </div>
 

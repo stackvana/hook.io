@@ -8,7 +8,16 @@
   },
   "bin": {
     "npm-install": "./bin/npm-install",
-    "run-hook": "./bin/run-hook"
+    "run-hook": "./bin/run-hook",
+    "run-hook-bash": "./bin/run-hook-bash",
+    "run-hook-lua": "./bin/run-hook-lua",
+    "run-hook-perl": "./bin/run-hook-perl",
+    "run-hook-php": "./bin/run-hook-php",
+    "run-hook-python": "./bin/run-hook-python",
+    "run-hook-ruby": "./bin/run-hook-ruby",
+    "run-hook-scheme": "./bin/run-hook-scheme",
+    "run-hook-smalltalk": "./bin/run-hook-smalltalk",
+    "run-hook-tcl": "./bin/run-hook-tcl"
   },
   "dependencies": {
     "async": "^1.3.0",
