@@ -1,16 +1,19 @@
-var hook = require("../lib/resources/hook")
+var hook = require("../lib/resources/hook");
+var hooks = require("hook.io-hooks");
 var bodyParser = require('body-parser');
 var mergeParams = require('merge-params');
 var config = require('../config');
 var themes = require('../lib/resources/themes');
+var hooks = require('hook.io-hooks');
+
 
 module['exports'] = function view (opts, callback) {
   var req = opts.request,
       res = opts.response;
-  
+
   var $ = this.$,
   self = this;
-  
+
   if (!req.isAuthenticated()) { 
     req.session.redirectTo = "/new";
     return res.redirect('/login');
@@ -105,6 +108,24 @@ module['exports'] = function view (opts, callback) {
     } else {
       $('.gistStatus').remove();
     }
+
+    var services = hooks.services;
+    var examples = {};
+
+    // pull out helloworld examples for every langauge
+    hook.languages.forEach(function(l){
+      examples[l] = services['examples-' + l + '-helloworld'];
+    });
+
+    boot.examples = examples;
+
+    /*
+    for (var e in examples) {
+      for (var code in examples[e]) {
+        // $('.services').append(examples[e][code]);
+      }
+    }
+    */
 
     self.parent.components.themeSelector.present({}, function(err, html){
       var el = $('.themeSelector')

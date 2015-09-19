@@ -33,6 +33,7 @@
     "debug": "^2.1.0",
     "github": "^0.2.2",
     "hook.io-datastore": "https://github.com/bigcompany/hook.io-datastore/tarball/master",
+    "hook.io-hooks": "https://github.com/bigcompany/hooks/tarball/master",
     "hook.io-logs": "https://github.com/bigcompany/hook.io-logs/tarball/master",
     "hyperdirect": "0.0.0",
     "hyperquest": "^1.0.1",

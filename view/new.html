@@ -21,6 +21,10 @@
   font-size: 18px;
 }
 
+.warning {
+  color: red;
+}
+
 .cron-button {
     height: 16px;
     padding-left: 20px;
@@ -299,6 +303,8 @@ body legend {
 
 .warnLanguages {
   display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 </style>
@@ -351,6 +357,17 @@ body legend {
     }
   };
 
+  function showCode () {
+    $('.codeEditorHolder').show();
+    $('.gistUrlHolder').hide();
+    $('.CodeMirror').show();
+    //$('#editorSource').attr('checked', 'CHECKED');
+    editor.setCursor(0,0);
+    //editor.focus();
+    editor.refresh();
+    $('.hookFrame').hide();
+  };
+
   $(document).ready(function(){
 
     var deployingCode = false, snippetLoading = false;
@@ -363,13 +380,6 @@ body legend {
         deployingCode = false;
       }
     });
-    function showCode () {
-      $('.CodeMirror').show();
-      editor.setCursor(0,0);
-      //editor.focus();
-      editor.refresh();
-      $('.hookFrame').hide();
-    };
 
     $('.codeButton').on('click', function(){
       showCode();
@@ -381,7 +391,6 @@ body legend {
       $('.codeEditorHolder').show();
       editor.refresh();
     });
-
 
     $('#gistSource').on('click', function(){
       $('.codeEditorHolder').hide();
@@ -491,15 +500,37 @@ body legend {
     });
 
     $('#language').change(function(e){
+
       if (!agreedToWarning) {
         $('.warnLanguages').show();
         $('#create').attr('disabled', 'DISABLED');
       }
+
+      var l = $('#language').val();
+      $('.currentLanguage').html($( "#language option:selected" ).text());
+      if (l === "javascript") {
+        $('#gatewayForm').attr('action', '/Marak/gateway');
+        $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+      } else {
+        $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+        // TODO: better default gist values for non-javascript langauges
+        $('#gist').attr('value', '');
+      }
+
+      // assume first file is source code
+      // see: https://github.com/bigcompany/hook.io/issues/110
+      var keys = Object.keys(boot.examples[l]);
+      editor.setValue(boot.examples[l][keys[0]]);
+      $('#editorSource').click();
+      //showCode();
       return false;
       //var val = themes[$(this).val()];
     });
 
     drawHookLinks();
+
+    //$('.services').html(JSON.stringify(boot.examples));
+
 
   });
 
@@ -650,8 +681,10 @@ body legend {
     <div class="sourcesHolder">
       <h2>Hook Source</h2>
 
+      <div class="services"></div>
+
       <div class="form-group languages">
-        <div class="languageTitle"><strong>Programming Language:</strong> <span class="currentLanguage">JavaScript</span></div>
+        <div class="languageTitle"><strong>Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
         <label class="smaller" for="language">Select Language:</label>
         <select name="language" id="language">
           <option value="javascript">JavaScript ( Recommended )</option>
@@ -667,9 +700,10 @@ body legend {
           <option value="tcl">Tcl ( Experimental )</option>
         </select>
         <div class="warnLanguages">
-          <p>Warning: We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
-          <p>By clicking "Agree to Terms", you acknowledge that at this time using other languages besides JavaScript on hook.io is considered EXPERIMENTAL.</p>
-          <p>If you find something that doesn't work or have any questions / feedback please <a href="/support" target="_blank">let us know</a>.</p>
+          <h2 class="warning">Warning</h2>
+          <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
+          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
           <p>For those interested in helping, we are <a href="/blog/seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a> to help support these new languages.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
         </div>
