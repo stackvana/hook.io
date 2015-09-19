@@ -1,4 +1,6 @@
 var config = require('../config');
+var hook = require('../lib/resources/hook');
+var hooks = require('hook.io-hooks');
 var slug = require('slug');
 slug.defaults.modes['rfc3986'] = {
     replacement: '-',      // replace spaces with replacement
@@ -26,6 +28,8 @@ module['exports'] = function view (opts, callback) {
       res = opts.response,
       params = req.resource.params,
       user = req.session.user;
+
+  var boot = {};
 
   //
   // enables curl signups
@@ -95,9 +99,22 @@ module['exports'] = function view (opts, callback) {
   // TODO: gateway.hook.io for production
   $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway');
 
+
+  var services = hooks.services;
+  var examples = {};
+
+  // pull out helloworld examples for every langauge
+  hook.languages.forEach(function(l){
+    examples[l] = services['examples-' + l + '-helloworld'];
+  });
+
+  boot.examples = examples;
+
   if (typeof user === "undefined") {
     $('.userBar').remove();
-    callback(null, this.$.html());
+    var out = $.html();
+    out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+    return callback(null, out);
   } else {
     user = user.toLowerCase();
     var query = { name: user };
@@ -106,11 +123,17 @@ module['exports'] = function view (opts, callback) {
         return res.end(err.message);
       }
       if (results.length === 0) {
-        return res.end('Unable to find user. This error should never happen. Please contact hookmaster@hook.io immediately.');
+        $('.userBar').remove();
+        var out = $.html();
+        out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+        return callback(null, out);
+        // return res.end('Unable to find user. This error should never happen. Please contact hookmaster@hook.io immediately.');
+      } else {
+        // do nothing
       }
       var u = results[0];
       if(typeof u.email === "undefined" || u.email.length === 0) {
-        // do nothing, we have the email
+        // do not remove emailReminder
       } else {
         $('.emailReminder').remove();
       }
@@ -120,7 +143,9 @@ module['exports'] = function view (opts, callback) {
       // $('.tagline').remove();
       $('.yourHooks').attr("href", "/" + user);
       $('.splash').remove();
-      callback(null, $.html());
+      var out = $.html();
+      out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+      return callback(null, out);
     });
   }
 

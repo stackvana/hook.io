@@ -28,6 +28,21 @@
     color: red;
   }
 
+  .smaller {
+    font-size: 18px;
+  }
+  .warning {
+    color: red;
+  }
+  .languages {
+    margin-bottom: 5px;
+    padding-bottom: 0px;
+  }
+  #language {
+    font-size: 32px;
+    cursor: pointer;
+  }
+
   /* do not group these rules */
   .error::-webkit-input-placeholder {
     color: white;
@@ -165,6 +180,12 @@
   
   .welcome {
     font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .warnLanguages {
+    display: none;
+    margin-top: 10px;
     margin-bottom: 10px;
   }
 
@@ -352,8 +373,17 @@
   .tuts {
     font-size: 24px;
   }
-  .scrollForMore {
+  body .scrollForMore {
     font-size: 32px;
+    font-weight: bold;
+  }
+  .warnLanguages {
+    display: none;
+  }
+  .helloWorld {
+    display: none;
+    font-size: 28px;
+    font-weight: bold;
   }
 </style>
 
@@ -366,6 +396,9 @@
 <script type="text/javascript">
 
 var newAccount = false;
+
+var boot = {{hook}};
+var agreedToWarning = false;
 
 $('document').ready(function(){
 
@@ -385,6 +418,54 @@ $('document').ready(function(){
       editor.setValue(res);
     });
   };
+
+  $('#agreeWarning').on('click', function () {
+    $('.warnLanguages').hide();
+    $('.runButton').attr('disabled', null);
+    $('.saveButton').attr('disabled', null);
+    $('.codeButton').attr('disabled', null);
+    agreedToWarning = true;
+    return false;
+  });
+
+  $('#language').change(function(e){
+
+    if (!agreedToWarning) {
+      $('.warnLanguages').show();
+      $('.runButton').attr('disabled', 'DISABLED');
+      $('.saveButton').attr('disabled', 'DISABLED');
+      $('.codeButton').attr('disabled', 'DISABLED');
+    }
+
+    var l = $('#language').val();
+    $('.currentLanguage').html($( "#language option:selected" ).text());
+    if (l === "javascript") {
+      $('#gatewayForm').attr('action', '/Marak/gateway');
+      $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+      $('.selectSnippet').show();
+      $('.prevControl').show();
+      $('.nextControl').show();
+      $('.helloWorld').hide();
+    } else {
+      $('.selectSnippet').hide();
+      $('.prevControl').hide();
+      $('.nextControl').hide();
+      $('.helloLang').html(l);
+      $('.helloWorld').show();
+      $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+      // TODO: better default gist values for non-javascript langauges
+      $('#gist').attr('value', '');
+    }
+
+    // assume first file is source code
+    // see: https://github.com/bigcompany/hook.io/issues/110
+    var keys = Object.keys(boot.examples[l]);
+    editor.setValue(boot.examples[l][keys[0]]);
+    $('#codeButton').click();
+    //showCode();
+    return false;
+    //var val = themes[$(this).val()];
+  });
 
   // the only reason this boolean currently exists is to prevent,
   // a firefox bug which causes the iframe load event to trigger on,
@@ -851,8 +932,7 @@ var editor;
         <br/>
       </div>
       <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
-      <br/>
-      <p class"scrollForMore">Scroll Down For More!</p>
+      <p class="scrollForMore">Scroll Down For More!</p>
       <br/>
     </div>
     <div class="col-md-4" align="left">
@@ -882,7 +962,34 @@ var editor;
     <div class="col-md-12" align="left">
       <br/>
       <h2 class="tuts">Click "Deploy Service" to instantly deploy your first Microservice!</h2>
+
       <div class="btn-group transport" role="group">
+        <div class="form-group languages">
+           <label class="smaller" for="language">Select Language:</label>
+           <select name="language" id="language">
+             <option value="javascript">JavaScript ( Recommended )</option>
+             <option value="coffee-script">CoffeeScript ( Supported )</option>
+             <option value="bash">Bash ( Experimental )</option>
+             <option value="lua">Lua ( Experimental )</option>
+             <option value="perl">Perl ( Experimental )</option>
+             <option value="php">PHP ( Experimental )</option>
+             <option value="python">Python ( Experimental )</option>
+             <option value="ruby">Ruby ( Experimental )</option>
+             <option value="scheme">Scheme ( Experimental )</option>
+             <option value="smalltalk">SmallTalk ( Experimental )</option>
+             <option value="tcl">Tcl ( Experimental )</option>
+           </select>
+           <br/>
+           <div class="warnLanguages">
+             <h2 class="warning">Warning</h2>
+             <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+             <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
+             <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
+             <p>For those interested in helping, we are <a href="/blog/seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a> to help support these new languages.</p>
+             <button class="btn" id="agreeWarning">Agree to Terms</button>
+           </div>
+        </div>
+
         <select name="selectSnippet" class="selectSnippet btn btn-default">
           <option value="/Marak/examples-helloWorld">hello world</option>
           <option value="/Marak/examples-simpleHttpRequest">send outgoing http requests</option>
@@ -901,11 +1008,14 @@ var editor;
           <!-- <option value="/Marak/markdown">render markdown</option> -->
           <!-- <option value="/Marak/spellcheck">spellcheck words</option> -->
         </select>
-        <div class="transportControl">&nbsp;
+        <div class="helloWorld">
+          Hello world example for <span class="helloLang">X</span>
+        </div>
+        <div class="transportControl prevControl">&nbsp;
           <a class="prevSnippet" href="#prev"><span class="octicon octicon-playback-rewind"></span>
           Prev</a>
         </div>
-        <div class="transportControl">
+        <div class="transportControl nextControl">
           <a class="nextSnippet" href="#next">
           Next&nbsp;<span class="octicon octicon-playback-fast-forward"></span></a>
         </div>
