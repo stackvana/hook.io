@@ -1,4 +1,5 @@
 var hook = require('../lib/resources/hook');
+var hooks = require('hook.io-hooks');
 var cache = require('../lib/resources/cache');
 var metric = require('../lib/resources/metric');
 var request = require('hyperquest');
@@ -9,7 +10,6 @@ var mergeParams = require('merge-params');
 var bodyParser = require('body-parser');
 var themes = require('../lib/resources/themes');
 var server = require('../lib/server');
-
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -134,6 +134,11 @@ module['exports'] = function view (opts, callback) {
 
     function finish (h) {
 
+      var services = hook.services;
+      for(var s in services) {
+        $('.services').append(services[s]);
+      }
+
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
       $('.hookLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs");
       $('.hookSource').attr('href', '/' + h.owner + '/' + h.name + "/source");
@@ -176,6 +181,11 @@ module['exports'] = function view (opts, callback) {
         $('.isPublic').attr('checked', 'CHECKED');
       }
 
+      if (typeof h.language !== 'undefined') {
+        $('#language').prepend('<option value="' + h.language + '">' + h.language + '</option>')
+      }
+
+
       if (typeof h.status !== 'undefined') {
         $('.status').prepend('<option value="' + h.status + '">' + h.status + '</option>')
       }
@@ -198,6 +208,17 @@ module['exports'] = function view (opts, callback) {
           owner: req.session.user,
           source: h.source
         };
+
+        var services = hooks.services;
+        var examples = {};
+
+        // pull out helloworld examples for every langauge
+        hook.languages.forEach(function(l){
+          examples[l] = services['examples-' + l + '-helloworld'];
+        });
+
+        boot.examples = examples;
+
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
         return callback(null, out);
       });

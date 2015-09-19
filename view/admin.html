@@ -12,7 +12,10 @@
     cursor: hand;
   }
   .languages {
-    display: none;
+    display: block;
+  }
+  .warnLanguages {
+   display: none;
   }
 </style>
 <script src="/js/jquery-ui.js"></script>
@@ -448,6 +451,8 @@ body legend {
     }
   };
 
+  var agreedToWarning = false;
+
   $(document).ready(function(){
 
     var deployingCode = false, snippetLoading = false;
@@ -590,8 +595,41 @@ body legend {
     } else {
       // do nothing
     }
-  });
+    $('#agreeWarning').on('click', function () {
+      $('.warnLanguages').hide();
+      $('#save').attr('disabled', null);
+      agreedToWarning = true;
+      return false;
+    });
 
+    $('#language').change(function(e){
+
+      if (!agreedToWarning) {
+        $('.warnLanguages').show();
+        $('#save').attr('disabled', 'DISABLED');
+      }
+
+      var l = $('#language').val();
+      $('.currentLanguage').html($( "#language option:selected" ).text());
+      if (l === "javascript") {
+        $('#gatewayForm').attr('action', '/Marak/gateway');
+        $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+      } else {
+        $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+        // TODO: better default gist values for non-javascript langauges
+        $('#gist').attr('value', '');
+      }
+
+      // assume first file is source code
+      // see: https://github.com/bigcompany/hook.io/issues/110
+      var keys = Object.keys(boot.examples[l]);
+      editor.setValue(boot.examples[l][keys[0]]);
+      $('#editorSource').click();
+      //showCode();
+      return false;
+      //var val = themes[$(this).val()];
+    });
+  });
 
   function drawHookLinks () {
     var base = 'https://hook.io/' + boot.owner;
@@ -755,23 +793,34 @@ body legend {
     </div>
     <div class="sourcesHolder">
       <h2>Hook Source</h2>
-      <div class="form-group languages">
-        <label for="language">Programming Language</label>
-        <select name="language" id="language">
-          <option value="javascript">JavaScript ( First-Class Support. Recommended. )</option>
-          <option value="coffee-script">CoffeeScript ( Supported. Full-Featured. )</option>
-          <option value="bash">Bash ( Experimental )</option>
-          <option value="lua">lua ( Experimental )</option>
-          <option value="perl">perl ( Experimental )</option>
-          <option value="php">PHP ( Experimental )</option>
-          <option value="python">python ( Experimental )</option>
-          <option value="ruby">ruby ( Experimental )</option>
-          <option value="scheme">scheme ( Experimental )</option>
-          <option value="smalltalk">smalltalk ( Experimental )</option>
-          <option value="tcl">tcl ( Experimental )</option>
-        </select>
-      </div>
 
+      <div class="services"></div>
+
+      <div class="form-group languages">
+        <div class="languageTitle"><strong>Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
+        <label class="smaller" for="language">Select Language:</label>
+        <select name="language" id="language">
+          <option value="javascript">JavaScript ( Recommended )</option>
+          <option value="coffee-script">CoffeeScript ( Supported )</option>
+          <option value="bash">Bash ( Experimental )</option>
+          <option value="lua">Lua ( Experimental )</option>
+          <option value="perl">Perl ( Experimental )</option>
+          <option value="php">PHP ( Experimental )</option>
+          <option value="python">Python ( Experimental )</option>
+          <option value="ruby">Ruby ( Experimental )</option>
+          <option value="scheme">Scheme ( Experimental )</option>
+          <option value="smalltalk">SmallTalk ( Experimental )</option>
+          <option value="tcl">Tcl ( Experimental )</option>
+        </select>
+        <div class="warnLanguages">
+          <h2 class="warning">Warning</h2>
+          <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
+          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
+          <p>For those interested in helping, we are <a href="/blog/seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a> to help support these new languages.</p>
+          <button class="btn" id="agreeWarning">Agree to Terms</button>
+        </div>
+      </div>
       <div class="form-group sources">
 
         <label for="gistSource">Github Gist</label>
