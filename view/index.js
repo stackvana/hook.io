@@ -140,9 +140,10 @@ module['exports'] = function view (opts, callback) {
       $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
       $('.loginBar').remove();
       $('.featuresDiv').remove();
+      $('.hookStats').remove();
       // $('.tagline').remove();
       $('.yourHooks').attr("href", "/" + user);
-      $('.splash').remove();
+      // $('.splash').remove();
       var out = $.html();
       out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
       return callback(null, out);

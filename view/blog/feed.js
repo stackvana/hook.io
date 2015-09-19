@@ -20,7 +20,7 @@ module['exports'] = function view (opts, callback) {
 
   // TODO: multiple posts
 
-  var post2 = self.parent['seeking-developer-community-managers'];
+  var post2 = self.parent['new-multi-language-support'];
   var getData = new Function(post2.$('.data').html() + ' return data;');
   var data = getData();
   feed.item(data);

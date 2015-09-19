@@ -11,7 +11,7 @@ module['exports'] = function view (opts, callback) {
   var data = getData();
   $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
 
-  var post2 = self.parent['seeking-developer-community-managers'];
+  var post2 = self.parent['new-multi-language-support'];
   var getData = new Function(post2.$('.data').html() + ' return data;');
   var data = getData();
   $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');

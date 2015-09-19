@@ -25,6 +25,10 @@
   color: red;
 }
 
+.helpLang {
+  display: none;
+}
+
 .cron-button {
     height: 16px;
     padding-left: 20px;
@@ -282,6 +286,12 @@ body legend {
   font-weight: bold;
 }
 
+.mediumLink {
+  font-size: 22px;
+  font-weight: normal;
+  font-style: italic;
+}
+
 .hookFrame {
   background-color: white;
   margin-top: 10px;
@@ -508,13 +518,16 @@ body legend {
 
       var l = $('#language').val();
       $('.currentLanguage').html($( "#language option:selected" ).text());
+      $('.currentLanguageShort').html($( "#language" ).val());
       if (l === "javascript") {
         $('#gatewayForm').attr('action', '/Marak/gateway');
         $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+        $('.helpLang').hide();
       } else {
         $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
         // TODO: better default gist values for non-javascript langauges
         $('#gist').attr('value', '');
+        $('.helpLang').show();
       }
 
       // assume first file is source code
@@ -699,14 +712,20 @@ body legend {
           <option value="smalltalk">SmallTalk ( Experimental )</option>
           <option value="tcl">Tcl ( Experimental )</option>
         </select>
+
         <div class="warnLanguages">
           <h2 class="warning">Warning</h2>
           <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
-          <p>For those interested in helping, we are <a href="/blog/seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a> to help support these new languages.</p>
+          <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
         </div>
+
+        <div class="helpLang">
+          <a class="mediumLink" href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguageShort">language</span> work better on hook.io?</a>
+        </div>
+
       </div>
 
       <div class="form-group sources">

@@ -31,6 +31,11 @@
   .smaller {
     font-size: 18px;
   }
+  .mediumLink {
+    font-size: 22px;
+    font-weight: normal;
+    font-style: italic;
+  }
   .warning {
     color: red;
   }
@@ -337,6 +342,7 @@
     font-size: 30px;
     width: 380px;
   }
+
   #emailLogin {
     margin-bottom: 10px;
   }
@@ -438,7 +444,7 @@ $('document').ready(function(){
     }
 
     var l = $('#language').val();
-    $('.currentLanguage').html($( "#language option:selected" ).text());
+    $('.currentLanguage').html($( "#language" ).val());
     if (l === "javascript") {
       $('#gatewayForm').attr('action', '/Marak/gateway');
       $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
@@ -461,7 +467,7 @@ $('document').ready(function(){
     // see: https://github.com/bigcompany/hook.io/issues/110
     var keys = Object.keys(boot.examples[l]);
     editor.setValue(boot.examples[l][keys[0]]);
-    $('#codeButton').click();
+    $('.codeButton').click();
     //showCode();
     return false;
     //var val = themes[$(this).val()];
@@ -906,8 +912,13 @@ var editor;
     <a href="/logout">Logout</a>
   </div>
 
+  <div class="row">
+    <div class="col-md-12" align="center">
+      <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
+    </div>
+  </div>
+
   <div class="row loginBar">
-    <br/>
     <div class="col-md-8" align="center">
       <div class="loginHolder">
         <form action="/signup" id="loginForm">
@@ -931,7 +942,6 @@ var editor;
         <div><h2><a href="/pricing">Paid Accounts Available!</a></h2></div>
         <br/>
       </div>
-      <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
       <p class="scrollForMore">Scroll Down For More!</p>
       <br/>
     </div>
@@ -939,6 +949,7 @@ var editor;
       <div class="featuresDiv">
         <h2>Features</h2>
         <ul class="features">
+          <!-- <li><a href="/docs#data">Multiple Languages</a></li> -->
           <li><a href="/docs#data">JSON / Query / Multipart</a></li>
           <li><a href="/docs#data">Binary / Streaming Data</a></li>
           <!-- <li><a href="/git">Git Deploy Code Updates</a></li> -->
@@ -985,7 +996,7 @@ var editor;
              <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
              <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
              <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
-             <p>For those interested in helping, we are <a href="/blog/seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a> to help support these new languages.</p>
+             <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
              <button class="btn" id="agreeWarning">Agree to Terms</button>
            </div>
         </div>
@@ -1009,7 +1020,8 @@ var editor;
           <!-- <option value="/Marak/spellcheck">spellcheck words</option> -->
         </select>
         <div class="helloWorld">
-          Hello world example for <span class="helloLang">X</span>
+          Hello world example for <span class="helloLang">X</span><br/>
+          <a class="mediumLink" href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguage">language</span> work better on hook.io?</a>
         </div>
         <div class="transportControl prevControl">&nbsp;
           <a class="prevSnippet" href="#prev"><span class="octicon octicon-playback-rewind"></span>
@@ -1034,6 +1046,7 @@ var editor;
           </div>
         -->
       </div>
+      <a name="tuts"/>
       <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
       <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="source" id="source">// A simple hello world microservice 
