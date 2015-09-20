@@ -37,5 +37,8 @@ module['exports'] = {
   sslKeyDirectory: __dirname + '/../ssl/',
   chrootDirectory: '/Users/chroot',
   useChroot: true,
-  customDomains: true
+  customDomains: true,
+  messages: {
+    serviceExecutionTimeout: require('./messages/serviceExecutionTimeout')
+  }
 };
