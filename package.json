@@ -68,6 +68,7 @@
     "stream-buffers": "^1.1.0",
     "stripe": "^3.3.4",
     "through2": "^0.6.3",
+    "tree-kill": "^0.1.1",
     "trycatch": "^1.5.11",
     "view": "0.7.x"
   },
