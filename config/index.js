@@ -21,16 +21,24 @@ module['exports'] = {
     // don't use these in production as they may be revoked and refeshed at anytime
     CLIENT_ID: "321de11108ccdacf2279",
     CLIENT_SECRET: "14ed41431983aaceef121d32f2f3f3087e0434ac",
-    OAUTH_CALLBACK: "http://localhost:9999/login/callback"
+    OAUTH_CALLBACK: "http://localhost:9999/login/github/callback"
   },
-  defaultTheme : "http://localhost:9999/themes/debug/index.html",
-  defaultPresenter : "http://localhost:9999/themes/debug/index.js",
+  defaultTheme : "https://localhost/themes/none/index.html",
+  defaultPresenter : "https://localhost/themes/none/index.js",
   stripe: {
     secretKey: "sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV",
     publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
   },
+  email: {
+    "provider": "mock",
+    "api_user": "marak",
+    "api_key": "abcd"
+  },
   sslKeyDirectory: __dirname + '/../ssl/',
   chrootDirectory: '/Users/chroot',
-  useChroot: false,
-  customDomains: true
+  useChroot: true,
+  customDomains: true,
+  messages: {
+    serviceExecutionTimeout: require('./messages/serviceExecutionTimeout')
+  }
 };

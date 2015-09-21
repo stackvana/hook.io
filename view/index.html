@@ -8,12 +8,69 @@
     font-size: 26px;
     text-align: left;
   }
-
+  .emailReminder .tiny {
+    font-size: 18px;
+    font-style: italic;
+  }
   .tagLines li {
     font-size:22px;
     text-align: left;
     margin-left: 5px;
     list-style-image: url('/img/little-sideways-pipe-grey.gif');
+  }
+
+  .error {
+    color: white;
+    background-color: red;
+  }
+
+  .errorStatus {
+    color: red;
+  }
+
+  .smaller {
+    font-size: 18px;
+  }
+  .mediumLink {
+    font-size: 22px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  .warning {
+    color: red;
+  }
+  .languages {
+    margin-bottom: 5px;
+    padding-bottom: 0px;
+  }
+  #language {
+    font-size: 32px;
+    cursor: pointer;
+  }
+
+  /* do not group these rules */
+  .error::-webkit-input-placeholder {
+    color: white;
+  }
+  .error*:-moz-placeholder {
+      /* FF 4-18 */
+      color: white;
+  }
+  .error*::-moz-placeholder {
+      /* FF 19+ */
+      color: white;
+  }
+  .error*:-ms-input-placeholder {
+      /* IE 10+ */
+      color: white;
+  }
+
+  .checkmark {
+    background-image: url('/img/checkmark.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: contain;
+    background-position-x: 340px;
   }
 
 /*  
@@ -32,6 +89,9 @@
     margin: 0px;
   }
 
+  .tiny {
+    font-size: 22px;
+  }
   .saveForm {
     padding: 0px;
     margin: 0px;
@@ -125,6 +185,13 @@
   
   .welcome {
     font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .warnLanguages {
+    display: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .splash .hookStats {
@@ -159,10 +226,48 @@
     width: 48px;
   }
   
-  .callToAction {
-    font-size: 20px;
+  form {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
   }
-  
+  #loginForm {
+    width: 100%;
+  }
+  .loginHolder {
+    color: black;
+    border: solid;
+    border-width: 1px;
+    box-shadow: 10px 10px 5px #888888;
+    padding-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .featuresDiv a:hover {
+    font-weight: bold;
+  }
+
+  .featuresDiv {
+    color: black;
+    border: solid;
+    border-width: 1px;
+    box-shadow: 10px 10px 5px #888888;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .featuresDiv h2 {
+    font-weight: bold;
+  }
+  .featuresDiv li {
+    list-style: none;
+    padding: 0px;
+    margin-left: 0px;
+  }
+  .featuresDiv ul {
+    list-style: none;
+    padding: 0px;
+    margin-left: 0px;
+  }
   .selectSnippet {
     height: 39px;
     margin: 0px;
@@ -195,6 +300,97 @@
     padding-top: 5px;  
   }
 
+  #email {
+    width: 380px;
+    font-size: 26px;
+    height: 40px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+  }
+
+  #password {
+    width: 380px;
+    font-size: 26px;
+    padding-left: 5px;
+    position: relative;
+  }
+
+  #confirmPassword {
+    width: 380px;
+    font-size: 26px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+  }
+
+  .passwordHolder {
+    /* display: none; */
+    margin-bottom: 10px;
+  }
+  .resetPasswordHolder {
+    display: none;
+    font-size: 18px;
+  }
+  .confirmPasswordHolder {
+    display: none;
+  }
+  .callToAction {
+    font-size: 20px;
+    text-align: left;
+    padding-bottom: 10px;
+    font-weight: bold;
+    margin-top: 0px;
+    font-size: 30px;
+    width: 380px;
+  }
+
+  #emailLogin {
+    margin-bottom: 10px;
+  }
+  #resetPassword {
+    margin-bottom: 10px;
+  }
+
+  .loginBar .btn {
+    width: 380px;
+    font-size: 22px;
+  }
+
+  .loginBar .btn:hover {
+    width: 380px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .emailReminder {
+    color: black;
+    border: solid;
+    border-width: 1px;
+    box-shadow: 10px 10px 5px #888888;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  #updateEmail {
+    padding: 0px;
+    margin: 0px;
+  }
+  .tuts {
+    font-size: 24px;
+  }
+  body .scrollForMore {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .warnLanguages {
+    display: none;
+  }
+  .helloWorld {
+    display: none;
+    font-size: 28px;
+    font-weight: bold;
+  }
 </style>
 
 <!-- Create a simple CodeMirror instance -->
@@ -203,13 +399,17 @@
 <script src="/js/javascript.js"></script>
 <script src="/js/jquery.twinkle-0.8.0.js"></script>
 
-
 <script type="text/javascript">
 
+var newAccount = false;
+
+var boot = {{hook}};
+var agreedToWarning = false;
+
 $('document').ready(function(){
-  
+
   var request = null, snippetLoading = false;
-  
+
   function loadSnippet (src) {
     // don't stack ajax requests...just cancel the last one :-)
     if (snippetLoading) {
@@ -219,11 +419,59 @@ $('document').ready(function(){
     showCode();
     editor.setValue("loading...");
     loadingSnippet();
-    request = $.get('https://hook.io' + src + '/source', function (res) {
+    request = $.get('http://localhost:9999' + src + '/source', function (res) {
       snippetLoaded();
       editor.setValue(res);
     });
   };
+
+  $('#agreeWarning').on('click', function () {
+    $('.warnLanguages').hide();
+    $('.runButton').attr('disabled', null);
+    $('.saveButton').attr('disabled', null);
+    $('.codeButton').attr('disabled', null);
+    agreedToWarning = true;
+    return false;
+  });
+
+  $('#language').change(function(e){
+
+    if (!agreedToWarning) {
+      $('.warnLanguages').show();
+      $('.runButton').attr('disabled', 'DISABLED');
+      $('.saveButton').attr('disabled', 'DISABLED');
+      $('.codeButton').attr('disabled', 'DISABLED');
+    }
+
+    var l = $('#language').val();
+    $('.currentLanguage').html($( "#language" ).val());
+    if (l === "javascript") {
+      $('#gatewayForm').attr('action', '/Marak/gateway');
+      $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+      $('.selectSnippet').show();
+      $('.prevControl').show();
+      $('.nextControl').show();
+      $('.helloWorld').hide();
+    } else {
+      $('.selectSnippet').hide();
+      $('.prevControl').hide();
+      $('.nextControl').hide();
+      $('.helloLang').html(l);
+      $('.helloWorld').show();
+      $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+      // TODO: better default gist values for non-javascript langauges
+      $('#gist').attr('value', '');
+    }
+
+    // assume first file is source code
+    // see: https://github.com/bigcompany/hook.io/issues/110
+    var keys = Object.keys(boot.examples[l]);
+    editor.setValue(boot.examples[l][keys[0]]);
+    $('.codeButton').click();
+    //showCode();
+    return false;
+    //var val = themes[$(this).val()];
+  });
 
   // the only reason this boolean currently exists is to prevent,
   // a firefox bug which causes the iframe load event to trigger on,
@@ -238,7 +486,6 @@ $('document').ready(function(){
       deployingCode = false;
     }
   });
-
 
   function deployCode () {
     if (snippetLoading) {
@@ -268,6 +515,271 @@ $('document').ready(function(){
     return false;
   });
 
+  function login () {
+    if (newAccount) {
+      signUp();
+    } else {
+      loginWithEmail();
+    }
+    return false;
+  }
+
+  $('#emailLogin').click(function(){
+    login();
+    return false;
+  });
+  $('#loginForm').on('submit', function(){
+    login();
+    return false;
+  });
+
+  $('#resetPassword').on('click', function () {
+    $.ajax({
+       type: "GET",
+       url: '/reset',
+       data: {
+         "email": $('#email').val()
+       },
+       success: function(res){
+         var obj;
+         try {
+           obj = JSON.parse(res);
+         } catch (err) {
+           // do nothing
+         }
+         if(typeof obj === "object") {
+           // a bit of a quickfix hack
+           // TODO: replace later with JSON only response
+           res = obj.res;
+         }
+         switch (res) {
+            case 'valid':
+              // valid login, redirect to homepage
+              document.location = "/";
+            break;
+
+            case 'exists':
+              alert('exists');
+            break;
+            case 'email-sent':
+              $('.resetPasswordHolder').html('A password reset link has been emailed to: ' + obj.email)
+            break;
+            case 'email-missing':
+              $('.resetPasswordHolder').html('<span class="errorStatus">No email associated with this account. Please contact hookmaster@hook.io for additional support.</span>');
+            break;
+            default:
+              alert('default ' + res);
+            break;
+          }
+       },
+       error: function (err) {
+         alert('error' + err)
+       }
+     });
+    return false;
+  });
+  function signUp () {
+    if ($('#password').val() === "") {
+      $('#password').attr('placeholder', 'password cannot be blank...');
+      $('#password').addClass('error').focus();
+      return false;
+    }
+    if ($('#password').val() !== $('#confirmPassword').val()) {
+      $('#confirmPassword').attr('placeholder', 'passwords did not match...');
+      $('#confirmPassword').val('');
+      //$('#password').val('');
+      $('#confirmPassword').addClass('error').focus();
+      return false;
+    }
+    $.ajax({
+       type: "POST",
+       url: '/signup',
+       data: {
+         "email": $('#email').val(),
+         "password": $('#password').val(),
+         "confirmPassword": $('#confirmPassword').val()
+       },
+       success: function(res){
+         switch (res) {
+            case 'valid':
+              // valid login, redirect to homepage
+              document.location = "/";
+            break;
+            case 'invalid':
+              $('#password').addClass('error');
+              $('#password').val('').focus();
+              $('#password').attr('placeholder', 'invalid password. try again...')
+              $('.resetPasswordHolder').show();
+            break;
+            case 'available':
+              newAccount = true;
+              $('.passwordHolder').show();
+              $('#password').focus();
+              $('.resetPasswordHolder').hide();
+              $('#email').addClass('checkmark');
+              $('.confirmPasswordHolder').show();
+              $('#emailLogin').val('Create New Account');
+            break;
+            case 'exists':
+              alert('account already exists!');
+            break;
+            default:
+              alert(res);
+            break;
+          }
+       },
+       error: function (err) {
+         alert('error' + err)
+       }
+     });
+    return false;
+  };
+  $('#email').keypress(function (e) {
+   var key = e.which;
+   if(key == 13)  // the enter key code
+    {
+      login();
+      return false;
+    }
+  });
+
+  $('#password').keypress(function (e) {
+   $(this).removeClass('error');
+   var key = e.which;
+   if (key == 13)  // the enter key code
+    {
+      login($('#password').val());
+      return false;
+    }
+  });
+
+  $('#confirmPassword').keypress(function (e) {
+   var key = e.which;
+   if (key == 13)  // the enter key code
+    {
+      login($('#password').val());
+      return false;
+    }
+  });
+
+  $('#email').focus();
+
+  function loginWithEmail () {
+    var self = this;
+    var email = $('#email').val(),
+        password = $('#password').val();
+
+    if (password.length > 0) {
+      $.ajax({
+        type: "POST",
+        url: '/login',
+        data: {
+          "name": $('#email').val(),
+          "password": $('#password').val()
+        },
+        success: function(res) {
+          var obj;
+          try {
+            obj = JSON.parse(res);
+          } catch (err) {
+            // do nothing
+          }
+
+          if(typeof obj === "object") {
+            // a bit of a quickfix hack
+            // TODO: replace later with JSON only response
+            res = obj.res;
+          }
+
+           switch (res) {
+
+              case 'redirect':
+                // valid login, redirect to homepage
+                document.location = "/login/github";
+              break;
+
+              case 'valid':
+                // valid login, redirect to homepage
+                document.location = "/";
+              break;
+              case 'invalid':
+                $('#password').addClass('error');
+                $('#password').val('').focus();
+                $('#password').attr('placeholder', 'invalid password. try again...');
+                $('.resetPasswordHolder').show();
+              break;
+              case 'available':
+                newAccount = true;
+                $('.passwordHolder').show();
+                $('#password').focus();
+                $('#email').addClass('checkmark');
+                $('.confirmPasswordHolder').show();
+                $('#confirmPassword').show().focus();
+                $('#emailLogin').val('Create New Account');
+                $('.resetPasswordHolder').hide();
+              break;
+              default:
+                alert(res);
+              break;
+            }
+        },
+        error: function (err) {
+          alert('error' + err)
+        }
+      })
+      return false;
+    }
+
+    if(email.length === 0) {
+      $('#email').focus();
+      // alert('Username or email is required.');
+      return;
+    }
+
+    $.get('/signup?email=' + email, function(body, res){
+
+      switch (body) {
+        case 'exists':
+          $('#email').addClass('checkmark');
+          $('.passwordHolder').show();
+          $('#password').focus();
+        break;
+        case 'created':
+        break;
+        case 'available':
+          newAccount = true;
+          $('.passwordHolder').show();
+          $('#password').focus();
+          $('#email').addClass('checkmark');
+          $('.confirmPasswordHolder').show();
+          $('#confirmPassword').show();
+          $('#emailLogin').val('Create New Account');
+          $('.resetPasswordHolder').hide();
+        break;
+        default:
+          alert(body);
+        break;
+      }
+    });
+    return false;
+  };
+
+  $('.saveEmail').on('click', function(){
+    $.ajax({
+      type: "POST",
+      url: '/account',
+      data: {
+        "email": $('#email').val()
+      },
+      success: function(res){
+        $('.emailReminder').html('<span class="tiny">Email set to: ' + $('#email').val() + "</span>");
+      },
+      error: function (err) {
+        alert('error' + err);
+      }
+    })
+    return false;
+  });
 
   function loadingSnippet () {
     $('.CodeMirror').css('opacity', 0.4);
@@ -292,7 +804,7 @@ $('document').ready(function(){
   function showCode () {
     $('.CodeMirror').show();
     editor.setCursor(0,0);
-    editor.focus();
+    //editor.focus();
     editor.refresh();
     $('.hookFrame').hide();
   };
@@ -301,7 +813,6 @@ $('document').ready(function(){
   $('.codeButton').on('click', function(){
     showCode();
   });
-
 
   var loadHeaderSection = function loadHeaderSection () {
     $(".splashSections > div").hide();
@@ -322,7 +833,7 @@ $('document').ready(function(){
 
   //$('.splashImage img').hoverIntent(loadSplashSection);
   $('.splashImage img').click(loadSplashSection);
-  
+
   function checkStats () {
     // TODO: add real-time info for other metrics
     $.get('/metrics/hook/totalHits', function(res){
@@ -357,6 +868,10 @@ $('document').ready(function(){
     return false;
   });
 
+
+  $('#updateEmail').on('submit', function(){
+    return false;
+  });
   $('.prevSnippet').on('click', function(){
     var index = $('.selectSnippet').prop('selectedIndex');
     var prev = index - 1;
@@ -372,42 +887,120 @@ $('document').ready(function(){
 var editor;
 </script>
 
-<br/>
-
-
 <div class="container-fluid">
 
   <div class="userBar">
-    <span class="welcome"></span><br/>
+    <div class="welcome"></div>
+    <div class="emailReminder">
+      <span class="errorStatus"><strong>Attention:</strong></span> Please verify your account with an email address.<br/>
+      <span class="tiny">Without an email address on record, it's possible you may get locked out of your account.</span>
+      <form name="updateEmail" id="updateEmail">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input tabindex="1" class="form-control" type="text" name="email" id="email" placeholder="youremail@example.com..."/>
+        </div>
+        <button class="btn saveEmail">Save</button>
+      </form>
+    </div>
     <a href="/new">Create Hook</a><br/>
     <a href="/Marak" class="yourHooks">My Hooks</a><br/>
     <a href="/datastore" class="yourDatastore">My Datastore</a><br/>
     <a href="/domains" class="yourDomains">Custom Domains</a><br/>
-    <a href="/account" class="yourAccount">Account Information</a><br/>
+    <a href="/account" class="yourAccount">Account Settings</a><br/>
     <a href="/billing" class="yourBilling">Billing Information</a><br/>
     <a href="/affiliates" class="yourAffiliates">Affiliates Program</a><br/>
     <a href="/logout">Logout</a>
   </div>
 
-  <div class="row loginBar">
-    <div class="col-md-12" align="center">
-      <a href="/login" class="btn btn-social btn-github" style="padding: 14px 24px;font-size: 21px;"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
-    </div>
-  </div>
-  <br/>
-  <div class="row loginBar">
+  <div class="row">
     <div class="col-md-12" align="center">
       <p class="hookStats"><a href="#" class="deploymentsLink" title="Whenever a service URL is requested, hook.io will take a copy of the Hook's source code and deploy it to an awaiting worker in our elastic cloud to respond to the incoming request.">Deployments:</a> <span class="totalRun">loading...</span> </p>
-      
     </div>
   </div>
-  <!-- <h2>Try it now!</h2> -->
-  
+
+  <div class="row loginBar">
+    <div class="col-md-8" align="center">
+      <div class="loginHolder">
+        <form action="/signup" id="loginForm">
+          <div class="callToAction">Sign up Instantly! It's Free!</div>
+          <input id="email" name="email" type="text" placeholder="email or account name..."/>
+          <div class="passwordHolder">
+            <input id="password" name="password" type="password" placeholder="enter account password..."/>
+          </div>
+          <div class="confirmPasswordHolder">
+            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="confirm account password..."/>
+          </div>
+          <div class="resetPasswordHolder">
+            <input type="button" id="resetPassword" class="btn" name="resetPassword"  value="Reset Account Password"/>
+          </div>
+          <input type="button" id="emailLogin" class="btn" value="Sign In With Username or Email"/>
+        </form>
+        <form action="/login/github" method="GET">
+          <input type="submit" class="btn" value="Sign in with Github"/>
+        </form>
+        <br/>
+        <div><h2><a href="/pricing">Paid Accounts Available!</a></h2></div>
+        <br/>
+      </div>
+      <p class="scrollForMore">Scroll Down For More!</p>
+      <br/>
+    </div>
+    <div class="col-md-4" align="left">
+      <div class="featuresDiv">
+        <h2>Features</h2>
+        <ul class="features">
+          <!-- <li><a href="/docs#data">Multiple Languages</a></li> -->
+          <li><a href="/docs#data">JSON / Query / Multipart</a></li>
+          <li><a href="/docs#data">Binary / Streaming Data</a></li>
+          <!-- <li><a href="/git">Git Deploy Code Updates</a></li> -->
+          <li><a href="/datastore">Cloud Datastore</a></li>
+          <li><a href="/logs">Logging</a></li>
+          <li><a href="/docs#schema">Input Validators</a></li>
+          <li><a href="/modules">NPM Modules</a></li>
+          <li><a href="/cron">Cron Tasks</a></li>
+          <!-- <li><a href="/docs#metrics">Metrics</a></li> -->
+          <li><a href="/themes">Theming Engine</a></li>
+          <li><a href="/docs#forms">Form Generator</a></li>
+          <li><a href="/ssl">SSL / HTTPS</a></li>
+          <li><a href="/domains">Custom Domains</a></li>
+          <li><a href="/curl">Unix Pipe Integration</a></li>
+          <li><a href="http://github.com/bigcompany/hook.io">100% open-source</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-md-8" align="left">
-      <h2>Interactive Microservice Tutorial</h2>
+    <div class="col-md-12" align="left">
+      <br/>
+      <h2 class="tuts">Click "Deploy Service" to instantly deploy your first Microservice!</h2>
 
       <div class="btn-group transport" role="group">
+        <div class="form-group languages">
+           <label class="smaller" for="language">Select Language:</label>
+           <select name="language" id="language">
+             <option value="javascript">JavaScript ( Recommended )</option>
+             <option value="coffee-script">CoffeeScript ( Supported )</option>
+             <option value="bash">Bash ( Experimental )</option>
+             <option value="lua">Lua ( Experimental )</option>
+             <option value="perl">Perl ( Experimental )</option>
+             <option value="php">PHP ( Experimental )</option>
+             <option value="python">Python ( Experimental )</option>
+             <option value="ruby">Ruby ( Experimental )</option>
+             <option value="scheme">Scheme ( Experimental )</option>
+             <option value="smalltalk">SmallTalk ( Experimental )</option>
+             <option value="tcl">Tcl ( Experimental )</option>
+           </select>
+           <br/>
+           <div class="warnLanguages">
+             <h2 class="warning">Warning</h2>
+             <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+             <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
+             <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
+             <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
+             <button class="btn" id="agreeWarning">Agree to Terms</button>
+           </div>
+        </div>
+
         <select name="selectSnippet" class="selectSnippet btn btn-default">
           <option value="/Marak/examples-helloWorld">hello world</option>
           <option value="/Marak/examples-simpleHttpRequest">send outgoing http requests</option>
@@ -426,11 +1019,15 @@ var editor;
           <!-- <option value="/Marak/markdown">render markdown</option> -->
           <!-- <option value="/Marak/spellcheck">spellcheck words</option> -->
         </select>
-        <div class="transportControl">&nbsp;
+        <div class="helloWorld">
+          Hello world example for <span class="helloLang">X</span><br/>
+          <a class="mediumLink" href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguage">language</span> work better on hook.io?</a>
+        </div>
+        <div class="transportControl prevControl">&nbsp;
           <a class="prevSnippet" href="#prev"><span class="octicon octicon-playback-rewind"></span>
           Prev</a>
         </div>
-        <div class="transportControl">
+        <div class="transportControl nextControl">
           <a class="nextSnippet" href="#next">
           Next&nbsp;<span class="octicon octicon-playback-fast-forward"></span></a>
         </div>
@@ -449,6 +1046,7 @@ var editor;
           </div>
         -->
       </div>
+      <a name="tuts"/>
       <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
       <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="source" id="source">// A simple hello world microservice 
@@ -462,35 +1060,12 @@ module['exports'] = function helloWorld (hook) {
   hook.res.end(host + ' says, "Hello world!"');
 };</textarea>
     </form>
-      <iframe name="hookFrame" class="hookFrame"></iframe>
+    <iframe name="hookFrame" class="hookFrame"></iframe>
       <!-- <div class="hookOutput"></div> -->
-    </div>
-    <div class="col-md-4" align="left">
-      <div class="featuresDiv">
-        <h2>Full Featured</h2>
-        <ul class="features">
-          <li><a href="/docs#data">JSON / Query String / Multipart</a></li>
-          <li><a href="/docs#data">Binary Data / Streaming Data</a></li>
-          <!-- <li><a href="/git">Git Deploy Code Updates</a></li> -->
-          <li><a href="/datastore">Cloud Datastore</a></li>
-          <li><a href="/logs">Logging</a></li>
-          <li><a href="/docs#schema">Input Validators</a></li>
-          <li><a href="/modules">NPM Modules</a></li>
-          <li><a href="/cron">Cron Tasks</a></li>
-          <!-- <li><a href="/docs#metrics">Metrics</a></li> -->
-          <li><a href="/themes">Theming Engine</a></li>
-          <li><a href="/docs#forms">Form Generator</a></li>
-          <li><a href="/ssl">SSL / HTTPS</a></li>
-          <li><a href="/domains">Custom Domains</a></li>
-          <li><a href="/curl">Unix Pipe Integration</a></li>
-          <li><a href="http://github.com/bigcompany/hook.io">100% open-source</a></li>
-        </ul>
-      </div>
     </div>
   </div>
   <br/>
 
   <br/>
-
 </div>
 

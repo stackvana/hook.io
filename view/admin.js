@@ -1,4 +1,5 @@
 var hook = require('../lib/resources/hook');
+var hooks = require('hook.io-hooks');
 var cache = require('../lib/resources/cache');
 var metric = require('../lib/resources/metric');
 var request = require('hyperquest');
@@ -9,7 +10,6 @@ var mergeParams = require('merge-params');
 var bodyParser = require('body-parser');
 var themes = require('../lib/resources/themes');
 var server = require('../lib/server');
-
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -32,12 +32,9 @@ module['exports'] = function view (opts, callback) {
     mergeParams(req, res, function(){});
     params = opts.request.resource.params;
 
-    if (typeof params.owner === 'undefined') {
-      // redirect to hook listing page
-      return res.redirect('/' + req.session.user);
-    }
+    params.owner = req.session.user;
 
-    if (req.session.user !== params.owner && req.session.user !== "Marak") {
+    if (req.session.user !== params.owner && req.session.user !== "marak") {
       return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
     }
   
@@ -47,6 +44,15 @@ module['exports'] = function view (opts, callback) {
     } else {
       name = params.name;
     }
+    
+    if (typeof params.owner === 'undefined' || params.owner.length === 0) {
+      return res.redirect(301, '/');
+    }
+
+    if (typeof name === 'undefined' || name.length === 0) {
+      return res.redirect(301, '/');
+    }
+
     // fetch the latest version of hook ( non-cached )
     hook.find({ owner: params.owner, name: name }, function (err, result) {
       if (err) {
@@ -70,7 +76,17 @@ module['exports'] = function view (opts, callback) {
       var data = {};
 
       // strings
-      data.gist = params.hookSource || req.hook.gist;
+
+      data.gist = params.gist;
+      data.language = params.language || "javascript";
+
+
+      if (params.hookSource === "editor") {
+        delete params.gist;
+        params.source = params.codeEditor;
+      }
+
+      data.source = params.source;
       data.name = params.name;
       data.path = params.path;
 
@@ -98,7 +114,6 @@ module['exports'] = function view (opts, callback) {
       data.id = req.hook.id;
 
       var key = '/hook/' + req.hook.owner + "/" + data.name;
-
       return hook.update(data, function(err, result){
         if (err) {
           // TODO: generic error handler
@@ -119,6 +134,11 @@ module['exports'] = function view (opts, callback) {
 
     function finish (h) {
 
+      var services = hook.services;
+      for(var s in services) {
+        $('.services').append(services[s]);
+      }
+
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
       $('.hookLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs");
       $('.hookSource').attr('href', '/' + h.owner + '/' + h.name + "/source");
@@ -128,12 +148,22 @@ module['exports'] = function view (opts, callback) {
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
-      $('.name').attr('value', h.name);
+      $('#name').attr('value', h.name);
       $('.owner').attr('value', h.owner);
-      $('.path').attr('value', h.path);
+      $('#path').attr('value', h.path);
       $('.previousName').attr('value', h.name);
 
       $('.hookSource').attr('value', h.gist);
+
+      if (h.gist && h.gist.length > 5) {
+        // do nothing
+        $('#gist').attr('value', h.gist);
+        
+      } else {
+        $('#editorSource').attr('checked', 'CHECKED');
+        $('.gistUrlHolder').attr('style', 'display:none;');
+        $('.codeEditorHolder').attr('style', 'display:block;');
+      }
 
       if (h.cronActive === true) {
         $('.cronActive').attr('checked', 'CHECKED');
@@ -151,6 +181,11 @@ module['exports'] = function view (opts, callback) {
         $('.isPublic').attr('checked', 'CHECKED');
       }
 
+      if (typeof h.language !== 'undefined') {
+        $('#language').prepend('<option value="' + h.language + '">' + h.language + '</option>')
+      }
+
+
       if (typeof h.status !== 'undefined') {
         $('.status').prepend('<option value="' + h.status + '">' + h.status + '</option>')
       }
@@ -162,15 +197,29 @@ module['exports'] = function view (opts, callback) {
       $('.deleteLink').attr('href', '/' + h.owner + "/" + h.name + "?delete=true");
       $('.deleteLink').attr('data-name', (h.owner + "/" + h.name));
 
-  //    $('form').attr('action', '/admin?owner=' + h.owner + "&name=" + h.name);
-
       self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h, themes: themes }, function(err, html){
-        var el = $('.hookTable > div').eq(4);
-        el.after(html);
+        var el = $('.themeSelector')
+        el.html(html);
         var out = $.html();
         h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
+        var boot = {
+          owner: req.session.user,
+          source: h.source
+        };
+
+        var services = hooks.services;
+        var examples = {};
+
+        // pull out helloworld examples for every langauge
+        hook.languages.forEach(function(l){
+          examples[l] = services['examples-' + l + '-helloworld'];
+        });
+
+        boot.examples = examples;
+
+        out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
         return callback(null, out);
       });
 

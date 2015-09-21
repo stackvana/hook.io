@@ -1,0 +1,22 @@
+#!/usr/bin/tclsh
+
+package require cmdline
+
+# Show argv before processing
+# puts "Before, argv = '$argv'"
+ 
+# Process the command line
+set parameters {
+    {s.arg "" "The service"}
+    {c.arg "" "The code to run"}
+    {p.arg "" "Additional inject payload"}
+    {e.arg "" "The environment"}
+    {debug "Output extra debug info"}
+}
+array set arg [cmdline::getoptions argv $parameters]
+
+# parray arg
+eval $arg(p)
+eval $arg(c)
+# TODO: do something with service and env
+#puts $arg(s)

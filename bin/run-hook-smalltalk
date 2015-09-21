@@ -1,0 +1,17 @@
+#!/usr/local/bin/gst
+
+array := Array new: 7.
+
+(1 to: Smalltalk getArgc) do: [ :i |
+  array at: i put: (Smalltalk getArgv: i)
+]
+
+"(array at: 1) displayNl"
+"(array at: 2) displayNl"
+"(array at: 3) displayNl"
+"(array at: 4) displayNl"
+"(array at: 5) displayNl"
+"(array at: 6) displayNl"
+"(array at: 7) displayNl"
+
+(Behavior evaluate: (array at: 3))

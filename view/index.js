@@ -1,4 +1,6 @@
 var config = require('../config');
+var hook = require('../lib/resources/hook');
+var hooks = require('hook.io-hooks');
 var slug = require('slug');
 slug.defaults.modes['rfc3986'] = {
     replacement: '-',      // replace spaces with replacement
@@ -26,6 +28,9 @@ module['exports'] = function view (opts, callback) {
       res = opts.response,
       params = req.resource.params,
       user = req.session.user;
+
+  var boot = {};
+
   //
   // enables curl signups
   // EASYTODO: move this into separate module
@@ -93,16 +98,56 @@ module['exports'] = function view (opts, callback) {
   }
   // TODO: gateway.hook.io for production
   $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway');
+
+
+  var services = hooks.services;
+  var examples = {};
+
+  // pull out helloworld examples for every langauge
+  hook.languages.forEach(function(l){
+    examples[l] = services['examples-' + l + '-helloworld'];
+  });
+
+  boot.examples = examples;
+
   if (typeof user === "undefined") {
     $('.userBar').remove();
+    var out = $.html();
+    out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+    return callback(null, out);
   } else {
-    $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
-    $('.loginBar').remove();
-    $('.featuresDiv').remove();
-    //    $('.tagline').remove();
-    $('.yourHooks').attr("href", "/" + user);
-    $('.splash').remove();
+    user = user.toLowerCase();
+    var query = { name: user };
+    return userResource.find(query, function(err, results){
+      if (err) {
+        return res.end(err.message);
+      }
+      if (results.length === 0) {
+        $('.userBar').remove();
+        var out = $.html();
+        out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+        return callback(null, out);
+        // return res.end('Unable to find user. This error should never happen. Please contact hookmaster@hook.io immediately.');
+      } else {
+        // do nothing
+      }
+      var u = results[0];
+      if(typeof u.email === "undefined" || u.email.length === 0) {
+        // do not remove emailReminder
+      } else {
+        $('.emailReminder').remove();
+      }
+      $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
+      $('.loginBar').remove();
+      $('.featuresDiv').remove();
+      $('.hookStats').remove();
+      // $('.tagline').remove();
+      $('.yourHooks').attr("href", "/" + user);
+      // $('.splash').remove();
+      var out = $.html();
+      out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+      return callback(null, out);
+    });
   }
 
-  callback(null, this.$.html());
 };

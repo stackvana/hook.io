@@ -13,6 +13,10 @@
 <div align="left" class="logs">
   <h1>Logging</h1>
 
+  <h2>Writing to Hook Logs</h2>
+  <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
+  <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
+
   <h2>Accessing Hook Logs</h2>
   <p>To access the logs for a Hook simply attach <code>/logs</code> to the end of the Hook service url.</p>
   <p><strong>For example:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a></p>
@@ -25,10 +29,6 @@
     <h3>Plain Text Logs</h3>
     <p>To access plain text logs, request the logging endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
     <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/Marak/echo/logs</code></p>
-
-  <h2>Writing to Hook Logs</h2>
-  <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
-  <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
 
   <h2>Limitations</h2>
   <p>Currently all Free accounts are limited to fifty logging entries per Hook. If you need to increase this limit you can upgrade to a paid account or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a>

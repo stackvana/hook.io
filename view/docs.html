@@ -12,9 +12,11 @@
     <h2><strong>Getting Started</strong></h2>
     <p>A Hook is represented by a unique URL.</p>
     <p>The Hook can be executed by sending HTTP requests to this URL.</p>
-    <p>To see live examples of using Hooks visit the: <a href="https://hook.io">Interactive Microservice Tutorial</a></p>
+    <p>To see live examples of using Hooks visit the: <a href="https://hook.io/#tuts">Interactive Microservice Tutorial</a></p>
     <p>
       <ul style="font-size:22px;">
+        <li><a href="#language">Choosing a Programming Language</a></li>
+        
         <li><a href="#creating">Creating a Hook</a></li>
         <li><a href="#forking">Forking an existing Hook</a></li>
         
@@ -39,6 +41,28 @@
       </ul>
     </p>
     <hr/>
+
+    <a name="language"></a>
+    <h2><strong>Choosing a Programming Language</strong></h2>
+    <p>Since September 19, 2015, hook.io supports writing services in other programming languages besides JavaScript. </p>
+    <p><strong>Currently, JavaScript is the only fully supported language.</strong></p>
+    <p><strong>Experimental Support</strong> is available for the following languages</p>
+    <ul style="font-size:18px;">
+      <li>Bash</li>
+      <li>Coffee-Script</li>
+      <li>Perl</li>
+      <li>Php</li>
+      <li>Bash</li>
+      <li>Python</li>
+      <li>Perl</li>
+      <li>Scheme</li>
+      <li>SmallTalk</li>
+      <li>Tcl</li>
+    </ul>
+    <p>You may select new languages while creating or editing a service.</p>
+    <p><a href="https://hook.io/#tuts">Click here for an Interactive Microservice Tutorial</a></p>
+    
+    <p>For those interested in helping support these new languages, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
 
     <a name="creating"></a>
     <h2><strong>Creating a Hook</strong></h2>
@@ -97,7 +121,8 @@
     <a name="data"></a>
     <hr/>
     <h2><strong>Sending data to the Hook</strong></h2>
-    <p>Data can be sent to a Hook through the query string or posted to the Hook through forms or binary data transfers.</p>
+    <p>Data can be sent to a Hook through any methods HTTP supports.</p>
+    <p>The most common way to send data to a Hook is through the URL query string or posted through forms or binary data transfers.</p>
     <h3><strong>Query String Data</strong></h3>
     <p>To add a parameter via query string simply append it to the url of the Hook</p>
     <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo?foo=bar&hello=there&run=true">https://hook.io/Marak/echo?foo=bar&hello=there&run=true</a></p>
@@ -167,7 +192,7 @@
       Documentation for mschema can be found <a href="http://github.com/mschema/mschema/">here</a>.
     </p>
 
-    <p><strong>Important:</strong> For performance reasons, changes made to the Hook schema will not appear in the User Interface until the Hook has been run once. The schema is applied to the Hook immediately when the gist is updated, just the User Interface will lag behind. This performance setting may be configurable in the future. The work-around is to simply run the Hook once to update the UI with new schema data.</p>
+    <p><strong>Important:</strong> For performance reasons, the Hook may need to be run to update it's schema.</p>
     <hr/>
 
     <a name="forms"/>

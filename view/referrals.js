@@ -12,7 +12,7 @@ module['exports'] = function view (opts, callback) {
   }
 
   return user.find({
-    referredBy: req.user.username
+    referredBy: req.session.user
   }, function (err, results){
     if (err) {
       return res.end(err.message);
@@ -23,7 +23,7 @@ module['exports'] = function view (opts, callback) {
         $('.referrals').append('<a href="https://hook.io/' + u.name + '">' + u.name +  '</a>' + '<br/>')
       });
     }
-    callback(null, $.html().replace(/\{\{username\}\}/g, req.user.username));
+    callback(null, $.html().replace(/\{\{username\}\}/g, req.session.user));
   });
 
 };

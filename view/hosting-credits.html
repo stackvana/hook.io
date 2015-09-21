@@ -1,0 +1,212 @@
+<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+
+<style>
+ .pitch {
+   text-align: left;
+ }
+ .pitch p {
+   font-size: 36px;
+ }
+ .pitch h1 {
+   font-weight: bold;
+   font-size: 52px;
+ }
+ .pitch h2 {
+   font-size: 48px;
+   font-weight: bold;
+ }
+ .product table {
+   text-align: left;
+   font-size: 24px;
+ }
+ .product .buy {
+   font-size: 16px;
+   padding: 10px;
+   width: 210px;
+   margin: 0px;
+ }
+ .product .buy:hover {
+   font-weight: 700;
+ }
+ 
+</style>
+
+<div class="status"></div>
+
+<div class="pitch">
+  <h1>Buy Hosting Credits!</h1>
+  <h2><em>Limited Time Offer</em></h2>
+  <h2>Starting September 11th, 2015!</h2> <br/>
+  <p>In order to reward early adopters and help promote growth of the <a href="https://hook.io">hook.io</a> open-source microservice platform...</p>
+
+  <p>...we now offer the ability for users to <em>buy</em> <a href="#products">bulk hosting credits</a> at a <em>discount</em>!</p>
+
+  <p>These credits could be applied towards future incurred hosting costs...</p>
+
+  <p>...or these credits could even be transferred between user accounts on <a href="https://hook.io">hook.io</a>!</p>
+  
+  <p>In fact, we encourage you to trade them.</p>
+  
+  <p>Continue reading and we'll explain how you could redeem these Hosting Credits for a profit.</p>
+  <br/>
+
+  <h2>How?</h2>
+  
+  <p>hook.io is actively <a href="http://angel.co/hook-io">seeking a seed investment</a> to jumpstart our already profitable and growing platform.</p>
+
+  <p>Our goal is that sometime in the next year after raising a seed investment, we will upgrade our existing <a href="/affiliates">Affiliates Program</a> to offer cash rebates for existing hosting credits.</p>
+
+  <h2>Rewards? Swag?</h2>
+  <p>In the near future our <a href="/affiliates">Affiliates Program</a> will offer company merchandise such as stickers and t-shirts. If you wanted, you could take a few Hosting Credits and buy a hook.io t-shirt!</p>
+  <br/>
+
+  <h2>The idea is simple</h2>
+  <p>The more credits you buy today, the better we can make this <a href="https://github.com/bigcompany/hook.io/">100% open-source project</a> tomorrow.</p>
+
+  <p>Credits bought today at a discount will be redeemable though our  <a href="/affiliates">Affiliates Program</a> in the future for full value.</p>
+  <a name="products"/>
+  <div class="product">
+    <h2>Bulk Hosting Credit Packages</h2>
+    <form action="/hosting-credits" method="POST"> \
+      <table class="table">
+        <tr>
+          <th>Credits</th>
+          <th>Value</th>
+          <th>Discount</th>
+          <th>Your Cost</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tr>
+          <td>100 Credits</td>
+          <td>$100.00</td>
+          <td>10%</td>
+          <td>$90.00</td>
+          <td>
+            <button class="buy btn" data-credits="100" data-discount="0.1">Buy with Bitcoin or Card</button>
+          </td>
+        </tr>
+        <tr>
+          <td>250 Credits</td>
+          <td>$250.00</td>
+          <td>15%</td>
+          <td>$212.50</td>
+          <td>
+            <button class="buy btn" data-credits="250" data-discount="0.15">Buy with Bitcoin or Card</button>
+          </td>
+        </tr>
+        <tr>
+          <td>500 Credits</td>
+          <td>$500.00</td>
+          <td>20%</td>
+          <td>$400.00</td>
+          <td>
+            <button class="buy btn" data-credits="500" data-discount="0.2">Buy with Bitcoin or Card</button>
+          </td>
+        </tr>
+        <tr>
+          <td>1000 Credits</td>
+          <td>$1000.00</td>
+          <td>25%</td>
+          <td>$750.00</td>
+          <td>
+            <button class="buy btn" data-credits="1000" data-discount="0.25">Buy with Bitcoin or Card</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2000 Credits</td>
+          <td>$2000.00</td>
+          <td>30%</td>
+          <td>$1400.00</td>
+          <td>
+            <button class="buy btn" data-credits="2000" data-discount="0.3">Buy with Bitcoin or Card</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5000 Credits</td>
+          <td>$5,000.00</td>
+          <td>35%</td>
+          <td>$3250.00</td>
+          <td>
+            <button class="buy btn" data-credits="5000" data-discount="0.35">Buy with Bitcoin or Card</button>
+          </td>
+        </tr>
+        <tr>
+          <td>10,000 Credits</td>
+          <td>$10,000.00</td>
+          <td>40%</td>
+          <td>$6000.00</td>
+          <td>
+            <button class="buy btn" data-credits="10000" data-discount="0.4">Buy with Bitcoin or Card</button>
+          </td>
+        </tr>
+      
+      </table>
+    </table>
+    <p>This is a unique opportunity to help promote open-source, while potentially making a profit.</p> 
+    <h2>Thank you for your support.</h2>
+    <p>Questions? Email <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
+
+
+  </div>
+  
+  <br/>
+  <br/>
+  <br/>
+</div>
+
+
+<script type="text/javascript">
+  var amount, credits;
+  $(document).ready(function(){
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_axAR0vF3Qam8zs09JE7t8ZIo',
+      image: 'https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png',
+      locale: 'auto',
+      token: function(token) {
+        $.ajax({
+          type: "POST",
+          url: '/hosting-credits',
+          data: {
+            "email": token.email,
+            "token": token,
+            "credits": credits // NOTE: All hosting credit amounts are manually reconciled against the monthly payment processor reports...please don't try to hack this open-source project... 
+          },
+          success: function(res){
+            if (res === "paid") {
+              document.location = "/account?paid=true";
+            }
+            // $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
+          },
+          error: function (err) {
+            alert('error' + err);
+          }
+        })
+
+        return false;
+
+      }
+    });
+
+    $('.buy').on('click', function(e) {
+      // Open Checkout with further options
+      credits = Number($(this).attr('data-credits'));
+      var discount = Number($(this).attr('data-discount'));
+      amount = (credits - (credits * discount)) * 100;
+      handler.open({
+        name: 'hook.io',
+        description: credits + " Hosting Credits",
+        currency: "usd",
+        bitcoin: true,
+        amount: amount,
+        panelLabel: "Purchase"
+      });
+      e.preventDefault();
+    });
+
+    // Close Checkout on page navigation
+    $(window).on('popstate', function() {
+      handler.close();
+    });  
+  });
+
+</script>

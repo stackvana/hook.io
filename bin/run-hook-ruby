@@ -1,0 +1,17 @@
+#!/usr/bin/ruby
+
+require 'json'
+
+
+code = ARGV[1]
+
+# TODO: do something with env
+
+env = JSON.parse(ARGV[3])
+Hook = env
+
+# TODO: do something with service
+service = ARGV[5]
+
+# TODO: better error checking around eval
+eval code

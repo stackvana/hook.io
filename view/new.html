@@ -1,4 +1,34 @@
 <style>
+
+#hookForm h1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+#hookForm h2 {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 10px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.smaller {
+  font-size: 18px;
+}
+
+.cronRow .warning {
+  font-size: 18px;
+}
+
+.warning {
+  color: red;
+}
+
+.helpLang {
+  display: none;
+}
+
 .cron-button {
     height: 16px;
     padding-left: 20px;
@@ -22,6 +52,15 @@
 }
 .cron-controls > span.cron-loading {
     background-image: url('img/loading.gif');
+}
+
+.languages {
+  display: block;
+}
+
+select {
+  font-size: 32px;
+  cursor: pointer;
 }
 
 .routeHint {
@@ -56,14 +95,6 @@
 code {
   padding: 0px;
   margin: 0px;
-}
-
-h2 {
-  margin: 0px;
-  padding: 0px;
-  margin-bottom: 10px;
-  font-size: 32px;
-  font-weight: 700;
 }
 
 label {
@@ -189,10 +220,6 @@ input[type="checkbox"] {
   width: 100%;
 }
 
-.btn {
-  margin-top: 10px;
-}
-
 .sourcesHolder {
   color: black;
   background-color: #f5f5f5;
@@ -211,7 +238,6 @@ input[type="checkbox"] {
 }
 
 .cronDiv {
-  background-color: white;
   width: 100%;
 }
 
@@ -247,6 +273,25 @@ body legend {
   font-weight: bold;
 }
 
+.codeEditorHolder .btn {
+  width: 120px;
+}
+
+.btn {
+  margin-top: 10px;
+  width: 200px;
+}
+
+.btn:hover {
+  font-weight: bold;
+}
+
+.mediumLink {
+  font-size: 22px;
+  font-weight: normal;
+  font-style: italic;
+}
+
 .hookFrame {
   background-color: white;
   margin-top: 10px;
@@ -262,6 +307,16 @@ body legend {
   width: 100%;
 }
 
+.cronClear {
+  margin-bottom: 10px;
+}
+
+.warnLanguages {
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 </style>
 <link href="/css/jquery-ui.css" rel="stylesheet">
 
@@ -271,6 +326,8 @@ body legend {
 <script type="text/javascript">
 
   var boot = {{hook}};
+
+  var agreedToWarning = false;
 
   // client-side slugify
   // the server-side slugify code is much more robust covering much utf
@@ -310,6 +367,17 @@ body legend {
     }
   };
 
+  function showCode () {
+    $('.codeEditorHolder').show();
+    $('.gistUrlHolder').hide();
+    $('.CodeMirror').show();
+    //$('#editorSource').attr('checked', 'CHECKED');
+    editor.setCursor(0,0);
+    //editor.focus();
+    editor.refresh();
+    $('.hookFrame').hide();
+  };
+
   $(document).ready(function(){
 
     var deployingCode = false, snippetLoading = false;
@@ -322,13 +390,6 @@ body legend {
         deployingCode = false;
       }
     });
-    function showCode () {
-      $('.CodeMirror').show();
-      editor.setCursor(0,0);
-      //editor.focus();
-      editor.refresh();
-      $('.hookFrame').hide();
-    };
 
     $('.codeButton').on('click', function(){
       showCode();
@@ -340,7 +401,6 @@ body legend {
       $('.codeEditorHolder').show();
       editor.refresh();
     });
-
 
     $('#gistSource').on('click', function(){
       $('.codeEditorHolder').hide();
@@ -366,7 +426,7 @@ body legend {
       var now = new Date().getTime();
       $('#source').val(editor.getValue());
       $('.gatewayForm').submit();
-      $('iframe').show();
+      //    $('iframe').show();
       return false;
     };
 
@@ -386,6 +446,7 @@ body legend {
       var name = $('#name').val();
       if (name.length === 0) {
         $('#name').addClass('error').focus();
+        $('#name').attr('placeholder', 'name is required...')
         //alert('name required');
         return false;
       }
@@ -407,7 +468,9 @@ body legend {
         $(this).addClass('error');
         $(this).val(s);
       } else {
-        $(this).removeClass('error');
+        if(v.length !== 0) {
+          $(this).removeClass('error');
+        }
       }
       drawHookLinks();
     });
@@ -430,16 +493,58 @@ body legend {
         delay: 100
       }
     };
-    
+
     var p = $('#name').position();
     $('#name').focus();
     $('.themeSelect').change(function(e){
       var val = themes[$(this).val()];
-      console.log(val)
       $('#theme').attr('value', val.theme);
       $('#presenter').attr('value', val.presenter);
     });
+
+    $('#agreeWarning').on('click', function () {
+      $('.warnLanguages').hide();
+      $('#create').attr('disabled', null);
+      agreedToWarning = true;
+      return false;
+    });
+
+    $('#language').change(function(e){
+
+      if (!agreedToWarning) {
+        $('.warnLanguages').show();
+        $('#create').attr('disabled', 'DISABLED');
+      }
+
+      var l = $('#language').val();
+      $('.currentLanguage').html($( "#language option:selected" ).text());
+      $('.currentLanguageShort').html($( "#language" ).val());
+      if (l === "javascript") {
+        $('#gatewayForm').attr('action', '/Marak/gateway');
+        $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+        $('.helpLang').hide();
+      } else {
+        $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+        // TODO: better default gist values for non-javascript langauges
+        $('#gist').attr('value', '');
+        $('.helpLang').show();
+      }
+
+      // assume first file is source code
+      // see: https://github.com/bigcompany/hook.io/issues/110
+      var keys = Object.keys(boot.examples[l]);
+      editor.setValue(boot.examples[l][keys[0]]);
+      $('#editorSource').click();
+      //showCode();
+      return false;
+      //var val = themes[$(this).val()];
+    });
+
     drawHookLinks();
+
+    //$('.services').html(JSON.stringify(boot.examples));
+
+
   });
 
 
@@ -449,7 +554,7 @@ body legend {
     var path = $('#path').val();
     if(name.length === 0 && path.length === 0) {
       //$('.hookLinks .admin').html('');
-      return;
+      //return;
     }
 
     if (name.length === 0) {
@@ -481,7 +586,7 @@ body legend {
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
   <form id="hookForm" method="POST" action="/new" role="form">
-    <legend><h1>Create New Hook Service</h1></legend>
+    <legend><h1>Create New Microservice</h1></legend>
 
     <div class="gistStatus">Hey there! We just created a new Gist on Github using your account: <a href="">here</a><br/>
       <br/>
@@ -489,7 +594,7 @@ body legend {
     </div>
 
     <div class="hookHolder">
-      <h2>Service</h2>
+      <h2>Service Information</h2>
       <div class="form-group">
         <label for="name">Name</label>
         <input tabindex="1" class="form-control" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
@@ -501,7 +606,7 @@ body legend {
         <label for="path">Route</label>
         <input tabindex="2" class="form-control" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
         <div class="tiny">
-          <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope.</em><br/>
+          <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
           <button tabindex="3" type="button" class="routeTipsButton btn small-btn">Route Formatting Help</button>
         </div>
 
@@ -558,15 +663,15 @@ body legend {
           </tr>
           <tr>
             <td><strong>Admin ( login required )</strong></td>
-            <td class="admin">https://hook.io/Marak/hook-name/admin</td>
+            <td class="admin">https://hook.io/marak/hook-name/admin</td>
           </tr>
           <tr>
             <td><strong>Source Code</strong></td>
-            <td class="source">https://hook.io/Marak/hook-name/source</td>
+            <td class="source">https://hook.io/marak/hook-name/source</td>
           </tr>
           <tr>
             <td><strong>Logs</strong></td>
-            <td class="logs">https://hook.io/Marak/hook-name/logs</td>
+            <td class="logs">https://hook.io/marak/hook-name/logs</td>
           </tr>
           <!--
           <tr>
@@ -588,8 +693,42 @@ body legend {
     </div>
     <div class="sourcesHolder">
       <h2>Hook Source</h2>
-      <div class="form-group sources">
 
+      <div class="services"></div>
+
+      <div class="form-group languages">
+        <div class="languageTitle"><strong>Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
+        <label class="smaller" for="language">Select Language:</label>
+        <select name="language" id="language">
+          <option value="javascript">JavaScript ( Recommended )</option>
+          <option value="coffee-script">CoffeeScript ( Supported )</option>
+          <option value="bash">Bash ( Experimental )</option>
+          <option value="lua">Lua ( Experimental )</option>
+          <option value="perl">Perl ( Experimental )</option>
+          <option value="php">PHP ( Experimental )</option>
+          <option value="python">Python ( Experimental )</option>
+          <option value="ruby">Ruby ( Experimental )</option>
+          <option value="scheme">Scheme ( Experimental )</option>
+          <option value="smalltalk">SmallTalk ( Experimental )</option>
+          <option value="tcl">Tcl ( Experimental )</option>
+        </select>
+
+        <div class="warnLanguages">
+          <h2 class="warning">Warning</h2>
+          <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
+          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
+          <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
+          <button class="btn" id="agreeWarning">Agree to Terms</button>
+        </div>
+
+        <div class="helpLang">
+          <a class="mediumLink" href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguageShort">language</span> work better on hook.io?</a>
+        </div>
+
+      </div>
+
+      <div class="form-group sources">
         <label for="gistSource">Github Gist</label>
         <input tabindex="4" type="radio" checked="CHECKED" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
         &nbsp;
@@ -633,7 +772,6 @@ body legend {
 
                   <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
                   <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
-  console.log("Console messages are sent to /logs");
   console.log(hook.params);
   console.log(hook.req.path);
   console.log(hook.req.method);
@@ -681,6 +819,7 @@ body legend {
       <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
       <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
       <p class="superTiny">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
+      <p class="warning"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@hook.io">please let us know</a>. </p>
       <h3>Cron Pattern</h3>
       <div class="cronDiv"></div>
     </div>

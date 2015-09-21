@@ -30,7 +30,7 @@ module['exports'] = function view (opts, callback) {
               return res.end(err.message);
             }
             req.session.gistLink = result.html_url;
-            req.session.gistLink = req.session.gistLink.replace('gist.github.com/', 'gist.github.com/' + req.user.username + "/");
+            req.session.gistLink = req.session.gistLink.replace('gist.github.com/', 'gist.github.com/' + req.session.user + "/");
             return res.redirect('/new')
           })
         } else {
