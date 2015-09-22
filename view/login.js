@@ -20,7 +20,7 @@ module['exports'] = function view (opts, callback) {
   var req = opts.request,
       res = opts.response;
 
-  parseRequest(req, res, function(err, params){
+  parseRequest(req, res, function(err, params) {
     if (params.name && params.password) {
       params.name = params.name.toLowerCase();
       var type = "name";
@@ -47,7 +47,7 @@ module['exports'] = function view (opts, callback) {
           };
           if (u.githubOauth === true) {
             r.res = "redirect";
-            r.url = "/login/github";
+            r.redirect = "/login/github";
             // if the user has already oauthed with github before,
             // and is attempting to sign in with a bad password,
             // lets just redirect them to the github auth! easy.
@@ -59,7 +59,12 @@ module['exports'] = function view (opts, callback) {
             return res.end(err.message);
           }
           req.session.user = u.name.toLowerCase();
-          return res.end('valid');
+          var r = {
+            res: "valid",
+          };
+          // r.res = "redirect";
+          r.redirect = req.session.redirectTo || "/";
+          return res.end(JSON.stringify(r));
         });
       });
     } else {
