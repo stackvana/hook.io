@@ -1,5 +1,4 @@
 var request = require('hyperquest');
-var GitHubApi = require('github');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
 var mustache = require('mustache');
@@ -7,17 +6,6 @@ var mustache = require('mustache');
 // load docs html as file
 // TODO: load docs as http request
 // var docs = require('fs').readFileSync(__dirname + '/../../../view/docs.html').toString();
-
-var github = new GitHubApi({
-    // required
-    version: "3.0.0",
-    // optional
-    debug: false,
-    protocol: "https",
-    host: "api.github.com",
-    requestFormat: "json",
-    timeout: 5000
-});
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
