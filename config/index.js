@@ -34,11 +34,14 @@ module['exports'] = {
     "api_user": "marak",
     "api_key": "abcd"
   },
+  // tempDirectory: __dirname + "/../temp/",
+  tempDirectory: "/hook-temp/",
   sslKeyDirectory: __dirname + '/../ssl/',
   chrootDirectory: '/Users/chroot',
   useChroot: true,
   customDomains: true,
   messages: {
+    childProcessSpawnError: require('./messages/childProcessSpawnError'),
     serviceExecutionTimeout: require('./messages/serviceExecutionTimeout')
   }
 };
