@@ -3,8 +3,8 @@ hookio:
   ports:
    - "9999:9999"
   volumes:
-   - .:/code
+   - .:/src
   links:
-   - redis
+    - redis
 redis:
   image: redis

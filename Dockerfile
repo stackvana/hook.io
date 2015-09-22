@@ -33,4 +33,8 @@ RUN mkdir /chroot
 
 # RUN which node
 
+WORKDIR /src
+
+EXPOSE 9999
+
 CMD sh /src/scripts/start.sh
