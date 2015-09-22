@@ -40,6 +40,7 @@ module['exports'] = {
   chrootDirectory: '/Users/chroot',
   useChroot: true,
   customDomains: true,
+  UNTRUSTED_HOOK_TIMEOUT: 10000,
   messages: {
     childProcessSpawnError: require('./messages/childProcessSpawnError'),
     serviceExecutionTimeout: require('./messages/serviceExecutionTimeout')
