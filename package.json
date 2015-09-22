@@ -71,7 +71,7 @@
     "through2": "^0.6.3",
     "tree-kill": "^0.1.1",
     "trycatch": "^1.5.20",
-    "view": "0.7.x"
+    "view": "0.8.x"
   },
   "devDependencies": {
     "gulp-rename": "*",
