@@ -1,0 +1,10 @@
+hookio:
+  build: .
+  ports:
+   - "9999:9999"
+  volumes:
+   - .:/code
+  links:
+   - redis
+redis:
+  image: redis
