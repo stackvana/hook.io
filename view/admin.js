@@ -10,6 +10,7 @@ var mergeParams = require('merge-params');
 var bodyParser = require('body-parser');
 var themes = require('../lib/resources/themes');
 var server = require('../lib/server');
+var languages = require('../lib/resources/programmingLanguage').languages;
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -28,31 +29,33 @@ module['exports'] = function view (opts, callback) {
     req.session.redirectTo = req.url;
     return res.redirect('/login');
   }
+
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     params = opts.request.resource.params;
 
-    params.owner = req.session.user;
+    // params.owner = req.session.user;
 
-    if (req.session.user !== params.owner && req.session.user !== "marak") {
-      return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
+    if (typeof params.owner === 'undefined' || params.owner.length === 0) {
+      return res.redirect(301, '/' + req.session.user);
     }
-  
+
     var name;
     if (typeof params.previousName !== 'undefined') {
       name = params.previousName;
     } else {
       name = params.name;
     }
-    
-    if (typeof params.owner === 'undefined' || params.owner.length === 0) {
-      return res.redirect(301, '/');
-    }
 
     if (typeof name === 'undefined' || name.length === 0) {
-      return res.redirect(301, '/');
+      return res.redirect(301, '/' + req.session.user);
     }
 
+    if (req.session.user !== params.owner && req.session.user !== "marak") {
+      return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
+    }
+
+    // console.log('finding', { owner: params.owner, name: name });
     // fetch the latest version of hook ( non-cached )
     hook.find({ owner: params.owner, name: name }, function (err, result) {
       if (err) {
@@ -80,16 +83,25 @@ module['exports'] = function view (opts, callback) {
       data.gist = params.gist;
       data.language = params.language || "javascript";
 
-
-      if (params.hookSource === "editor") {
+      if (params.hookSource === "code") {
         delete params.gist;
         params.source = params.codeEditor;
+      } else if (params.hookSource === "gist") {
+        delete params.source;
       }
 
+      data.sourceType = params.hookSource;
       data.source = params.source;
       data.name = params.name;
       data.path = params.path;
 
+      if (params.themeActive) {
+        data.themeStatus = "enabled";
+      } else {
+        data.themeStatus = "disabled";
+      }
+
+      data.themeName = params.themeSelect;
       data.theme = params.theme;
       data.presenter = params.presenter;
       data.mode = params.mode;
@@ -112,7 +124,6 @@ module['exports'] = function view (opts, callback) {
       }
 
       data.id = req.hook.id;
-
       var key = '/hook/' + req.hook.owner + "/" + data.name;
       return hook.update(data, function(err, result){
         if (err) {
@@ -139,6 +150,8 @@ module['exports'] = function view (opts, callback) {
         $('.services').append(services[s]);
       }
 
+      $('#owner').attr('value', h.owner);
+
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
       $('.hookLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs");
       $('.hookSource').attr('href', '/' + h.owner + '/' + h.name + "/source");
@@ -155,15 +168,21 @@ module['exports'] = function view (opts, callback) {
 
       $('.hookSource').attr('value', h.gist);
 
-      if (h.gist && h.gist.length > 5) {
-        // do nothing
+
+      if (h.sourceType === "gist") {
         $('#gist').attr('value', h.gist);
-        
+        $('#gistSource').attr('checked', 'CHECKED');
       } else {
         $('#editorSource').attr('checked', 'CHECKED');
         $('.gistUrlHolder').attr('style', 'display:none;');
         $('.codeEditorHolder').attr('style', 'display:block;');
       }
+      /*
+      if (h.gist && h.gist.length > 5) {
+        // do nothing
+      } else {
+      }
+      */
 
       if (h.cronActive === true) {
         $('.cronActive').attr('checked', 'CHECKED');
@@ -183,8 +202,10 @@ module['exports'] = function view (opts, callback) {
 
       if (typeof h.language !== 'undefined') {
         $('#language').prepend('<option value="' + h.language + '">' + h.language + '</option>')
+        if (h.language !== "javascript") {
+          $('#gatewayForm').attr('action', '/Marak/gateway-' + h.language);
+        }
       }
-
 
       if (typeof h.status !== 'undefined') {
         $('.status').prepend('<option value="' + h.status + '">' + h.status + '</option>')
@@ -200,13 +221,26 @@ module['exports'] = function view (opts, callback) {
       self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h, themes: themes }, function(err, html){
         var el = $('.themeSelector')
         el.html(html);
+
+        $('#theme').attr('value', h.theme);
+        $('#presenter').attr('value', h.presenter);
+        if (typeof h.themeName !== 'undefined' && h.themeName.length > 0) {
+          $('.themeSelect').prepend('<option>' + h.themeName + '</option>')
+        }
+
+        if (h.themeStatus === "enabled") {
+          $('#themeActive').attr('checked', 'CHECKED');
+          $('.themeRow').attr('style', 'display: block;');
+        }
+
         var out = $.html();
         h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
         var boot = {
           owner: req.session.user,
-          source: h.source
+          source: hook,
+          themes: themes
         };
 
         var services = hooks.services;

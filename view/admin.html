@@ -420,7 +420,7 @@ body legend {
 <script type="text/javascript">
 
   var boot = {{hook}};
-
+  var themes = boot.themes;
   // client-side slugify
   // the server-side slugify code is much more robust covering much utf
   function slugify(text) {
@@ -429,35 +429,6 @@ body legend {
 //      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
 //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
   }
-
-  // lookup themes from curated theme list
-  // TODO: Create "themes" resource and persist this to database
-  var themes = {
-    "debug": {
-      "theme": "https://hook.io/themes/debug/index.html",
-      "presenter": "https://hook.io/themes/debug/index.js"
-    },
-    "form": {
-      "theme": "https://hook.io/themes/form/index.html",
-      "presenter": "https://hook.io/themes/form/index.js"
-    },
-    "simple": {
-      "theme": "https://hook.io/themes/simple/index.html",
-      "presenter": "https://hook.io/themes/simple/index.js"
-    },
-    "simple-form": {
-      "theme": "https://hook.io/themes/simple-form/index.html",
-      "presenter": "https://hook.io/themes/simple-form/index.js"
-    },
-    "none": {
-      "theme": "https://hook.io/themes/none/index.html",
-      "presenter": "https://hook.io/themes/none/index.js"
-    },
-    "custom": {
-      "theme": "",
-      "presenter": ""
-    }
-  };
 
   var agreedToWarning = false;
 
@@ -596,9 +567,9 @@ body legend {
     
     if (boot.source && boot.source.length > 0) {
       editor.setValue(boot.source);
-      $('#editorSource').attr('checked', 'CHECKED');
-      $('.gistUrlHolder').hide();
-      $('.codeEditorHolder').show();
+      //$('#editorSource').attr('checked', 'CHECKED');
+      //$('.gistUrlHolder').hide();
+      //$('.codeEditorHolder').show();
       editor.refresh();
     } else {
       // do nothing
@@ -693,6 +664,7 @@ body legend {
         <label for="name">Name</label>
         <input tabindex="1" class="form-control" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
         <input type="hidden" id="previousName" name="previousName" class="previousName"/>
+        <input type="hidden" id="owner" name="owner" class="owner"/>
         <div class="tiny">
           <em>Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
         </div>
@@ -738,7 +710,7 @@ body legend {
           </div>
         </div>
         <div class="form-group">
-          <label for="hookSource">Hook Run Count</label>
+          <label for="hookRan">Hook Run Count</label>
           <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
         </div>
 
@@ -822,7 +794,7 @@ body legend {
         </select>
         <div class="warnLanguages">
           <h2 class="warning">Warning</h2>
-          <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <p> We have <a href="/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
           <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
@@ -831,11 +803,12 @@ body legend {
       </div>
       <div class="form-group sources">
 
-        <label for="gistSource">Github Gist</label>
-        <input tabindex="4" type="radio" checked="CHECKED" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
-        &nbsp;
         <label for="editorSource">Code Editor</label>
-        <input tabindex="5" type="radio" value="editor" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
+        <input tabindex="5" type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
+        &nbsp;
+
+        <label for="gistSource">Github Gist</label>
+        <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
 
       </div>
       <div class="tiny">
