@@ -44,7 +44,7 @@
     padding-bottom: 0px;
   }
   #language {
-    font-size: 32px;
+    /* font-size: 32px; */
     cursor: pointer;
   }
 
@@ -252,8 +252,10 @@
     border-width: 1px;
     box-shadow: 10px 10px 5px #888888;
     width: 100%;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
   }
   .featuresDiv h2 {
     font-weight: bold;
@@ -555,7 +557,7 @@ $('document').ready(function(){
          switch (res) {
             case 'valid':
               // valid login, redirect to homepage
-              document.location = "/";
+              document.location = obj.redirect;
             break;
 
             case 'exists':
@@ -603,7 +605,7 @@ $('document').ready(function(){
          switch (res) {
             case 'valid':
               // valid login, redirect to homepage
-              document.location = "/";
+              document.location = obj.redirect;
             break;
             case 'invalid':
               $('#password').addClass('error');
@@ -695,12 +697,12 @@ $('document').ready(function(){
 
               case 'redirect':
                 // valid login, redirect to homepage
-                document.location = "/login/github";
+                document.location = obj.redirect;
               break;
 
               case 'valid':
                 // valid login, redirect to homepage
-                document.location = "/";
+                document.location = obj.redirect;
               break;
               case 'invalid':
                 $('#password').addClass('error');
@@ -942,6 +944,7 @@ var editor;
         <div><h2><a href="/pricing">Paid Accounts Available!</a></h2></div>
         <br/>
       </div>
+      <br/>
       <p class="scrollForMore">Scroll Down For More!</p>
       <br/>
     </div>
@@ -993,7 +996,7 @@ var editor;
            <br/>
            <div class="warnLanguages">
              <h2 class="warning">Warning</h2>
-             <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+             <p> We have <a href="/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
              <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
              <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
              <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
