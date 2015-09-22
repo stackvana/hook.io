@@ -1,17 +1,17 @@
-trap 'killall node' EXIT
-trap 'killall node' SIGINT
+#trap 'killall node' EXIT
+#trap 'killall node' SIGINT
 
 
 # start main front-end server
-sudo node bin/server &
+node /src/bin/server &
 
 # start five workers to run hooks
 
-sudo node bin/worker &
-sudo node bin/worker &
-sudo node bin/worker &
-sudo node bin/worker &
-sudo node bin/worker &
+node /src/bin/worker &
+node /src/bin/worker &
+node /src/bin/worker &
+node /src/bin/worker &
+node /src/bin/worker
 
 # start cron jobs
 # sudo node bin/cron

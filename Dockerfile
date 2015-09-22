@@ -1,38 +1,36 @@
-FROM ubuntu:14.04
+FROM node:0.12.7-wheezy
+#FROM ubuntu:14.04
 
 COPY . /src
 
+RUN rm -rf /src/node_modules
+
 # update apt-get
-RUN apt-get -y update
+RUN apt-get -y update && apt-get -y upgrade
 
-# install git
-RUN apt-get -y install git-core
+# install build-essential
+RUN apt-get -y install build-essential
 
-# install python
-RUN apt-get -y install python
+# install and configure couchdb
+RUN apt-get -y install couchdb
 
-# install wget
-RUN apt-get -y install wget
+# install and configure redis
+RUN apt-get -y install redis-server
 
-# install make
-RUN apt-get -y install make
+RUN cd /tmp; git clone https://github.com/tj/mon; cd mon; make install
 
-# install some missing deps
-RUN apt-get -y install g++ curl libssl-dev apache2-utils
-
-RUN \
-  cd /tmp && \
-  wget https://github.com/joyent/node/tarball/v0.12.7 && \
-  tar xf v0.12.7 && \
-  cd nodejs-node-v0.x-archive-bf88623 && \
-  ./configure && \
-  CXX="g++ -Wno-unused-local-typedefs" make && \
-  CXX="g++ -Wno-unused-local-typedefs" make install && \
-  printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /.bashrc
+RUN npm install -g npm
 
 RUN cd /src; npm install
 
+# RUN adduser worker
+
+RUN addgroup workers
+
+RUN adduser --gid 1000 --disabled-password --gecos '' worker
+
+RUN mkdir /chroot
+
 # RUN which node
 
-EXPOSE  9999
-CMD ["/usr/local/bin/node", "/src/bin/minServer.js"]
+CMD sh /src/scripts/start.sh

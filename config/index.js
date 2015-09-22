@@ -37,7 +37,7 @@ module['exports'] = {
   // tempDirectory: __dirname + "/../temp/",
   tempDirectory: "/hook-temp/",
   sslKeyDirectory: __dirname + '/../ssl/',
-  chrootDirectory: '/Users/chroot',
+  chrootDirectory: '/chroot',
   useChroot: true,
   customDomains: true,
   UNTRUSTED_HOOK_TIMEOUT: 10000,
