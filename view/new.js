@@ -46,6 +46,8 @@ module['exports'] = function view (opts, callback) {
         delete params.presenter;
       }
 
+      params.sourceType = params.hookSource;
+
       var query = { name: params.name, owner: req.session.user };
       return hook.find(query, function(err, results){
         if (results.length > 0) {
@@ -54,7 +56,7 @@ module['exports'] = function view (opts, callback) {
           //return res.redirect('/' + h.owner + "/" + h.name + "?alreadyExists=true");
         }
         params.cron = params.cronString;
-        if (params.hookSource === "editor") {
+        if (params.hookSource === "code") {
             delete params.gist;
             params.source = params.codeEditor;
         }
@@ -68,7 +70,7 @@ module['exports'] = function view (opts, callback) {
           var h = result;
           req.hook = h;
 
-          if (params.hookSource === "editor") {
+          if (params.hookSource === "code") {
              // the source of the hook is coming from the code editor
              return res.redirect('/' + h.owner + "/" + h.name + "");
           } else {

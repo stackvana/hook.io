@@ -461,7 +461,7 @@ body legend {
       return false;
     });
 
-    $('#name, #path').on('keyup', function(){
+    $('#name, #path').on('keyup', function(e){
       var v = $(this).val();
       var s = slugify($(this).val());
       if (v !== s) {
@@ -473,6 +473,9 @@ body legend {
         }
       }
       drawHookLinks();
+      if (e.keyCode === 13) {
+        $('#hookForm').submit();
+      }
     });
 
     $('input[name="themeActive"]').click(function(){
@@ -717,7 +720,7 @@ body legend {
           <h2 class="warning">Warning</h2>
           <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
-          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
+          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="/blog/new-multi-language-support" target="_blank">let us know</a>.</p>
           <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
         </div>
@@ -729,11 +732,11 @@ body legend {
       </div>
 
       <div class="form-group sources">
+        <label for="editorSource">Code Editor</label>
+        <input tabindex="5" type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
+        &nbsp;
         <label for="gistSource">Github Gist</label>
         <input tabindex="4" type="radio" checked="CHECKED" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
-        &nbsp;
-        <label for="editorSource">Code Editor</label>
-        <input tabindex="5" type="radio" value="editor" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
 
       </div>
       <div class="tiny">
