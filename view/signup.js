@@ -80,7 +80,12 @@ module['exports'] = function signup (opts, cb) {
               return res.end(err.message);
             }
             req.session.user = result.name.toLowerCase();
-            return res.end('valid');
+            var r = {
+              res: "valid",
+            };
+            // r.res = "redirect";
+            r.redirect = req.session.redirectTo || "/";
+            return res.end(JSON.stringify(r));
           });
         });
       }

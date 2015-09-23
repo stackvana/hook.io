@@ -601,7 +601,20 @@ $('document').ready(function(){
          "password": $('#password').val(),
          "confirmPassword": $('#confirmPassword').val()
        },
-       success: function(res){
+       success: function(res) {
+
+         var obj;
+         try {
+           obj = JSON.parse(res);
+         } catch (err) {
+           // do nothing
+         }
+         if (typeof obj === "object") {
+           // a bit of a quickfix hack
+           // TODO: replace later with JSON only response
+           res = obj.res;
+         }
+
          switch (res) {
             case 'valid':
               // valid login, redirect to homepage
