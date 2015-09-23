@@ -16,7 +16,7 @@ module['exports'] = {
   },
   redis: {
     port: 6379,
-    host: "127.0.0.1"
+    host: "redis"
   },
   github: {
     accessName: "",
@@ -41,9 +41,9 @@ module['exports'] = {
   },
   // tempDirectory: __dirname + "/../temp/",
   tempDirectory: "/hook-temp/",
-  //sslKeyDirectory: __dirname + '/../ssl/',
   sslKeyDirectory: '/src/ssl/',
   chrootDirectory: '/chroot',
+  //sslKeyDirectory: __dirname + '/../ssl/',
   //chrootDirectory: '/Users/chroot',
   useChroot: true,
   customDomains: true,

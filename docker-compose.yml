@@ -1,10 +1,9 @@
 hookio:
   build: .
   ports:
-   - "9999:9999"
-  volumes:
-   - .:/src
+    - "49160:9999"
   links:
-    - redis
-redis:
+    - "db:redis"
+
+db:
   image: redis

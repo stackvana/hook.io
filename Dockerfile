@@ -37,4 +37,4 @@ WORKDIR /src
 
 EXPOSE 9999
 
-CMD sh /src/scripts/start.sh
+CMD node /src/bin/server
