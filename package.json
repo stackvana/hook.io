@@ -47,6 +47,7 @@
     "mschema": "https://github.com/mschema/mschema/tarball/master",
     "mschema-forms": "https://github.com/mschema/mschema-forms/tarball/master",
     "mustache": "^0.8.2",
+    "nano": "^6.1.5",
     "node-slug": "0.0.2",
     "node-uuid": "^1.4.3",
     "npm": "*",
