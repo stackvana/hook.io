@@ -1,8 +1,9 @@
 module['exports'] = {
   site: {
     port: 9999,
+    host: "0.0.0.0",
     https: true,
-    roots: ["127.0.0.1", "localhost", "hook.io", "www.hook.io"]
+    roots: ["192.168.59.103", "localhost", "hook.io", "www.hook.io"]
   },
   baseUrl: "https://localhost",
   couch: {
@@ -12,6 +13,10 @@ module['exports'] = {
     "password": "password",
     "port": 5984,
     "host": "localhost"
+  },
+  redis: {
+    port: 6379,
+    host: "127.0.0.1"
   },
   github: {
     accessName: "",
@@ -36,9 +41,10 @@ module['exports'] = {
   },
   // tempDirectory: __dirname + "/../temp/",
   tempDirectory: "/hook-temp/",
-  // sslKeyDirectory: __dirname + '/../ssl/',
+  //sslKeyDirectory: __dirname + '/../ssl/',
   sslKeyDirectory: '/src/ssl/',
   chrootDirectory: '/chroot',
+  //chrootDirectory: '/Users/chroot',
   useChroot: true,
   customDomains: true,
   UNTRUSTED_HOOK_TIMEOUT: 10000,
