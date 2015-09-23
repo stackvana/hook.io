@@ -37,4 +37,14 @@ WORKDIR /src
 
 EXPOSE 9999
 
-CMD node /src/bin/server
+CMD node /src/bin/server && node /src/bin/worker
+
+# CMD node /src/bin/worker
+
+# CMD node /src/bin/worker
+
+# CMD node /src/bin/worker
+
+# CMD node /src/bin/worker
+
+# CMD node /src/bin/worker
