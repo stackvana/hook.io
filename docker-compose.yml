@@ -1,9 +1,13 @@
+redis:
+  image: redis
+
+couch:
+  image: couchdb
+
 hookio:
   build: .
   ports:
     - "49160:9999"
   links:
-    - "db:redis"
-
-db:
-  image: redis
+    - "redis:redis"
+    - "couch:couch"

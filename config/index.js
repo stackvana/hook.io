@@ -12,7 +12,7 @@ module['exports'] = {
     "username": "admin",
     "password": "password",
     "port": 5984,
-    "host": "localhost"
+    "host": "couch"
   },
   redis: {
     port: 6379,
