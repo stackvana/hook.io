@@ -14,7 +14,7 @@ function mergeParams (req, res, next) {
   //
   if (typeof req.params === 'object') {
     Object.keys(req.params).forEach(function (p) {
-      req.resource.params[p] = req.param(p);
+      req.resource.params[p] = req.param[p];
     });
   }
 
