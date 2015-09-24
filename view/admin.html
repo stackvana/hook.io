@@ -37,8 +37,8 @@
 
     $('.cronDiv').croneditor({ "value": "{{hook.cron}}"});
 
-    if(!$('input[name="cronActive"]').is(':checked')) {
-      $('.cronRow').hide();
+    if($('input[name="cronActive"]').is(':checked')) {
+      $('.cronRow').show();
     }
 
     $('input[name="cronActive"]').click(function(){
@@ -469,8 +469,6 @@ body legend {
       $('.gistUrlHolder').show();
     });
 
-    $('.cronDiv').croneditor();
-
     $('input[name="cronActive"]').click(function(){
       if($(this).prop('checked')) {
         $('.cronRow').show();
@@ -591,18 +589,16 @@ body legend {
       var l = $('#language').val();
       $('.currentLanguage').html($( "#language option:selected" ).text());
       if (l === "javascript") {
-        $('#gatewayForm').attr('action', '/Marak/gateway');
         $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
       } else {
-        $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
         // TODO: better default gist values for non-javascript langauges
         $('#gist').attr('value', '');
       }
 
-      // assume first file is source code
-      // see: https://github.com/bigcompany/hook.io/issues/110
+      $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+
       var keys = Object.keys(boot.examples[l]);
-      editor.setValue(boot.examples[l][keys[0]]);
+      editor.setValue(boot.examples[l]['source']);
       $('#editorSource').click();
       //showCode();
       return false;
@@ -650,7 +646,7 @@ body legend {
 
   <form id="hookForm" method="POST" action="/admin" role="form">
     <legend><h1>Manage Microservice</h1></legend>
-    <h3><a href="" class="hookLink">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh">Refresh Cache</a></h3>
+    <h3><a href="" class="hookLink" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh">Refresh Cache</a></h3>
     <h3><a href="" class="hookSource">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter">Presenter</a></h3>
     <br/>
     <div class="gistStatus">Hey there! We just created a new Gist on Github using your account: <a href="">here</a><br/>

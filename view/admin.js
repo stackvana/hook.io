@@ -189,7 +189,7 @@ module['exports'] = function view (opts, callback) {
       }
 
       if (typeof h.cron !== 'undefined') {
-        $('#cronString').attr('value', h.cron);
+        $//('#cronString').attr('value', h.cron);
       }
 
       $('.isPublic').attr('checked', 'CHECKED');
@@ -239,20 +239,29 @@ module['exports'] = function view (opts, callback) {
         out = out.replace("{{hook.cron}}", h.cron);
         var boot = {
           owner: req.session.user,
-          source: hook,
-          themes: themes
+          source: h.source,
+          themes: themes,
+          cron: h.cron
         };
 
         var services = hooks.services;
         var examples = {};
-
         // pull out helloworld examples for every langauge
         hook.languages.forEach(function(l){
-          examples[l] = services['examples-' + l + '-helloworld'];
+          examples[l] = services['examples-' + l + '-hello-world'];
         });
 
-        boot.examples = examples;
+        for (var s in services) {
+          var e = services[s];
+          var type = s.split('-')[0],
+              lang = s.split('-')[1];
+          if (type === "examples" && lang === "javascript") {
+            $('.selectSnippet').prepend('<option value="' + 'marak/' + s + '">' + e.description + '</option>')
+          }
+        }
 
+        //console.log(examples)
+        boot.examples = examples;
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
         return callback(null, out);
       });
