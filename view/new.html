@@ -340,6 +340,7 @@ body legend {
 
   // lookup themes from curated theme list
   // TODO: Create "themes" resource and persist this to database
+  // REMARK: WHY IS THIS NOT USING THEMES MODULE ?!?!
   var themes = {
     "debug": {
       "theme": "https://hook.io/themes/debug/index.html",
@@ -523,20 +524,20 @@ body legend {
       $('.currentLanguage').html($( "#language option:selected" ).text());
       $('.currentLanguageShort').html($( "#language" ).val());
       if (l === "javascript") {
-        $('#gatewayForm').attr('action', '/Marak/gateway');
         $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
         $('.helpLang').hide();
       } else {
-        $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
         // TODO: better default gist values for non-javascript langauges
         $('#gist').attr('value', '');
         $('.helpLang').show();
       }
 
+      $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+
       // assume first file is source code
       // see: https://github.com/bigcompany/hook.io/issues/110
       var keys = Object.keys(boot.examples[l]);
-      editor.setValue(boot.examples[l][keys[0]]);
+      editor.setValue(boot.examples[l]['source']);
       $('#editorSource').click();
       //showCode();
       return false;
