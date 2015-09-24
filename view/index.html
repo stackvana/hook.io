@@ -469,8 +469,6 @@ $('document').ready(function(){
       $('#gist').attr('value', '');
     }
 
-    // assume first file is source code
-    // see: https://github.com/bigcompany/hook.io/issues/110
     var keys = Object.keys(boot.examples[l]);
     editor.setValue(boot.examples[l]['source']);
     $('.codeButton').click();

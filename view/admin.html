@@ -590,6 +590,8 @@ body legend {
       $('.currentLanguage').html($( "#language option:selected" ).text());
       if (l === "javascript") {
         $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+        $('.warnLanguages').hide();
+        $('#save').attr('disabled', null);
       } else {
         // TODO: better default gist values for non-javascript langauges
         $('#gist').attr('value', '');
