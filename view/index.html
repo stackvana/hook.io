@@ -421,7 +421,7 @@ $('document').ready(function(){
     showCode();
     editor.setValue("loading...");
     loadingSnippet();
-    request = $.get('http://localhost:9999' + src + '/source', function (res) {
+    request = $.get(boot.baseUrl + "/" + src + '/source', function (res) {
       snippetLoaded();
       editor.setValue(res);
     });
@@ -446,21 +446,25 @@ $('document').ready(function(){
     }
 
     var l = $('#language').val();
-    $('.currentLanguage').html($( "#language" ).val());
+    $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+
     if (l === "javascript") {
-      $('#gatewayForm').attr('action', '/Marak/gateway');
-      $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
       $('.selectSnippet').show();
       $('.prevControl').show();
       $('.nextControl').show();
       $('.helloWorld').hide();
+      $('.helloLang').hide();
+      $('.warnLanguages').hide();
+      $('.runButton').attr('disabled', null);
+      $('.saveButton').attr('disabled', null);
+      $('.codeButton').attr('disabled', null);
     } else {
+      $('.currentLanguage').html($( "#language" ).val());
       $('.selectSnippet').hide();
       $('.prevControl').hide();
       $('.nextControl').hide();
       $('.helloLang').html(l);
       $('.helloWorld').show();
-      $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
       // TODO: better default gist values for non-javascript langauges
       $('#gist').attr('value', '');
     }
@@ -468,7 +472,7 @@ $('document').ready(function(){
     // assume first file is source code
     // see: https://github.com/bigcompany/hook.io/issues/110
     var keys = Object.keys(boot.examples[l]);
-    editor.setValue(boot.examples[l][keys[0]]);
+    editor.setValue(boot.examples[l]['source']);
     $('.codeButton').click();
     //showCode();
     return false;
@@ -1016,24 +1020,7 @@ var editor;
              <button class="btn" id="agreeWarning">Agree to Terms</button>
            </div>
         </div>
-
         <select name="selectSnippet" class="selectSnippet btn btn-default">
-          <option value="/Marak/examples-helloWorld">hello world</option>
-          <option value="/Marak/examples-simpleHttpRequest">send outgoing http requests</option>
-          <option value="/Marak/examples-requestParameters">access incoming request data</option>
-          <option value="/Marak/examples-inputSchema">add input schemas</option>
-          <option value="/Marak/examples-transformStream">transform streaming requests</option>
-          <option value="/Marak/examples-pipeHook">pipe streaming requests</option>
-          <option value="/Marak/examples-mergeStreams">merge streams</option>
-          <option value="/Marak/examples-datastore">use the cloud datastore</option>
-          <option value="/Marak/examples-imageResize">resize images</option>
-          <option value="/Marak/examples-fakeData">generate fake data</option>
-          <!--
-          <option value="/Marak/coin">get crypto-currency prices</option>
-          <option value="/Marak/geoip">lookup requests geoip</option>
-          -->
-          <!-- <option value="/Marak/markdown">render markdown</option> -->
-          <!-- <option value="/Marak/spellcheck">spellcheck words</option> -->
         </select>
         <div class="helloWorld">
           Hello world example for <span class="helloLang">X</span><br/>
@@ -1064,7 +1051,7 @@ var editor;
       </div>
       <a name="tuts"/>
       <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
-      <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
+      <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway-javascript" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="source" id="source">// A simple hello world microservice 
 // Click "Deploy Service" to deploy this code
 // Service will respond to HTTP requests with a string

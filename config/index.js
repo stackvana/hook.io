@@ -13,7 +13,7 @@ module['exports'] = {
    { host: "worker3", port: "10000" },
    { host: "worker4", port: "10000" }
   ],
-  baseUrl: "https://localhost",
+  baseUrl: "http://localhost:9999",
   couch: {
     "database": "hook",
     "type": "couchdb",
@@ -36,8 +36,8 @@ module['exports'] = {
     CLIENT_SECRET: "14ed41431983aaceef121d32f2f3f3087e0434ac",
     OAUTH_CALLBACK: "http://localhost:9999/login/github/callback"
   },
-  defaultTheme : "https://localhost/themes/none/index.html",
-  defaultPresenter : "https://localhost/themes/none/index.js",
+  defaultTheme : "http://localhost:9999/themes/none/index.html", // should be https?
+  defaultPresenter : "http://localhost:9999/themes/none/index.js",
   stripe: {
     secretKey: "sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV",
     publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
@@ -47,10 +47,11 @@ module['exports'] = {
     "api_user": "marak",
     "api_key": "abcd"
   },
+  cacheView: false,
   // tempDirectory: __dirname + "/../temp/",
   tempDirectory: "/hook-temp/",
   sslKeyDirectory: '/src/ssl/',
-  chrootDirectory: '/chroot',
+  chrootDirectory: '/var/chroot',
   //sslKeyDirectory: __dirname + '/../ssl/',
   //chrootDirectory: '/Users/chroot',
   useChroot: true,

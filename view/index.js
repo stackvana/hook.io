@@ -31,6 +31,8 @@ module['exports'] = function view (opts, callback) {
 
   var boot = {};
 
+  boot.baseUrl = config.baseUrl;
+
   //
   // enables curl signups
   // EASYTODO: move this into separate module
@@ -97,17 +99,27 @@ module['exports'] = function view (opts, callback) {
     return res.end(message);
   }
   // TODO: gateway.hook.io for production
-  $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway');
+  $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway-javascript');
 
 
   var services = hooks.services;
   var examples = {};
-
+  console.log(services)
   // pull out helloworld examples for every langauge
   hook.languages.forEach(function(l){
-    examples[l] = services['examples-' + l + '-helloworld'];
+    examples[l] = services['examples-' + l + '-hello-world'];
   });
 
+  for (var s in services) {
+    var e = services[s];
+    var type = s.split('-')[0], 
+        lang = s.split('-')[1];
+    if (type === "examples" && lang === "javascript") {
+      $('.selectSnippet').prepend('<option value="' + 'marak/' + s + '">' + e.description + '</option>')
+    }
+  }
+
+  //console.log(examples)
   boot.examples = examples;
 
   if (typeof user === "undefined") {
