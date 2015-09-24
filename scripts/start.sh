@@ -3,15 +3,15 @@
 
 
 # start main front-end server
-node /src/bin/server &
+node ./bin/server &
 
 # start five workers to run hooks
 
-node /src/bin/worker &
-node /src/bin/worker &
-node /src/bin/worker &
-node /src/bin/worker &
-node /src/bin/worker
+node ./bin/worker &
+node ./bin/worker &
+node ./bin/worker &
+node ./bin/worker &
+node ./bin/worker
 
 # start cron jobs
 # sudo node bin/cron

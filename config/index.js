@@ -4,8 +4,15 @@ module['exports'] = {
     port: 9999,
     host: "0.0.0.0",
     https: true,
-    roots: ["0.0.0.0", "192.168.59.103", "localhost", "hook.io", "www.hook.io"]
+    roots: ["hookio", "0.0.0.0", "192.168.59.103", "localhost", "hook.io", "www.hook.io"]
   },
+  workers: [
+   { host: "worker0", port: "10000" },
+   { host: "worker1", port: "10000" },
+   { host: "worker2", port: "10000" },
+   { host: "worker3", port: "10000" },
+   { host: "worker4", port: "10000" }
+  ],
   baseUrl: "https://localhost",
   couch: {
     "database": "hook",
