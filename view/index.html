@@ -1038,7 +1038,7 @@ var editor;
             <button class="codeButton btn btn-default">Edit Service</button>
           <form name="saveForm" id="saveForm" class="saveForm" action="/gist" method="POST">
             <input name="source" class="gistSource" type="hidden"/>
-            <!-- TODO: re-enable <button class="saveButton btn btn-default">Save Service to Github</button> -->
+            <button disabled="DISABLED" class="saveButton btn btn-default">Save Service to Github</button>
           </form>
         </div>
         <!--
@@ -1047,7 +1047,7 @@ var editor;
           </div>
         -->
       </div>
-      <a name="tuts"/>
+      <a name="tuts"></a>
       <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
       <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway-javascript" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="source" id="source">// A simple hello world microservice 
