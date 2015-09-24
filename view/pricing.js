@@ -1,3 +1,8 @@
+var config = require("../config");
+
 module['exports'] = function view (opts, callback) {
-  callback(null, this.$.html());
+  var $ = this.$;
+  var out = $.html();
+  out = out.replace('{{stripePK}}', config.stripe.publicKey);
+  callback(null, out);
 };

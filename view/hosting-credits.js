@@ -1,4 +1,3 @@
-
 // TODO: make parseRequest into separate module
 // maybe put into https://github.com/bigcompany/parse-service-request/ ?
 var parseRequest = function parse (req, res, cb) {
@@ -11,8 +10,8 @@ var parseRequest = function parse (req, res, cb) {
   });
 };
 
-
 var user = require("../lib/resources/user");
+var config = require("../config");
 var slug = require('slug');
 
 module['exports'] = function hostingCredits (opts, cb) {
@@ -30,7 +29,7 @@ module['exports'] = function hostingCredits (opts, cb) {
       // success?
       // amount
       // email
-      // TODO: better stripe confirmation check
+      // TODO: better stripe confirmation check with amount
       if (typeof params.email !== "string" || params.email.length === 0) {
         return res.end('invalid transaction!');
       }
@@ -65,9 +64,7 @@ module['exports'] = function hostingCredits (opts, cb) {
                 req.session.user = result.name;
                 return res.end('paid');
               });
-              
             });
-            
         } else {
           // if so, use that account info, login
           // set hosting credits
@@ -94,8 +91,10 @@ module['exports'] = function hostingCredits (opts, cb) {
       });
     
     } else {
+      var out = $.html();
+      out = out.replace('{{stripePK}}', config.stripe.publicKey);
       // GET request, show copy
-      cb(null, $.html());
+      cb(null, out);
     }
   });
   

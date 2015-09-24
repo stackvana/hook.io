@@ -251,7 +251,7 @@
     var amount, credits;
     $(document).ready(function(){
       var handler = StripeCheckout.configure({
-        key: 'pk_test_axAR0vF3Qam8zs09JE7t8ZIo',
+        key: '{{stripePK}}',
         image: 'https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png',
         locale: 'auto',
         token: function(token) {
