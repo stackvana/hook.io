@@ -1,164 +1,147 @@
 <script src="https://checkout.stripe.com/v2/checkout.js"></script>
-
+<script src="http://andreruffert.github.io/rangeslider.js/assets/rangeslider.js/dist/rangeslider.min.js"></script>
 <style>
- .pitch {
+  .pitch {
    text-align: left;
- }
- .pitch p {
+  }
+  .pitch p {
    font-size: 36px;
- }
- .pitch h1 {
+  }
+  .pitch h1 {
    font-weight: bold;
    font-size: 52px;
- }
- .pitch h2 {
+   margin-bottom: 10px;
+  }
+  .pitch h2 {
    font-size: 48px;
    font-weight: bold;
- }
- .product table {
+   margin-bottom: 10px;
+  }
+  .product table {
    text-align: left;
    font-size: 24px;
- }
- .product .buy {
+  }
+  .product .buy {
    font-size: 16px;
    padding: 10px;
    width: 210px;
    margin: 0px;
- }
- .product .buy:hover {
+  }
+  .product .buy:hover {
    font-weight: 700;
- }
+  }
+  .callToAction {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    
+    color: black;
+    border: solid;
+    border-width: 1px;
+    box-shadow: 10px 10px 5px #888888;
+    width: 100%;
+  }
+  .callToAction button.btn {
+    font-size: 38px;
+    margin-top: 20px;
+    width: 90%;
+  }
+  .callToAction button.btn:hover {
+   font-weight: bold;
+  }
+  .callToAction .rangeslider {
+   margin-bottom: 10px;
+   width: 90%;
+  }
+  .callToAction .amount {
+   font-size: 32px;
+   width: 100px;
+   margin-bottom: 10px;
+   padding: 0px;
+  }
+  .callToAction .currency {
+   font-size: 32px;
+   margin: 0px;
+   padding: 0px;
+  }
+
+  .frannyTag {
+   font-size: 18px;
+  }
  
 </style>
 
 <div class="status"></div>
 
 <div class="pitch">
-  <h1>Buy Hosting Credits!</h1>
-  <h2><em>Limited Time Offer</em></h2>
-  <h2>Starting September 11th, 2015!</h2> <br/>
-  <p>In order to reward early adopters and help promote growth of the <a href="https://hook.io">hook.io</a> open-source microservice platform...</p>
+  <h1>Help Fund Hook.io!</h1>
+  <h2><em>Buy Hosting Credits</em></h2>
 
-  <p>...we now offer the ability for users to <em>buy</em> <a href="#products">bulk hosting credits</a> at a <em>discount</em>!</p>
-
-  <p>These credits could be applied towards future incurred hosting costs...</p>
-
-  <p>...or these credits could even be transferred between user accounts on <a href="https://hook.io">hook.io</a>!</p>
-  
-  <p>In fact, we encourage you to trade them.</p>
-  
-  <p>Continue reading and we'll explain how you could redeem these Hosting Credits for a profit.</p>
   <br/>
+  <p>To help promote growth of the <a href="https://hook.io">hook.io</a> open-source microservice platform we now offer the ability for users to buy bulk hosting credits.</p>
 
-  <h2>How?</h2>
+  <div align="center" class="callToAction">
+    <h2 align="left" style="padding-bottom:20px;padding-left:40px;">Select Amount...</h2>
+    <input type="range" class="js-amount-range" value="5" min="5" max="1000">
+    <br>
+    <span class="currency">$<input type="number" class="amount" value="5" min="5" max="1000"></input>.00</span>
+    <button class="buy btn" data-credits="100" data-discount="0.1">Click here to buy with Bitcoin or Card</button>
+  </div>
+
+  <p>While these credits can be applied towards future incurred hosting costs on hook.io, we hope you think of them of a way to help invest in the growth of this 100% open-source project.</p>
+
+  <em class="frannyTag">Here is a picture of our dog, Franny</em>
+  <img title="Here is a picture of our dog, Franny" src="/img/franny/swimming.jpg" height="500"/>
   
-  <p>hook.io is actively <a href="http://angel.co/hook-io">seeking a seed investment</a> to jumpstart our already profitable and growing platform.</p>
-
-  <p>Our goal is that sometime in the next year after raising a seed investment, we will upgrade our existing <a href="/affiliates">Affiliates Program</a> to offer cash rebates for existing hosting credits.</p>
-
-  <h2>Rewards? Swag?</h2>
-  <p>In the near future our <a href="/affiliates">Affiliates Program</a> will offer company merchandise such as stickers and t-shirts. If you wanted, you could take a few Hosting Credits and buy a hook.io t-shirt!</p>
   <br/>
-
+  <br/>
+  <br/>
   <h2>The idea is simple</h2>
   <p>The more credits you buy today, the better we can make this <a href="https://github.com/bigcompany/hook.io/">100% open-source project</a> tomorrow.</p>
 
-  <p>Credits bought today at a discount will be redeemable though our  <a href="/affiliates">Affiliates Program</a> in the future for full value.</p>
-  <a name="products"/>
-  <div class="product">
-    <h2>Bulk Hosting Credit Packages</h2>
-    <form action="/billing" method="POST"> \
-      <table class="table">
-        <tr>
-          <th>Credits</th>
-          <th>Value</th>
-          <th>Discount</th>
-          <th>Your Cost</th>
-          <th>&nbsp;</th>
-        </tr>
-        <tr>
-          <td>100 Credits</td>
-          <td>$100.00</td>
-          <td>10%</td>
-          <td>$90.00</td>
-          <td>
-            <button class="buy btn" data-credits="100" data-discount="0.1">Buy with Bitcoin or Card</button>
-          </td>
-        </tr>
-        <tr>
-          <td>250 Credits</td>
-          <td>$250.00</td>
-          <td>15%</td>
-          <td>$212.50</td>
-          <td>
-            <button class="buy btn" data-credits="250" data-discount="0.15">Buy with Bitcoin or Card</button>
-          </td>
-        </tr>
-        <tr>
-          <td>500 Credits</td>
-          <td>$500.00</td>
-          <td>20%</td>
-          <td>$400.00</td>
-          <td>
-            <button class="buy btn" data-credits="500" data-discount="0.2">Buy with Bitcoin or Card</button>
-          </td>
-        </tr>
-        <tr>
-          <td>1000 Credits</td>
-          <td>$1000.00</td>
-          <td>25%</td>
-          <td>$750.00</td>
-          <td>
-            <button class="buy btn" data-credits="1000" data-discount="0.25">Buy with Bitcoin or Card</button>
-          </td>
-        </tr>
-        <tr>
-          <td>2000 Credits</td>
-          <td>$2000.00</td>
-          <td>30%</td>
-          <td>$1400.00</td>
-          <td>
-            <button class="buy btn" data-credits="2000" data-discount="0.3">Buy with Bitcoin or Card</button>
-          </td>
-        </tr>
-        <tr>
-          <td>5000 Credits</td>
-          <td>$5,000.00</td>
-          <td>35%</td>
-          <td>$3250.00</td>
-          <td>
-            <button class="buy btn" data-credits="5000" data-discount="0.35">Buy with Bitcoin or Card</button>
-          </td>
-        </tr>
-        <tr>
-          <td>10,000 Credits</td>
-          <td>$10,000.00</td>
-          <td>40%</td>
-          <td>$6000.00</td>
-          <td>
-            <button class="buy btn" data-credits="10000" data-discount="0.4">Buy with Bitcoin or Card</button>
-          </td>
-        </tr>
-      
-      </table>
-    </table>
-    <p>This is a unique opportunity to help promote open-source, while potentially making a profit.</p> 
+  <p>We can't promise that these Hosting Credits will have any redeemable value in the future or represent ownership in hook.io.</p> 
+  <p>We will promise that we will do everything we can to reward the early supporters of <a href="https://hook.io/">hook.io</a></p>
+  <em class="frannyTag">Franny was the cutest puppy ever!</em>
+  <img title="Franny was the cutest puppy ever!" src="/img/franny/puppy.jpg" height="500"/>
+
+  <br/>
+  <br/>
+  <br/>  
+  <h2>Rewards? Swag?</h2>
+  <p>In the near future our <a href="/affiliates">Affiliates Program</a> will offer company merchandise such as stickers and t-shirts. If you wanted, you could spend a few Hosting Credits and get a hook.io t-shirt or other awesome swag!</p>
+
+  <div align="center" class="callToAction">
+    <h2 align="left" style="padding-bottom:20px;padding-left:40px;">Select Amount...</h2>
+    <input type="range" class="js-amount-range" value="5" min="5" max="1000">
+    <br>
+    <span class="currency">$<input type="number" class="amount" value="5" min="5" max="1000"></input>.00</span>
+    <button class="buy btn" data-credits="100" data-discount="0.1">Click here to buy with Bitcoin or Card</button>
+  </div>
+
+  <div align="center">
+    <em class="frannyTag">Please help feed Franny. She is a very discriminating lady who only eats steak.</em><br/><br/>
+    <img title="Please help feed Franny. She is a very discriminating lady who only eats steak." src="/img/franny/belly.jpg" height="600"/>
+    <br/>
+    <br/>
     <h2>Thank you for your support.</h2>
     <p>Questions? Email <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
-
-
   </div>
-  
+  <!--
+    Secret hidden franny video 
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/8Y9k8s1ahVo" frameborder="0" allowfullscreen></iframe>
+  -->
   <br/>
   <br/>
   <br/>
 </div>
 
-
 <script type="text/javascript">
-  var amount, credits;
+  var amount, credits, handler;
   $(document).ready(function(){
-    var handler = StripeCheckout.configure({
+    handler = StripeCheckout.configure({
       key: '{{stripePK}}',
       image: 'https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png',
       locale: 'auto',
@@ -168,12 +151,14 @@
           url: '/hosting-credits',
           data: {
             "email": token.email,
-            "token": token,
-            "credits": credits // NOTE: All hosting credit amounts are manually reconciled against the monthly payment processor reports...please don't try to hack this open-source project... 
+            "stripeToken": token,
+            "credits": amount // NOTE: All hosting credit amounts are manually reconciled against the monthly payment processor reports...please don't try to hack this open-source project... 
           },
           success: function(res){
             if (res === "paid") {
               document.location = "/account?paid=true";
+            } else {
+              alert(res);
             }
             // $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
           },
@@ -189,24 +174,47 @@
 
     $('.buy').on('click', function(e) {
       // Open Checkout with further options
-      credits = Number($(this).attr('data-credits'));
-      var discount = Number($(this).attr('data-discount'));
-      amount = (credits - (credits * discount)) * 100;
-      handler.open({
-        name: 'hook.io',
-        description: credits + " Hosting Credits",
-        currency: "usd",
-        bitcoin: true,
-        amount: amount,
-        panelLabel: "Purchase"
-      });
+      //credits = Number($(this).attr('data-credits'));
+      amount = Number($('.amount', $('.buy').parent()).val()) * 100;
+      //var discount = Number($(this).attr('data-discount'));
+      // amount = (credits - (credits * discount)) * 100;
+      openStripe(amount);
       e.preventDefault();
     });
 
     // Close Checkout on page navigation
     $(window).on('popstate', function() {
       handler.close();
-    });  
+    });
+    
+    var $rangeslider = $('.js-amount-range');
+    var $amount = $('.amount');
+
+    $rangeslider
+      .rangeslider({
+        polyfill: false
+      })
+      .on('input', function() {
+        $amount.val(this.value);// = this.value;
+//        $rangeslider.val(this.value).change();
+      });
+
+    $amount.on('input', function() {
+      $rangeslider.val(this.value).change();
+    });
+    
   });
+
+  function openStripe (amount) {
+    handler.open({
+      name: 'hook.io',
+      description: amount / 100 + " Hosting Credits",
+      currency: "usd",
+      bitcoin: true,
+      amount: amount,
+      panelLabel: "Purchase"
+    });
+    
+  };
 
 </script>
