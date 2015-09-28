@@ -48,6 +48,10 @@ module['exports'] = function view (opts, callback) {
 
       params.sourceType = params.hookSource;
 
+      if (params.themeActive) {
+        params.themeStatus = "enabled";
+      }
+
       var query = { name: params.name, owner: req.session.user };
       return hook.find(query, function(err, results){
         if (results.length > 0) {
