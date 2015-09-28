@@ -188,7 +188,7 @@ function showUserForm (user, cb) {
 
   formSchema.previousName = {
     default: user.name,
-    hidden: true
+    format: "hidden"
   };
 
   formSchema.email.default = user.email || "";
