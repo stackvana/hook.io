@@ -104,12 +104,31 @@ module['exports'] = function view (opts, callback) {
 
   var services = hooks.services;
   var examples = {};
-  console.log(services)
+
   // pull out helloworld examples for every langauge
   hook.languages.forEach(function(l){
     examples[l] = services['examples-' + l + '-hello-world'];
   });
 
+  // list of js examples by order
+  var jsExamples = [
+    "hello-world",
+    "request-parameters",
+    "send-http-request",
+    "input-schema",
+    "pipe-hook",
+    "stream-merge",
+    "stream-transform",
+    "datastore",
+    "fake-data"
+  ];
+  jsExamples = jsExamples.reverse();
+  jsExamples.forEach(function (item){
+    var ex = services['examples-javascript-' + item];
+    $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.description + '</option>')
+  });
+
+  /*
   for (var s in services) {
     var e = services[s];
     var type = s.split('-')[0], 
@@ -118,8 +137,8 @@ module['exports'] = function view (opts, callback) {
       $('.selectSnippet').prepend('<option value="' + 'marak/' + s + '">' + e.description + '</option>')
     }
   }
+  */
 
-  //console.log(examples)
   boot.examples = examples;
 
   if (typeof user === "undefined") {
