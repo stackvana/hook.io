@@ -648,52 +648,52 @@ body legend {
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
 
   <form id="hookForm" method="POST" action="/admin" role="form">
-    <legend><h1>Manage Microservice</h1></legend>
-    <h3><a href="" class="hookLink" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh">Refresh Cache</a></h3>
-    <h3><a href="" class="hookSource">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter">Presenter</a></h3>
+    <legend><h1 class="i18n">Manage Microservice</h1></legend>
+    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
+    <h3><a href="" class="hookSource i18n">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource i18n">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView i18n">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter i18n">Presenter</a></h3>
     <br/>
-    <div class="gistStatus">Hey there! We just created a new Gist on Github using your account: <a href="">here</a><br/>
+    <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
       <br/>
       The Gist will now be associated with the Hook service once you've completed this form.
     </div>
 
     <div class="hookHolder">
-      <h2>Service Information</h2>
+      <h2 class="i18n">Service Information</h2>
       <div class="form-group">
-        <label for="name">Name</label>
-        <input tabindex="1" class="form-control" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
+        <label for="name" class="i18n">Name</label>
+        <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
         <input type="hidden" id="previousName" name="previousName" class="previousName"/>
         <input type="hidden" id="owner" name="owner" class="owner"/>
         <div class="tiny">
-          <em>Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
+          <em class="i18n">Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
         </div>
       </div>
       <div class="form-group">
-        <label for="path">Route</label>
-        <input tabindex="2" class="form-control" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
+        <label for="path" class="i18n">Route</label>
+        <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
         <div class="tiny">
-          <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
-          <button tabindex="3" type="button" class="routeTipsButton btn small-btn">Route Formatting Help</button>
+          <em class="i18n">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
+          <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n">Route Formatting Help</button>
         </div>
 
         <div class="tiny routeHint">
-          <h4>Route Formatting</h4>
+          <h4 class="i18n">Route Formatting</h4>
           <table class="routeExamples" border="1">
             <tr>
               <td><code>:name</code></td>
-              <td>a named parameter to capture from the route</td>
+              <td class="i18n">a named parameter to capture from the route</td>
             </tr>
             <tr>
               <td><code>*splat</code></td>
-              <td>a wildcard splat to capture from the route</td>
+              <td class="i18n">a wildcard splat to capture from the route</td>
             </tr>
             <tr>
               <td><code>()</code></td>
-              <td>Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
+              <td class="i18n">Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
             </tr>
             <tr>
               <td><code>strings</code></td>
-              <td>Anything else. Interpolate static strings with params.</td>
+              <td class="i18n">Anything else. Interpolate static strings with params.</td>
             </tr>
           </table>
 
@@ -714,21 +714,21 @@ body legend {
         </div>
 
         <div class="form-group">
-          <label for="mode">Hook Mode</label>
+          <label for="mode" class="i18n">Hook Mode</label>
           <select class="form-control mode" name="mode">
-            <option value="Development">Development</option>
-            <option value="Production">Production</option>
+            <option value="Development" class="i18n">Development</option>
+            <option value="Production" class="i18n">Production</option>
           </select>
-          <p class="smaller"><strong>Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+          <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
         </div>
 
       </div>
 
       <div class="form-group">
-        <label for="path">Service URLs</label>
+        <label for="path" class="i18n">Service URLs</label>
 
         <div class="tiny">
-          <em>The following URLs will be created to help manage the service.</em>
+          <em class="i18n">The following URLs will be created to help manage the service.</em>
         </div>
 
         <table class="hookLinks" border="1">
@@ -737,19 +737,19 @@ body legend {
             <td class="home">https://hook.io/Marak/hook-name</td>
           </tr>
           <tr>
-            <td><strong>Optional Url Parameters</strong></td>
+            <td><strong class="i18n">Optional Url Parameters</strong></td>
             <td class="params">None</td>
           </tr>
           <tr>
-            <td><strong>Admin ( login required )</strong></td>
+            <td><strong class="i18n">Admin ( login required )</strong></td>
             <td class="admin">https://hook.io/marak/hook-name/admin</td>
           </tr>
           <tr>
-            <td><strong>Source Code</strong></td>
+            <td><strong class="i18n">Source Code</strong></td>
             <td class="source">https://hook.io/marak/hook-name/source</td>
           </tr>
           <tr>
-            <td><strong>Logs</strong></td>
+            <td><strong class="i18n">Logs</strong></td>
             <td class="logs">https://hook.io/marak/hook-name/logs</td>
           </tr>
           <!--
@@ -771,12 +771,12 @@ body legend {
       </div>
     </div>
     <div class="sourcesHolder">
-      <h2>Hook Source</h2>
+      <h2 class="i18n">Hook Source</h2>
 
       <div class="services"></div>
 
       <div class="form-group languages">
-        <div class="languageTitle"><strong>Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
+        <div class="languageTitle"><strong class="i18n">Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
         <label class="smaller" for="language">Select Language:</label>
         <select name="language" id="language">
           <option value="javascript">JavaScript ( Recommended )</option>
@@ -793,7 +793,7 @@ body legend {
         </select>
         <div class="warnLanguages">
           <h2 class="warning">Warning</h2>
-          <p> We have <a href="/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <p>We have <a href="/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
           <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
@@ -811,7 +811,7 @@ body legend {
 
       </div>
       <div class="tiny">
-        <em>The source code to power the service. Can be provided as a Github Gist or as plain-text.</em>
+        <em class="i18n">The source code to power the service. Can be provided as a Github Gist or as plain-text.</em>
       </div>
 
       <div class="form-group gistUrlHolder">
@@ -872,15 +872,15 @@ body legend {
 
 
     <div class="form-group">
-      <input tabindex="10" type="checkbox" class="themeActive" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
-      <label for="themeActive">Customize appearance of Hook with a Theme</label>
+      <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
+      <label for="themeActive" class="i18n">Customize appearance of Hook with a Theme</label>
     </div>
 
     <div class="themeSelector well themeRow"></div>
 
     <div class="form-group">
-      <input tabindex="11" type="checkbox" class="cronActive" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
-      <label for="cronActive">Schedule Hook on a Timer using Cron</label>
+      <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
+      <label for="cronActive" class="i18n">Schedule Hook on a Timer using Cron</label>
     </div>
 
     <div class="form-group cronRow">
@@ -898,11 +898,11 @@ body legend {
     <div class="dangerZone">
       <div class="form-group danger">
         Danger Zone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span style="background-color:white;">||<a class="red deleteLink" href="">Delete Hook</a>||</span>
+          <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>
       </div>
     </div>
     <div class="form-group">
-      <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn">
+      <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn i18n">
     </div>
     
     <!-- 

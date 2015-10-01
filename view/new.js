@@ -123,6 +123,10 @@ module['exports'] = function view (opts, callback) {
       examples[l] = services['examples-' + l + '-hello-world'];
     });
 
+    var i18n = require('./helpers/i18n');
+    var i = req.i18n;
+    i18n(i, $);
+
     for (var s in services) {
       var e = services[s];
       var type = s.split('-')[0], 

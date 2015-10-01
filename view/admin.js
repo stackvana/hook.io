@@ -233,6 +233,10 @@ module['exports'] = function view (opts, callback) {
           $('.themeRow').attr('style', 'display: block;');
         }
 
+        var i18n = require('./helpers/i18n');
+        var i = req.i18n;
+        i18n(i, $);
+
         var out = $.html();
         h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));

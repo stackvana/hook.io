@@ -164,23 +164,8 @@ module['exports'] = function view (opts, callback) {
     $(item).html(i.__(v));
   });
 
-  // TODO: make into helper function
-  $('.i18n').each(function(index, item){
-    var el = $(item),
-        tagType = el[0].name;
-    switch (tagType) {
-      case 'input':
-        var v = $(item).attr('value');
-        $(item).attr('value', i.__(v));
-        var ph = $(item).attr('placeholder');
-        $(item).attr('placeholder', i.__(ph));
-      break;
-      default:
-        var v = $(item).html();
-        $(item).html(i.__(v));
-      break;
-    }
-  });
+  var i18n = require('./helpers/i18n');
+  i18n(i, $);
 
   if (typeof user === "undefined") {
     $('.userBar').remove();

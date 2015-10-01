@@ -591,48 +591,48 @@ body legend {
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
   <form id="hookForm" method="POST" action="/new" role="form">
-    <legend><h1>Create New Microservice</h1></legend>
+    <legend><h1 class="i18n">Create New Microservice</h1></legend>
 
-    <div class="gistStatus">Hey there! We just created a new Gist on Github using your account: <a href="">here</a><br/>
+    <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href=""  class="i18n">here</a><br/>
       <br/>
       The Gist will now be associated with the Hook service once you've completed this form.
     </div>
 
     <div class="hookHolder">
-      <h2>Service Information</h2>
+      <h2 class="i18n">Service Information</h2>
       <div class="form-group">
-        <label for="name">Name</label>
-        <input tabindex="1" class="form-control" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
+        <label for="name i18n">Name</label>
+        <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
         <div class="tiny">
           <em>Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
         </div>
       </div>
       <div class="form-group">
-        <label for="path">Route</label>
-        <input tabindex="2" class="form-control" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
+        <label for="path" class="i18n">Route</label>
+        <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
         <div class="tiny">
           <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
-          <button tabindex="3" type="button" class="routeTipsButton btn small-btn">Route Formatting Help</button>
+          <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n">Route Formatting Help</button>
         </div>
 
         <div class="tiny routeHint">
-          <h4>Route Formatting</h4>
+          <h4 class="i18n">Route Formatting</h4>
           <table class="routeExamples" border="1">
             <tr>
               <td><code>:name</code></td>
-              <td>a named parameter to capture from the route</td>
+              <td class="i18n">a named parameter to capture from the route</td>
             </tr>
             <tr>
               <td><code>*splat</code></td>
-              <td>a wildcard splat to capture from the route</td>
+              <td class="i18n">a wildcard splat to capture from the route</td>
             </tr>
             <tr>
               <td><code>()</code></td>
-              <td>Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
+              <td class="i18n">Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
             </tr>
             <tr>
               <td><code>strings</code></td>
-              <td>Anything else. Interpolate static strings with params.</td>
+              <td class="i18n">Anything else. Interpolate static strings with params.</td>
             </tr>
           </table>
 
@@ -651,7 +651,7 @@ body legend {
       </div>
 
       <div class="form-group">
-        <label for="path">Service URLs</label>
+        <label for="path" class="i18n">Service URLs</label>
 
         <div class="tiny">
           <em>The following URLs will be created to help manage the service.</em>
@@ -659,23 +659,23 @@ body legend {
 
         <table class="hookLinks" border="1">
           <tr>
-            <td class="left"><strong>Home</strong></td>
+            <td class="left"><strong class="i18n">Home</strong></td>
             <td class="home">https://hook.io/Marak/hook-name</td>
           </tr>
           <tr>
-            <td><strong>Optional Url Parameters</strong></td>
-            <td class="params">None</td>
+            <td><strong class="i18n">Optional Url Parameters</strong></td>
+            <td class="params i18n">None</td>
           </tr>
           <tr>
-            <td><strong>Admin ( login required )</strong></td>
+            <td><strong class="i18n">Admin ( login required )</strong></td>
             <td class="admin">https://hook.io/marak/hook-name/admin</td>
           </tr>
           <tr>
-            <td><strong>Source Code</strong></td>
+            <td><strong class="i18n">Source Code</strong></td>
             <td class="source">https://hook.io/marak/hook-name/source</td>
           </tr>
           <tr>
-            <td><strong>Logs</strong></td>
+            <td><strong class="i18n">Logs</strong></td>
             <td class="logs">https://hook.io/marak/hook-name/logs</td>
           </tr>
           <!--
@@ -697,12 +697,12 @@ body legend {
       </div>
     </div>
     <div class="sourcesHolder">
-      <h2>Hook Source</h2>
+      <h2 class="i18n">Hook Source</h2>
 
       <div class="services"></div>
 
       <div class="form-group languages">
-        <div class="languageTitle"><strong>Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
+        <div class="languageTitle"><strong class="i18n">Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
         <label class="smaller" for="language">Select Language:</label>
         <select name="language" id="language">
           <option value="javascript">JavaScript ( Recommended )</option>
@@ -719,8 +719,8 @@ body legend {
         </select>
 
         <div class="warnLanguages">
-          <h2 class="warning">Warning</h2>
-          <p> We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <h2 class="warning i18n">Warning</h2>
+          <p>We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="/blog/new-multi-language-support" target="_blank">let us know</a>.</p>
           <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
@@ -734,65 +734,65 @@ body legend {
       </div>
 
       <div class="form-group sources">
-        <label for="editorSource">Code Editor</label>
+        <label for="editorSource i18n">Code Editor</label>
         <input tabindex="5" type="radio" checked="CHECKED" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
         &nbsp;
-        <label for="gistSource">Github Gist</label>
+        <label for="gistSource i18n">Github Gist</label>
         <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
 
       </div>
       <div class="tiny">
-        <em>The source code to power the service. Can be provided as a Github Gist or as plain-text.</em>
+        <em class="i18n">The source code to power the service. Can be provided as a Github Gist or as plain-text.</em>
       </div>
 
       <div class="form-group gistUrlHolder">
-        <label for="gist">Gist Url</label>
+        <label for="gist" class="i18n">Gist Url</label>
         <input tabindex="6" type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
         <div class="tiny" style="padding-left:5px;padding-top:5px;">
-          <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
+          <a class="i18n" href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
         </div>
       </div>
 
-            <div class="form-group codeEditorHolder">
+      <div class="form-group codeEditorHolder">
 
-                <!-- Create a simple CodeMirror instance -->
-                <link rel="stylesheet" href="/js/codemirror.css">
-                <script src="/js/codemirror.js"></script>
-                <script src="/js/javascript.js"></script>
-                <script type="text/javascript">
-                </script>
-                <style>
-                  .CodeMirror {
-                    /* Set height, width, borders, and global font properties here */
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                    font-family: monospace;
-                    height: 500px;
-                    color: black;
-                    border: solid;
-                    border-width: 1px;
-                    box-shadow: 10px 10px 5px #888888;
-                  }
-                </style>
+          <!-- Create a simple CodeMirror instance -->
+          <link rel="stylesheet" href="/js/codemirror.css">
+          <script src="/js/codemirror.js"></script>
+          <script src="/js/javascript.js"></script>
+          <script type="text/javascript">
+          </script>
+          <style>
+            .CodeMirror {
+              /* Set height, width, borders, and global font properties here */
+              margin-top: 10px;
+              margin-bottom: 10px;
+              font-family: monospace;
+              height: 500px;
+              color: black;
+              border: solid;
+              border-width: 1px;
+              box-shadow: 10px 10px 5px #888888;
+            }
+          </style>
 
-                  <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
-                  <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
-  console.log(hook.params);
-  console.log(hook.req.path);
-  console.log(hook.req.method);
-  console.log(hook.env);
-  hook.res.end(JSON.stringify(hook.params, true, 2));
+            <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
+            <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
+console.log(hook.params);
+console.log(hook.req.path);
+console.log(hook.req.method);
+console.log(hook.env);
+hook.res.end(JSON.stringify(hook.params, true, 2));
 };</textarea>
-                  <script type="text/javascript">
-                    var editor;
-                    editor = CodeMirror.fromTextArea($('textarea').get(0), {
-                      lineNumbers: true
-                    });
-                    editor.refresh();
-                    //editor.show();
-                  </script>
-                <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
-              </div>
+            <script type="text/javascript">
+              var editor;
+              editor = CodeMirror.fromTextArea($('textarea').get(0), {
+                lineNumbers: true
+              });
+              editor.refresh();
+              //editor.show();
+            </script>
+          <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
+        </div>
     </div>
 
     <!--
@@ -805,27 +805,26 @@ body legend {
     </div>
     -->
 
-
     <div class="form-group">
-      <input tabindex="10" type="checkbox" class="themeActive" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
-      <label for="themeActive">Customize appearance of Hook with a Theme</label>
+      <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
+      <label for="themeActive" class="i18n">Customize appearance of Hook with a Theme</label>
     </div>
 
     <div class="themeSelector well themeRow"></div>
 
     <div class="form-group">
-      <input tabindex="11" type="checkbox" class="cronActive" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
-      <label for="cronActive">Schedule Hook on a Timer using Cron</label>
+      <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
+      <label for="cronActive" class="i18n">Schedule Hook on a Timer using Cron</label>
     </div>
 
     <div class="form-group cronRow">
-      <h2>Hooks can be scheduled on a timer</h2>
+      <h2 class="i18n">Hooks can be scheduled on a timer</h2>
 
-      <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
-      <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
-      <p class="superTiny">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
-      <p class="warning"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@hook.io">please let us know</a>. </p>
-      <h3>Cron Pattern</h3>
+      <p class="i18n">All Hooks support the ability to schedule their execution based on a date time pattern.</p>
+      <p class="superTiny i18n">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
+      <p class="superTiny i18n">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
+      <p class="warning i18n"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@hook.io">please let us know</a>. </p>
+      <h3 class="i18n">Cron Pattern</h3>
       <div class="cronDiv"></div>
     </div>
     <!-- 
@@ -834,7 +833,7 @@ body legend {
       <label for="isPublic">Display Hook in public Hook registry</label>
     </div>
     -->
-    <input tabindex="12" id="create" name="create" type="submit" value="Create new Hook"/ class="btn">
+    <input tabindex="12" id="create" name="create" type="submit" value="Create new Hook"/ class="btn i18n">
   </form>
 
   <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
