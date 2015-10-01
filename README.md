@@ -18,33 +18,38 @@ If you'd like, you can run the following Curl command to opt-in to our mailing l
 
 Replace youremail@marak.com with your email address.
 
+## Project Design and Development
+
+Interested in contributing to the development of hook.io? Please join the discussion!
+
+### IRC Room
+
+`#hook.io` on `irc.freenode.net:6667`
+
+Webchat [available here](http://webchat.freenode.net/?channels=hook.io)
+
+
+### Trello Boards
+
+[hook.io-design](https://trello.com/b/YBIFL077/hook-io-design)
+
+[hook.io-features](https://trello.com/b/9i9QSbof/hook-io-features)
+
 ## What is the purpose of hook.io?
 
-
 hook.io is an open-source hosting platform for webhooks and microservices. The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms. hook.io provides an easy way to create, host, and share microservices. Through developing many small re-usable microservices, you can reduce the complexity of your applications while improving stability.
-
-
 
 ## Why or how would I want to use hook.io?
 
 You should want to use hook.io if it can make your life as a developer easier.
 
-
 The most *basic use-case* for hook.io is quick and free webhook hosting. You can instantly create a [simple hook](https://hook.io/Marak/echo) which parses the incoming parameters of an HTTP request and performs arbitrary actions on it. For instance: Send an SMS message every-time the Hook is requested as a webpage. Since NPM is supported, you can re-use any existing library from the extensive [NPM module repository](http://npmjs.org). You can also configure Hooks to be executed on a schedule using a [Cron pattern](https://hook.io/cron).
-
-
 
 At this point, we will take note that Hooks are [fully streaming](https://github.com/substack/stream-handbook). Inside your Hook source code you have direct access to Node's [http.IncomingMessage](http://nodejs.org/api/http.html#http_http_incomingmessage) and [httpServer.ServerResponse](http://nodejs.org/api/http.html#http_class_http_serverresponse) request and response streams. This means you can treat the inside of a Hook the exact same way as if it were inside a streaming middleware in a regular node http server. Having direct access to these streams is extremely useful and I am unsure if any other microservice hosting providers currently offer this feature.
 
-
-
 More *advanced use-cases* for hook.io would be replacing individual parts of your application with microservices. Instead of adding a new route or module to your application , you could instead create a Hook responsible for only one unit of functionality and call it using a regular HTTP request from inside your existing application. One specific example could be building a Hook with a [custom theme](https://hook.io/themes) which acts perfectly as a stand-alone sign-up form. This sign-up form can then be loaded server-side in your application using one HTTP get request. It might sound complicated at first, but integrating microservices with your existing application is actually very easy. In the upcoming weeks we'll work on releasing specific guides for separating application functionalities into microservices.
 
-
-
 An *even more advanced usage* would be building a suite of Hooks and composing them to create new and unique applications! Since every Hook understands Standard In and Standard Out and Hooks can [easily call other Hooks](https://hook.io/Marak/merge) from inside each other, there are an endless amount of combinations to be made. This composability enables the foundation for [Flow-based Programming](http://en.wikipedia.org/wiki/Flow-based_programming) without imposing any specific rules for composition. A specific example could be building a Hook ( called "tar" ) responsible for taking in STDIN and streaming out a compressed tar file. Once this Hook is created, you could easily pipe the results of another Hook ( such as an image downloader ) into the "tar" Hook. These Hooks don't exist yet, but I am certain someone will build them in the near future.
-
-
 
 ## Unix Pipes!
 
@@ -65,8 +70,6 @@ cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' https://hook.io
 ## The Data!
 
 If you noticed in the last example, hook.io is fully capable of streaming binary data. It also supports streaming file uploads, multipart form uploads, and will assist in parsing all incoming form fields, JSON, and query string data.
-
-
 
 ## Software Architecture
 
@@ -143,12 +146,6 @@ In the near future, we will improve the process of setting up a local hook.io se
 Hooks are executed on *stateless* isolated workers to help facilitate scaling and to ensure stability in the core application. These workers are responsible for running user-submitted Hook source code and piping their responses back to the main server. If running untrusted user-submitted code, you will need to isolate these workers.
 
 see: `./bin/worker` and `./bin/test-worker`
-
-## User process isolation
-
-If you plan to run a hook.io server that allows user-submitted code, you will need to setup process isolation per user on every worker so that user-submitted Hooks will not potentially affect performance of other users or interact with parts of the system the user should not have permission to access.
-
-<a href="http://docker.com">Docker</a> is a great tool to start with.
 
 ## Contributing
 
