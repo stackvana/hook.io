@@ -36,6 +36,13 @@ module['exports'] = {
     CLIENT_SECRET: "14ed41431983aaceef121d32f2f3f3087e0434ac",
     OAUTH_CALLBACK: "http://localhost:9999/login/github/callback"
   },
+  worker: {
+    //npmPath: path.resolve("~/"),
+    nproc: {
+      soft: 500,
+      hard: 1000
+    }
+  },
   defaultTheme : "http://localhost:9999/themes/none/index.html", // should be https?
   defaultPresenter : "http://localhost:9999/themes/none/index.js",
   stripe: {
@@ -55,6 +62,9 @@ module['exports'] = {
   //sslKeyDirectory: __dirname + '/../ssl/',
   //chrootDirectory: '/Users/chroot',
   useChroot: true,
+  locales: {
+    locales: ['en', 'de']
+  },
   customDomains: true,
   UNTRUSTED_HOOK_TIMEOUT: 10000,
   messages: {

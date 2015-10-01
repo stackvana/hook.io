@@ -566,7 +566,7 @@ $('document').ready(function(){
               alert('exists');
             break;
             case 'email-sent':
-              $('.resetPasswordHolder').html('A password reset link has been emailed to: ' + obj.email)
+              $('.resetPasswordHolder').html(boot.messages.passwordReset + obj.email)
             break;
             case 'email-missing':
               $('.resetPasswordHolder').html('<span class="errorStatus">No email associated with this account. Please contact hookmaster@hook.io for additional support.</span>');
@@ -584,12 +584,12 @@ $('document').ready(function(){
   });
   function signUp () {
     if ($('#password').val() === "") {
-      $('#password').attr('placeholder', 'password cannot be blank...');
+      $('#password').attr('placeholder', boot.messages.passwordBlank);
       $('#password').addClass('error').focus();
       return false;
     }
     if ($('#password').val() !== $('#confirmPassword').val()) {
-      $('#confirmPassword').attr('placeholder', 'passwords did not match...');
+      $('#confirmPassword').attr('placeholder', boot.messages.passwordMismatch);
       $('#confirmPassword').val('');
       //$('#password').val('');
       $('#confirmPassword').addClass('error').focus();
@@ -625,7 +625,7 @@ $('document').ready(function(){
             case 'invalid':
               $('#password').addClass('error');
               $('#password').val('').focus();
-              $('#password').attr('placeholder', 'invalid password. try again...')
+              $('#password').attr('placeholder', boot.messages.passwordInvalid)
               $('.resetPasswordHolder').show();
             break;
             case 'available':
@@ -635,7 +635,7 @@ $('document').ready(function(){
               $('.resetPasswordHolder').hide();
               $('#email').addClass('checkmark');
               $('.confirmPasswordHolder').show();
-              $('#emailLogin').val('Create New Account');
+              $('#emailLogin').val(boot.messages.createAccount);
             break;
             case 'exists':
               alert('account already exists!');
@@ -722,7 +722,7 @@ $('document').ready(function(){
               case 'invalid':
                 $('#password').addClass('error');
                 $('#password').val('').focus();
-                $('#password').attr('placeholder', 'invalid password. try again...');
+                $('#password').attr('placeholder', boot.messages.passwordInvalid);
                 $('.resetPasswordHolder').show();
               break;
               case 'available':
@@ -732,7 +732,7 @@ $('document').ready(function(){
                 $('#email').addClass('checkmark');
                 $('.confirmPasswordHolder').show();
                 $('#confirmPassword').show().focus();
-                $('#emailLogin').val('Create New Account');
+                $('#emailLogin').val(boot.messages.createAccount);
                 $('.resetPasswordHolder').hide();
               break;
               default:
@@ -770,7 +770,7 @@ $('document').ready(function(){
           $('#email').addClass('checkmark');
           $('.confirmPasswordHolder').show();
           $('#confirmPassword').show();
-          $('#emailLogin').val('Create New Account');
+          $('#emailLogin').val(boot.messages.createAccount);
           $('.resetPasswordHolder').hide();
         break;
         default:
@@ -909,24 +909,24 @@ var editor;
   <div class="userBar">
     <div class="welcome"></div>
     <div class="emailReminder">
-      <span class="errorStatus"><strong>Attention:</strong></span> Please verify your account with an email address.<br/>
-      <span class="tiny">Without an email address on record, it's possible you may get locked out of your account.</span>
+      <span class="errorStatus"><strong class="i18n">Attention:</strong></span> <span class="i18n">Please verify your account with an email address.</span><br/>
+      <span class="tiny i18n">Without an email address on record, it's possible you may get locked out of your account.</span>
       <form name="updateEmail" id="updateEmail">
         <div class="form-group">
-          <label for="email">Email:</label>
+          <label for="email i18n">Email:</label>
           <input tabindex="1" class="form-control" type="text" name="email" id="email" placeholder="youremail@example.com..."/>
         </div>
-        <button class="btn saveEmail">Save</button>
+        <button class="btn saveEmail i18n">Save</button>
       </form>
     </div>
-    <a href="/new">Create Hook</a><br/>
-    <a href="/Marak" class="yourHooks">My Hooks</a><br/>
-    <a href="/datastore" class="yourDatastore">My Datastore</a><br/>
-    <a href="/domains" class="yourDomains">Custom Domains</a><br/>
-    <a href="/account" class="yourAccount">Account Settings</a><br/>
-    <a href="/billing" class="yourBilling">Billing Information</a><br/>
-    <a href="/affiliates" class="yourAffiliates">Affiliates Program</a><br/>
-    <a href="/logout">Logout</a>
+    <a href="/new" class="i18n">Create Hook</a><br/>
+    <a href="/Marak" class="yourHooks i18n">My Hooks</a><br/>
+    <a href="/datastore" class="yourDatastore i18n">My Datastore</a><br/>
+    <a href="/domains" class="yourDomains i18n">Custom Domains</a><br/>
+    <a href="/account" class="yourAccount i18n">Account Settings</a><br/>
+    <a href="/billing" class="yourBilling i18n">Billing Information</a><br/>
+    <a href="/affiliates" class="yourAffiliates i18n">Affiliates Program</a><br/>
+    <a href="/logout" class="i18n">Logout</a>
   </div>
 
   <div class="row">
@@ -940,23 +940,23 @@ var editor;
       <div class="loginHolder">
         <form action="/signup" id="loginForm">
           <div class="callToAction">Sign up Instantly! It's Free!</div>
-          <input id="email" name="email" type="text" placeholder="email or account name..."/>
+          <input class="i18n" id="email" name="email" type="text" placeholder="email or account name..."/>
           <div class="passwordHolder">
-            <input id="password" name="password" type="password" placeholder="enter account password..."/>
+            <input class="i18n" id="password" name="password" type="password" placeholder="enter account password..."/>
           </div>
           <div class="confirmPasswordHolder">
-            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="confirm account password..."/>
+            <input class="i18n" id="confirmPassword" name="confirmPassword" type="password" placeholder="confirm account password..."/>
           </div>
           <div class="resetPasswordHolder">
-            <input type="button" id="resetPassword" class="btn" name="resetPassword"  value="Reset Account Password"/>
+            <input type="button" id="resetPassword" class="btn i18n" name="resetPassword"  value="Reset Account Password"/>
           </div>
-          <input type="button" id="emailLogin" class="btn" value="Sign In With Username or Email"/>
+          <input type="button" id="emailLogin" class="btn i18n" value="Sign In With Username or Email"/>
         </form>
         <form action="/login/github" method="GET">
-          <input type="submit" class="btn" value="Sign in with Github"/>
+          <input type="submit" id="githubLogin" class="btn i18n" value="Sign in with Github"/>
         </form>
         <br/>
-        <div><h2><a href="/pricing">Paid Accounts Available!</a></h2></div>
+        <div><h2 class="secondCall"><a href="/pricing" class="i18n">Paid Accounts Available!</a></h2></div>
         <br/>
       </div>
       <br/>

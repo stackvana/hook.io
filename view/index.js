@@ -32,6 +32,16 @@ module['exports'] = function view (opts, callback) {
   var boot = {};
 
   boot.baseUrl = config.baseUrl;
+  var i = req.i18n;
+
+  boot.messages = {
+    "passwordBlank": i.__("password cannot be blank..."),
+    "passwordMismtach": i.__("passwords do not match..."),
+    "passwordConfirm": i.__("confirm account password..."),
+    "passwordInvalid": i.__("invalid password. try again..."),
+    "passwordReset": i.__("A password reset link has been emailed to:"),
+    "createAccount": i.__('Create New Account')
+  };
 
   //
   // enables curl signups
@@ -141,6 +151,37 @@ module['exports'] = function view (opts, callback) {
 
   boot.examples = examples;
 
+  //req.i18n.setLocale('de');
+
+  // Localize page based on request lauguage
+  $('.deploymentsLink').html(i.__("Deployments"));
+  $('.callToAction').html(i.__("Sign up Instantly! It's Free!"));
+
+  $('.featuresDiv h2').html(i.__("Features"));
+
+  $('.features li a').each(function(index, item){
+    var v = $(item).html();
+    $(item).html(i.__(v));
+  });
+
+  // TODO: make into helper function
+  $('.i18n').each(function(index, item){
+    var el = $(item),
+        tagType = el[0].name;
+    switch (tagType) {
+      case 'input':
+        var v = $(item).attr('value');
+        $(item).attr('value', i.__(v));
+        var ph = $(item).attr('placeholder');
+        $(item).attr('placeholder', i.__(ph));
+      break;
+      default:
+        var v = $(item).html();
+        $(item).html(i.__(v));
+      break;
+    }
+  });
+
   if (typeof user === "undefined") {
     $('.userBar').remove();
     var out = $.html();
@@ -168,7 +209,7 @@ module['exports'] = function view (opts, callback) {
       } else {
         $('.emailReminder').remove();
       }
-      $('.userBar .welcome').html('Welcome <strong>' + user + "</strong>!")
+      $('.userBar .welcome').html(i.__('Welcome') + ' <strong>' + user + "</strong>!")
       $('.loginBar').remove();
       $('.featuresDiv').remove();
       $('.hookStats').remove();
