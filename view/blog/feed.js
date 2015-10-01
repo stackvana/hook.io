@@ -20,6 +20,11 @@ module['exports'] = function view (opts, callback) {
 
   // TODO: multiple posts
 
+  var post3 = self.parent['hook-in-your-language'];
+  var getData = new Function(post3.$('.data').html() + ' return data;');
+  var data = getData();
+  feed.item(data);
+
   var post2 = self.parent['new-multi-language-support'];
   var getData = new Function(post2.$('.data').html() + ' return data;');
   var data = getData();
