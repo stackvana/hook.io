@@ -36,7 +36,6 @@ module['exports'] = function view (opts, callback) {
   feed.item(data);
 
   var xml = feed.xml();
-  console.log(xml)
   callback(null, xml);
 };
 
