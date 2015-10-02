@@ -5,10 +5,15 @@
 
 To start using hook.io visit the website at [https://hook.io](https://hook.io). Here you will find many examples and documentation on how to use hook.io
 
-
-**Built with:** [Node.js](http://nodejs.org), [CouchDB](http://couchdb.com), [Redis](http://redis.io), and [Github Gist](http://gist.github.com). [Node Package Manager](http://npmjs.org) modules are fully supported.
-
 Architectural details can be found a bit further down.
+
+## Help Kickstart hook.io!
+
+We are looking for project backers to kickstart the development on this project into high-gear!
+
+Unlike any of our competitors, hook.io is a 100% open-source project. We hope we can count on your support!
+
+[https://www.kickstarter.com/projects/773811571/hookio](https://www.kickstarter.com/projects/773811571/hookio)
 
 ## Interested, but too busy to read this now?
 
