@@ -1,0 +1,17 @@
+#!/usr/local/bin/node
+
+// parse incoming command line arguments
+var argv = require('minimist')(process.argv.slice(2));
+
+var hpm = require('hpm');
+
+
+
+hpm.onAny(function(data){
+  console.log('event');
+  console.log(this.event, data)
+});
+
+hpm.server.start({ port: 8888, host: "localhost" }, function (err, app){
+  console.log(err, app.server.address())
+});

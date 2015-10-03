@@ -11,7 +11,10 @@ node ./bin/worker &
 node ./bin/worker &
 node ./bin/worker &
 node ./bin/worker &
-node ./bin/worker
+node ./bin/worker &
+node ./bin/hpm-server
+
+
 
 # start cron jobs
 # sudo node bin/cron

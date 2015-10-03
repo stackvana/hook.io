@@ -8,6 +8,10 @@ sudo mon -d "sudo node bin/worker" --log worker-logs.txt &&
 sudo mon -d "sudo node bin/worker" --log worker-logs.txt &&
 sudo mon -d "sudo node bin/worker" --log worker-logs.txt &&
 
+# start Hook Packager Manager server
+# this managers hook package dependecy installations
+sudo mon -d "sudo node bin/hpm-server" --log hpm-logs.txt &&
+
 # start cron process
 # this will exit(0) every ~60 seconds and restart
 sudo mon -d "sudo node bin/cron" --log cron-logs.txt
