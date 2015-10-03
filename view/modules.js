@@ -1,3 +1,10 @@
+var big = require('big');
+
 module['exports'] = function view (opts, callback) {
-  callback(null, this.$.html());
+  // attempt to reload view manually
+  var req = opts.request,
+      res = opts.response;
+  var v = req.url;
+  return res.redirect(301, '/packages');
+  //callback(null, this.$.html());
 };
