@@ -12,7 +12,8 @@ module['exports'] = function (opts, cb) {
     results = results.sort();
     results.forEach(function(m){
       var parts = m.split('@');
-      $('.installed').append('<tr><td>' + npmLink(parts[0]) + '</td><td>' + parts[1] + '</td></tr>')
+      var v =  parts[1] || "latest";
+      $('.installed').append('<tr><td>' + npmLink(parts[0]) + '</td><td>' + v + '</td></tr>')
     });
     if (results.length === 0) {
       $('.installed').remove();

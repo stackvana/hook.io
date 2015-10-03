@@ -12,7 +12,8 @@ module['exports'] = function npmErrored (opts, cb) {
     results = results.sort();
     results.forEach(function(m){
       var parts = m.split('@');
-      $('.errored').append('<tr><td>' + npmLink(parts[0]) + '</td><td>' + parts[1] + '</td></tr>')
+      var v =  parts[1] || "latest";
+      $('.errored').append('<tr><td>' + npmLink(parts[0]) + '</td><td>' + v + '</td></tr>')
     });
     if (results.length === 0) {
       $('.errored').remove();
