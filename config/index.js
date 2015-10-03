@@ -65,6 +65,13 @@ module['exports'] = {
   locales: {
     locales: ['en', 'de']
   },
+  worker: {
+    nproc: {
+      soft: 500,
+      hard: 1000
+    },
+    npmPath: "/Users/chroot/"
+  },
   customDomains: true,
   UNTRUSTED_HOOK_TIMEOUT: 10000,
   messages: {
