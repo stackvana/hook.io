@@ -1,5 +1,3 @@
-var big = require('big');
-
 module['exports'] = function view (opts, callback) {
   // attempt to reload view manually
   var req = opts.request,
