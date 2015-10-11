@@ -577,7 +577,7 @@ $('document').ready(function(){
           }
        },
        error: function (err) {
-         alert('error' + err)
+         alert('error ' + err.message);
        }
      });
     return false;
@@ -646,7 +646,7 @@ $('document').ready(function(){
           }
        },
        error: function (err) {
-         alert('error' + err)
+         alert('error ' + err.message)
        }
      });
     return false;
@@ -707,7 +707,7 @@ $('document').ready(function(){
             // TODO: replace later with JSON only response
             res = obj.res;
           }
-
+//          alert(res)
            switch (res) {
 
               case 'redirect':
@@ -741,7 +741,7 @@ $('document').ready(function(){
             }
         },
         error: function (err) {
-          alert('error' + err)
+          //alert('error ' + err.message)
         }
       })
       return false;
@@ -792,7 +792,7 @@ $('document').ready(function(){
         $('.emailReminder').html('<span class="tiny">Email set to: ' + $('#email').val() + "</span>");
       },
       error: function (err) {
-        alert('error' + err);
+        alert('error: ' + err.message);
       }
     })
     return false;
@@ -1003,6 +1003,7 @@ var editor;
              <option value="perl">Perl ( Experimental )</option>
              <option value="php">PHP ( Experimental )</option>
              <option value="python">Python ( Experimental )</option>
+             <option value="python3">Python 3 ( Experimental )</option>
              <option value="ruby">Ruby ( Experimental )</option>
              <option value="scheme">Scheme ( Experimental )</option>
              <option value="smalltalk">SmallTalk ( Experimental )</option>
