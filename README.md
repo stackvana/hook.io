@@ -7,14 +7,6 @@ To start using hook.io visit the website at [https://hook.io](https://hook.io). 
 
 Architectural details can be found a bit further down.
 
-## Help Kickstart hook.io!
-
-We are looking for project backers to kickstart the development on this project into high-gear!
-
-Unlike any of our competitors, hook.io is a 100% open-source project. We hope we can count on your support!
-
-[https://www.kickstarter.com/projects/773811571/hookio](https://www.kickstarter.com/projects/773811571/hookio)
-
 ## Interested, but too busy to read this now?
 
 If you'd like, you can run the following Curl command to opt-in to our mailing list. We'll periodically send you updates about the project.
