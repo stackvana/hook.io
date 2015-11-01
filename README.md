@@ -144,6 +144,10 @@ Hooks are executed on *stateless* isolated workers to help facilitate scaling an
 
 see: `./bin/worker` and `./bin/test-worker`
 
+## i18n Internationalization
+
+[https://github.com/bigcompany/hook.io-i18n](https://github.com/bigcompany/hook.io-i18n)
+
 ## Tests
 
 Integration tests for hook.io are available at [https://github.com/bigcompany/hook.io-test](https://github.com/bigcompany/hook.io-test)
