@@ -4,7 +4,7 @@
   .hookTable .smaller  {
     font-size: 16px;
     padding-top:8px;
-``  }
+  }
   .error {
     background-color: red;
   }
@@ -24,6 +24,10 @@
   }
   .smaller {
     font-size: 18px;
+  }
+  .message {
+    font-size: 32px;
+    color: rgb(68, 199, 68);
   }
 </style>
 <script src="/js/jquery-ui.js"></script>
@@ -622,10 +626,14 @@ body legend {
       name = "hook-name";
     }
 
-    $('.hookLinks .home').html(base + '/' + name + '');
-    $('.hookLinks .admin').html(base + '/' + name + '/admin');
-    $('.hookLinks .source').html(base + '/' + name + '/source');
-    $('.hookLinks .logs').html(base + '/' + name + '/logs');
+    function absLink (base, name) {
+      return '<a href="' + base + '/' + name + '">' + base + '/' + name + '' + '</a>';
+    };
+
+    $('.hookLinks .home').html(absLink(base, name));
+    $('.hookLinks .admin').html(absLink(base, name + '/admin'));
+    $('.hookLinks .source').html(absLink(base, name + '/source'));
+    $('.hookLinks .logs').html(absLink(base, name + '/logs'));
 
     if (path.length > 1) {
       $('.hookLinks .params').html(path);
@@ -647,6 +655,7 @@ body legend {
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
 
+  <div class="message"></div>
   <form id="hookForm" method="POST" action="/admin" role="form">
     <legend><h1 class="i18n">Manage Microservice</h1></legend>
     <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
@@ -740,7 +749,7 @@ body legend {
         <table class="hookLinks" border="1">
           <tr>
             <td class="left"><strong>Home</strong></td>
-            <td class="home">https://hook.io/Marak/hook-name</td>
+            <td class="home">loading...</td>
           </tr>
           <tr>
             <td><strong class="i18n">Optional Url Parameters</strong></td>
@@ -748,15 +757,15 @@ body legend {
           </tr>
           <tr>
             <td><strong class="i18n">Admin ( login required )</strong></td>
-            <td class="admin">https://hook.io/marak/hook-name/admin</td>
+            <td class="admin">loading...</td>
           </tr>
           <tr>
             <td><strong class="i18n">Source Code</strong></td>
-            <td class="source">https://hook.io/marak/hook-name/source</td>
+            <td class="source">loading...</td>
           </tr>
           <tr>
             <td><strong class="i18n">Logs</strong></td>
-            <td class="logs">https://hook.io/marak/hook-name/logs</td>
+            <td class="logs">loading...</td>
           </tr>
           <!--
           <tr>

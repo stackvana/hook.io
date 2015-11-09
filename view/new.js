@@ -25,6 +25,9 @@ module['exports'] = function view (opts, callback) {
     owner: user
   };
 
+
+  $('title').html('hook.io - Create new Hook');
+
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     var params = req.resource.params;
@@ -76,7 +79,7 @@ module['exports'] = function view (opts, callback) {
 
           if (params.hookSource === "code") {
              // the source of the hook is coming from the code editor
-             return res.redirect('/' + h.owner + "/" + h.name + "");
+             return res.redirect('/admin?owner=' + h.owner + "&name=" + h.name + "&status=created");
           } else {
             // the source of the hook is coming from a github gist
             opts.gist = gist;
@@ -117,7 +120,7 @@ module['exports'] = function view (opts, callback) {
 
     var services = hooks.services;
     var examples = {};
-    console.log(services)
+
     // pull out helloworld examples for every langauge
     hook.languages.forEach(function(l){
       examples[l] = services['examples-' + l + '-hello-world'];
@@ -136,7 +139,6 @@ module['exports'] = function view (opts, callback) {
       }
     }
 
-    //console.log(examples)
     boot.examples = examples;
 
     /*

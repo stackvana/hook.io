@@ -134,8 +134,7 @@ module['exports'] = function view (opts, callback) {
           return res.end(err.message);
         }
         cache.set(key, result, function(){
-          $('.formStatus').html('Saved!');
-          finish(result);
+          return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + req.hook.name + "&status=saved");
         });
       });
     } else {
@@ -149,8 +148,16 @@ module['exports'] = function view (opts, callback) {
     function finish (h) {
 
       var services = hook.services;
-      for(var s in services) {
+      for (var s in services) {
         $('.services').append(services[s]);
+      }
+
+      if (params.status === "created") {
+        $('.message').html('Hook Created!')
+      }
+
+      if (params.status === "saved") {
+        $('.message').html('Hook Saved!')
       }
 
       $('#owner').attr('value', h.owner);
@@ -174,7 +181,6 @@ module['exports'] = function view (opts, callback) {
       $('.previousName').attr('value', h.name);
 
       $('.hookSource').attr('value', h.gist);
-
 
       if (h.sourceType === "gist") {
         $('#gist').attr('value', h.gist);
