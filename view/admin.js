@@ -106,6 +106,9 @@ module['exports'] = function view (opts, callback) {
       data.presenter = params.presenter;
       data.mode = params.mode;
 
+      // todo: only available for paid accounts
+      data.customTimeout = params.customTimeout;
+
       // TODO: check to see if index.html file matches up with known theme
       data.cron = params.cronString || req.hook.cron;
       data.status = params.status || req.hook.status;
@@ -159,6 +162,10 @@ module['exports'] = function view (opts, callback) {
       $('.hookView').attr('href', '/' + h.owner + '/' + h.name + "/view");
       $('.hookPresenter').attr('href', '/' + h.owner + '/' + h.name + "/presenter");
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
+
+      if (typeof h.customTimeout === "number") {
+        $('.customTimeout').attr('value', h.customTimeout.toString());
+      }
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
       $('#name').attr('value', h.name);

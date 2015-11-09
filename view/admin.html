@@ -709,18 +709,24 @@ body legend {
           </div>
         </div>
         <div class="form-group">
-          <label for="hookRan">Hook Run Count</label>
+          <label for="hookRan">Run Count</label>
           <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
         </div>
 
         <div class="form-group">
-          <label for="mode" class="i18n">Hook Mode</label>
+          <label for="mode" class="i18n">Mode</label>
           <select class="form-control mode" name="mode">
             <option value="Development" class="i18n">Development</option>
             <option value="Production" class="i18n">Production</option>
           </select>
           <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
         </div>
+
+        <div class="form-group">
+          <label for="customTimeout" class="i18n">Service Timeout</label>
+          <input name="customTimeout" type="text" class="form-control customTimeout" id="customTimeout" value="" size="40">
+        </div>
+
 
       </div>
 

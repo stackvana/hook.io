@@ -74,6 +74,7 @@ if (service.language === "coffee-script") {
 var rs = require('run-service');
 
 var psr = require('parse-service-request');
+// var mp = require('merge-params');
 
 // create a new writable stream to wrap / handle STDOUT
 var Writable = require('stream').Writable;
@@ -280,6 +281,7 @@ psr(process.stdin, output, function(req, res, fields){
       params: env.params,
       datastore: datastore,
       isStreaming: env.isStreaming,
+      customTimeout: env.customTimeout,
       debug: debug,
       open: open,
       post: post
@@ -289,6 +291,7 @@ psr(process.stdin, output, function(req, res, fields){
         log: debug,
         error: debug
       },
+      setTimeout: setTimeout,
      __dirname: __dirname,
      require: require
    },
