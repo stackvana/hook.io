@@ -1,6 +1,7 @@
 var hook = require('../lib/resources/hook');
 var hooks = require('hook.io-hooks');
 var cache = require('../lib/resources/cache');
+var billing = require('../lib/resources/billing');
 var metric = require('../lib/resources/metric');
 var request = require('hyperquest');
 var dateFormat = require('dateformat');
@@ -65,7 +66,17 @@ module['exports'] = function view (opts, callback) {
         return server.handle404(req, res);
       }
       req.hook = result[0];
-      presentView();
+
+      billing.find({ owner: req.session.user }, function (err, results) {
+        if (err) {
+          return callback(err, $.html());
+        }
+        if (results.length > 0) {
+          // TODO: better billings check
+          req.billings = results[0];
+        }
+        presentView();
+      });
     });
   });
 
@@ -107,7 +118,9 @@ module['exports'] = function view (opts, callback) {
       data.mode = params.mode;
 
       // todo: only available for paid accounts
-      data.customTimeout = params.customTimeout;
+      if (req.billings && req.billings.length > 0) {
+        data.customTimeout = params.customTimeout;
+      }
 
       // TODO: check to see if index.html file matches up with known theme
       data.cron = params.cronString || req.hook.cron;
@@ -137,6 +150,7 @@ module['exports'] = function view (opts, callback) {
           return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + req.hook.name + "&status=saved");
         });
       });
+
     } else {
       // get latest metric
       metric.get('/' + req.hook.owner + "/" + req.hook.name + "/hits", function (err, count){
@@ -172,6 +186,10 @@ module['exports'] = function view (opts, callback) {
 
       if (typeof h.customTimeout === "number") {
         $('.customTimeout').attr('value', h.customTimeout.toString());
+      }
+
+      if (typeof req.billings === "undefined") {
+        $('.customTimeout').attr('disabled', 'DISABLED');
       }
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
