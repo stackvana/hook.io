@@ -118,7 +118,7 @@ module['exports'] = function view (opts, callback) {
       data.mode = params.mode;
 
       // todo: only available for paid accounts
-      if (req.billings && req.billings.length > 0) {
+      if (typeof req.billings === "object") {
         data.customTimeout = params.customTimeout;
       }
 
