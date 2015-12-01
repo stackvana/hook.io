@@ -162,7 +162,7 @@ module['exports'] = function view (opts, callback) {
         });
 
         cache.set(key, result, function(){
-          return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + req.hook.name + "&status=saved");
+          return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + data.name + "&status=saved");
         });
       });
 
