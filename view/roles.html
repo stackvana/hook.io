@@ -1,0 +1,36 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.removeKey').click(function(){
+      $(this).parent().parent().remove();
+    });
+    $('.addKey').click(function(){
+      var _delete = '<a href="#remove" class="removeKey">X</a>';
+      var _key = '<input name="key" type="text" value="' + "" + '" size="20"/>';
+      var _value = '<input name="value" type="text" value="' + "" + '" size="60"/>';
+      $('.env').append('<tr><td>' + _delete + '</td><td>' + _key + '</td><td>' + _value + '</td></tr>');
+      $('.removeKey').click(function(){
+        $(this).parent().parent().remove();
+      });
+    });
+  });
+</script>
+
+<style>
+ .env input {
+   font-size:22px;
+ }
+ .env td {
+   font-size:22px;
+ }
+
+</style>
+<div style="font-size:26px;background-image: url('./img/socialite.png');background-repeat: none;text-align:left;padding-bottom:20px">
+  <h1>Roles</h1>
+  <p>Here you can view the available access roles hook.io offers</p>
+  <p>These roles are useful for creating access keys to manage the security of your services.</p>
+  <h2><a href="/keys">Using Roles when creating Access Keys</a></h2>
+  <div class="availableRoles">
+  </div>
+</div>
+
+<br/>

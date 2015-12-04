@@ -1,5 +1,6 @@
 var user = require('../lib/resources/user');
 var cache = require("../lib/resources/cache");
+var resource = require('resource');
 
 var bodyParser = require('body-parser');
 module['exports'] = function view (opts, callback) {
@@ -57,7 +58,12 @@ module['exports'] = function view (opts, callback) {
               return res.end(err.message);
             }
             // update user cache
-            cache.set('/user/' + _user.name, _user, function(){
+            cache.set('/user/' + _user.name, _user, function() {
+              resource.emit('env::write', {
+                ip: req.connection.remoteAddress,
+                owner: req.session.user,
+                url: req.url
+              });
               showEnv();
             });
           });
@@ -98,6 +104,12 @@ module['exports'] = function view (opts, callback) {
           }
           Object.keys(env).forEach(function(key){
             addRow(key, env[key]);
+          });
+
+          resource.emit('env::read', {
+            ip: req.connection.remoteAddress,
+            owner: req.session.user,
+            url: req.url
           });
 
           callback(null, $.html());

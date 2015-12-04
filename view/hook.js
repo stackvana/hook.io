@@ -1,10 +1,17 @@
 var hook = require('../lib/resources/hook');
+var keys = require('../lib/resources/keys');
 var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
 var mustache = require('mustache');
 var View = require('view').View;
 var config = require('../config');
+
+
+var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess');
+
+
+keys.persist(config.couch)
 
 module['exports'] = function view (opts, callback) {
 
@@ -32,15 +39,27 @@ module['exports'] = function view (opts, callback) {
 
   opts.req = req;
   opts.res = res;
-  return hook.runHook(opts, function (err, result){
-    if (err) {
-      if (Array.isArray(err)) {
-        return res.end(JSON.stringify(err, true, 2));
-      } else {
-        return res.end(err.message);
-      }
+
+  checkRoleAccess({ req: req, res: res }, function (err, hasPermission) {
+    if (!hasPermission) {
+      //runHook();
+      return res.end(config.messages.unauthorizedRoleAccess(req));
+    } else {
+      runHook();
     }
-    return res.end(result.output);
   });
+
+  function runHook () {
+    return hook.runHook(opts, function (err, result){
+      if (err) {
+        if (Array.isArray(err)) {
+          return res.end(JSON.stringify(err, true, 2));
+        } else {
+          return res.end(err.message);
+        }
+      }
+      return res.end(result.output);
+    });
+  }
 
 };

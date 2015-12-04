@@ -76,6 +76,7 @@ module['exports'] = {
   UNTRUSTED_HOOK_TIMEOUT: 10000,
   messages: {
     childProcessSpawnError: require('./messages/childProcessSpawnError'),
-    serviceExecutionTimeout: require('./messages/serviceExecutionTimeout')
+    serviceExecutionTimeout: require('./messages/serviceExecutionTimeout'),
+    unauthorizedRoleAccess: require('./messages/unauthorizedRoleAccess')
   }
 };

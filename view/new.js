@@ -5,7 +5,7 @@ var mergeParams = require('merge-params');
 var config = require('../config');
 var themes = require('../lib/resources/themes');
 var hooks = require('hook.io-hooks');
-
+var resource = require('resource');
 
 module['exports'] = function view (opts, callback) {
   var req = opts.request,
@@ -69,13 +69,20 @@ module['exports'] = function view (opts, callback) {
         }
 
         // TODO: filter params for only specified resource fields?
-        return hook.create(params, function(err, result){
+        return hook.create.call({ req: req, res: res }, params, function(err, result){
+
           if (err) {
             return callback(null, err.message);
           }
 
           var h = result;
           req.hook = h;
+
+           resource.emit('hook::created', {
+             ip: req.connection.remoteAddress,
+             owner: params.owner,
+             name: params.name
+           });
 
           if (params.hookSource === "code") {
              // the source of the hook is coming from the code editor
@@ -149,7 +156,7 @@ module['exports'] = function view (opts, callback) {
     }
     */
 
-    self.parent.components.themeSelector.present({}, function(err, html){
+    self.parent.components.themeSelector.present({ request: req, response: res }, function(err, html){
       var el = $('.themeSelector')
       el.html(html);
       var out = $.html();

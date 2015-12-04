@@ -1,0 +1,40 @@
+<style>
+  .events h1 {
+    padding-top: 20px;
+  }
+  .events h2 {
+    padding-top: 10px;
+    text-decoration: underline;
+  }
+  .events h3 {
+    text-decoration: underline;
+  }
+</style>
+<div align="left" class="events">
+  <h1>Events</h1>
+  <h3>todo: add checklist for configuring events</h3>
+  <pre class="recent"></pre>
+  <h2>Writing to Hook Events</h2>
+  <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
+  <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
+
+  <h2>Accessing Hook Events</h2>
+  <p>To access the events for a Hook simply attach <code>/events</code> to the end of the Hook service url.</p>
+  <p><strong>For example:</strong> <a href="https://hook.io/Marak/echo/events">https://hook.io/Marak/echo/events</a></p>
+  <p>The logging endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
+
+    <h3>Streaming events</h3>
+    <p>To access streaming events, request the logging endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
+    <p><strong>Example: </strong><code>curl -N https://hook.io/Marak/echo/events</code></p>
+
+    <h3>Plain Text Events</h3>
+    <p>To access plain text events, request the logging endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
+    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/Marak/echo/events</code></p>
+
+  <h2>Limitations</h2>
+  <p>Currently all Free accounts are limited to fifty logging entries per Hook. If you need to increase this limit you can upgrade to a paid account or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a>
+  
+  </br>
+  </br>
+  </br>
+</div>
