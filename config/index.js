@@ -3,15 +3,11 @@ module['exports'] = {
   site: {
     port: 9999,
     host: "0.0.0.0",
-    https: true,
+    https: process.env['NODE_ENV'] === 'production',
     roots: ["hookio", "0.0.0.0", "192.168.59.103", "localhost", "hook.io", "www.hook.io"]
   },
   workers: [
-   { host: "worker0", port: "10000" },
-   { host: "worker1", port: "10000" },
-   { host: "worker2", port: "10000" },
-   { host: "worker3", port: "10000" },
-   { host: "worker4", port: "10000" }
+   { host: "worker0", port: "10000" }
   ],
   baseUrl: "http://localhost:9999",
   couch: {
