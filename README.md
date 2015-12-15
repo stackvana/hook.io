@@ -148,6 +148,14 @@ see: `./bin/worker` and `./bin/test-worker`
 
 [https://github.com/bigcompany/hook.io-i18n](https://github.com/bigcompany/hook.io-i18n)
 
+## Installing Local Instance
+
+Currently the process for installing a local version of hook.io is not streamlined with a working Docker image. We'll have Docker support soon. 
+
+Our current installation scripts can be found here:
+
+https://github.com/bigcompany/hook.io/blob/master/scripts
+
 ## Tests
 
 Integration tests for hook.io are available at [https://github.com/bigcompany/hook.io-test](https://github.com/bigcompany/hook.io-test)
