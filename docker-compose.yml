@@ -2,7 +2,7 @@ redis:
   image: redis
 
 couch:
-  image: couchdb
+  build: ./docker/couchdb
 
 hookio:
   build: .
@@ -11,49 +11,13 @@ hookio:
   links:
     - "redis:redis"
     - "couch:couch"
-    - "worker0:worker0"
-    - "worker1:worker1"
-    - "worker2:worker2"
-    - "worker3:worker3"
-    - "worker4:worker4"
+    - "worker:worker"
 
-worker0:
-  image: worker
+worker:
+  build: ./docker/worker
   privileged: true
   ports:
     - "49161:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
-
-worker1:
-  image: worker
-  ports:
-    - "49162:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
-
-worker2:
-  image: worker
-  ports:
-    - "49163:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
-        
-worker3:
-  image: worker
-  ports:
-    - "49164:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
-
-worker4:
-  image: worker
-  ports:
-    - "49165:10000"
   links:
     - "redis:redis"
     - "couch:couch"
