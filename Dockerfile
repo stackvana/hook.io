@@ -12,7 +12,9 @@ RUN cd /tmp; git clone https://github.com/tj/mon; cd mon; make install
 # copy basic files
 COPY . /src
 RUN cd /src && npm install
-RUN cd /src/modules && node install.js
+
+# disable install modules for now
+# RUN cd /src/modules && node install.js
 
 RUN addgroup workers
 RUN adduser --gid 1000 --disabled-password --gecos '' worker
