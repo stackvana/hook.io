@@ -6,6 +6,7 @@ couch:
 
 hookio:
   build: .
+  command: node /src/bin/server
   ports:
     - "49160:9999"
   links:
@@ -14,7 +15,8 @@ hookio:
     - "worker:worker"
 
 worker:
-  build: ./docker/worker
+  build: .
+  command: node /src/bin/worker
   privileged: true
   ports:
     - "49161:10000"
