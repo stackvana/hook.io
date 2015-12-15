@@ -23,3 +23,9 @@ worker:
   links:
     - "redis:redis"
     - "couch:couch"
+
+setup:
+  build: .
+  command: /src/config/couchdb/create_admin.sh
+  links:
+    - "couch:couch"
