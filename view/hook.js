@@ -40,10 +40,10 @@ module['exports'] = function view (opts, callback) {
   opts.req = req;
   opts.res = res;
 
-  checkRoleAccess({ req: req, res: res }, function (err, hasPermission) {
+  checkRoleAccess({ req: req, res: res, role: "hook::run" }, function (err, hasPermission) {
     if (!hasPermission) {
       //runHook();
-      return res.end(config.messages.unauthorizedRoleAccess(req));
+      return res.end(config.messages.unauthorizedRoleAccess(req, "hook::run"));
     } else {
       runHook();
     }

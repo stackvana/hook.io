@@ -2,9 +2,16 @@ module['exports'] = function view (opts, callback) {
   var req = opts.request,
       params = req.resource.params,
       $ = this.$;
+      
   if (req.user && req.session.user) {
     $('.myHooks').attr('href', '/' + req.session.user);
   }
+
+  /*
+  if (!req.isAuthenticated()) {
+    req.session.user = "anonymous";
+  }
+  */
 
   if (params.lang) {
     req.i18n.setLocale(params.lang);

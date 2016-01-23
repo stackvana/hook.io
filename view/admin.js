@@ -1,4 +1,7 @@
+// Make run count live
+
 var hook = require('../lib/resources/hook');
+var resource = require('resource');
 var hooks = require('hook.io-hooks');
 var cache = require('../lib/resources/cache');
 var billing = require('../lib/resources/billing');
@@ -90,7 +93,6 @@ module['exports'] = function view (opts, callback) {
       var data = {};
 
       // strings
-
       data.gist = params.gist;
       data.language = params.language || "javascript";
 
@@ -105,6 +107,12 @@ module['exports'] = function view (opts, callback) {
       data.source = params.source;
       data.name = params.name;
       data.path = params.path;
+
+      if (params.isPrivate === "true") {
+        data.isPrivate = true;
+      } else {
+        data.isPrivate = false;
+      }
 
       if (params.themeActive) {
         data.themeStatus = "enabled";
@@ -146,6 +154,13 @@ module['exports'] = function view (opts, callback) {
           // TODO: generic error handler
           return res.end(err.message);
         }
+
+        resource.emit('hook::updated', {
+          ip: req.connection.remoteAddress,
+          owner: req.hook.owner,
+          name: data.name
+        });
+
         cache.set(key, result, function(){
           return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + req.hook.name + "&status=saved");
         });
@@ -195,6 +210,12 @@ module['exports'] = function view (opts, callback) {
       $('.hookRan').attr('value', numberWithCommas(h.ran));
       $('#name').attr('value', h.name);
       $('.owner').attr('value', h.owner);
+      console.log(h)
+      if (h.isPrivate) {
+        $('.hookPrivate').attr('checked', 'CHECKED');
+      } else {
+        $('.hookPublic').attr('checked', 'CHECKED');
+      }
       $('#path').attr('value', h.path);
       $('.previousName').attr('value', h.name);
 
@@ -246,10 +267,13 @@ module['exports'] = function view (opts, callback) {
         $('.mode').prepend('<option value="' + h.mode + '">' + h.mode + '</option>')
       }
 
-      $('.deleteLink').attr('href', '/' + h.owner + "/" + h.name + "?delete=true");
+      $('.deleteLink').attr('href', '/' + h.owner + "/" + h.name + "/delete");
       $('.deleteLink').attr('data-name', (h.owner + "/" + h.name));
 
-      self.parent.components.themeSelector.present({ theme: h.theme, presenter: h.presenter, hook: h, themes: themes }, function(err, html){
+      self.parent.components.themeSelector.present({ 
+        request: req,
+        response: res,
+        theme: h.theme, presenter: h.presenter, hook: h, themes: themes }, function(err, html){
         var el = $('.themeSelector')
         el.html(html);
 

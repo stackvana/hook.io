@@ -18,8 +18,9 @@ module['exports'] = function view (opts, callback) {
        res = opts.response,
        $ = this.$;
 
+ // TODO: only show form if logged in, if not, show login form
 
- checkRoleAccess({ req: req, res: res, access: "keys::read" }, function (err, hasPermission) {
+ checkRoleAccess({ req: req, res: res, roles: "keys::read" }, function (err, hasPermission) {
    if (hasPermission) {
      $('.loginBar').remove();
      finish();
@@ -42,6 +43,12 @@ module['exports'] = function view (opts, callback) {
      mergeParams(req, res, function (){});
      req.session.user = "marak";
      req.resource.params.owner = req.session.user;
+
+     if (typeof req.resource.params.roles === "string") {
+       req.resource.params.roles = [req.resource.params.roles];
+     }
+
+     console.log('rrr', req.resource.params);
      var middle = forms.generate({
         view: 'grid-with-form',
         resource: keys,
@@ -61,6 +68,7 @@ module['exports'] = function view (opts, callback) {
         schema: {
           name: {
             type: 'string',
+            label: '<h3>Name</h3>',
             description: 'Your custom domain name. Example: marak.com',
             placeholder: 'admin-access-key',
             required: true,
@@ -76,6 +84,8 @@ module['exports'] = function view (opts, callback) {
             maxLength: 50,
             default: req.session.user
           },
+          /*
+          ,
           hook_public_key: {
             type: 'string',
             label: "Public Key",
@@ -84,9 +94,11 @@ module['exports'] = function view (opts, callback) {
             minLength: 1,
             maxLength: 255,
             size: 40,
-//            default: "public-" + new Date().getTime()
+            disabled: true,
+            //            default: "public-" + new Date().getTime()
             default: uuid()
           },
+          */
           hook_private_key: {
             type: 'string',
             label: "Private Key",
@@ -95,14 +107,18 @@ module['exports'] = function view (opts, callback) {
             minLength: 1,
             maxLength: 255,
             size: 40,
-//            default: "private-" + new Date().getTime()
-            default: uuid()
+            default: uuid(),
+            private: true
           },
           roles: {
+            label: "<h3>Roles</h3>",
             type: "string",
             format: "checkbox",
+            selectAll: true,
+            selectNone: true,
             enum: Object.keys(role.roles),
-            defaultState: "checked"
+            defaultState: "checked",
+            required: true
           }
           /*
           key_type: {
@@ -125,9 +141,6 @@ module['exports'] = function view (opts, callback) {
         return;
         });
       });
-   
  }
- 
-
 
 };

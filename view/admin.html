@@ -30,8 +30,7 @@
     color: rgb(68, 199, 68);
   }
 </style>
-<script src="/js/jquery-ui.js"></script>
-<script src="/js/jquery.croneditor.js"></script>
+
 <script type="text/javascript">
   // TODO: Create "themes" resource and persist this to database
   // lookup themes from curated theme list
@@ -299,6 +298,22 @@ input[type="checkbox"] {
   margin-bottom: 30px;
 }
 
+.timeoutsHolder {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+
+
 .hookHolder .form-control {
   margin-bottom: 10px;
 }
@@ -309,6 +324,10 @@ input[type="checkbox"] {
 .gistUrlHolder {
   padding-top: 10px;
   width: 100%;
+}
+
+.missingFeature {
+  color: #CCCCCC;
 }
 
 .dangerZone {
@@ -325,6 +344,20 @@ input[type="checkbox"] {
   margin-bottom: 20px;  
 }
 
+.securityHolder {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
 .sourcesHolder {
   color: black;
   background-color: #f5f5f5;
@@ -338,6 +371,22 @@ input[type="checkbox"] {
   width: 100%;
   margin-bottom: 20px;
 }
+
+.analyticsHolder {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+
 .sources {
   margin-bottom: 0px;
 }
@@ -658,7 +707,7 @@ body legend {
   <div class="message"></div>
   <form id="hookForm" method="POST" action="/admin" role="form">
     <legend><h1 class="i18n">Manage Microservice</h1></legend>
-    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
+    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="/keys" class="accessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
     <h3><a href="" class="hookSource i18n">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource i18n">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView i18n">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter i18n">Presenter</a></h3>
     <br/>
     <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
@@ -717,10 +766,6 @@ body legend {
             </code>
           </div>
         </div>
-        <div class="form-group">
-          <label for="hookRan">Run Count</label>
-          <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
-        </div>
 
         <div class="form-group">
           <label for="mode" class="i18n">Mode</label>
@@ -731,16 +776,12 @@ body legend {
           <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
         </div>
 
-        <div class="form-group">
-          <label for="customTimeout" class="i18n">Service Timeout</label>
-          <input name="customTimeout" type="text" class="form-control customTimeout" id="customTimeout" value="" size="40">
-        </div>
-
 
       </div>
 
       <div class="form-group">
         <label for="path" class="i18n">Service URLs</label>
+
 
         <div class="tiny">
           <em class="i18n">The following URLs will be created to help manage the service.</em>
@@ -785,6 +826,47 @@ body legend {
 
       </div>
     </div>
+
+
+    <div class="analyticsHolder">
+      <h2 class="i18n">Service Analytics</h2>
+      <!-- private / tokens -->
+      
+      <div class="form-group">
+        <label for="hookRan">Run Count</label>
+        <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
+      </div>
+
+    </div>
+
+    <div class="timeoutsHolder">
+      <h2 class="i18n">Service Timeouts</h2>
+      <!-- private / tokens -->
+      
+      <div class="form-group">
+        <label for="customTimeout" class="i18n">Service Timeout</label>
+        <input name="customTimeout" type="text" class="form-control customTimeout" id="customTimeout" value="" size="40">
+      </div>
+
+    </div>
+    
+    <div class="securityHolder">
+      <h2 class="i18n">Service Security</h2>
+      <!-- private / tokens -->
+      
+      <div class="form-group private">
+
+        <label for="hookPublic">Public Service</label>
+        <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
+        &nbsp;
+
+        <label for="hookPrivate">Private Service</label>
+        <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
+        <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
+        <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
+      </div>
+    </div>
+
     <div class="sourcesHolder">
       <h2 class="i18n">Hook Source</h2>
 
@@ -949,3 +1031,6 @@ body legend {
   <br/>
   <br/>
 </div>
+
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/jquery.croneditor.js"></script>
