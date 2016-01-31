@@ -6,7 +6,6 @@ module['exports'] = function view (opts, callback) {
       res = opts.response;
   
   if (!req.isAuthenticated()) {
-    req.session.user = "marak";
     $('.recent').html('Log in to view your hook.io system events.');
     callback(null, $.html());
   }

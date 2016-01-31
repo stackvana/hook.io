@@ -7,11 +7,13 @@ module['exports'] = function view (opts, callback) {
     $('.myHooks').attr('href', '/' + req.session.user);
   }
 
-  /*
   if (!req.isAuthenticated()) {
     req.session.user = "anonymous";
   }
-  */
+
+  if (req.url !== "/login" && req.url !== "" && req.url !== "/") {
+    req.session.redirectTo = req.url;
+  }
 
   if (params.lang) {
     req.i18n.setLocale(params.lang);

@@ -20,7 +20,14 @@ module['exports'] = function view (opts, callback) {
 
  // TODO: only show form if logged in, if not, show login form
 
- checkRoleAccess({ req: req, res: res, roles: "keys::read" }, function (err, hasPermission) {
+ if (!req.isAuthenticated()) {
+   $('.keys').remove();
+   return callback(null, $.html());
+ } else {
+   $('.loginLink').remove();
+ }
+
+ checkRoleAccess({ req: req, res: res, role: "keys::read" }, function (err, hasPermission) {
    if (hasPermission) {
      $('.loginBar').remove();
      finish();
@@ -41,14 +48,11 @@ module['exports'] = function view (opts, callback) {
  function finish () {
    bodyParser()(req, res, function bodyParsed() {
      mergeParams(req, res, function (){});
-     req.session.user = "marak";
-     req.resource.params.owner = req.session.user;
 
      if (typeof req.resource.params.roles === "string") {
        req.resource.params.roles = [req.resource.params.roles];
      }
 
-     console.log('rrr', req.resource.params);
      var middle = forms.generate({
         view: 'grid-with-form',
         resource: keys,
@@ -114,6 +118,8 @@ module['exports'] = function view (opts, callback) {
             label: "<h3>Roles</h3>",
             type: "string",
             format: "checkbox",
+            // TODO: make actual array type instead of string
+            // type: "array",
             selectAll: true,
             selectNone: true,
             enum: Object.keys(role.roles),

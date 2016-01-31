@@ -123,6 +123,20 @@ label {
     color: white;
 }
 
+.securityHolder {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
 .cronRow {
   display: none;
   color: black;
@@ -694,6 +708,21 @@ body legend {
 
       </div>
     </div>
+
+    <div class="securityHolder">
+      <h2 class="i18n">Service Security</h2>
+      <!-- private / tokens -->
+      <div class="form-group private">
+        <label for="hookPublic">Public Service</label>
+        <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
+        &nbsp;
+        <label for="hookPrivate">Private Service</label>
+        <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
+        <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
+        <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
+      </div>
+    </div>
+
     <div class="sourcesHolder">
       <h2 class="i18n">Hook Source</h2>
 

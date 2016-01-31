@@ -163,6 +163,8 @@ module['exports'] = function view (opts, callback) {
         // TODO: if form post data, attempt to update user account information
         showUserForm(r, function(err, result){
           $('.userForm').html(result);
+          var i18n = require('./helpers/i18n');
+          i18n(req.i18n, $);
           callback(null, $.html());
         });
       }

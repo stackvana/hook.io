@@ -12,27 +12,38 @@
 </style>
 <div align="left" class="events">
   <h1>Events</h1>
-  <h3>todo: add checklist for configuring events</h3>
-  <pre class="recent"></pre>
-  <h2>Writing to Hook Events</h2>
-  <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
-  <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
+  <p>All actions on hook.io are tracked internally as System Events. These events are useful for monitoring the actions your services are performing.</p>
+  <!-- >
+  <h2>TODO: login to manage event settings</h2>
+  -->
+  <h2>Events and Role Access</h2>
+  <p>It's important to note that all hook.io events are available as <a href="/roles">Access Roles</a>. This mapping allows granular role based <a href="/keys">key access</a> per System Event. <a href="/keys"></a></p>
 
-  <h2>Accessing Hook Events</h2>
-  <p>To access the events for a Hook simply attach <code>/events</code> to the end of the Hook service url.</p>
-  <p><strong>For example:</strong> <a href="https://hook.io/Marak/echo/events">https://hook.io/Marak/echo/events</a></p>
-  <p>The logging endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
+  <!--
+    <h3>todo: add checklist for configuring events</h3>
+    <div class="root">Current User's Events: <a href="#" class="currentRoot">loading...</span></div>
+    <pre class="recent"></pre>
+  -->
+
+  <h2>Writing to Hook System Events</h2>
+  <p>Several useful events ( such as <code>hook::run</code> or <code>keys::authCheck</code>) are <em>automatically</em> written to your event service log.</p>
+  <p>A full listing of available events can currently be <a href="/roles">found here</a>.</p>
+  <p>Currently, hook.io does not support custom system events. We will probably add this feature in the near future.</p>
+  <h2>Accessing Hook System Events</h2>
+  <p>To access the System Event log for an account, simply attach <code>/events</code> to the end of your account homepage.</p>
+  <p><strong>For example:</strong> <a href="https://hook.io/Marak/events">https://hook.io/Marak/events</a></p>
+  <p>The events endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
 
     <h3>Streaming events</h3>
-    <p>To access streaming events, request the logging endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
-    <p><strong>Example: </strong><code>curl -N https://hook.io/Marak/echo/events</code></p>
+    <p>To access streaming events, request the events endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
+    <p><strong>Example: </strong><code>curl -N https://hook.io/Marak/events</code></p>
 
     <h3>Plain Text Events</h3>
-    <p>To access plain text events, request the logging endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
-    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/Marak/echo/events</code></p>
+    <p>To access plain text events, request the events endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
+    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/Marak/events</code></p>
 
   <h2>Limitations</h2>
-  <p>Currently all Free accounts are limited to fifty logging entries per Hook. If you need to increase this limit you can upgrade to a paid account or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a>
+  <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can upgrade to a paid account or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a>
   
   </br>
   </br>

@@ -54,6 +54,8 @@ module['exports'] = function view (opts, callback) {
     if (Object.keys(opts.hooks).length > 0) {
       $('.noHooks').remove();
     }
+  } else {
+    $('.navBar').remove();
   }
 
   callback(null, this.$.html());
