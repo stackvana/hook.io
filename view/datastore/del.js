@@ -42,33 +42,24 @@ module['exports'] = function datasourceDelView (opts, callback) {
     finish();
   });
 
-  
   function finish () {
-
     if (typeof params.key !== 'undefined') {
-
-      checkRoleAccess({ req: req, res: res, role: "datastore::write" }, function (err, hasPermission) {
-        console.log(err, hasPermission);
+      checkRoleAccess({ req: req, res: res, role: "datastore::del" }, function (err, hasPermission) {
         if (!hasPermission) {
-          return res.end(config.messages.unauthorizedRoleAccess(req, "datastore::write" ));
+          return res.end(config.messages.unauthorizedRoleAccess(req, "datastore::del" ));
         } else {
-
           var datastore = new Datastore({ root: req.resource.owner });
-
           datastore.del(params.key, function(err, result){
             if (err) {
               return callback(err);
             }
             return callback(null, JSON.stringify(result, true, 2));
           });
-
         }
       });
-
     } else {
       return callback(null, $.html());
     }
   }
-
 
 };

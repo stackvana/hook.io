@@ -48,23 +48,19 @@ module['exports'] = function view (opts, callback) {
 
   function finish () {
 
-    var datastore = new Datastore({ root: req.session.user });
-    console.log('ggg', params, req.session.user)
     if (typeof params.key !== 'undefined') {
 
       checkRoleAccess({ req: req, res: res, role: "datastore::get" }, function (err, hasPermission) {
-        console.log('checked get', err, hasPermission);
         if (!hasPermission) {
           return res.end(config.messages.unauthorizedRoleAccess(req, "datastore::get"));
         } else {
-          
+          var datastore = new Datastore({ root: req.resource.owner });
           datastore.get(params.key, function(err, result){
             if (err) {
               return callback(err);
             }
             return callback(null, JSON.stringify(result, true, 2));
           });
-          
         }
       });
 
