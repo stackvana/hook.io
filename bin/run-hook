@@ -252,16 +252,23 @@ var debug = function debug () {
   return;
 };
 
-/*
-// Remark: Let's put a special rule for the gateway hook,
-// since the gateway allows arbitrary code and that can call the datastore...
-// and the gateway owner is "Marak"...then all anonymous data would be keyed to Hook owner "Marak"
-// since that would probably mess up Marak's account, we create a special key for anonymous
-// datastore requests coming from gateway.hook.io
-*/
 var _root = service.owner;
-if (service.owner === "Marak" && service.name === "gateway") {
- _root = "anonymous";
+if (service.owner === "marak" && (service.name === "gateway" || service.name === "gateway-javascript")) {
+  /*
+    // Remark: Let's put a special rule for the gateway hook,
+    // since the gateway allows arbitrary code and that can call the datastore...
+    // and the gateway owner is "Marak"...then all anonymous data would be keyed to Hook owner "Marak"
+    // since that would probably mess up Marak's account, we create a special key for anonymous
+    // datastore requests coming from gateway.hook.io
+    // We could also have every user fork their own hot-code gateway hook ( it's just a hook ),
+    // but that wouldn't be very convenient for most users
+  */
+  _root = "anonymous";
+  // Remark: If the special x-hookio-user-session-name has been injected from the load-balancer,
+  // scope the datastore to that session name. This allows the hot-code gateway to maintain proper user scope
+  if (typeof process.stdin.headers === "object" && typeof process.stdin.headers["x-hookio-user-session-name"] === "string" && process.stdin.headers["x-hookio-user-session-name"].length > 0) {
+   _root = process.stdin.headers["x-hookio-user-session-name"];
+  }
 }
 
 // Wrap datastore so that all entries are keyed to owner of hook
