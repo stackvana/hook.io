@@ -41,7 +41,7 @@ module['exports'] = function view (opts, callback) {
             return res.end(err.message);
           }
           if(results.length === 0) {
-            user.create({ name: name, email: opts.email }, function (err, result) {
+            user.create({ name: name, email: opts.email, paidStatus: "paid" }, function (err, result) {
               if (err) {
                 return res.end(err.message);
               }
@@ -49,7 +49,13 @@ module['exports'] = function view (opts, callback) {
             });
           } else {
             var u = results[0];
-            complete(u)
+            u.paidStatus = "paid";
+            u.save(function(err, r){
+              if (err) {
+                return res.end(err.message);
+              }
+              complete(u);
+            });
           }
         });
       } else {
