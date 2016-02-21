@@ -192,6 +192,17 @@ output.on('error', function(err){
   process.exit();
 });
 
+
+// When .json is called, exit the process with a JSON dump
+output.json = function json (data) {
+  if (typeof data !== 'undefined') {
+    console.log(JSON.stringify(data, true, 2));
+  }
+  console.error(JSON.stringify({ type: "end" }));
+  process.exit();
+};
+
+
 // When the response has been ended, exit the process
 output.end = function end (data) {
   if (typeof data !== 'undefined') {
