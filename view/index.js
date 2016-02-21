@@ -157,7 +157,7 @@ module['exports'] = function view (opts, callback) {
   $('.deploymentsLink').html(i.__("Deployments"));
   $('.callToAction').html(i.__("Sign up Instantly! It's Free!"));
 
-  $('.featuresDiv h2').html(i.__("Features"));
+  //$('.featuresDiv h2').html(i.__("Features"));
 
   $('.features li a').each(function(index, item){
     var v = $(item).html();

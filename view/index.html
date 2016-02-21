@@ -572,7 +572,7 @@ $('document').ready(function(){
               $('.resetPasswordHolder').html('<span class="errorStatus">No email associated with this account. Please contact hookmaster@hook.io for additional support.</span>');
             break;
             default:
-              alert('default ' + res);
+              alert('an error occurred. please contact support: ' + res);
             break;
           }
        },
@@ -967,8 +967,10 @@ var editor;
     </div>
     <div class="col-md-4" align="left">
       <div class="featuresDiv">
-        <h2>Features</h2>
+        <h2>Getting Started</h2>
         <ul class="features">
+          <li><a href="/docs">Documentation</a></li>
+          <li><a href="/examples">Examples</a></li>
           <!-- <li><a href="/docs#data">Multiple Languages</a></li> -->
           <li><a href="/docs#data">JSON / Query / Multipart</a></li>
           <li><a href="/docs#data">Binary / Streaming Data</a></li>
@@ -976,7 +978,7 @@ var editor;
           <li><a href="/datastore">Cloud Datastore</a></li>
           <li><a href="/logs">Logging</a></li>
           <li><a href="/keys">API Access Keys</a></li>
-          <li><a href="/roles">Role Based Security Access</a></li>
+          <li><a href="/roles">Role Based Access Control</a></li>
           <li><a href="/docs#schema">Input Validators</a></li>
           <li><a href="/packages">Package Managers</a></li>
           <li><a href="/cron">Cron Tasks</a></li>

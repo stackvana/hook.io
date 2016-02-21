@@ -2,51 +2,92 @@
   .content p {
     font-size: 20px;
   }
+  .content h2 {
+    font-weight: bold;
+  }
+  .warning {
+    color: red;
+  }
 </style>
-<div align="left">
+<div align="left" class="documentation">
   <div class="docsHeader">
-    <h1>Documentation</h1>
+    <h1 class="i18n">Documentation</h1>
   </div>
-  <div class="content">
-
-    <h2><strong>Getting Started</strong></h2>
-    <p>A Hook is represented by a unique URL.</p>
-    <p>The Hook can be executed by sending HTTP requests to this URL.</p>
-    <p>To see live examples of using Hooks visit the: <a href="https://hook.io/#tuts">Interactive Microservice Tutorial</a></p>
+  <div class="content"> 
+    <h2 class="i18n">Getting Started</h2>
+    <p class="i18n">A Hook is single function represented by a unique URL.</p>
+    <p class="i18n">The Hook can be executed by sending HTTP requests to this URL.</p>
+    <p><span class="i18n">To see live examples of using Hooks visit the:</span> <a class="i18n" href="https://hook.io/#tuts">Interactive Microservice Tutorial</a></p>
+    <p><span>To see example Hooks which you can <a href="#forking">fork</a> visit:</span> <a class="i18n" href="/examples">Examples</a></p>
     <p>
       <ul style="font-size:22px;">
-        <li><a href="#language">Choosing a Programming Language</a></li>
-        
-        <li><a href="#creating">Creating a Hook</a></li>
-        <li><a href="#forking">Forking an existing Hook</a></li>
-        
-        <li><a href="#running">Running a Hook</a></li>
-        <li><a href="#viewsource">Viewing Hook Source Code</a></li>
-        <li><a href="#admin">Accessing Hook Admin Panel</a></li>
-        
-        <li><a href="#logs">Hook Debugging and Logs</a></li>
-        <li><a href="#data">Sending Data to a Hook</a></li>
+        <li>Getting Started
+          <ul>
+            <li><a href="#language" class="i18n">Choosing a Programming Language</a></li>
 
-        <li><a href="#code">Editing a Hook</a></li>
-        <li><a href="#hook">Accessing the Hook object</a></li>
-        <li><a href="#schema">Specifying Hook Schema</a></li>
-        <li><a href="#datastore">Using the Cloud Datastore</a></li>
-        <li><a href="#forms">Hook Schema Form Generator</a></li>
-        <li><a href="#env">Setting Hook Environment</a></li>
-        <li><a href="#domains">Setting Custom Domains</a></li>
-        <li><a href="#accept">Content-Type Routing</a></li>
-        <li><a href="#cache">Cache Controls</a></li>
-        <li><a href="#ssl">SSL / HTTPS</a></li>
+            <li><a href="#creating" class="i18n">Creating a Hook</a></li>
+            <li><a href="#forking" class="i18n">Forking an existing Hook</a></li>
+
+            <li><a href="#running" class="i18n">Running a Hook</a></li>
+            <li><a href="#hook" class="i18n">Accessing the Hook object</a></li>
+
+            <li><a href="#data" class="i18n">Sending Data to a Hook</a></li>
+            <li><a href="#logs" class="i18n">Hook Debugging and Logs</a></li>
+
+            <li><a href="#viewsource" class="i18n">Viewing Hook Source Code</a></li>
+            <li><a href="#admin" class="i18n">Accessing Hook Admin Panel</a></li>
+
+            <li><a href="#code" class="i18n">Editing a Hook</a></li>
+
+            <li><a href="#content-type" class="i18n">Content-Type Routing</a></li>
+
+          </ul>
+        </li>
+
+        <li>
+          Additional Hook Features
+          <ul>
+            <li><a href="#streams" class="i18n">Streaming Support</a></li>
+            <li><a href="#env" class="i18n">Setting Hook Environment variables</a></li>
+            <li><a href="#schema" class="i18n">Specifying Hook Schema</a></li>
+            <li><a href="#forms" class="i18n">Hook Schema Form Generator</a></li>
+            <li><a href="#themes" class="i18n">Hook Themes</a></li>
+            <li><a href="#cron" class="i18n">Schedule Hook as Cronjob</a></li>
+            <li><a href="#cache" class="i18n">Cache Controls</a></li>
+            <li><a href="#hot-code" class="i18n">Hot-code Execution Gateway</a></li>
+            <li><a href="#timeouts" class="i18n">Setting Custom Hook Timeouts</a></li>
+            <li><a href="/curl" class="i18n">UNIX Pipe Support</a></li>
+          </ul>
+        </li>
+
+        <li>
+          Restricting Access to Services
+          <ul>
+            <li><a href="#keys" class="i18n">Creating API Access Keys</a></li>
+            <li><a href="#keys" class="i18n">Restricting access to Hook services ( private hooks )</a></li>
+            <li><a href="#roles" class="i18n">Using Role Based Access Control ( RBAC )</a></li>
+          </ul>
+        </li>
+
+        <li>Additional Platform Features
+          <ul>
+            <li><a href="#datastore" class="i18n">Using the Cloud Datastore</a></li>
+            <li><a href="#domains" class="i18n">Setting Custom Domains</a></li>
+            <li><a href="#events" class="i18n">Accessing System Events</a></li>
+            <li><a href="#api" class="i18n">Using hook.io through it's HTTP API</a></li>
+            <li><a href="#ssl" class="i18n">SSL / HTTPS</a></li>
+          </ul>
+        </li>
         <!-- <li><a href="#metrics">Hook Metrics</a></li> -->
       </ul>
     </p>
     <hr/>
 
     <a name="language"></a>
-    <h2><strong>Choosing a Programming Language</strong></h2>
-    <p>Since September 19, 2015, hook.io supports writing services in other programming languages besides JavaScript. </p>
-    <p><strong>Currently, JavaScript is the only fully supported language.</strong></p>
-    <p><strong>Experimental Support</strong> is available for the following languages</p>
+    <h2 class="i18n">Choosing a Programming Language</h2>
+    <p class="i18n">hook.io supports writing services in other programming languages besides JavaScript. </p>
+    <p><strong class="i18n">Currently, JavaScript is the only fully supported language.</strong></p>
+    <p><strong class="i18n">Experimental Support</strong> is available for the following languages</p>
     <ul style="font-size:18px;">
       <li>Bash</li>
       <li>Coffee-Script</li>
@@ -59,144 +100,150 @@
       <li>SmallTalk</li>
       <li>Tcl</li>
     </ul>
-    <p>You may select new languages while creating or editing a service.</p>
-    <p><a href="https://hook.io/#tuts">Click here for an Interactive Microservice Tutorial</a></p>
+    <p class="i18n">You may select new languages while creating or editing a service.</p>
+    <p><a  class="i18n" href="https://hook.io/#tuts">Click here for an Interactive Microservice Tutorial</a></p>
     
     <p>For those interested in helping support these new languages, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
 
     <a name="creating"></a>
-    <h2><strong>Creating a Hook</strong></h2>
-    <p>To create a Hook visit: <a href="https://hook.io/new">https://hook.io/new</a></p>
-    <p>On this page, the following properties can be specified to create a Hook:</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name</strong> <em>required</em> - Name of hook</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Path</strong> <em>optional</em> - url regex route for the hook. Supports named parameters, splats, and groups.</p>
+    <h2 class="i18n">Creating a Hook</h2>
+    <p><span class="i18n">To create a Hook visit: </span><a href="https://hook.io/new">https://hook.io/new</a></p>
+    <p class="i18n">On this page, the following properties can be specified to create a Hook:</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Name</strong> <em class="i18n">required</em> - <span class="i18n">Name of hook</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Path</strong> <em class="i18n">optional</em> - <span class="i18n">url regex route for the hook. Supports named parameters, splats, and groups.</span></p>
     
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Gist</strong> <em>required</em> - Source code of the Hook as a Github Gist</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Theme</strong> <em>optional</em> - A View-Presenter that will render the output of the Hook, see: <a href="https://hook.io/themes">Themes</a></p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Cron</strong> <em>optional</em> - Run this Hook on a Cron schedule, see: <a href="https://hook.io/cron">Cron</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Gist</strong> <em class="i18n">required</em> - <span class="i18n">Source code of the Hook as a Github Gist</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Theme</strong> <em class="i18n">optional</em> - <span class="i18n">A View-Presenter that will render the output of the Hook, see:</span> <a href="https://hook.io/themes">Themes</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Cron</strong> <em class="i18n">optional</em> - <span class="i18n">Run this Hook on a Cron schedule, see: </span><a class="i18n" href="https://hook.io/cron">Cron</a></p>
 
 
     <a name="forking"></a>
-    <h2><strong>Forking an existing Hook</strong></h2>
+    <h2 class="i18n">Forking an existing Hook</h2>
     <p>To fork another Hook, simply add <code>/fork</code> to the url of the Hook you want to fork.</p>
-    <p>By specifying the <code>fork</code> parameter, you will be taken to a new page where you can start customizing your Fork.</p>
+    <p class="i18n">By specifying the <code>fork</code> parameter, you will be taken to a new page where you can start customizing your Fork.</p>
 
-    <p>Once a Hook is created the browser will redirect to the landing page for that Hook.</p>
+    <p class="i18n">Once a Hook is created the browser will redirect to the admin page for that Hook.</p>
     
-    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo/fork">https://hook.io/Marak/echo/fork</a>
+    <p><strong class="i18n">Example:</strong> <a href="https://hook.io/Marak/echo/fork">https://hook.io/Marak/echo/fork</a>
     <hr/>
 
     <a name="running"></a>
-    <h2><strong>Running a Hook</strong></h2>
-    <p>Hooks are automatically executed when an HTTP request is sent to the Hook's url.</p>
-    <p>This HTTP request can be sent from any source ( such as the browser, custom application, or the command line).</p>
+    <h2 class="i18n">Running a Hook</h2>
+    <p class="i18n">Hooks are automatically executed when an HTTP request is sent to the Hook's url.</p>
+    <p class="i18n">This HTTP request can be sent from any source ( such as the browser, custom application, or the command line).</p>
+    <h3 class="warning">Important Note about Service Timeouts:</h3>
+    <p>All hooks have a <code>10 second</code> timeout value by default. If the execution of your service takes longer then this value, the client will receive a <code>service timeout</code> error message.</p>
+    <p>In the majority of cases, <strong>a time-out</strong> indicates that the service failed to end properly and <strong>usually indicates a programming error</strong>.</p>
+    <p align="center"><strong>Attempting to run an HTTP or TCP server in a Hook will not work! <br/>Hooks are microservices ( think functions ), not servers.</strong>
+    <p>In some other cases, you may be dealing with transferring a larger amount of data from a third-party service and the default timeout of ten seconds is not long enough to complete the transmission.</p> 
+    <p> If you think your service may require more than 10 seconds to execute, hook.io allows for <a href="#timeouts">Custom Timeouts</a> per service.</p>
     <hr/>
 
     <a name="viewsource"></a>
-    <h2><strong>View Hook Source</strong></h2>
-    <p>To view the source code of any Hook simply attach <code>/source</code> to the Hook service url.</p>
-    <p>This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
+    <h2 class="i18n">View Hook Source</h2>
+    <p class="i18n">To view the source code of any Hook simply attach <code>/source</code> to the Hook service url.</p>
+    <p class="i18n">This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
     
-    <p><strong>Source Code:</strong> <a href="https://hook.io/Marak/echo/source">https://hook.io/Marak/echo/source</a></p>
-    <p><strong>Logs:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a></p>
-    <p><strong>Resource:</strong> <a href="https://hook.io/Marak/echo/resource">https://hook.io/Marak/echo/resource</a></p>
-    <p><strong>View:</strong> <a href="https://hook.io/Marak/echo/view">https://hook.io/Marak/echo/view</a></p>
-    <p><strong>Presenter:</strong> <a href="https://hook.io/Marak/echo/presenter">https://hook.io/Marak/echo/presenter</a></p>
+    <p><strong class="i18n">Source Code:</strong> <a href="https://hook.io/Marak/echo/source">https://hook.io/Marak/echo/source</a></p>
+    <p><strong class="i18n">Logs:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a></p>
+    <p><strong class="i18n">Resource:</strong> <a href="https://hook.io/Marak/echo/resource">https://hook.io/Marak/echo/resource</a></p>
+    <p><strong class="i18n">View:</strong> <a href="https://hook.io/Marak/echo/view">https://hook.io/Marak/echo/view</a></p>
+    <p><strong class="i18n">Presenter:</strong> <a href="https://hook.io/Marak/echo/presenter">https://hook.io/Marak/echo/presenter</a></p>
 
-    <p>If you require the source code of a Hook to remain private, upgrade to a paid account and set the Hook to <code>Private</code>
+    <p class="i18n">If you require the source code of a Hook to remain private, upgrade to a paid account and set the Hook to <code>Private</code>
 
     <a name="admin"></a>
-    <h2><strong>Hook Admin Panel</strong></h2>
-    <p>To access the Administration page for a Hook simply attach <code>/admin</code> to the Hook service url.</p>
-    <p>This will only work for Hooks which you own.</p>
+    <h2 class="i18n">Hook Admin Panel</h2>
+    <p class="i18n">To access the Administration page for a Hook simply attach <code>/admin</code> to the Hook service url.</p>
+    <p class="i18n">This will only work for Hooks which you own.</p>
 
     <a name="logs"></a>
     <hr/>
-    <h2><strong>Hook Debugging and Logs</strong></h2>
-    <p>hook.io provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simple call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
-    <p>Streaming log endpoints are available for real-time consumption on all Hook service urls as <code>/logs</code>.</p>
+    <h2 class="i18n">Hook Debugging and Logs</h2>
+    <p class="i18n">hook.io provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simple call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
+    <p class="i18n">Streaming log endpoints are available for real-time consumption on all Hook service urls as <code>/logs</code>.</p>
     <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a>
-      <p>Complete logging documentation can be found at <a href="https://hook.io/logs">https://hook.io/logs</a>
+    <p>Complete logging documentation can be found at <a href="https://hook.io/logs">https://hook.io/logs</a>
 
     <a name="data"></a>
     <hr/>
-    <h2><strong>Sending data to the Hook</strong></h2>
-    <p>Data can be sent to a Hook through any methods HTTP supports.</p>
-    <p>The most common way to send data to a Hook is through the URL query string or posted through forms or binary data transfers.</p>
-    <h3><strong>Query String Data</strong></h3>
-    <p>To add a parameter via query string simply append it to the url of the Hook</p>
-    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo?foo=bar&hello=there&run=true">https://hook.io/Marak/echo?foo=bar&hello=there&run=true</a></p>
-    <p>Nested parameters are also supported.</p>
-    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true">https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
+    <h2 class="i18n">Sending data to the Hook</h2>
+    <p class="i18n">Data can be sent to a Hook through any methods HTTP supports.</p>
+    <p class="i18n">The most common way to send data to a Hook is through the URL query string or posted through forms or binary data transfers.</p>
+    <h3><strong class="i18n">Query String Data</strong></h3>
+    <p class="i18n">To add a parameter via query string simply append it to the url of the Hook</p>
+    <p><strong class="i18n">Example:</strong> <a href="https://hook.io/Marak/echo?foo=bar&hello=there&run=true">https://hook.io/Marak/echo?foo=bar&hello=there&run=true</a></p>
+    <p class="i18n">Nested parameters are also supported.</p>
+    <p><strong class="i18n">Example:</strong> <a href="https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true">https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
 
-    <h3><strong>Form Data</strong></h3>
-    <p>Data can also be sent via form POST</p>
-    <p><strong>Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' https://hook.io/Marak/echo" size="60"/></p>
+    <h3><strong class="i18n">Form Data</strong></h3>
+    <p class="i18n">Data can also be sent via form POST</p>
+    <p><strong class="i18n">Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' https://hook.io/Marak/echo" size="60"/></p>
 
-    <h3><strong>Streaming Data</strong></h3>
-    <p>To send streaming data to the hook, simply open up a streaming http request.</p>
-    <p><a href="/Marak/transform">Here is an example of streaming data to a hook</a></p>
+    <h3><strong class="i18n">Streaming Data</strong></h3>
+    <p class="i18n">To send streaming data to the hook, simply open up a streaming http request.</p>
+    <p><a class="i18n" href="/Marak/transform">Here is an example of streaming data to a hook</a></p>
     <hr/>
 
     <a name="code"></a>
-    <h2><strong>Editing Hook source code</strong></h2>
-    <p>The source code for a Hook is stored as a Github Gist</p>
-    <p>There are currently two options available for editing the source code of a Hook.</p>
-    <h3>Git Deploy Updates</h3>
-    <p>To update the source code of a Hook using Git, you simply need to clone the Gist source code to your local development machine, commit changes, and push back to the Gist.</p>
-    <p>The location of a Hook's git endpoints can be found on it's <code>/admin</code> page.</p>
-    <h3>Edit source on gist.github.com</h3>
-    <p>It's also possible to simply edit the source directly on the gist.github.com website using Github's web editor.</p>
+    <h2 class="i18n">Editing Hook source code</h2>
+    <p class="i18n">The source code for a Hook is stored as a Github Gist</p>
+    <p class="i18n">There are currently two options available for editing the source code of a Hook.</p>
+    <h3 class="i18n">Git Deploy Updates</h3>
+    <p class="i18n">To update the source code of a Hook using Git, you simply need to clone the Gist source code to your local development machine, commit changes, and push back to the Gist.</p>
+    <p class="i18n">The location of a Hook's git endpoints can be found on it's <code>/admin</code> page.</p>
+    <h3 class="i18n">Edit source on gist.github.com</h3>
+    <p class="i18n">It's also possible to simply edit the source directly on the gist.github.com website using Github's web editor.</p>
     <p>
-      <em>If you want to edit a Hook which you do not own, you can <a href="#forking">Fork It</a>.</em>
+      <em><span class="i18n">If you want to edit a Hook which you do not own, you can</span> <a href="#forking">Fork It</a>.</em>
     </p>
     <hr/>
 
     <a name="hook"></a>
-    <h2><strong>Accessing the Hook object inside your code</strong></h2>
-    <p>Every hook receives a <strong>Hook</strong> object as it's first argument.</p>
+    <h2 class="i18n">Accessing the Hook object inside your code</h2>
+    <p><span class="i18n">Every hook receives a </span><strong>Hook</strong> <span class="i18n">object as it's first argument.</span></p>
     <p>
       <!-- 
       deprecated in favor of `console.log` <strong>Hook.debug</strong> - Logging method for sending debug messages to the debug console <br/>
       -->
-      <strong>Hook.params</strong> - Incoming HTTP request data ( query string and form fields )<br/>
-      <strong>Hook.req</strong> - Incoming <a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a> stream <br/>
-      <strong>Hook.res</strong> - Outgoing <a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">httpServer.ServerResponse</a> stream<br/>
-      <strong>Hook.datastore</strong> - Contains methods for getting and setting key-values from the datastore<br/>
+      <strong>Hook.params</strong> - <span class="i18n">Incoming HTTP request data ( query string and form fields )</span><br/>
+      <strong>Hook.req</strong> - <span class="i18n">Incoming</span> <a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a> stream <br/>
+      <strong>Hook.res</strong> - <span class="i18n">Outgoing</span> <a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">httpServer.ServerResponse</a> stream<br/>
+      <strong>Hook.datastore</strong> - <span class="i18n">Contains methods for getting and setting key-values from the datastore</span><br/>
       
-      <strong>Hook.open</strong> - Method for opening URLs ( such as another Hook ). Options pass through to <a href="https://github.com/substack/hyperquest">Hyperquest API</a>.<br/>
-      <strong>Hook.schema</strong> - Optional <a href="https://github.com/mschema/mschema">mschema</a> for <strong>hook.params</strong><br/>
-      <strong>Hook.env</strong> - Optional. Key / value pairs stored by the owner of the Hook. See: <a href="#env">Setting Hook Environment</a><br/>
-      <strong>Hook.streaming</strong> - Boolean. Is the Hook.req still streaming data. For most browser requests, this will be false.<br/>
+      <strong>Hook.open</strong> - <span class="i18n">Method for opening URLs ( such as another Hook ). Options pass through to</span> <a href="https://github.com/substack/hyperquest">Hyperquest API</a>.<br/>
+      <strong>Hook.schema</strong> - <span>Optional <a href="https://github.com/mschema/mschema">mschema</a> for <strong>hook.params</strong><br/>
+      <strong>Hook.env</strong> - <span class="i18n">Optional. Key / value pairs stored by the owner of the Hook. See:</span>  <a class="i18n" href="#env">Setting Hook Environment</a><br/>
+      <strong>Hook.streaming</strong> - <span class="i18n">Boolean. Is the Hook.req still streaming data. For most browser requests, this will be false.</span> <br/>
     </p>
     <hr/>
 
     <a name="datastore"></a>
-    <h2><strong>Using the Cloud Datastore</strong></h2>
-    <p>Hooks have access to a key-value cloud datastore which can be used to manage persistent data.</p>
+    <h2 class="i18n">Using the Cloud Datastore</h2>
+    <p class="i18n">Hooks have access to a key-value cloud datastore which can be used to manage persistent data.</p>
     
-    <p>This is useful for storing persistent information which you may want to retrieve later ( such as a user signup ).</p>
+    <p class="i18n">This is useful for storing persistent information which you may want to retrieve later ( such as a user signup ).</p>
 
-    <p>More information about using the cloud datastore can be found here <a href="https://hook.io/datastore">https://hook.io/datastore</a></p> 
+    <p><span class="i18n">More information about using the cloud datastore can be found here</span> <a href="https://hook.io/datastore">https://hook.io/datastore</a></p> 
 
     <a name="schema"></a>
-    <h2><strong>Specifying Optional Schema</strong></h2>
-    <p>Through the use of <a href="https://github.com/mschema/mschema">mschema</a>, it is possible to enable validation and default values for incoming hook parameters.</p>
+    <h2 class="i18n">Specifying Optional Schema</h2>
+    <p><span>Through the use of</span> <a href="https://github.com/mschema/mschema">mschema</a>, <span>it is possible to enable validation and default values for incoming hook parameters.</span></p>
 
-    <p>To create a mschema for the incoming hook parameters, simply specify the schema property of the hook.</p> 
+    <p class="i18n">To create a mschema for the incoming hook parameters, simply specify the schema property of the hook.</p> 
     <p>
-      <strong>Example:</strong>
+      <strong class="i18n">Example:</strong>
       <div data-gist="33f13d0f9a390c9601f9">Loading...</div>
     </p>
-    <p>
+    <p class="i18n">
       Documentation for mschema can be found <a href="http://github.com/mschema/mschema/">here</a>.
     </p>
 
-    <p><strong>Important:</strong> For performance reasons, the Hook may need to be run to update it's schema.</p>
+    <p><strong class="i18n">Important:</strong><span class="i18n"> For performance reasons, the Hook may need to be run to update it's schema.</span></p>
     <hr/>
 
-    <a name="forms"/>
-    <h2><strong>Using Schema Based Forms</strong></h2>
+    <a name="forms"></a>
+    <h2>Using Schema Based Forms</h2>
     <p>Through the use of <a href="https://github.com/mschema/mschema-forms">mschema-forms</a>, all Hooks have the ability to auto-generate an HTML form element populated with input fields matching that Hook's <strong>Hook.schema</strong></p>
 
     <p>Forms are automatically generated in the <strong>friendly</strong> format when a <strong>Hook.schema</strong> is specified.</p> 
@@ -207,62 +254,164 @@
 
     <hr/>
     <a name="env"></a>
-    <h2><strong>Setting Hook Environment Variables</strong></h2>
-    <p>To set Hook Environment variables visit: <a href="/env">https://hook.io/env</a></p>
-    <p>Arbitrary key / value pairs can be set on your account so that all your Hooks will have access to the pairs in the <strong>Hook.env</strong> variable.</p> 
-    <p>This is useful for protecting private authorization credentials from public view ( such as an API key or password ).</p>
-    <p>After you have updated your environment variables they will be available in your hook's <strong>Hook.env</strong> </p>
+    <h2 class="i18n">Setting Hook Environment Variables</h2>
+    <p><span class="i18n">To set Hook Environment variables visit:</span> <a href="/env">https://hook.io/env</a></p>
+    <p class="i18n">Arbitrary key / value pairs can be set on your account so that all your Hooks will have access to the pairs in the <strong>Hook.env</strong> variable.</p> 
+    <p class="i18n">This is useful for protecting private authorization credentials from public view ( such as an API key or password ).</p>
+    <p class="i18n">After you have updated your environment variables they will be available in your hook's <strong>Hook.env</strong> </p>
     <hr/>
 
     <a name="domains"></a>
-    <h2><strong>Setting Custom Domains</strong></h2>
-    <p>Custom domains are a great way to brand the appearance of your service with it's own unique domain name.</p>
-    <p>To add a Custom Domain, you will first need to set the domains <code>A record</code> to <code>104.131.118.1</code> ( which is the ip address of hook.io ).</p>
-    <p>After setting the <code>A record</code> in your domain's DNS manager, simply visit: <a href="/domains">https://hook.io/domains</a> to complete the process by mapping any of your Hooks to the Custom Domain.</p>
+    <h2 class="i18n">Setting Custom Domains</h2>
+    <p class="i18n">Custom domains are a great way to brand the appearance of your service with it's own unique domain name.</p>
+    <p><span class="i18n">To add a Custom Domain, you will first need to set the domains</span> <code>A record</code> to <code>159.203.77.62</code> ( which is the ip address of hook.io ).</p>
+    <p><span class="i18n">After setting the <code>A record</code> in your domain's DNS manager, simply visit:</span> <a href="/domains">https://hook.io/domains</a> <span class="i18n">to complete the process by mapping any of your Hooks to the Custom Domain.</span></p>
     <hr/>
 
-    <a name="accept"></a>
-    <h2><strong>Content-Type Routing</strong></h2>
-    <p>Based on the Content-Type header, hook.io will process the incoming request differently.</p>
+    <a name="content-type"></a>
+    <h2 class="i18n">Content-Type Routing</h2>
+    <p class="i18n">Based on the Content-Type header, hook.io will process the incoming request differently.</p>
     <br/>
-    <p><strong>application/json</strong><br/>
-      Will buffer the incoming request in order to parse the body as JSON. Incoming JSON maps to <em>Hook.params</em>. Streaming the incoming request is no longer possible at this point.</p>
+    <p>
+      <strong>application/json</strong><br/>
+      <span class="i18n">Will buffer the incoming request in order to parse the body as JSON. Incoming JSON maps to <em>Hook.params</em>. Streaming the incoming request is no longer possible at this point.</span>
+    </p>
 
-    <p><strong>application/x-www-form-urlencoded</strong><br/>
-       Will buffer the incoming request in order to process form fields. Incoming form fields maps to <em>Hook.params</em>.Streaming the incoming request is no longer possible at this point.</p>
+    <p>
+      <strong>application/x-www-form-urlencoded</strong><br/>
+      <span class="i18n">Will buffer the incoming request in order to process form fields. Incoming form fields maps to <em>Hook.params</em>.Streaming the incoming request is no longer possible at this point.</span>
+    </p>
     
-    <p><strong>multipart/form-data</strong><br/>Will attach any multipart file uploads as streams to <em>Hook.params</em>. File uploads can be then be handled as streams inside the Hook.</p>
+    <p><strong>multipart/form-data</strong><br/>
+      <span class="i18n">Will attach any multipart file uploads as streams to <em>Hook.params</em>. File uploads can be then be handled as streams inside the Hook.</span>
+    </p>
 
-    <p><strong>application/octet-stream</strong><br/>Will treat the incoming request as a binary data stream.</p>
+    <p><strong>application/octet-stream</strong><br/>
+    <span class="i18n">Will treat the incoming request as a binary data stream.</span>  
+    </p>
 
+    <!-- 
     <br/>
-    <h2>Accept Header Routing</h2>
-    <p>The hook will also respond to requests differently based on their incoming <strong>Accept</strong> HTTP header.</p>
+    <h2 class="i18n">Accept Header Routing</h2>
+    <p class="i18n">The hook will also respond to requests differently based on their incoming <strong>Accept</strong> HTTP header.</p>
     <br/>
-    <p><strong>text/html</strong><br/>Returns a friendly HTML landing page ( useful for humans )</p>
-    <p><strong>*/*</strong><br/>Executes the hook and returns the response type specified in the Hook  ( useful for programs )</p>
-    <p>Accept Header Routing can be overridden by setting <em>Hook.params.format</em> to <em>raw</em>. 
-  <br/>
+    <p><strong>text/html</strong><br/>
+      <span class="i18n">Returns a friendly HTML landing page ( useful for humans )</span>
+    </p>
+    <p><strong>*/*</strong><br/>
+      <span class="i18n">Executes the hook and returns the response type specified in the Hook  ( useful for programs )</span>
+    </p>
+    <p><span class="i18n">Accept Header Routing can be overridden by setting</span> <em>Hook.params.format</em> to <em>raw</em>. 
+    <br/>
+    -->
+  <hr/>
   
   <a name="cache"></a>
-  <h2><strong>Cache Controls</strong></h2>
-  <p>To ensure optimal execution speeds, hook.io can cache your Hook's source code and assets in memory.</p>
-  <p>Currently, these caching controls can be toggled by setting the <code>mode</code> property in the Hook's admin page to either <code>Production</code> or <code>Development</code>.</p>
+  <h2 class="i18n">Cache Controls</h2>
+  <p class="i18n">To ensure optimal execution speeds, hook.io can cache your Hook's source code and assets in memory.</p>
+  <p class="i18n">Currently, these caching controls can be toggled by setting the <code>mode</code> property in the Hook's admin page to either <code>Production</code> or <code>Development</code>.</p>
 
-  <p>In <code>Development</code> mode, all Hook source code will be pulled from it's original source on every request. This is useful for Hooks which are in active development.</p>
-  <p>In <code>Production</code> mode, all Hook source code will be cached in memory. This ensures much faster execution speeds, but also means that any updates to the Hook's external sources will not be immediately loaded.</p>
+  <p class="i18n">In <code>Development</code> mode, all Hook source code will be pulled from it's original source on every request. This is useful for Hooks which are in active development.</p>
+  <p class="i18n">In <code>Production</code> mode, all Hook source code will be cached in memory. This ensures much faster execution speeds, but also means that any updates to the Hook's external sources will not be immediately loaded.</p>
   <br/>
+  <hr/>
+
+  <a name="timeouts"></a>
+
+  <h2>Custom Service Timeouts</h2>
+  <p>All hooks have a <code>10 second</code> timeout value by default. If the execution of your service takes longer than this value, the client will receive a <code>service timeout</code> error.</p>
+  <p>In the majority of cases, <strong>a time-out error</strong> indicates that the service failed to end properly and <strong>usually indicates a programming error</strong>.</p>
+  <p align="center"><strong>Attempting to run an HTTP or TCP server in a Hook will not work! <br/>Hooks are microservices ( think functions ), not servers.</strong>
+  <p>In some other cases, you may be dealing with transferring a larger amount of data from a third-party service and the default timeout of ten seconds is not long enough to complete the transmission.</p> 
+  <p>If you think your service may require more than 10 seconds to execute, simply visit the <code>/admin</code> page for the Hook and set the form field for "Custom Timeout" in seconds. ( Note: A <a href="https://hook.io/pricing">paid account</a> may be required ).</p>
+  <hr/>
+
+
+
+  <br/>
+
+  <a name="hot-code"></a>
+  <h2 class="i18n">Hot-Code Execution Gateway</h2>
+  <p class="i18n">In most cases, you will want to save your service's source-code as a Hook.</p>
+  <p class="i18n">In other situations, you may need to send code that has to be executed immediately and without any additional requests ( such as testing and developing hooks or executing dynamically created source code from a third-party service ).</p>
+  <p>hook.io provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="https://hook.io#tuts">Interactive Example</a> on the hook.io homepage, you will notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
+  <h3>Examples of using the Hot-Code Gateways</h3>
+  <p>Here are two simple examples of using <code>echo</code> and <code>curl</code> to execute hot-code against hook.io's gateway.</p>
+
+  <h4>JavasScript</h4>
+  <pre><code>echo 'module["exports"] = function helloWorld (h) { h.res.end("Hello world!"); };' | curl --data-urlencode source@- http://gateway-javascript.hook.io</code></pre>
+
+  <h4>Python</h4>
+  <pre><code>echo 'print "hello world"' | curl --data-urlencode source@- http://gateway-python.hook.io/</code></pre>
+
+  <p>You can also simply open a url to the gateway like this: <a href="http://gateway-python.hook.io/?source=print%20%22hello%20world%22">http://gateway-python.hook.io/?source=print "hello world"</a>
+  <br/>
+
+  <h3>Available Gateways</h3>
+  <em>Note: The gateway will return an error if the <code>source</code> parameter is not provided</em>
+
+  <ul style="font-size:22px;padding-top:10px;list-style-type: disc;">
+    <li><a href="https://gateway-javascript.hook.io">gateway-javascript.hook.io</a></li>
+    <li><a href="https://gateway-coffee-script.hook.io">gateway-coffee-script.hook.io</a></li>
+    <li><a href="https://gateway-bash.hook.io">gateway-bash.hook.io</a></li>
+    <li><a href="https://gateway-lua.hook.io">gateway-lua.hook.io</a></li>
+    <li><a href="https://gateway-perl.hook.io">gateway-perl.hook.io</a></li>
+    <li><a href="https://gateway-php.hook.io">gateway-php.hook.io</a></li>
+    <li><a href="https://gateway-python.hook.io">gateway-python.hook.io</a></li>
+    <li><a href="https://gateway-python3.hook.io">gateway-python3.hook.io</a></li>
+    <li><a href="https://gateway-ruby.hook.io">gateway-ruby.hook.io</a></li>
+    <li><a href="https://gateway-scheme.hook.io">gateway-scheme.hook.io</a></li>
+    <li><a href="https://gateway-smalltalk.hook.io">gateway-smalltalk.hook.io</a></li>
+    <li><a href="https://gateway-tcl.hook.io">gateway-tcl.hook.io</a></li>
+  </ul>
+
+  <br/>
+  <hr/>
+
+  <a name="events"></a>
+
+  <h2>System Events</h2>
+  
+  <p>All actions on hook.io are tracked internally as <a href="/events">System Events</a>.</a> 
+  <p>These events are useful for monitoring the actions your services are performing, and who is performing them.</p>
+  
+  <h3>The relation of System Events and Role Access</h3>
+  <p>It's important to note that all hook.io events are available as <a href="/keys">Access Roles</a>. This mapping allows granular role based key access per System Event.</p>
+  <p><a href="/keys">Read More about Role Based Access Control</a></p>
+  
+  <hr/>
+  <br/>
+
   
   <a name="ssl"></a>
-  <h2><strong>SSL / HTTPS</strong></h2>
+  <h2>SSL / HTTPS</h2>
 
-  <p>Currently, <code>HTTPS</code> is supported on hook.io through a single shared <code>SSL</code> certificate.</p>
-  <p>All URLs and services on the site are available over <code>HTTPS</code></p>
-  <p>If you require a custom <code>SSL</code> certificate for your microservices, please contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
-  
+  <p class="i18n">Currently, <code>HTTPS</code> is supported on hook.io through a single shared <code>SSL</code> certificate.</p>
+  <p class="i18n">All URLs and services on the site are available over <code>HTTPS</code></p>
+  <p class="i18n">If you require a custom <code>SSL</code> certificate for your microservices, please contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
+
+  <br/>
+  <hr/>
+
+  <a name="api"></a>
+  <h2>Using hook.io as an HTTP API</h2>
+
+  <p><span class="i18n">A graphical interface exists for all of hook.io's supported features at </span> <a href="https://hook.io">https://hook.io</a>.</p>
+  <p class="i18n">In some cases, you may want a third party script or client ( not your browser window ), to be able to access a specific hook.io platform feature ( such as logs, the datastore, or creating a new hook service ).</p>
+  <p class="i18n">Using hook.io's HTTP API, you can access any platform feature that is available in our web app.</p> <p>To keep things simple ( and self documenting ), the routes in our web app are 1:1 with our API.</p>
+  <p>The <a href="/datastore/set">/datastore</a> or <a href="/logs">/logs</a> endpoints are well documented examples of how this works, but other endpoints like <a href="/new">/new</a> might require a small amount of reverse engineering.</p>
+  <a name="keys"></a>
+  <h3>API Access Keys</h3>
+
+  <p class="i18n">hook.io provides a robust role based API key access system.</p>
+  <p><span class="i18n">All</span> <a href="/events">events</a> <span class="i18n">on hook.io are registered as</span> <a href="/roles">roles</a> <span class="i18n">which can be granted per</span> <a href="/keys"><span class="i18n">generated API access key</span></a></p>
+
+
+  <p>All API endpoints are backed by <a href="#roles">Role Based Access Control</a>, so if you provide a <code>hook_private_key</code> parameter in your request which matches a known API key containing the required role, that request will be granted access to the resource. <a href="/keys">Read More about Keys and Roles</a></p>
+
   <!--
   <a name="metrics"></a>
-  <h2><strong>Hook Metrics</strong></h2>
+  <h2>Hook Metrics</h2>
   <p>Hook.io provides a basic API endpoint for accessing historical information on Hook metrics.</p>
   <p>This is useful for giving an insight as to how the Hook is performing.</p>
   <p>Currently the following metrics are available:</p>

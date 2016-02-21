@@ -41,14 +41,12 @@ module['exports'] = function resetPassword (opts, cb) {
   }
 
   var query = {};
-  query[type] = nameOrEmail;
   nameOrEmail = nameOrEmail.toLowerCase();
-
+  query[type] = nameOrEmail;
   user.reset({ query: query }, function (err, u ) {
     if (err) {
       return res.end(err.message);
     }
-
     // TODO: move template to /emails folder
     // TODO: use before / after resource hooks for user.reset action
     var ip = req.connection.remoteAddress.toString();
