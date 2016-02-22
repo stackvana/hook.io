@@ -335,7 +335,8 @@ psr(process.stdin, output, function(req, res, fields){
       },
       setTimeout: setTimeout,
      __dirname: __dirname,
-     require: require
+     require: require,
+     Buffer: Buffer
    },
    errorHandler: errorHandler
   })(function (err, result){
