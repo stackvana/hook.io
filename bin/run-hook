@@ -297,6 +297,7 @@ psr(process.stdin, output, function(req, res, fields){
       res: res,
       env: env.env,
       params: env.params,
+      resource: env.resource,
       datastore: datastore,
       isStreaming: env.isStreaming,
       customTimeout: env.customTimeout,
