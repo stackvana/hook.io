@@ -71,6 +71,29 @@ if (service.language === "coffee-script") {
   code = code.join('\n')
 }
 
+// babel support for es6 / es7
+if (service.language === "es7") {
+  // service is es6+, so convert it to normal javascript
+  var babel = require('babel-core'); // don't require unless we need it
+  // TODO: This may cause peformance issues, better to cache it
+  var opts = {
+      "presets": [
+       "es2015"
+      ],
+      "plugins": []
+  };
+  code = babel.transform(code, opts).code;
+  // brittle approach to wrap es7 in module.exports
+  // TODO: better integration with generated JS
+  code = code.split('\n');
+  code.shift();
+  code.shift();
+  code = code.join('\n');
+  code = 'module["exports"] = ' + code;
+  //console.log(code);
+  //process.exit();
+}
+
 var rs = require('run-service');
 
 var psr = require('parse-service-request');

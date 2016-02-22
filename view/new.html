@@ -718,6 +718,7 @@ body legend {
         &nbsp;
         <label for="hookPrivate">Private Service</label>
         <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
+        <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.<br/></div>
         <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
         <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
       </div>
@@ -733,6 +734,7 @@ body legend {
         <label class="smaller" for="language">Select Language:</label>
         <select name="language" id="language">
           <option value="javascript">JavaScript ( Recommended )</option>
+          <option value="es7">ECMAScript 7 ( Supported )</option>
           <option value="coffee-script">CoffeeScript ( Supported )</option>
           <option value="bash">Bash ( Experimental )</option>
           <option value="lua">Lua ( Experimental )</option>
