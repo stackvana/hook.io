@@ -21,6 +21,10 @@ module['exports'] = function view (opts, callback) {
   var data = getData();
   $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
 
+  var post3 = self.parent['role-based-access-control'];
+  var getData = new Function(post3.$('.data').html() + ' return data;');
+  var data = getData();
+  $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
 
   callback(null, $.html());
 };

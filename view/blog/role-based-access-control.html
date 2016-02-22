@@ -1,0 +1,117 @@
+<script type="text/javascript" class="data">
+  var data = {
+    title: "Role Based Access Control",
+    description: "",
+    url: "https://hook.io/blog/role-based-access-control",
+    guid: "role-based-access-control",
+    author: "Marak",
+    date: "Sun Feb 21 2016 17:39:18 GMT-0500 (EST)"
+  };
+</script>
+
+
+<style>
+.managers p { font-size: 32px; padding-bottom: 10px; margin-bottom: 10px; }
+.managers li { font-size: 20px; }
+.managers h1, h2 {
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+.managers h1 {
+  font-size: 52px;
+}
+.managers h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+.managers ul {
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.managers ul li {
+  font-size:22px;
+}
+
+</style>
+<div class="managers" align="left">
+<h1>Role Based Access Control</h1>
+
+<br/>
+
+<p>
+ If you haven't heard yet, <a href="https://hook.io">hook.io</a> is the <a href="https://github.com/bigcompany/hook.io">100% open-source</a> platform for Microservices.
+</p>
+<p>
+  hook.io is a <a href="https://hook.io/docs">full-featured</a> platform that supports <a href="https://hook.io/blog/new-multi-language-support">11+ software programming languages</a> .
+</p>
+<p>
+  With <strong>over 32 million successful deployments</strong>, one of our most requested features in the past few months has been private Hook services and API access keys.
+</p>
+<p>
+  Today, we are <strong>happy to announce support</strong> for <strong><a href="/roles">Role Base Access Control</a></strong> and <strong><a href="/keys">API Access keys</a></strong>.</strong></p>
+</p>
+
+<h2>Private Hook Services!</h2>
+
+<p>It's now very easy to restrict public access to hook.io services.</p>
+<p>If you want to try it out, new security settings are now available when <a href="https://hook.io/new">creating</a> or editing hooks.</p>
+<p>For more information on how this works, keep on reading.</a>
+
+<h2>Easy to use Role Based Permissions!</h2>
+
+<p>hook.io provides a very simple method for creating API Access keys which are mapped to a custom list of roles. These <a href="/roles">roles</a> represent <a href="/events">hook.io system events</a>, which are subject to role based permission checks.</p>
+
+<p>API Access Key role checks are performed by providing a valid <code>hook_private_key</code> parameter in the HTTP client request targeting hook.io</p>
+
+<p><strong>Key Based API Access</strong></p> 
+
+<p>Multiple API Access Keys can be created with custom roles, allowing granular role based permission access for any number of users or third-party services accessing hook.io</p>
+
+<p><strong>Third-Party Developer Support</strong></p> 
+
+<p>
+  In addition to implementing API Access Keys, all service endpoints on hook.io are now exposed as HTTP API endpoints with role based permission checks.
+</p>
+<p> 
+  For example, you can now access the <a href="https://hook.io/logs">/logs</a> or the  <a href="https://hook.io/datastore">/datastore</a> for your account from a third-party service if you provide a valid <code>hook_private_key</code> parameter.
+</p>
+
+<p>
+  The best way to see this in action is to visit the new <a href="https://hook.io/datastore#http">Datastore HTTP API Endpoint</a>.
+</p>
+
+
+<p><strong>Streaming System Events</strong></p>
+
+<p>
+  All events and role checks on hook.io are now logged at the <a href="https://hook.io/events">/events</a> endpoint.
+</p>
+
+<p>The System Events API endpoint provides a high level of visibility into when your services on hook.io are being accessed, and which client is accessing them.</a>
+
+<p>The <a href="https://hook.io/events">events</a> API endpoint is widely accessible and is capable of providing streaming responses.</a></p>
+
+<p><strong>Business Grade Security and Service</strong></p>
+
+
+
+<p>
+  With this new addition of <a href="https://hook.io/roles">Role Based Access Control</a> and <a href="/events">System Events</a>, hook.io can now safely protect services which must remain private.</p>
+</p>
+
+<p>
+  hook.io can now seamlessly provide secure services to third-party applications, allowing a whole new class of applications to be developed!</p>
+</p>
+
+<p>
+  To try out this new functionality, you can create a free account at <a href="https://hook.io">hook.io</a> and then visit <a href="https://hook.io/keys">/keys</a>
+</p>
+
+<p>
+  <em>We hope to hear about the services you build soon!</em>
+</p>
+<br/>
+<br/>
+
+</div>

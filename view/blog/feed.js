@@ -11,7 +11,7 @@ module['exports'] = function view (opts, callback) {
       site_url: 'https://hook.io',
       managingEditor: 'hook.io',
       webMaster: 'hook.io',
-      copyright: '2015 hook.io',
+      copyright: '2016 hook.io',
       language: 'en',
       pubDate: 'Jul 29, 2015 15:38:30 PDT'
     };
@@ -34,6 +34,12 @@ module['exports'] = function view (opts, callback) {
   var getData = new Function(post.$('.data').html() + ' return data;');
   var data = getData();
   feed.item(data);
+
+  var post = self.parent['role-based-access-control'];
+  var getData = new Function(post.$('.data').html() + ' return data;');
+  var data = getData();
+  feed.item(data);
+
 
   var xml = feed.xml();
   callback(null, xml);
