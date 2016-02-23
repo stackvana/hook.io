@@ -74,13 +74,15 @@ if (service.language === "coffee-script") {
 // babel support for es6 / es7
 if (service.language === "es7") {
   // service is es6+, so convert it to normal javascript
-  var babel = require('babel-core'); // don't require unless we need it
-  // TODO: This may cause peformance issues, better to cache it
+  var babel = require('babel-core');
+  require("babel-polyfill");
+  // TODO: This may cause peformance issues, could be better to cache transpile of code
   var opts = {
-      "presets": [
-       "es2015"
-      ],
-      "plugins": []
+    "presets": [
+     "es2015",
+     "stage-3"
+    ],
+    "plugins": ["syntax-async-functions","transform-regenerator"]
   };
   code = babel.transform(code, opts).code;
   // brittle approach to wrap es7 in module.exports
@@ -89,9 +91,7 @@ if (service.language === "es7") {
   code.shift();
   code.shift();
   code = code.join('\n');
-  code = 'module["exports"] = ' + code;
-  //console.log(code);
-  //process.exit();
+  code = 'var exports = module["exports"];\n\n' + code;
 }
 
 var rs = require('run-service');
