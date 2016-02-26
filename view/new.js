@@ -127,7 +127,7 @@ module['exports'] = function view (opts, callback) {
           params.cron = params.cronString;
           if (params.hookSource === "code") {
             delete params.gist;
-            params.source = params.codeEditor;
+            params.source = params.source || params.codeEditor;
             if (typeof params.source === "undefined") {
               params.source = "module['exports'] = function (hook) {hook.res.end('no source code provided')};";
             }
@@ -188,6 +188,12 @@ module['exports'] = function view (opts, callback) {
         $('.gist').attr('value', req.session.gistLink);
       } else {
         $('.gistStatus').remove();
+      }
+
+      if (req.user.paidStatus === "paid") {
+        $('.paidAccount').remove();
+      } else {
+        $('.securityHolder input').attr('disabled', 'DISABLED')
       }
 
       var services = hooks.services;

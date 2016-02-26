@@ -1,6 +1,7 @@
 // Make run count live
 
 var hook = require('../lib/resources/hook');
+var user = require('../lib/resources/user');
 var resource = require('resource');
 var hooks = require('hook.io-hooks');
 var cache = require('../lib/resources/cache');
@@ -59,6 +60,13 @@ module['exports'] = function view (opts, callback) {
       return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
     }
 
+    if (req.user.paidStatus === "paid" || req.session.paidStatus === "paid") {
+      $('.paidAccount').remove();
+    } else {
+      $('.securityHolder input').attr('disabled', 'DISABLED')
+      $('.securityHints').remove();
+    }
+
     // console.log('finding', { owner: params.owner, name: name });
     // fetch the latest version of hook ( non-cached )
     hook.find({ owner: params.owner, name: name }, function (err, result) {
@@ -69,17 +77,16 @@ module['exports'] = function view (opts, callback) {
         return server.handle404(req, res);
       }
       req.hook = result[0];
-
-      billing.find({ owner: req.session.user }, function (err, results) {
-        if (err) {
-          return callback(err, $.html());
-        }
-        if (results.length > 0) {
-          // TODO: better billings check
-          req.billings = results[0];
-        }
-        presentView();
-      });
+        billing.find({ owner: req.session.user }, function (err, results) {
+          if (err) {
+            return callback(err, $.html());
+          }
+          if (results.length > 0) {
+            // TODO: better billings check
+            req.billings = results[0];
+          }
+          presentView();
+        });
     });
   });
 
@@ -162,7 +169,7 @@ module['exports'] = function view (opts, callback) {
         });
 
         cache.set(key, result, function(){
-          return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + req.hook.name + "&status=saved");
+          return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + data.name + "&status=saved");
         });
       });
 
@@ -193,6 +200,7 @@ module['exports'] = function view (opts, callback) {
 
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
       $('.hookLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs");
+      $('.clearLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs?flush=true");
       $('.hookSource').attr('href', '/' + h.owner + '/' + h.name + "/source");
       $('.hookResource').attr('href', '/' + h.owner + '/' + h.name + "/resource");
       $('.hookView').attr('href', '/' + h.owner + '/' + h.name + "/view");
@@ -319,7 +327,6 @@ module['exports'] = function view (opts, callback) {
           }
         }
 
-        //console.log(examples)
         boot.examples = examples;
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
         return callback(null, out);

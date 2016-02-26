@@ -19,11 +19,20 @@ module['exports'] = function view (opts, callback) {
     req.i18n.setLocale(params.lang);
   }
 
+  var acceptTypes = [];
+
+  if (req.headers && req.headers.accept) {
+    acceptTypes = req.headers.accept.split(',');
+  }
+  if (acceptTypes.indexOf('text/html') === -1) {
+    req.jsonResponse = true;
+  }
+
   var i = req.i18n;
 
   //$('title').html(i.__('hook.io - Free Microservice and Webhook Hosting. Deploy your code in seconds.'));
   //$('.splash').html(i.__('Instantly Build and Deploy HTTP Microservices'));
-  $('.supportedLang').html(i.__("%s Supported Programming Languages", "11+"));
+  $('.supportedLang').html(i.__("%s Supported Programming Languages", "12+"));
   //$('.deploymentsLink').html(i.__("Deployments"));
 
   $('.features li a').each(function(index, item){

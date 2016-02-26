@@ -45,11 +45,13 @@ module['exports'] = function view (opts, callback) {
               if (err) {
                 return res.end(err.message);
               }
+              req.session.paidStatus = "paid";
               complete(result)
             });
           } else {
             var u = results[0];
             u.paidStatus = "paid";
+            req.session.paidStatus = "paid";
             u.save(function(err, r){
               if (err) {
                 return res.end(err.message);
