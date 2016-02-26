@@ -700,14 +700,12 @@ body legend {
   
 </script>
 
-
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="font-size:22px;height:800px;text-align: left;" class="container">
-
   <div class="message"></div>
   <form id="hookForm" method="POST" action="/admin" role="form">
     <legend><h1 class="i18n">Manage Microservice</h1></legend>
-    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="/keys" class="accessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
+    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="clearLogs i18n">Clear Logs</a>&nbsp;|&nbsp;<a href="/keys" class="accessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
     <h3><a href="" class="hookSource i18n">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource i18n">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView i18n">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter i18n">Presenter</a></h3>
     <br/>
     <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
@@ -863,8 +861,10 @@ body legend {
         <label for="hookPrivate">Private Service</label>
         <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
         <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.<br/></div>
-        <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
-        <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
+        <div class="securityHints">
+          <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
+          <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
+        </div>
       </div>
     </div>
 
@@ -896,7 +896,6 @@ body legend {
           <p>We have <a href="/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
-          <p>For those interested in helping, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
         </div>
       </div>
