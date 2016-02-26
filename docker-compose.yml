@@ -2,23 +2,23 @@ redis:
   image: redis
 
 couch:
-  image: couchdb
+  build: ./docker/couchdb
+  ports:
+    - "49162:5984"
 
 hookio:
   build: .
+  command: node /src/bin/server
   ports:
     - "49160:9999"
   links:
     - "redis:redis"
     - "couch:couch"
     - "worker0:worker0"
-    - "worker1:worker1"
-    - "worker2:worker2"
-    - "worker3:worker3"
-    - "worker4:worker4"
 
 worker0:
-  image: worker
+  build: .
+  command: node /src/bin/worker
   privileged: true
   ports:
     - "49161:10000"
@@ -26,34 +26,8 @@ worker0:
     - "redis:redis"
     - "couch:couch"
 
-worker1:
-  image: worker
-  ports:
-    - "49162:10000"
+setup:
+  build: .
+  command: /src/config/couchdb/create_admin.sh
   links:
-    - "redis:redis"
-    - "couch:couch"
-
-worker2:
-  image: worker
-  ports:
-    - "49163:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
-        
-worker3:
-  image: worker
-  ports:
-    - "49164:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
-
-worker4:
-  image: worker
-  ports:
-    - "49165:10000"
-  links:
-    - "redis:redis"
     - "couch:couch"
