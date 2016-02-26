@@ -3,6 +3,8 @@ redis:
 
 couch:
   build: ./docker/couchdb
+  ports:
+    - "49162:5984"
 
 hookio:
   build: .
@@ -12,9 +14,9 @@ hookio:
   links:
     - "redis:redis"
     - "couch:couch"
-    - "worker:worker"
+    - "worker0:worker0"
 
-worker:
+worker0:
   build: .
   command: node /src/bin/worker
   privileged: true
