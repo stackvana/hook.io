@@ -10,7 +10,7 @@ module['exports'] = function unauthorizedRoleAccess (req, role) {
   if (typeof req.resource.params.hook_private_key !== "undefined") {
     // if key was provided but the role check failed ( since it reached here ) show specific error message
     str += "A role access check was attempted but failed with key " + '"' + req.resource.params.hook_private_key + '"\n\n';
-    errorType = "invalid-access-key";
+    errorType = "unauthorized-role-access";
     //str += "Try again with a diffirent `hook_private_key` value?\n\n";
   }
 
