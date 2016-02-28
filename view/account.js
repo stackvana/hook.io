@@ -206,7 +206,7 @@ function showUserForm (user, cb) {
     "type": "string",
     "label": "account paid status",
     "disabled": true,
-    "default": "unpaid"
+    "default": user.paidStatus
   };
 
   formSchema.password = {

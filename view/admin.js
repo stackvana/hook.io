@@ -156,6 +156,8 @@ module['exports'] = function view (opts, callback) {
 
       data.id = req.hook.id;
       var key = '/hook/' + req.hook.owner + "/" + data.name;
+      data.owner = req.hook.owner;
+
       return hook.update(data, function(err, result){
         if (err) {
           // TODO: generic error handler
