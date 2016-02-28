@@ -10,7 +10,7 @@ hookio:
   build: .
   command: node /src/bin/server
   ports:
-    - "49160:9999"
+    - "80:9999"
   links:
     - "redis:redis"
     - "couch:couch"
