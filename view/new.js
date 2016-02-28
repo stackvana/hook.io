@@ -108,6 +108,7 @@ module['exports'] = function view (opts, callback) {
         }
 
         var query = { name: params.name, owner: req.resource.owner };
+        //var query = { name: params.name, owner: req.session.user };
         return hook.find(query, function(err, results){
           if (results.length > 0) {
             var h = results[0];
@@ -149,9 +150,15 @@ module['exports'] = function view (opts, callback) {
                name: params.name
              });
 
+            // the source of the hook is coming from the code editor
             if (params.hookSource === "code") {
-               // the source of the hook is coming from the code editor
-               return res.redirect('/admin?owner=' + h.owner + "&name=" + h.name + "&status=created");
+               // if jsonResponse, return object
+               if (req.jsonResponse) {
+                 return res.json({ status: 'created', hook: result });
+               } else {
+                 // if not, redirect to admin page for newly created hook
+                 return res.redirect('/admin?owner=' + h.owner + "&name=" + h.name + "&status=created");
+               }
             } else {
               // the source of the hook is coming from a github gist
               opts.gist = gist;

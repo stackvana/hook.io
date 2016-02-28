@@ -3,6 +3,23 @@
 
 ### Build and deploy HTTP microservices in seconds
 
+#### Supported Service Programming Languages
+
+  - JavaScript
+  - ES7
+  - CoffeeScript
+  - Bash
+  - Lua
+  - Perl
+  - PHP
+  - Python2
+  - Python3
+  - Ruby
+  - Scheme
+  - SmallTalk
+  - TCL
+
+
 To start using hook.io visit the website at [https://hook.io](https://hook.io). Here you will find many examples and documentation on how to use hook.io
 
 Architectural details can be found a bit further down.
@@ -15,22 +32,53 @@ If you'd like, you can run the following Curl command to opt-in to our mailing l
 
 Replace youremail@marak.com with your email address.
 
-## Project Design and Development
+## Installing Local Instance
 
-Interested in contributing to the development of hook.io? Please join the discussion!
+Before setting up a local hook.io server, you should try the free hosted version at [https://hook.io](https://hook.io)
 
-### IRC Room
+Running a local development instance of hook.io is simple.
 
-`#hook.io` on `irc.freenode.net:6667`
+First, you'll need to install [Docker](https://docs.docker.com/engine/installation/). 
 
-Webchat [available here](http://webchat.freenode.net/?channels=hook.io)
+### Docker???
+
+It's important to note that hook.io is only using `docker` for helping developers get setup with a local development instance. We are not using docker in production and do not recommend using our Docker image and default configurations in production ( as there will be almost no service isolation ).
+
+### Installing hook.io
+
+Once `docker-machine` is installed and running, perform the following commands:
+
+``` bash
+git clone https://github.com/bigcompany/hook.io
+cd hook.io
+docker-compose build
+docker-compose up
+```
+
+This should start the following services:
+
+ - 1 hook.io front-end load balancer
+ - 1 hook.io worker
+ - 1 couchdb server
+ - 1 redis server
+
+*Note: The `cron` and `hpm` services are not currently included in our docker image. If you require using these services locally they should be easy to add.*
 
 
-### Trello Boards
+To access these services you'll need to open the current ip address of your docker-machine in the browser.
 
-[hook.io-design](https://trello.com/b/YBIFL077/hook-io-design)
+To find the current address of the Docker machine run: `docker-machine ip`
 
-[hook.io-features](https://trello.com/b/9i9QSbof/hook-io-features)
+### Configure the local running hook.io instance
+
+Once the services are started, you'll still need to run one more command.
+
+```bash
+curl http://{{your_docker_machine_ip}}/_admin?baseUrl=set
+```
+
+Without running this last line, most http redirects and ajax gateways in the system will not work.
+
 
 ## What is the purpose of hook.io?
 
@@ -102,7 +150,7 @@ The front-facing server is responsible for serving static content, maintaining u
 
 Workers are responsible for executing user-submitted source code and piping their responses through the front-facing server to the client.
 
-At this point, we will take note that communication between the Hook and client remains streaming throughout the entire architecture. This gives hook.io the ability to perform complex tasks like [transcoding large video streams](https://hook.io/Marak/transcodeVideo) without worrying about clogging up any parts of the system with large memory buffers.
+At this point, we will take note that communication between the Hook and client remains streaming throughout the entire architecture. This gives hook.io the ability to perform complex tasks like transcoding large video streams without worrying about clogging up any parts of the system with large memory buffers.
 
 Hook Servers and Hook Workers are immutable and stateless to ensure stability of the platform. They are designed to fail fast and restart fast. [mon](http://github.com/tj/mon) is used as a process supervisor.
 
@@ -130,14 +178,6 @@ If your module requires additional dependencies outside of what NPM can install,
 
 If you only need to test your Hook code, you can run `./bin/test-hook` without having to setup the full hook.io stack.
 
-## Setting up a private hook.io
-
-Before setting up a private hook.io server, you should try the free hosted version at [https://hook.io](https://hook.io)
-
-Setting up a private hook.io server at this time will not be easy. You'll need to clone this repository, install the dependencies, and run the `start.sh` script. There currently are not detailed installation instructions and you will need to configure a few dependencies ( such as couchdb, redis, and github api ) and pull a few other dependencies from `master`.
-
-In the near future, we will improve the process of setting up a local hook.io server.
-
 ## Workers
 
 Hooks are executed on *stateless* isolated workers to help facilitate scaling and to ensure stability in the core application. These workers are responsible for running user-submitted Hook source code and piping their responses back to the main server. If running untrusted user-submitted code, you will need to isolate these workers.
@@ -148,13 +188,6 @@ see: `./bin/worker` and `./bin/test-worker`
 
 [https://github.com/bigcompany/hook.io-i18n](https://github.com/bigcompany/hook.io-i18n)
 
-## Installing Local Instance
-
-Currently the process for installing a local version of hook.io is not streamlined with a working Docker image. We'll have Docker support soon. 
-
-Our current installation scripts can be found here:
-
-https://github.com/bigcompany/hook.io/blob/master/scripts
 
 ## Tests
 

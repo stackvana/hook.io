@@ -1,4 +1,29 @@
+<style>
+  .json {
+    width: 800px;
+    height: 500px;
+  }
+</style>
+
 <h1>hook.io admin interface</h1>
+
+<h2>Find User By Email</h2>
+
+<form name="userSearch" class="userSearchForm" action="/_admin" method="GET">
+  <input name="name" type="text" placeholder="marak@hook.io">
+  <input type="submit" value="Search">
+</form>
+
+
+<div class="user">
+  <a class="loginAs" href="/_admin">Login as this user</a>
+  <textarea class="json"></textarea>
+  
+</div>
+<div class="account"></div>
+
+<a name="admin"></a>
+
 
 <div align="left">
   <h2>Views</h2>

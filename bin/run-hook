@@ -307,7 +307,7 @@ if (service.owner === "marak" && (service.name === "gateway" || service.name ===
 
 // Wrap datastore so that all entries are keyed to owner of hook
 var Datastore = require('hook.io-datastore').Datastore;
-var datastore = new Datastore({ root: _root });
+var datastore = new Datastore({ root: _root, host: "redis" });
 
 psr(process.stdin, output, function(req, res, fields){
   for (var p in fields) {
