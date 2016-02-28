@@ -11,7 +11,7 @@ RUN cd /tmp; git clone https://github.com/tj/mon; cd mon; make install
 
 # copy basic files
 COPY . /src
-RUN cd /src && rm -rf ./node_modules/ && npm install
+RUN export USER=root && cd /src && rm -rf ./node_modules/ && npm install && npm link
 
 # disable install modules for now
 # RUN cd /src/modules && node install.js

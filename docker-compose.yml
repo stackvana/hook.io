@@ -31,3 +31,9 @@ setup:
   command: /src/config/couchdb/create_admin.sh
   links:
     - "couch:couch"
+
+install_default_hooks:
+  build: .
+  command: node /src/scripts/install/add-default-hooks.js
+  links:
+    - "couch:couch"
