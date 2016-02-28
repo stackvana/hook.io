@@ -84,7 +84,7 @@ module['exports'] = function signup (opts, cb) {
               res: "valid",
             };
             // r.res = "redirect";
-            r.redirect = req.session.redirectTo || "/";
+            r.redirect = "/";
             return res.end(JSON.stringify(r));
           });
         });
