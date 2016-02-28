@@ -12,23 +12,29 @@ hookM.persist(config.couch);
 var services = Object.keys(hooks.services);
 
 function addHook () {
-  
+
   if (services.length === 0) {
-    console.log('done'.green);
+    console.log('done'.magenta);
     process.exit();
   }
-  
+
   var h = services.pop();
   var hook = hooks.services[h];
-  
+
   // add a new hook to the database
   var newHook = {
     name: h,
     owner: "marak",
     language: hook.language,
     description: hook.description,
-    source: hook.source
+    source: hook.source,
+    sourceType: "code"
   };
+
+  // special-case for gateway hooks
+  if(h.search('gateway') !== -1) {
+    newHook.hookType = "gateway";
+  }
 
   hookM.find({ owner: "marak", name: h }, function (err, results) {
     if (err) {
@@ -40,7 +46,7 @@ function addHook () {
         if(err) {
           throw err;
         }
-        console.log('blue'.blue, newHook);
+        console.log('created'.green, newHook.name);
         // iterate
         addHook();
       });
@@ -49,13 +55,13 @@ function addHook () {
       _h.source = newHook.source;
       _h.description = newHook.description;
       _h.language = newHook.language;
-      console.log(_h)
+      _h.hookType = newHook.hookType;
+      _h.sourceType = newHook.sourceType;
       _h.save(function(){
         if(err) {
           throw err;
         }
-        console.log('updated hook'.blue, newHook);
-        
+        console.log('updated'.blue, newHook.name);
         addHook();
       });
     }
