@@ -31,16 +31,20 @@
   <p>Currently, hook.io does not support custom system events. We will probably add this feature in the near future.</p>
   <h2>Accessing Hook System Events</h2>
   <p>To access the System Event log for an account, simply attach <code>/events</code> to the end of your account homepage.</p>
-  <p><strong>For example:</strong> <a href="https://hook.io/Marak/events">https://hook.io/Marak/events</a></p>
+  <p><strong>For example:</strong> <a href="https://hook.io/marak/events">https://hook.io/marak/events</a></p>
   <p>The events endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
+  <h3>Authentication</h3>
+  <p>By default, hook.io system events are private. In order to access them from a third-party service, you'll need to generate a valid <a href="/keys">API Access Key</a> with the <code>events::read</code> role.</p>
+  <p>Below is a link which contains a limited <a href="/roles">role</a> API Access Key created only for demonstration purposes.</p>
+  <p><a href="http://hook.io/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e">http://hook.io/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e</a></p>
 
     <h3>Streaming events</h3>
     <p>To access streaming events, request the events endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
-    <p><strong>Example: </strong><code>curl -N https://hook.io/Marak/events</code></p>
+    <p><strong>Example: </strong><code>curl -N https://hook.io/marak/events</code></p>
 
     <h3>Plain Text Events</h3>
     <p>To access plain text events, request the events endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
-    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/Marak/events</code></p>
+    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/marak/events</code></p>
 
   <h2>Limitations</h2>
   <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can <a href="https://hook.io/pricing">upgrade to a paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a>
