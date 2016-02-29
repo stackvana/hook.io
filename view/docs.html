@@ -339,30 +339,30 @@
   <p>Here are two simple examples of using <code>echo</code> and <code>curl</code> to execute hot-code against hook.io's gateway.</p>
 
   <h4>JavasScript</h4>
-  <pre><code>echo 'module["exports"] = function helloWorld (h) { h.res.end("Hello world!"); };' | curl --data-urlencode source@- http://gateway-javascript.hook.io</code></pre>
+  <pre><code>echo 'module["exports"] = function helloWorld (h) { h.res.end("Hello world!"); };' | curl --data-urlencode source@- http://javascript.hook.io</code></pre>
 
   <h4>Python</h4>
-  <pre><code>echo 'print "hello world"' | curl --data-urlencode source@- http://gateway-python.hook.io/</code></pre>
+  <pre><code>echo 'print "hello world"' | curl --data-urlencode source@- http://python.hook.io/</code></pre>
 
-  <p>You can also simply open a url to the gateway like this: <a href="http://gateway-python.hook.io/?source=print%20%22hello%20world%22">http://gateway-python.hook.io/?source=print "hello world"</a>
+  <p>You can also simply open a url to the gateway like this: <a href="http://python.hook.io/?source=print%20%22hello%20world%22">http://python.hook.io/?source=print "hello world"</a>
   <br/>
 
   <h3>Available Gateways</h3>
-  <em>Note: The gateway will return an error if the <code>source</code> parameter is not provided</em>
+  <em>Note: Most gateways will an return an error or blank response if the <code>source</code> parameter is not provided</em>
 
   <ul style="font-size:22px;padding-top:10px;list-style-type: disc;">
-    <li><a href="http://gateway-javascript.hook.io">gateway-javascript.hook.io</a></li>
-    <li><a href="http://gateway-coffee-script.hook.io">gateway-coffee-script.hook.io</a></li>
-    <li><a href="http://gateway-bash.hook.io">gateway-bash.hook.io</a></li>
-    <li><a href="http://gateway-lua.hook.io">gateway-lua.hook.io</a></li>
-    <li><a href="http://gateway-perl.hook.io">gateway-perl.hook.io</a></li>
-    <li><a href="http://gateway-php.hook.io">gateway-php.hook.io</a></li>
-    <li><a href="http://gateway-python.hook.io">gateway-python.hook.io</a></li>
-    <li><a href="http://gateway-python3.hook.io">gateway-python3.hook.io</a></li>
-    <li><a href="http://gateway-ruby.hook.io">gateway-ruby.hook.io</a></li>
-    <li><a href="http://gateway-scheme.hook.io">gateway-scheme.hook.io</a></li>
-    <li><a href="http://gateway-smalltalk.hook.io">gateway-smalltalk.hook.io</a></li>
-    <li><a href="http://gateway-tcl.hook.io">gateway-tcl.hook.io</a></li>
+    <li><a href="http://javascript.hook.io">javascript.hook.io</a></li>
+    <li><a href="http://coffee.hook.io">coffee.hook.io</a></li>
+    <li><a href="http://bash.hook.io">bash.hook.io</a></li>
+    <li><a href="http://lua.hook.io">lua.hook.io</a></li>
+    <li><a href="http://perl.hook.io">perl.hook.io</a></li>
+    <li><a href="http://php.hook.io">php.hook.io</a></li>
+    <li><a href="http://python.hook.io">python.hook.io</a></li>
+    <li><a href="http://python3.hook.io">python3.hook.io</a></li>
+    <li><a href="http://ruby.hook.io">ruby.hook.io</a></li>
+    <li><a href="http://scheme.hook.io">scheme.hook.io</a></li>
+    <li><a href="http://smalltalk.hook.io">smalltalk.hook.io</a></li>
+    <li><a href="http://tcl.hook.io">tcl.hook.io</a></li>
   </ul>
 
   <br/>
