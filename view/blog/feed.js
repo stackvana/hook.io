@@ -18,28 +18,24 @@ module['exports'] = function view (opts, callback) {
 
   var feed = new RSS(feedOptions);
 
-  // TODO: multiple posts
+  function addItem (post) {
+    var getData = new Function(post.$('.data').html() + ' return data;');
+    var data = getData();
+    feed.item(data);
+  };
 
-  var post3 = self.parent['hook-in-your-language'];
-  var getData = new Function(post3.$('.data').html() + ' return data;');
-  var data = getData();
-  feed.item(data);
+  var posts = [
+    'the-monolith-versus-the-microservice-a-tale-of-two-applications',
+    'new-multi-language-support',
+    'hook-in-your-language',
+    'role-based-access-control',
+    'websocket-hooks'
+  ];
 
-  var post2 = self.parent['new-multi-language-support'];
-  var getData = new Function(post2.$('.data').html() + ' return data;');
-  var data = getData();
-  feed.item(data);
-
-  var post = self.parent['the-monolith-versus-the-microservice-a-tale-of-two-applications'];
-  var getData = new Function(post.$('.data').html() + ' return data;');
-  var data = getData();
-  feed.item(data);
-
-  var post = self.parent['role-based-access-control'];
-  var getData = new Function(post.$('.data').html() + ' return data;');
-  var data = getData();
-  feed.item(data);
-
+  posts.forEach(function(p){
+    var post = self.parent[p];
+    addItem(post);
+  });
 
   var xml = feed.xml();
   callback(null, xml);

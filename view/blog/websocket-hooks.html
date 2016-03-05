@@ -1,0 +1,79 @@
+<script type="text/javascript" class="data">
+  var data = {
+    title: "Websocket Hooks",
+    description: "",
+    url: "https://hook.io/blog/websocket-hooks",
+    guid: "websocket-hooks",
+    author: "Marak",
+    date: "Sat Mar 05 2016 02:34:36 GMT-0500 (EST)"
+  };
+</script>
+
+<style>
+.managers p { font-size: 32px; padding-bottom: 10px; margin-bottom: 10px; }
+.managers li { font-size: 20px; }
+.managers h1, h2 {
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+.managers h1 {
+  font-size: 52px;
+}
+.managers h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+.managers ul {
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.managers ul li {
+  font-size:22px;
+}
+
+</style>
+<div class="managers" align="left">
+<h1>Websocket Hooks</h1>
+
+<br/>
+
+<p>
+  We are happy to introduce a brand new way of sending data to any Hook service endpoint, Websockets! 
+</p>
+<p>This new functionality enables a bridge between Websocket connections and Webhook microservices.</p>
+<p>
+  Through a standard <code>ws://</code> connection, you can now connect to any existing <a href="https://hook.io">hook.io</a> microservice though Websockets.
+</p>
+<p>
+  hook.io will hold the Websocket connection, attempting to parse any incoming messages as JSON and forward them to a waiting hook service.
+</p>
+<p>If a string or non-JSON message is received, hook.io will simply pass it to the waiting service as <code>hook.params.body</code>
+<p>Any Websocket client will work, including the browser.</p>
+  
+<p>Below is an example of using the <a href="https://github.com/websockets/wscat">wscat</a> tool to connect to a hook.io service over Websockets to send and receive data.</p>
+
+<h3>Example</h3>
+<p><code>wscat -c ws://hook.io/marak/echo</code></p>
+<img src="/img/wscat.png"></img>
+<br/>
+<p><em>Simple as pie!</em></p>
+
+<h3>Binary Data Support / Websocket Transform Streams</h3>
+
+<p>
+  Currently, hook.io Websockets can only receive data as text or JSON messages. In the near future, we will most likely add support for streaming binary data over Websocket with the ability to perform transforms on the data stream.
+</p>
+<p>Remember, you can still perform streaming transforms of binary data using the regular HTTP API:</p>
+<code>echo "foo" | curl --header "content-type: application/octet-stream"  --data-binary @- http://hook.io/marak/transform</code><br/>
+</p>
+<p>
+  If you are interested in helping with this 100% open-source hook.io project, come join the discussion at: <a href="https://github.com/bigcompany/hook.io">https://github.com/bigcompany/hook.io</a>
+</p>
+
+<p>
+  <em>Go Websockets!</em>
+</p>
+<br/>
+
+</div>

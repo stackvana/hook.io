@@ -1,30 +1,27 @@
 var df = require('dateformat');
 
 module['exports'] = function view (opts, callback) {
-  
+
   var self = this, $ = this.$;
-  
-  
-  // TODO: multiple posts
-  var post = self.parent['the-monolith-versus-the-microservice-a-tale-of-two-applications'];
-  var getData = new Function(post.$('.data').html() + ' return data;');
-  var data = getData();
-  $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
 
-  var post2 = self.parent['new-multi-language-support'];
-  var getData = new Function(post2.$('.data').html() + ' return data;');
-  var data = getData();
-  $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
+  function appendPost (post) {
+    var getData = new Function(post.$('.data').html() + ' return data;');
+    var data = getData();
+    $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
+  };
 
-  var post3 = self.parent['hook-in-your-language'];
-  var getData = new Function(post3.$('.data').html() + ' return data;');
-  var data = getData();
-  $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
+  var posts = [
+    'the-monolith-versus-the-microservice-a-tale-of-two-applications',
+    'new-multi-language-support',
+    'hook-in-your-language',
+    'role-based-access-control',
+    'websocket-hooks'
+  ];
 
-  var post3 = self.parent['role-based-access-control'];
-  var getData = new Function(post3.$('.data').html() + ' return data;');
-  var data = getData();
-  $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + data.url + '">' + data.title + '</a></li>');
+  posts.forEach(function(p){
+    var post = self.parent[p];
+    appendPost(post);
+  });
 
   callback(null, $.html());
 };
