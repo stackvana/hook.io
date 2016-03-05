@@ -39,17 +39,17 @@
 <br/>
 
 <p>
-  We are happy to introduce a brand new way of sending data to any Hook service endpoint, Websockets! 
+  We are happy to introduce a brand new way of sending data to any Hook service endpoint, <strong>Websockets!</strong>
 </p>
-<p>This new functionality enables a bridge between Websocket connections and Webhook microservices.</p>
+<p>This new functionality enables a <em>bridge</em> between <strong>Websocket</strong> connections and <strong>Webhook</strong> microservices.</p>
 <p>
   Through a standard <code>ws://</code> connection, you can now connect to any existing <a href="https://hook.io">hook.io</a> microservice though Websockets.
 </p>
 <p>
-  hook.io will hold the Websocket connection, attempting to parse any incoming messages as JSON and forward them to a waiting hook service.
+  hook.io will hold the Websocket connection, attempting to parse any incoming messages as JSON and forward them to an existing hook service.
 </p>
-<p>If a string or non-JSON message is received, hook.io will simply pass it to the waiting service as <code>hook.params.body</code>
-<p>Any Websocket client will work, including the browser.</p>
+<p>If a string or non-JSON message is received, hook.io will simply pass the data to the hook service as <code>hook.params.body</code>
+<p><em>Any Websocket client will work, including the browser.</em></p>
   
 <p>Below is an example of using the <a href="https://github.com/websockets/wscat">wscat</a> tool to connect to a hook.io service over Websockets to send and receive data.</p>
 
