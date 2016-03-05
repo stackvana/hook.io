@@ -59,6 +59,7 @@ module['exports'] = function view (opts, callback) {
             return res.end(err.message);
           }
           req.session.user = u.name.toLowerCase();
+          req.session.paidStatus = u.paidStatus;
           var r = {
             res: "valid",
           };

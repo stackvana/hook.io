@@ -197,7 +197,7 @@ module['exports'] = function view (opts, callback) {
         $('.gistStatus').remove();
       }
 
-      if (req.user.paidStatus === "paid") {
+      if (req.session.paidStatus === "paid") {
         $('.paidAccount').remove();
       } else {
         $('.securityHolder input').attr('disabled', 'DISABLED')

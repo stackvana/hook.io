@@ -213,14 +213,13 @@ module['exports'] = function view (opts, callback) {
         $('.customTimeout').attr('value', h.customTimeout.toString());
       }
 
-      if (typeof req.billings === "undefined") {
+      if (typeof req.session.paidStatus !== "paid") {
         $('.customTimeout').attr('disabled', 'DISABLED');
       }
 
       $('.hookRan').attr('value', numberWithCommas(h.ran));
       $('#name').attr('value', h.name);
       $('.owner').attr('value', h.owner);
-      console.log(h)
       if (h.isPrivate) {
         $('.hookPrivate').attr('checked', 'CHECKED');
       } else {
@@ -264,9 +263,7 @@ module['exports'] = function view (opts, callback) {
 
       if (typeof h.language !== 'undefined') {
         $('#language').prepend('<option value="' + h.language + '">' + h.language + '</option>')
-        if (h.language !== "javascript") {
-          $('#gatewayForm').attr('action', '/Marak/gateway-' + h.language);
-        }
+        $('#gatewayForm').attr('action', '/Marak/gateway-' + h.language);
       }
 
       if (typeof h.status !== 'undefined') {
