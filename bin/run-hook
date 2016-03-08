@@ -286,6 +286,7 @@ var debug = function debug () {
   return;
 };
 
+
 var _root = service.owner;
 if (service.owner === "marak" && (service.name === "gateway" || service.name === "gateway-javascript")) {
   /*
@@ -305,9 +306,33 @@ if (service.owner === "marak" && (service.name === "gateway" || service.name ===
   }
 }
 
-// Wrap datastore so that all entries are keyed to owner of hook
-var Datastore = require('hook.io-datastore').Datastore;
-var datastore = new Datastore({ root: _root, host: "redis" });
+var sdk = require('hook.io-sdk');
+
+var client = sdk.createClient({
+  host: "hook.io",
+  port: 443,
+  protocol: "https",
+  hook_private_key: env.hookAccessKey
+});
+
+// START: Removed in favor of calling out over HTTP
+  // Wrap datastore so that all entries are keyed to owner of hook
+  // var Datastore = require('hook.io-datastore').Datastore;
+  // var datastore = new Datastore({ root: _root, host: "redis" });
+// END
+
+var datastore = client.datastore;
+
+/* TODO: implement handlers for IPC messages
+// new IPC stdio[3] communication logic
+// sends IPC message to parent
+function _send (message) {
+  process.send(message);
+}
+process.on('message', function (m){
+  console.log('pmessage ' + JSON.stringify(m));
+});
+*/
 
 psr(process.stdin, output, function(req, res, fields){
   for (var p in fields) {

@@ -42,6 +42,7 @@
     "hook.io-hooks": "https://github.com/bigcompany/hooks/tarball/master",
     "hook.io-i18n": "https://github.com/bigcompany/hook.io-i18n/tarball/master",
     "hook.io-logs": "https://github.com/bigcompany/hook.io-logs/tarball/master",
+    "hook.io-sdk": "^1.0.1",
     "hpm": "https://github.com/bigcompany/hpm/tarball/master",
     "hyperdirect": "0.0.0",
     "hyperquest": "^1.0.1",
