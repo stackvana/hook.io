@@ -4,7 +4,7 @@ module['exports'] = {
     port: 9999,
     host: "0.0.0.0",
     https: process.env['NODE_ENV'] === 'production',
-    roots: ["hookio", "0.0.0.0", "192.168.59.103", "localhost", "hook.io", "www.hook.io"]
+    roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io"]
   },
   workers: [
    { host: "worker0", port: "10000" }
@@ -20,6 +20,7 @@ module['exports'] = {
   },
   redis: {
     port: 6379,
+    password: "password",
     host: "redis"
   },
   github: {
