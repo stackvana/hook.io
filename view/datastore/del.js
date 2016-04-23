@@ -44,6 +44,7 @@ module['exports'] = function datasourceDelView (opts, callback) {
 
   function finish () {
     if (typeof params.key !== 'undefined') {
+      // TODO: move to resource.before hooks
       checkRoleAccess({ req: req, res: res, role: "datastore::del" }, function (err, hasPermission) {
         if (!hasPermission) {
           return res.end(config.messages.unauthorizedRoleAccess(req, "datastore::del" ));

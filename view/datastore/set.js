@@ -49,6 +49,7 @@ module['exports'] = function set (opts, callback) {
   function finish () {
 
     if (typeof params.key === 'string' && params.key.length > 0) {
+      // TODO: move to resource.before hooks
       checkRoleAccess({ req: req, res: res, role: "datastore::set" }, function (err, hasPermission) {
         if (!hasPermission) {
           return res.end(config.messages.unauthorizedRoleAccess(req, "datastore::set"));
