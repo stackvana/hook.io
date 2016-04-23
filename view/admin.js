@@ -16,6 +16,7 @@ var bodyParser = require('body-parser');
 var themes = require('../lib/resources/themes');
 var server = require('../lib/server');
 var languages = require('../lib/resources/programmingLanguage').languages;
+var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess');
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -30,10 +31,12 @@ module['exports'] = function view (opts, callback) {
 
   var params;
 
+  /* Remark: Removed in favor or role check
   if (!req.isAuthenticated()) {
     req.session.redirectTo = req.url;
     return res.redirect('/login');
   }
+  */
 
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
@@ -41,58 +44,74 @@ module['exports'] = function view (opts, callback) {
 
     // params.owner = req.session.user;
 
-    if (typeof params.owner === 'undefined' || params.owner.length === 0) {
-      return res.redirect(301, '/' + req.session.user);
-    }
-
-    var name;
-    if (typeof params.previousName !== 'undefined') {
-      name = params.previousName;
-    } else {
-      name = params.name;
-    }
-
-    if (typeof name === 'undefined' || name.length === 0) {
-      return res.redirect(301, '/' + req.session.user);
-    }
-
-    if (req.session.user !== params.owner && req.session.user !== "marak") {
-      return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
-    }
-
-    if (req.user.paidStatus === "paid" || req.session.paidStatus === "paid") {
-      $('.paidAccount').remove();
-    } else {
-      $('.securityHolder input').attr('disabled', 'DISABLED')
-      $('.securityHints').remove();
-    }
-
-    // console.log('finding', { owner: params.owner, name: name });
-    // fetch the latest version of hook ( non-cached )
-    hook.find({ owner: params.owner, name: name }, function (err, result) {
-      if (err) {
-        return res.end(err.message);
+    checkRoleAccess({ req: req, res: res, role: "hook::update" }, function (err, hasPermission) {
+      // console.log('check for role access', err, hasPermission)
+      if (!hasPermission || req.resource.owner === "anonymous") { // don't allow anonymous hook update
+        if (req.jsonResponse !== true && typeof params.hook_private_key === "undefined") {
+          req.session.redirectTo = "/new";
+          return res.redirect('/login');
+        }
+        return res.end(config.messages.unauthorizedRoleAccess(req, "hook::update"));
+      } else {
+        user = req.resource.owner;
+        boot = {
+          owner: user
+        };
+        params.owner = user;
+        next();
       }
-      if (result.length === 0) {
-        return server.handle404(req, res);
-      }
-      req.hook = result[0];
-        billing.find({ owner: req.session.user }, function (err, results) {
-          if (err) {
-            return callback(err, $.html());
-          }
-          if (results.length > 0) {
-            // TODO: better billings check
-            req.billings = results[0];
-          }
-          presentView();
-        });
     });
+
+    function next () {
+      if (typeof params.owner === 'undefined' || params.owner.length === 0) {
+        return res.redirect(301, '/' + req.session.user);
+      }
+
+      var name;
+      if (typeof params.previousName !== 'undefined') {
+        name = params.previousName;
+      } else {
+        name = params.name;
+      }
+
+      if (typeof name === 'undefined' || name.length === 0) {
+        return res.redirect(301, '/' + req.session.user);
+      }
+
+      /*
+      if (req.session.user !== params.owner && req.session.user !== "marak") {
+        return res.end(req.session.user + ' does not have permission to manage ' + params.owner + "/" + params.name);
+      }
+      */
+
+      // console.log('finding', { owner: params.owner, name: name });
+      // fetch the latest version of hook ( non-cached )
+      hook.find({ owner: params.owner, name: name }, function (err, result) {
+        if (err) {
+          return res.end(err.message);
+        }
+        if (result.length === 0) {
+          return server.handle404(req, res);
+        }
+        req.hook = result[0];
+          billing.find({ owner: req.session.user }, function (err, results) {
+            if (err) {
+              return callback(err, $.html());
+            }
+            if (results.length > 0) {
+              // TODO: better billings check
+              req.billings = results[0];
+            }
+            presentView();
+          });
+      });
+    }
+
   });
 
   function presentView () {
 
-    if (params.save) {
+    if (params.save || req.method === "POST") {
       // update the hook
       // at this point, auth should have already taken place, so we can just call Hook.save
 
@@ -133,8 +152,8 @@ module['exports'] = function view (opts, callback) {
       data.mode = params.mode;
 
       // todo: only available for paid accounts
-      if (typeof req.billings === "object") {
-        data.customTimeout = params.customTimeout;
+      if (req.user.paidStatus === "paid" || req.session.paidStatus === "paid") {
+        data.customTimeout = params.customTimeout || 10000;
       }
 
       // TODO: check to see if index.html file matches up with known theme
@@ -171,6 +190,14 @@ module['exports'] = function view (opts, callback) {
         });
 
         cache.set(key, result, function(){
+          if (req.jsonResponse) {
+            var rsp = {
+              "status": "updated",
+              "key": key,
+              "value": result
+            };
+            return res.json(rsp)
+          }
           return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + data.name + "&status=saved");
         });
       });
@@ -186,6 +213,17 @@ module['exports'] = function view (opts, callback) {
     function finish (h) {
 
       var services = hook.services;
+      if (req.jsonResponse) {
+        return res.json("OK")
+      }
+
+      if (req.user.paidStatus === "paid" || req.session.paidStatus === "paid") {
+        $('.paidAccount').remove();
+      } else {
+        $('.securityHolder input').attr('disabled', 'DISABLED')
+        $('.securityHints').remove();
+      }
+
       for (var s in services) {
         $('.services').append(services[s]);
       }
@@ -213,7 +251,9 @@ module['exports'] = function view (opts, callback) {
         $('.customTimeout').attr('value', h.customTimeout.toString());
       }
 
-      if (typeof req.session.paidStatus !== "paid") {
+      if (req.user.paidStatus === "paid" || req.session.paidStatus === "paid") {
+        //
+      } else {
         $('.customTimeout').attr('disabled', 'DISABLED');
       }
 
