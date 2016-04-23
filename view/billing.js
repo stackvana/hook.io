@@ -31,7 +31,7 @@ module['exports'] = function view (opts, callback) {
     }
     
     function createLocalBillings (opts, cb) {
-      if (typeof opts.owner === "undefined") {
+      if (typeof opts.owner === "undefined" || opts.owner === "anonymous") {
         var slug = require('slug');
         // quick hack fix for creating a unique user name based on email
         // TODO: no way to update user name now...fix that in /account page
@@ -46,11 +46,15 @@ module['exports'] = function view (opts, callback) {
                 return res.end(err.message);
               }
               req.session.paidStatus = "paid";
+              req.user = req.user || {};
+              req.user.paidStatus = "paid";
               complete(result)
             });
           } else {
             var u = results[0];
             u.paidStatus = "paid";
+            req.user = req.user || {};
+            req.user.paidStatus = "paid";
             req.session.paidStatus = "paid";
             u.save(function(err, r){
               if (err) {
@@ -63,19 +67,41 @@ module['exports'] = function view (opts, callback) {
       } else {
         complete();
       }
-      function complete (user) {
+      function complete (_user) {
         // console.log('creating billings', opts);
-        if (typeof user !== "undefined") {
-          opts.owner = user.name;
-          req.login(user, function (err){
+        if (typeof _user !== "undefined") {
+          opts.owner = _user.name;
+          req.login(_user, function (err){
             if (err) {
               return res.end(err.message);
             }
-            req.session.user = user.name.toLowerCase();
+            req.session.user = _user.name.toLowerCase();
+            req.user = req.user || {};
+            req.user.paidStatus = "paid";
+            req.session.paidStatus = "paid";
             billing.create(opts, cb);
           })
         } else {
-          billing.create(opts, cb);
+          user.find({ name: opts.owner }, function (err, results) {
+            if (err) {
+              return res.end(err.message);
+            }
+            if (results.length === 0) {
+              return res.end('An error occurred, please contact support.')
+            } else {
+              var u = results[0];
+              u.paidStatus = "paid";
+              req.user = req.user || {};
+              req.user.paidStatus = "paid";
+              req.session.paidStatus = "paid";
+              u.save(function(err, r){
+                if (err) {
+                  return res.end(err.message);
+                }
+                billing.create(opts, cb);
+              });
+            }
+          });
         }
       };
       // if new billing creation was succesful, but no user was found with that email
@@ -161,6 +187,9 @@ module['exports'] = function view (opts, callback) {
                 $('.status').html(err.message);
                 return callback(null, err.message);
               }
+              req.user = req.user || {};
+              req.user.paidStatus = "paid";
+              req.session.paidStatus = "paid";
 
                // console.log('added to plan', err, charge);
                $('.status').html('Billing Information Added! Thank you!');
