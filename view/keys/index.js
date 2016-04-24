@@ -1,15 +1,16 @@
 var forms = require('resource-forms'),
-keys = require('../lib/resources/keys'),
+keys = require('../../lib/resources/keys'),
 mschemaForms = require('mschema-forms');
 
 var uuid = require('node-uuid');
 
-var role = require('../lib/resources/role');
-var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess');
+var role = require('../../lib/resources/role');
+var checkRoleAccess = require('../../lib/server/routeHandlers/checkRoleAccess');
+var mschema = require('mschema');
 
-var mergeParams = require('./mergeParams');
+var mergeParams = require('../mergeParams');
 var bodyParser = require('body-parser');
-var config = require('../config');
+var config = require('../../config');
 
 
 module['exports'] = function view (opts, callback) {
@@ -18,22 +19,30 @@ module['exports'] = function view (opts, callback) {
        res = opts.response,
        $ = this.$;
 
+ var self = this;
+ self.schema = self.schema || {};
+
  // TODO: only show form if logged in, if not, show login form
 
  if (!req.isAuthenticated()) {
    $('.keys').remove();
-   return callback(null, $.html());
+   // return callback(null, $.html());
  } else {
    $('.loginLink').remove();
  }
 
+ // TODO: move to resource.before hooks
  checkRoleAccess({ req: req, res: res, role: "keys::read" }, function (err, hasPermission) {
    if (hasPermission) {
      $('.loginBar').remove();
      finish();
    } else {
+     if (req.jsonResponse) {
+       return res.end(config.messages.unauthorizedRoleAccess(req, "keys::read"));
+     }
      // if not logged in, kick out
      if (!req.isAuthenticated()) {
+       
        $('.keys').remove();
        req.session.redirectTo = "/keys";
        return callback(null, $.html());
@@ -53,11 +62,32 @@ module['exports'] = function view (opts, callback) {
        req.resource.params.roles = [req.resource.params.roles];
      }
 
+     if (req.jsonResponse) {
+       if (req.method === "POST") {
+         var validate = mschema.validate(req.resource.params, self.schema);
+         if (!validate.valid) {
+           validate.status = "error";
+           return res.json(validate);
+         } else {
+           return keys.create(req.resource.params, function(err, result){
+             if (err) {
+               return res.end(err.message)
+             }
+             return res.json(result);
+           });
+         }
+       } else {
+         return res.json({ "status": "autodocs"});
+       } 
+     }
+
      var middle = forms.generate({
         view: 'grid-with-form',
         resource: keys,
         action: '/keys',
         params: req.resource.params,
+        req: req,
+        res: res,
         query: { owner: req.session.user },
         useLayout: false,
         form: {
@@ -120,6 +150,7 @@ module['exports'] = function view (opts, callback) {
             format: "checkbox",
             // TODO: make actual array type instead of string
             // type: "array",
+            customValue: true,
             selectAll: true,
             selectNone: true,
             enum: Object.keys(role.roles),
@@ -149,4 +180,23 @@ module['exports'] = function view (opts, callback) {
       });
  }
 
+};
+
+module['exports'].schema = {
+  name: {
+    type: 'string',
+    required: true
+  },
+  owner: {
+    type: 'string',
+    required: true
+  },
+  hook_private_key: {
+    type: 'string',
+    required: true
+  },
+  roles: {
+    type: 'string',
+    required: true
+  }
 };
