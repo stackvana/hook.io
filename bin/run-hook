@@ -308,18 +308,25 @@ if (service.owner === "marak" && (service.name === "gateway" || service.name ===
 
 var sdk = require('hook.io-sdk');
 
-var client = sdk.createClient({
+var prod = {
   host: "hook.io",
   port: 443,
   protocol: "https",
   hook_private_key: env.hookAccessKey
-});
+};
 
-// START: Removed in favor of calling out over HTTP
+var dev = {
+  host: "0.0.0.0",
+  port: 9999,
+  protocol: "http",
+  hook_private_key: env.hookAccessKey
+}
+
+var client = sdk.createClient(dev);
+// REMARK: Removed in favor of calling out over HTTP
   // Wrap datastore so that all entries are keyed to owner of hook
   // var Datastore = require('hook.io-datastore').Datastore;
   // var datastore = new Datastore({ root: _root, host: "redis" });
-// END
 
 var datastore = client.datastore;
 
@@ -333,11 +340,25 @@ process.on('message', function (m){
   console.log('pmessage ' + JSON.stringify(m));
 });
 */
-
 psr(process.stdin, output, function(req, res, fields){
+
   for (var p in fields) {
     env.params[p] = fields[p];
   }
+
+  // Helper method for performing role checks based on current request's `hook_private_key` parameter
+  // You can use this in your service to perform custom role checks
+  req.checkAccess = function hasAccess (role, cb) {
+    if (typeof env.params.hook_private_key === "string") {
+      client.keys.checkAccess({ hook_private_key: env.params.hook_private_key, role: role }, function (err, hasAccess){
+        if (err) {
+          return cb(err);
+        }
+        cb(null, hasAccess);
+      })
+    }
+  };
+
   rs({
     service: code,
     env: {
@@ -347,6 +368,7 @@ psr(process.stdin, output, function(req, res, fields){
       params: env.params,
       resource: env.resource,
       datastore: datastore,
+      keys: client.keys,
       isStreaming: env.isStreaming,
       customTimeout: env.customTimeout,
       debug: debug,
