@@ -345,7 +345,6 @@ psr(process.stdin, output, function(req, res, fields){
   for (var p in fields) {
     env.params[p] = fields[p];
   }
-
   // Helper method for performing role checks based on current request's `hook_private_key` parameter
   // You can use this in your service to perform custom role checks
   req.checkAccess = function hasAccess (role, cb) {
@@ -356,6 +355,8 @@ psr(process.stdin, output, function(req, res, fields){
         }
         cb(null, hasAccess);
       })
+    } else {
+      cb(null, { hasAccess: false });
     }
   };
 
