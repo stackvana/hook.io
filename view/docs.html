@@ -11,13 +11,13 @@
 </style>
 <div align="left" class="documentation">
   <div class="docsHeader">
-    <h1 class="i18n">Documentation</h1>
+    <h1 class="i18n">Documentation<a href="/foo" class="i18n">Documentation</a></h1>
   </div>
   <div class="content"> 
     <h2 class="i18n">Getting Started</h2>
     <p class="i18n">A Hook is single function or block of code represented by a unique URL.</p>
     <p class="i18n">The Hook can be executed by sending HTTP requests to this URL.</p>
-    <p><span class="i18n">To see live examples of using Hooks visit the:</span> <a class="i18n" href="https://hook.io/#tuts">Interactive Microservice Tutorial</a></p>
+    <p><span class="i18n">To see live examples of using Hooks visit the:</span> <a class="i18n" href="https://{{appName}}/#tuts">Interactive Microservice Tutorial</a></p>
     <p><span>To see example Hooks which you can <a href="#forking">fork</a> visit:</span> <a class="i18n" href="/examples">Examples</a></p>
     <p>
       <ul style="font-size:22px;">
@@ -72,9 +72,10 @@
         <li>Additional Platform Features
           <ul>
             <li><a href="#datastore" class="i18n">Using the Cloud Datastore</a></li>
+            <li><a href="#files" class="i18n">Using the Multi-Cloud Virtual File System</a></li>
             <li><a href="#domains" class="i18n">Setting Custom Domains</a></li>
             <li><a href="#events" class="i18n">Accessing System Events</a></li>
-            <li><a href="#api" class="i18n">Using hook.io through it's HTTP API</a></li>
+            <li><a href="#api" class="i18n">Using {{appName}} through it's HTTP API</a></li>
             <li><a href="#ssl" class="i18n">SSL / HTTPS</a></li>
           </ul>
         </li>
@@ -85,7 +86,7 @@
 
     <a name="language"></a>
     <h2 class="i18n">Choosing a Programming Language</h2>
-    <p class="i18n">hook.io supports writing services in other programming languages besides JavaScript. </p>
+    <p class="i18n">{{appName}} supports writing services in other programming languages besides JavaScript. </p>
     <p><strong class="i18n">Currently, JavaScript is the only fully supported language.</strong></p>
     <p><strong class="i18n">Experimental Support</strong> is available for the following languages</p>
     <ul style="font-size:18px;">
@@ -101,20 +102,20 @@
       <li>Tcl</li>
     </ul>
     <p class="i18n">You may select new languages while creating or editing a service.</p>
-    <p><a  class="i18n" href="https://hook.io/#tuts">Click here for an Interactive Microservice Tutorial</a></p>
+    <p><a  class="i18n" href="https://{{appName}}/#tuts">Click here for an Interactive Microservice Tutorial</a></p>
     
     <p>For those interested in helping support these new languages, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
 
     <a name="creating"></a>
     <h2 class="i18n">Creating a Hook</h2>
-    <p><span class="i18n">To create a Hook visit: </span><a href="https://hook.io/new">https://hook.io/new</a></p>
+    <p><span class="i18n">To create a Hook visit: </span><a href="https://{{appName}}/new">https://{{appName}}/new</a></p>
     <p class="i18n">On this page, the following properties can be specified to create a Hook:</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Name</strong> <em class="i18n">required</em> - <span class="i18n">Name of hook</span></p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Path</strong> <em class="i18n">optional</em> - <span class="i18n">url regex route for the hook. Supports named parameters, splats, and groups.</span></p>
     
     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Gist</strong> <em class="i18n">required</em> - <span class="i18n">Source code of the Hook as a Github Gist</span></p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Theme</strong> <em class="i18n">optional</em> - <span class="i18n">A View-Presenter that will render the output of the Hook, see:</span> <a href="https://hook.io/themes">Themes</a></p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Cron</strong> <em class="i18n">optional</em> - <span class="i18n">Run this Hook on a Cron schedule, see: </span><a class="i18n" href="https://hook.io/cron">Cron</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Theme</strong> <em class="i18n">optional</em> - <span class="i18n">A View-Presenter that will render the output of the Hook, see:</span> <a href="https://{{appName}}/themes">Themes</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Cron</strong> <em class="i18n">optional</em> - <span class="i18n">Run this Hook on a Cron schedule, see: </span><a class="i18n" href="https://{{appName}}/cron">Cron</a></p>
 
 
     <a name="forking"></a>
@@ -124,7 +125,7 @@
 
     <p class="i18n">Once a Hook is created the browser will redirect to the admin page for that Hook.</p>
     
-    <p><strong class="i18n">Example:</strong> <a href="https://hook.io/Marak/echo/fork">https://hook.io/Marak/echo/fork</a>
+    <p><strong class="i18n">Example:</strong> <a href="https://{{appName}}/Marak/echo/fork">https://{{appName}}/Marak/echo/fork</a>
     <hr/>
 
     <a name="running"></a>
@@ -136,7 +137,7 @@
     <p>In the majority of cases, <strong>a time-out</strong> indicates that the service failed to end properly and <strong>usually indicates a programming error</strong>.</p>
     <p align="center"><strong>Attempting to run an HTTP or TCP server in a Hook will not work! <br/>Hooks are microservices ( think functions ), not servers.</strong>
     <p>In some other cases, you may be dealing with transferring a larger amount of data from a third-party service and the default timeout of ten seconds is not long enough to complete the transmission.</p> 
-    <p> If you think your service may require more than 10 seconds to execute, hook.io allows for <a href="#timeouts">Custom Timeouts</a> per service.</p>
+    <p> If you think your service may require more than 10 seconds to execute, {{appName}} allows for <a href="#timeouts">Custom Timeouts</a> per service.</p>
     <hr/>
 
     <a name="viewsource"></a>
@@ -144,11 +145,11 @@
     <p class="i18n">To view the source code of any Hook simply attach <code>/source</code> to the Hook service url.</p>
     <p class="i18n">This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
     
-    <p><strong class="i18n">Source Code:</strong> <a href="https://hook.io/Marak/echo/source">https://hook.io/Marak/echo/source</a></p>
-    <p><strong class="i18n">Logs:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a></p>
-    <p><strong class="i18n">Resource:</strong> <a href="https://hook.io/Marak/echo/resource">https://hook.io/Marak/echo/resource</a></p>
-    <p><strong class="i18n">View:</strong> <a href="https://hook.io/Marak/echo/view">https://hook.io/Marak/echo/view</a></p>
-    <p><strong class="i18n">Presenter:</strong> <a href="https://hook.io/Marak/echo/presenter">https://hook.io/Marak/echo/presenter</a></p>
+    <p><strong class="i18n">Source Code:</strong> <a href="https://{{appName}}/Marak/echo/source">https://{{appName}}/Marak/echo/source</a></p>
+    <p><strong class="i18n">Logs:</strong> <a href="https://{{appName}}/Marak/echo/logs">https://{{appName}}/Marak/echo/logs</a></p>
+    <p><strong class="i18n">Resource:</strong> <a href="https://{{appName}}/Marak/echo/resource">https://{{appName}}/Marak/echo/resource</a></p>
+    <p><strong class="i18n">View:</strong> <a href="https://{{appName}}/Marak/echo/view">https://{{appName}}/Marak/echo/view</a></p>
+    <p><strong class="i18n">Presenter:</strong> <a href="https://{{appName}}/Marak/echo/presenter">https://{{appName}}/Marak/echo/presenter</a></p>
 
     <p class="i18n">If you require the source code of a Hook to remain private, upgrade to a paid account and set the Hook to <code>Private</code>
 
@@ -160,10 +161,10 @@
     <a name="logs"></a>
     <hr/>
     <h2 class="i18n">Hook Debugging and Logs</h2>
-    <p class="i18n">hook.io provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simple call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
+    <p class="i18n">{{appName}} provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simple call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
     <p class="i18n">Streaming log endpoints are available for real-time consumption on all Hook service urls as <code>/logs</code>.</p>
-    <p><strong>Example:</strong> <a href="https://hook.io/Marak/echo/logs">https://hook.io/Marak/echo/logs</a>
-    <p>Complete logging documentation can be found at <a href="https://hook.io/logs">https://hook.io/logs</a>
+    <p><strong>Example:</strong> <a href="https://{{appName}}/Marak/echo/logs">https://{{appName}}/Marak/echo/logs</a>
+    <p>Complete logging documentation can be found at <a href="https://{{appName}}/logs">https://{{appName}}/logs</a>
 
     <a name="data"></a>
     <hr/>
@@ -172,13 +173,13 @@
     <p class="i18n">The most common way to send data to a Hook is through the URL query string or posted through forms or binary data transfers.</p>
     <h3><strong class="i18n">Query String Data</strong></h3>
     <p class="i18n">To add a parameter via query string simply append it to the url of the Hook</p>
-    <p><strong class="i18n">Example:</strong> <a href="https://hook.io/Marak/echo?foo=bar&hello=there&run=true">https://hook.io/Marak/echo?foo=bar&hello=there&run=true</a></p>
+    <p><strong class="i18n">Example:</strong> <a href="https://{{appName}}/Marak/echo?foo=bar&hello=there&run=true">https://{{appName}}/Marak/echo?foo=bar&hello=there&run=true</a></p>
     <p class="i18n">Nested parameters are also supported.</p>
-    <p><strong class="i18n">Example:</strong> <a href="https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true">https://hook.io/Marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
+    <p><strong class="i18n">Example:</strong> <a href="https://{{appName}}/Marak/echo?foo['bar']=one&foo['tar']=two&run=true">https://{{appName}}/Marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
 
     <h3><strong class="i18n">Form Data</strong></h3>
     <p class="i18n">Data can also be sent via form POST</p>
-    <p><strong class="i18n">Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' https://hook.io/Marak/echo" size="60"/></p>
+    <p><strong class="i18n">Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' https://{{appName}}/Marak/echo" size="60"/></p>
 
     <h3><strong class="i18n">Streaming Data</strong></h3>
     <p class="i18n">To send streaming data to the hook, simply open up a streaming http request.</p>
@@ -186,7 +187,7 @@
 
     <h3><strong class="i18n">Websockets</strong></h3>
     <p>To send data to a Hook over Websocket, simply connect to the endpoint using any <code>ws</code> client</p>
-    <p>More detailed instructions can be found at <a href="/websockets"> https://hook.io/websockets</a></p>
+    <p>More detailed instructions can be found at <a href="/websockets"> https://{{appName}}/websockets</a></p>
     <hr/>
 
     <a name="code"></a>
@@ -228,7 +229,7 @@
     
     <p class="i18n">This is useful for storing persistent information which you may want to retrieve later ( such as a user signup ).</p>
 
-    <p><span class="i18n">More information about using the cloud datastore can be found here</span> <a href="https://hook.io/datastore">https://hook.io/datastore</a></p> 
+    <p><span class="i18n">More information about using the cloud datastore can be found here</span> <a href="https://{{appName}}/datastore">https://{{appName}}/datastore</a></p> 
 
     <a name="schema"></a>
     <h2 class="i18n">Specifying Optional Schema</h2>
@@ -246,6 +247,16 @@
     <p><strong class="i18n">Important:</strong><span class="i18n"> For performance reasons, the Hook may need to be run to update it's schema.</span></p>
     <hr/>
 
+    <a name="files"></a>
+    <h2 class="i18n">Using the Mutli-Cloud Virtual File System</h2>
+    <p class="i18n">Hooks have access to robust multi-cloud virtual system which can be used to manage files across multiple adapters.</p>
+    
+    <p class="i18n">This is useful for storing persistent files which you may want to retrieve later ( such as an image ).</p>
+
+    <p><span class="i18n">More information about using the multi-cloud virtual file system can be found here</span> <a href="https://{{appName}}/files">https://{{appName}}/files</a></p> 
+
+    <hr/>
+
     <a name="forms"></a>
     <h2>Using Schema Based Forms</h2>
     <p>Through the use of <a href="https://github.com/mschema/mschema-forms">mschema-forms</a>, all Hooks have the ability to auto-generate an HTML form element populated with input fields matching that Hook's <strong>Hook.schema</strong></p>
@@ -259,7 +270,7 @@
     <hr/>
     <a name="env"></a>
     <h2 class="i18n">Setting Hook Environment Variables</h2>
-    <p><span class="i18n">To set Hook Environment variables visit:</span> <a href="/env">https://hook.io/env</a></p>
+    <p><span class="i18n">To set Hook Environment variables visit:</span> <a href="/env">https://{{appName}}/env</a></p>
     <p class="i18n">Arbitrary key / value pairs can be set on your account so that all your Hooks will have access to the pairs in the <strong>Hook.env</strong> variable.</p> 
     <p class="i18n">This is useful for protecting private authorization credentials from public view ( such as an API key or password ).</p>
     <p class="i18n">After you have updated your environment variables they will be available in your hook's <strong>Hook.env</strong> </p>
@@ -268,13 +279,13 @@
     <a name="domains"></a>
     <h2 class="i18n">Setting Custom Domains</h2>
     <p class="i18n">Custom domains are a great way to brand the appearance of your service with it's own unique domain name.</p>
-    <p><span class="i18n">To add a Custom Domain, you will first need to set the domains</span> <code>A record</code> to <code>159.203.77.62</code> ( which is the ip address of hook.io ).</p>
-    <p><span class="i18n">After setting the <code>A record</code> in your domain's DNS manager, simply visit:</span> <a href="/domains">https://hook.io/domains</a> <span class="i18n">to complete the process by mapping any of your Hooks to the Custom Domain.</span></p>
+    <p><span class="i18n">To add a Custom Domain, you will first need to set the domains</span> <code>A record</code> to <code>159.203.77.62</code> ( which is the ip address of {{appName}} ).</p>
+    <p><span class="i18n">After setting the <code>A record</code> in your domain's DNS manager, simply visit:</span> <a href="/domains">https://{{appName}}/domains</a> <span class="i18n">to complete the process by mapping any of your Hooks to the Custom Domain.</span></p>
     <hr/>
 
     <a name="content-type"></a>
     <h2 class="i18n">Content-Type Routing</h2>
-    <p class="i18n">Based on the Content-Type header, hook.io will process the incoming request differently.</p>
+    <p class="i18n">Based on the Content-Type header, {{appName}} will process the incoming request differently.</p>
     <br/>
     <p>
       <strong>application/json</strong><br/>
@@ -312,7 +323,7 @@
   
   <a name="cache"></a>
   <h2 class="i18n">Cache Controls</h2>
-  <p class="i18n">To ensure optimal execution speeds, hook.io can cache your Hook's source code and assets in memory.</p>
+  <p class="i18n">To ensure optimal execution speeds, {{appName}} can cache your Hook's source code and assets in memory.</p>
   <p class="i18n">Currently, these caching controls can be toggled by setting the <code>mode</code> property in the Hook's admin page to either <code>Production</code> or <code>Development</code>.</p>
 
   <p class="i18n">In <code>Development</code> mode, all Hook source code will be pulled from it's original source on every request. This is useful for Hooks which are in active development.</p>
@@ -327,7 +338,7 @@
   <p>In the majority of cases, <strong>a time-out error</strong> indicates that the service failed to end properly and <strong>usually indicates a programming error</strong>.</p>
   <p align="center"><strong>Attempting to run an HTTP or TCP server in a Hook will not work! <br/>Hooks are microservices ( think functions ), not servers.</strong>
   <p>In some other cases, you may be dealing with transferring a larger amount of data from a third-party service and the default timeout of ten seconds is not long enough to complete the transmission.</p> 
-  <p>If you think your service may require more than 10 seconds to execute, simply visit the <code>/admin</code> page for the Hook and set the form field for "Custom Timeout" in seconds. ( Note: A <a href="https://hook.io/pricing">paid account</a> may be required ).</p>
+  <p>If you think your service may require more than 10 seconds to execute, simply visit the <code>/admin</code> page for the Hook and set the form field for "Custom Timeout" in seconds. ( Note: A <a href="https://{{appName}}/pricing">paid account</a> may be required ).</p>
   <hr/>
 
 
@@ -338,35 +349,35 @@
   <h2 class="i18n">Hot-Code Execution Gateway</h2>
   <p class="i18n">In most cases, you will want to save your service's source-code as a Hook.</p>
   <p class="i18n">In other situations, you may need to send code that has to be executed immediately and without any additional requests ( such as testing and developing hooks or executing dynamically created source code from a third-party service ).</p>
-  <p>hook.io provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="https://hook.io#tuts">Interactive Example</a> on the hook.io homepage, you will notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
+  <p>{{appName}} provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="https://{{appName}}#tuts">Interactive Example</a> on the {{appName}} homepage, you will notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
   <h3>Examples of using the Hot-Code Gateways</h3>
-  <p>Here are two simple examples of using <code>echo</code> and <code>curl</code> to execute hot-code against hook.io's gateway.</p>
+  <p>Here are two simple examples of using <code>echo</code> and <code>curl</code> to execute hot-code against {{appName}}'s gateway.</p>
 
   <h4>JavasScript</h4>
-  <pre><code>echo 'module["exports"] = function helloWorld (h) { h.res.end("Hello world!"); };' | curl --data-urlencode source@- http://javascript.hook.io</code></pre>
+  <pre><code>echo 'module["exports"] = function helloWorld (h) { h.res.end("Hello world!"); };' | curl --data-urlencode source@- http://javascript.{{appName}}</code></pre>
 
   <h4>Python</h4>
-  <pre><code>echo 'print "hello world"' | curl --data-urlencode source@- http://python.hook.io/</code></pre>
+  <pre><code>echo 'print "hello world"' | curl --data-urlencode source@- http://python.{{appName}}/</code></pre>
 
-  <p>You can also simply open a url to the gateway like this: <a href="http://python.hook.io/?source=print%20%22hello%20world%22">http://python.hook.io/?source=print "hello world"</a>
+  <p>You can also simply open a url to the gateway like this: <a href="http://python.{{appName}}/?source=print%20%22hello%20world%22">http://python.{{appName}}/?source=print "hello world"</a>
   <br/>
 
   <h3>Available Gateways</h3>
   <em>Note: Most gateways will an return an error or blank response if the <code>source</code> parameter is not provided</em>
 
   <ul style="font-size:22px;padding-top:10px;list-style-type: disc;">
-    <li><a href="http://javascript.hook.io">javascript.hook.io</a></li>
-    <li><a href="http://coffee.hook.io">coffee.hook.io</a></li>
-    <li><a href="http://bash.hook.io">bash.hook.io</a></li>
-    <li><a href="http://lua.hook.io">lua.hook.io</a></li>
-    <li><a href="http://perl.hook.io">perl.hook.io</a></li>
-    <li><a href="http://php.hook.io">php.hook.io</a></li>
-    <li><a href="http://python.hook.io">python.hook.io</a></li>
-    <li><a href="http://python3.hook.io">python3.hook.io</a></li>
-    <li><a href="http://ruby.hook.io">ruby.hook.io</a></li>
-    <li><a href="http://scheme.hook.io">scheme.hook.io</a></li>
-    <li><a href="http://smalltalk.hook.io">smalltalk.hook.io</a></li>
-    <li><a href="http://tcl.hook.io">tcl.hook.io</a></li>
+    <li><a href="http://javascript.{{appName}}">javascript.{{appName}}</a></li>
+    <li><a href="http://coffee.{{appName}}">coffee.{{appName}}</a></li>
+    <li><a href="http://bash.{{appName}}">bash.{{appName}}</a></li>
+    <li><a href="http://lua.{{appName}}">lua.{{appName}}</a></li>
+    <li><a href="http://perl.{{appName}}">perl.{{appName}}</a></li>
+    <li><a href="http://php.{{appName}}">php.{{appName}}</a></li>
+    <li><a href="http://python.{{appName}}">python.{{appName}}</a></li>
+    <li><a href="http://python3.{{appName}}">python3.{{appName}}</a></li>
+    <li><a href="http://ruby.{{appName}}">ruby.{{appName}}</a></li>
+    <li><a href="http://scheme.{{appName}}">scheme.{{appName}}</a></li>
+    <li><a href="http://smalltalk.{{appName}}">smalltalk.{{appName}}</a></li>
+    <li><a href="http://tcl.{{appName}}">tcl.{{appName}}</a></li>
   </ul>
 
   <br/>
@@ -376,11 +387,11 @@
 
   <h2>System Events</h2>
   
-  <p>All actions on hook.io are tracked internally as <a href="/events">System Events</a>.</a> 
+  <p>All actions on {{appName}} are tracked internally as <a href="/events">System Events</a>.</a> 
   <p>These events are useful for monitoring the actions your services are performing, and who is performing them.</p>
   
   <h3>The relation of System Events and Role Access</h3>
-  <p>It's important to note that all hook.io events are available as <a href="/keys">Access Roles</a>. This mapping allows granular role based key access per System Event.</p>
+  <p>It's important to note that all {{appName}} events are available as <a href="/keys">Access Roles</a>. This mapping allows granular role based key access per System Event.</p>
   <p><a href="/keys">Read More about Role Based Access Control</a></p>
   
   <hr/>
@@ -390,25 +401,25 @@
   <a name="ssl"></a>
   <h2>SSL / HTTPS</h2>
 
-  <p class="i18n">Currently, <code>HTTPS</code> is supported on hook.io through a single shared <code>SSL</code> certificate.</p>
+  <p class="i18n">Currently, <code>HTTPS</code> is supported on {{appName}} through a single shared <code>SSL</code> certificate.</p>
   <p class="i18n">All URLs and services on the site are available over <code>HTTPS</code></p>
-  <p class="i18n">If you require a custom <code>SSL</code> certificate for your microservices, please contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
+  <p class="i18n">If you require a custom <code>SSL</code> certificate for your microservices, please contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a></p>
 
   <br/>
   <hr/>
 
   <a name="api"></a>
-  <h2>Using hook.io as an HTTP API</h2>
+  <h2>Using {{appName}} as an HTTP API</h2>
 
-  <p><span class="i18n">A graphical interface exists for all of hook.io's supported features at </span> <a href="https://hook.io">https://hook.io</a>.</p>
-  <p class="i18n">In some cases, you may want a third party script or client ( not your browser window ), to be able to access a specific hook.io platform feature ( such as logs, the datastore, or creating a new hook service ).</p>
-  <p class="i18n">Using hook.io's HTTP API, you can access any platform feature that is available in our web app.</p> <p>To keep things simple ( and self documenting ), the routes in our web app are 1:1 with our API.</p>
+  <p><span class="i18n">A graphical interface exists for all of {{appName}}'s supported features at </span> <a href="https://{{appName}}">https://{{appName}}</a>.</p>
+  <p class="i18n">In some cases, you may want a third party script or client ( not your browser window ), to be able to access a specific {{appName}} platform feature ( such as logs, the datastore, or creating a new hook service ).</p>
+  <p class="i18n">Using {{appName}}'s HTTP API, you can access any platform feature that is available in our web app.</p> <p>To keep things simple ( and self documenting ), the routes in our web app are 1:1 with our API.</p>
   <p>The <a href="/datastore/set">/datastore</a> or <a href="/logs">/logs</a> endpoints are well documented examples of how this works, but other endpoints like <a href="/new">/new</a> might require a small amount of reverse engineering.</p>
   <a name="keys"></a>
   <h3>API Access Keys</h3>
 
-  <p class="i18n">hook.io provides a robust role based API key access system.</p>
-  <p><span class="i18n">All</span> <a href="/events">events</a> <span class="i18n">on hook.io are registered as</span> <a href="/roles">roles</a> <span class="i18n">which can be granted per</span> <a href="/keys"><span class="i18n">generated API access key</span></a></p>
+  <p class="i18n">{{appName}} provides a robust role based API key access system.</p>
+  <p><span class="i18n">All</span> <a href="/events">events</a> <span class="i18n">on {{appName}} are registered as</span> <a href="/roles">roles</a> <span class="i18n">which can be granted per</span> <a href="/keys"><span class="i18n">generated API access key</span></a></p>
 
 
   <p>All API endpoints are backed by <a href="#roles">Role Based Access Control</a>, so if you provide a <code>hook_private_key</code> parameter in your request which matches a known API key containing the required role, that request will be granted access to the resource. <a href="/keys">Read More about Keys and Roles</a></p>
@@ -416,7 +427,7 @@
   <!--
   <a name="metrics"></a>
   <h2>Hook Metrics</h2>
-  <p>Hook.io provides a basic API endpoint for accessing historical information on Hook metrics.</p>
+  <p>{{appName}} provides a basic API endpoint for accessing historical information on Hook metrics.</p>
   <p>This is useful for giving an insight as to how the Hook is performing.</p>
   <p>Currently the following metrics are available:</p>
   <ul>
