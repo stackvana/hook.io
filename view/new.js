@@ -14,6 +14,8 @@ module['exports'] = function view (opts, callback) {
   var $ = this.$,
   self = this;
 
+  var appName = req.hostname;
+
   var user, boot;
 
   var params;
@@ -23,6 +25,7 @@ module['exports'] = function view (opts, callback) {
       params[p] = fields[p];
     }
 
+    // TODO: move to resource.before hooks...maybe not. better to avoid the pre-processing logic...
     checkRoleAccess({ req: req, res: res, role: "hook::create" }, function (err, hasPermission) {
 
       if (!hasPermission || req.resource.owner === "anonymous") { // don't allow anonymous hook creation
@@ -55,7 +58,7 @@ module['exports'] = function view (opts, callback) {
   });
 
   function finish () {
-
+    console.log('FINISH HIM', req.method, params)
     $('title').html('hook.io - Create new Hook');
 
       var gist = params.gist;
@@ -109,7 +112,9 @@ module['exports'] = function view (opts, callback) {
 
         var query = { name: params.name, owner: req.resource.owner };
         //var query = { name: params.name, owner: req.session.user };
+        console.log('trying to find', query)
         return hook.find(query, function(err, results){
+          console.log('FFFOUND', results)
           if (results.length > 0) {
             var h = results[0];
             var msg = 'Hook already exists ' + '/' + h.owner + "/" + h.name;
@@ -239,9 +244,28 @@ module['exports'] = function view (opts, callback) {
         el.html(html);
         var out = $.html();
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+        out = out.replace(/\{\{appName\}\}/g, appName);
         callback(null, out);
-      })
+      });
 
   }
 
+};
+
+module['exports'].schema = {
+  "name": {
+    "type": "string",
+    "required": true
+  },
+  "path": {
+    "type": "string"
+  },
+  "isPrivate": {
+    "type": "boolean",
+    "default": false
+  },
+  "source": {
+    "type": "string",
+    "required": false
+  }
 };

@@ -1,8 +1,9 @@
 
 module['exports'] = function (opts, callback) {
 
-  var $ = this.$;
+  var $ = this.$, req = opts.req;
   var hook = require('../lib/resources/hook');
+  var appName = req.hostname;
 
   hook.find({ owner: "marak" }, function (err, results){
     if (err) {
@@ -37,7 +38,9 @@ module['exports'] = function (opts, callback) {
       // }
     });
 
-    return callback(null, $.html());
+    var out = $.html();
+    out = out.replace(/\{\{appName\}\}/g, appName);
+    callback(null, out);
 
   });
 

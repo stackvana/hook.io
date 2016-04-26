@@ -6,13 +6,16 @@ var bodyParser = require('body-parser');
 module['exports'] = function view (opts, callback) {
   var req = opts.request, res = opts.response;
   var $ = this.$;
+
+  var appName = req.hostname;
+
   /*
   if (!req.isAuthenticated()) { 
     req.session.redirectTo = "/env";
     return res.redirect('/login');
   }
   */
-  
+
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
 
@@ -21,8 +24,10 @@ module['exports'] = function view (opts, callback) {
     Object.keys(role.roles).sort().forEach(function(r){
       $('.availableRoles').append('<div>' + r + '</div>');
     });
-    
-    callback(null, $.html())
+
+    var out = $.html();
+    out = out.replace(/\{\{appName\}\}/g, appName);
+    callback(null, out);
 
   });
   

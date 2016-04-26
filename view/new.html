@@ -356,24 +356,24 @@ body legend {
   // REMARK: WHY IS THIS NOT USING THEMES MODULE ?!?!
   var themes = {
     "debug": {
-      "theme": "https://hook.io/themes/debug/index.html",
-      "presenter": "https://hook.io/themes/debug/index.js"
+      "theme": "https://{{appName}}/themes/debug/index.html",
+      "presenter": "https://{{appName}}/themes/debug/index.js"
     },
     "form": {
-      "theme": "https://hook.io/themes/form/index.html",
-      "presenter": "https://hook.io/themes/form/index.js"
+      "theme": "https://{{appName}}/themes/form/index.html",
+      "presenter": "https://{{appName}}/themes/form/index.js"
     },
     "simple": {
-      "theme": "https://hook.io/themes/simple/index.html",
-      "presenter": "https://hook.io/themes/simple/index.js"
+      "theme": "https://{{appName}}/themes/simple/index.html",
+      "presenter": "https://{{appName}}/themes/simple/index.js"
     },
     "simple-form": {
-      "theme": "https://hook.io/themes/simple-form/index.html",
-      "presenter": "https://hook.io/themes/simple-form/index.js"
+      "theme": "https://{{appName}}/themes/simple-form/index.html",
+      "presenter": "https://{{appName}}/themes/simple-form/index.js"
     },
     "none": {
-      "theme": "https://hook.io/themes/none/index.html",
-      "presenter": "https://hook.io/themes/none/index.js"
+      "theme": "https://{{appName}}/themes/none/index.html",
+      "presenter": "https://{{appName}}/themes/none/index.js"
     },
     "custom": {
       "theme": "",
@@ -548,7 +548,7 @@ body legend {
       $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
 
       // assume first file is source code
-      // see: https://github.com/bigcompany/hook.io/issues/110
+      // see: https://github.com/bigcompany/{{appName}}/issues/110
       var keys = Object.keys(boot.examples[l]);
       editor.setValue(boot.examples[l]['source']);
       $('#editorSource').click();
@@ -566,7 +566,7 @@ body legend {
 
 
   function drawHookLinks () {
-    var base = 'https://hook.io/' + boot.owner;
+    var base = 'https://{{appName}}/' + boot.owner;
     var name = $('#name').val();
     var path = $('#path').val();
     if(name.length === 0 && path.length === 0) {
@@ -672,7 +672,7 @@ body legend {
         <table class="hookLinks" border="1">
           <tr>
             <td class="left"><strong class="i18n">Home</strong></td>
-            <td class="home">https://hook.io/Marak/hook-name</td>
+            <td class="home">https://{{appName}}/Marak/hook-name</td>
           </tr>
           <tr>
             <td><strong class="i18n">Optional Url Parameters</strong></td>
@@ -680,28 +680,28 @@ body legend {
           </tr>
           <tr>
             <td><strong class="i18n">Admin ( login required )</strong></td>
-            <td class="admin">https://hook.io/marak/hook-name/admin</td>
+            <td class="admin">https://{{appName}}/marak/hook-name/admin</td>
           </tr>
           <tr>
             <td><strong class="i18n">Source Code</strong></td>
-            <td class="source">https://hook.io/marak/hook-name/source</td>
+            <td class="source">https://{{appName}}/marak/hook-name/source</td>
           </tr>
           <tr>
             <td><strong class="i18n">Logs</strong></td>
-            <td class="logs">https://hook.io/marak/hook-name/logs</td>
+            <td class="logs">https://{{appName}}/marak/hook-name/logs</td>
           </tr>
           <!--
           <tr>
             <td>View</td>
-            <td>http://hook.io/Marak/echo/view</td>
+            <td>http://{{appName}}/Marak/echo/view</td>
           </tr>
           <tr>
             <td>Presenter</td>
-            <td>http://hook.io/Marak/echo/presenter</td>
+            <td>http://{{appName}}/Marak/echo/presenter</td>
           </tr>
           <tr>
             <td>Fork</td>
-            <td>http://hook.io/Marak/echo/fork</td>
+            <td>http://{{appName}}/Marak/echo/fork</td>
           </tr>
           -->
         </table>
@@ -718,7 +718,7 @@ body legend {
         &nbsp;
         <label for="hookPrivate">Private Service</label>
         <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
-        <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.<br/></div>
+        <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://{{appName}}/pricing">paid account</a>.<br/></div>
         <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
         <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
       </div>
@@ -750,14 +750,14 @@ body legend {
 
         <div class="warnLanguages">
           <h2 class="warning i18n">Warning</h2>
-          <p>We have <a href="https://github.com/bigcompany/hook.io/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
-          <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
+          <p>We have <a href="https://github.com/bigcompany/{{appName}}/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on {{appName}} is currently considered EXPERIMENTAL.</p>
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="/blog/new-multi-language-support" target="_blank">let us know</a>.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
         </div>
 
         <div class="helpLang">
-          <a class="mediumLink" href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguageShort">language</span> work better on hook.io?</a>
+          <a class="mediumLink" href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguageShort">language</span> work better on {{appName}}?</a>
         </div>
 
       </div>
@@ -852,7 +852,7 @@ hook.res.end(JSON.stringify(hook.params, true, 2));
       <p class="i18n">All Hooks support the ability to schedule their execution based on a date time pattern.</p>
       <p class="superTiny i18n">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
       <p class="superTiny i18n">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
-      <p class="warning i18n"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@hook.io">please let us know</a>. </p>
+      <p class="warning i18n"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@{{appName}}">please let us know</a>. </p>
       <h3 class="i18n">Cron Pattern</h3>
       <div class="cronDiv"></div>
     </div>

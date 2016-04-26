@@ -12,12 +12,12 @@
 </style>
 <div align="left" class="events">
   <h1>Events</h1>
-  <p>All actions on hook.io are tracked internally as System Events. These events are useful for monitoring the actions your services are performing.</p>
+  <p>All actions on {{appName}} are tracked internally as System Events. These events are useful for monitoring the actions your services are performing.</p>
   <!-- >
   <h2>TODO: login to manage event settings</h2>
   -->
   <h2>Events and Role Access</h2>
-  <p>It's important to note that all hook.io events are available as <a href="/roles">Access Roles</a>. This mapping allows granular <a href="/keys">role based key access</a> per System Event. <a href="/keys"></a></p>
+  <p>It's important to note that all {{appName}} events are available as <a href="/roles">Access Roles</a>. This mapping allows granular <a href="/keys">role based key access</a> per System Event. <a href="/keys"></a></p>
 
   <!--
     <h3>todo: add checklist for configuring events</h3>
@@ -28,26 +28,26 @@
   <h2>Writing to Hook System Events</h2>
   <p>Several useful events ( such as <code>hook::run</code> or <code>keys::authCheck</code>) are <em>automatically</em> written to your event service log.</p>
   <p>A full listing of available events can currently be <a href="/roles">found here</a>.</p>
-  <p>Currently, hook.io does not support custom system events. We will probably add this feature in the near future.</p>
+  <p>Currently, {{appName}} does not support custom system events. We will probably add this feature in the near future.</p>
   <h2>Accessing Hook System Events</h2>
   <p>To access the System Event log for an account, simply attach <code>/events</code> to the end of your account homepage.</p>
-  <p><strong>For example:</strong> <a href="https://hook.io/marak/events">https://hook.io/marak/events</a></p>
+  <p><strong>For example:</strong> <a href="https://{{appName}}/marak/events">https://{{appName}}/marak/events</a></p>
   <p>The events endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
   <h3>Authentication</h3>
-  <p>By default, hook.io system events are private. In order to access them from a third-party service, you'll need to generate a valid <a href="/keys">API Access Key</a> with the <code>events::read</code> role.</p>
+  <p>By default, {{appName}} system events are private. In order to access them from a third-party service, you'll need to generate a valid <a href="/keys">API Access Key</a> with the <code>events::read</code> role.</p>
   <p>Below is a link which contains a limited <a href="/roles">role</a> API Access Key created only for demonstration purposes.</p>
-  <p><a href="http://hook.io/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e">http://hook.io/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e</a></p>
+  <p><a href="http://{{appName}}/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e">http://{{appName}}/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e</a></p>
 
     <h3>Streaming events</h3>
     <p>To access streaming events, request the events endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
-    <p><strong>Example: </strong><code>curl -N https://hook.io/marak/events</code></p>
+    <p><strong>Example: </strong><code>curl -N https://{{appName}}/marak/events</code></p>
 
     <h3>Plain Text Events</h3>
     <p>To access plain text events, request the events endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
-    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://hook.io/marak/events</code></p>
+    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://{{appName}}/marak/events</code></p>
 
   <h2>Limitations</h2>
-  <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can <a href="https://hook.io/pricing">upgrade to a paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a>
+  <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can <a href="https://{{appName}}/pricing">upgrade to a paid account</a> or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
   
   </br>
   </br>
