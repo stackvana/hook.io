@@ -23,7 +23,7 @@
 <p>To perform a simple HTTP Get request with query string variables try the following command:</p>
 
 <p>
-  <input type="text" value="curl https://hook.io/Marak/isTheWebsiteDown?url=http://google.com"/>
+  <input type="text" value="curl https://{{appName}}/Marak/isTheWebsiteDown?url=http://google.com"/>
 </p>
 
 <br/>
@@ -33,7 +33,7 @@
 <p>To perform an HTTP POST form submission with some data fields try the following command:</p>
 
 <p>
-  <input type="text" value="curl --data 'foo=bar&hello=there' https://hook.io/Marak/echo"/>
+  <input type="text" value="curl --data 'foo=bar&hello=there' https://{{appName}}/Marak/echo"/>
 </p>
 
 <br/>
@@ -43,7 +43,7 @@
 <p>To perform a simple HTTP JSON POST with some data fields try the following command:</p>
 
 <p>
-  <input type="text" value="curl -H &quot;Content-Type: application/json&quot; -X POST -d '{&quot;foo&quot;:&quot;bar&quot;,&quot;hello&quot;:&quot;there&quot;}' http://echo.hook.io
+  <input type="text" value="curl -H &quot;Content-Type: application/json&quot; -X POST -d '{&quot;foo&quot;:&quot;bar&quot;,&quot;hello&quot;:&quot;there&quot;}' http://echo.{{appName}}
   "/>
 </p>
 
@@ -54,7 +54,7 @@
 <p>To HTTP POST multipart form files, you'll need a file to send. Assuming "cat.png" is an image on your local machine try the following command:</p>
 
 <p>
-  <input type="text" value="cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' https://hook.io/Marak/image/rotate &#62; upsidedown-cat.png"/>
+  <input type="text" value="cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' https://{{appName}}/Marak/image/rotate &#62; upsidedown-cat.png"/>
 </p>
 
 <br/>
@@ -65,17 +65,17 @@
 
 <p>
   This example will pipe the output of <strong>echo</strong> to a simple transform Hook that will append text to the stream.
-  <input type="text" value="echo 'foo' | curl --header 'content-type: application/octet-stream' --data-binary @- https://hook.io/Marak/transform"/>
+  <input type="text" value="echo 'foo' | curl --header 'content-type: application/octet-stream' --data-binary @- https://{{appName}}/Marak/transform"/>
 </p>
 <br/>
 <p>
   This example will <strong>cat</strong> the local "cat.png" file, pipe it to an image resize Hook and then pipe the result back to the local file system as "upsidedown-cat.png".
-  <input type="text" value="cat cat.png | curl --header 'content-type: application/octet-stream' --data-binary @- https://hook.io/Marak/image/rotate?degrees=180 &#62; upsidedowncat.png" />
+  <input type="text" value="cat cat.png | curl --header 'content-type: application/octet-stream' --data-binary @- https://{{appName}}/Marak/image/rotate?degrees=180 &#62; upsidedowncat.png" />
 </p>
 
 <h2><strong>Use Your Imagination</strong></h2>
 <p>There are a plethora of Unix Tools available that have been in development for decades.</p> 
-<p>Think of the Unix tool-chain and the possibilities of connecting it directly to another set of tools ( Hooks ) which can natively pipe data around the web.</p><p>Combining these tool-chains can yield very powerful results. Try creating a Hook which does that <a href="https://hook.io/new">now</a>.</p>
+<p>Think of the Unix tool-chain and the possibilities of connecting it directly to another set of tools ( Hooks ) which can natively pipe data around the web.</p><p>Combining these tool-chains can yield very powerful results. Try creating a Hook which does that <a href="https://{{appName}}/new">now</a>.</p>
 
 <br/>
 <br/><br/>

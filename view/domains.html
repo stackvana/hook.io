@@ -8,29 +8,29 @@
   <h1>Domains</h1>
   <p>Custom domains are a great way to brand the appearance of a service with it's own unique domain name.</p>
   
-  <h2>hook.io subdomains</h2>
+  <h2>{{appName}} subdomains</h2>
   <p>
-    Subdomains at <code>*.hook.io</code> are available on a first come first serve basis.</p><p> To associate a subdomain with a Hook, simply add the subdomain entry in the form below ( login required ).
+    Subdomains at <code>*.{{appName}}</code> are available on a first come first serve basis.</p><p> To associate a subdomain with a Hook, simply add the subdomain entry in the form below ( login required ).
   </p>
   <p>
     <strong>Example:</strong> <br/>
-    <strong>name:</strong> <code>echo.hook.io</code> <strong>hook: </strong><code>/Marak/echo</code><br/>
-    Now <a href="http://hook.io/Marak/echo">http://hook.io/Marak/echo</a> will redirect to : <a href="http://echo.hook.io/">http://echo.hook.io/</a>
+    <strong>name:</strong> <code>echo.{{appName}}</code> <strong>hook: </strong><code>/Marak/echo</code><br/>
+    Now <a href="http://{{appName}}/Marak/echo">http://{{appName}}/Marak/echo</a> will redirect to : <a href="http://echo.{{appName}}/">http://echo.{{appName}}/</a>
   </p>
 
   <hr/>
   <h2>custom domains</h2>
 
-  <p>To add a Custom Domain, you will need to associate the domain's <code>A record</code> to <code>104.131.118.1</code> ( which is the ip address of hook.io ).</p>
+  <p>To add a Custom Domain, you will need to associate the domain's <code>A record</code> to <code>104.131.118.1</code> ( which is the ip address of {{appName}} ).</p>
 
-  <p>Changing the <code>A record</code> of the domain is done in the domain's DNS manager. This setting is not managed by hook.io The DNS manager for the domain is usually located on the site which the domain is currently hosted or where the domain was purchased from.</p>
+  <p>Changing the <code>A record</code> of the domain is done in the domain's DNS manager. This setting is not managed by {{appName}} The DNS manager for the domain is usually located on the site which the domain is currently hosted or where the domain was purchased from.</p>
 
   <p>Once the <code>A record</code> is updated. Add the custom domain entry in the form below ( login required ).
   <p>
     <strong>Example:</strong> <br/>
     <strong>name:</strong> <code>marak.com</code> <strong>hook: </strong><code>/Marak/view</code><br/>
     <strong>name:</strong> <code>www.marak.com</code> <strong>hook: </strong><code>/Marak/view</code><br/>
-    Now <a href="http://marak.com">http://marak.com/</a> and <a href="http://www.marak.com">http://www.marak.com/</a> will redirect to: <a href="http://hook.io/Marak/view">http://hook.io/Marak/view</a>
+    Now <a href="http://marak.com">http://marak.com/</a> and <a href="http://www.marak.com">http://www.marak.com/</a> will redirect to: <a href="http://{{appName}}/Marak/view">http://{{appName}}/Marak/view</a>
   </p>
 
   

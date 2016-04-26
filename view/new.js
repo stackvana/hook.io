@@ -58,8 +58,7 @@ module['exports'] = function view (opts, callback) {
   });
 
   function finish () {
-    console.log('FINISH HIM', req.method, params)
-    $('title').html('hook.io - Create new Hook');
+    $('title').html(appName + ' - Create new Hook');
 
       var gist = params.gist;
 

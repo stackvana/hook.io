@@ -14,7 +14,7 @@
     <table class="table" align="center">
       <tr>
         <td align="center"><h3><strong>Theme View</strong></h3><br/><span class="mega-octicon really-more-mega octicon-device-desktop"></span><br/><br/>A HTML file which contains the layout of the Hook. This file can also contain links to other assets such as images, CSS, and client-side JavaScript.<td>
-        <td align="center"><h3><strong>Theme Presenter</strong></h3><br/><span class="mega-octicon really-more-mega octicon-file-code"></span><br/><br/>An optional JavaScript module which exports *one* method. When the Presenter is run on hook.io, it is given special properties to help perform server-side rendering of the Theme HTML.<td>
+        <td align="center"><h3><strong>Theme Presenter</strong></h3><br/><span class="mega-octicon really-more-mega octicon-file-code"></span><br/><br/>An optional JavaScript module which exports *one* method. When the Presenter is run on {{appName}}, it is given special properties to help perform server-side rendering of the Theme HTML.<td>
       </tr>
     </table>
   <br/>
@@ -40,7 +40,7 @@
   <p> For most themes, this simple replacement style should be sufficient. If additional server-side rendering is required, a Hook Theme Presenter can be added.</p>
   <h2><strong>Hook Theme Presenter</strong></h2>
   
-  <p>The Hook Theme Presenter is an optional JavaScript method which is performed server-side on the rendered Theme View before it's piped to the response. When the Presenter method is run on hook.io, it becomes a <a href="http://github.com/bigcompany/view/">View class</a>. This will give the Presenter special properties which allow for server-side rendering of the Theme View with JavaScript.</p>
+  <p>The Hook Theme Presenter is an optional JavaScript method which is performed server-side on the rendered Theme View before it's piped to the response. When the Presenter method is run on {{appName}}, it becomes a <a href="http://github.com/bigcompany/view/">View class</a>. This will give the Presenter special properties which allow for server-side rendering of the Theme View with JavaScript.</p>
   
   <p><strong>For example:</strong></p>
   <div data-gist="ed9a84b1f1cd7be73f5e">Loading...</div>
@@ -63,6 +63,6 @@
   <p>Any type of client-side JavaScript library can be used in the Theme HTML through the use of regular &lt;script&gt; tags.
 
   <h3><strong>Be Creative, Have Fun!</strong></h3>
-  <p>Themes are a great way to customize a Hook's appearance. They can also easily be shared for use with other Hooks. If you make a theme, open a <a href="http://github.com/bigcompany/hook.io/issues/new">Pull Request!</a> Your theme could very easily appear as a default theme option in the future.</p>
+  <p>Themes are a great way to customize a Hook's appearance. They can also easily be shared for use with other Hooks. If you make a theme, open a <a href="http://github.com/bigcompany/{{appName}}/issues/new">Pull Request!</a> Your theme could very easily appear as a default theme option in the future.</p>
    <br/><br/>
 </div>

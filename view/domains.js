@@ -1,10 +1,9 @@
 var forms = require('resource-forms'),
-domain = require('../lib/resources/domain'),
 mschemaForms = require('mschema-forms');
 
 var mergeParams = require('./mergeParams');
 var bodyParser = require('body-parser');
-
+var domain = require('../lib/resources/domain');
 
 module['exports'] = function view (opts, callback) {
 
@@ -12,6 +11,9 @@ module['exports'] = function view (opts, callback) {
        res = opts.response,
        $ = this.$;
 
+   var appName = req.hostname;
+
+ /*
  // if not logged in, kick out
  if (!req.isAuthenticated()) {
    $('.domains').remove();
@@ -21,6 +23,7 @@ module['exports'] = function view (opts, callback) {
  } else {
    $('.loginBar').remove();
  }
+ */
 
  bodyParser()(req, res, function bodyParsed() {
    mergeParams(req, res, function (){});
@@ -31,6 +34,8 @@ module['exports'] = function view (opts, callback) {
       view: 'grid-with-form',
       resource: domain,
       action: '/domains',
+      req: req,
+      res: res,
       params: req.resource.params,
       query: { owner: req.session.user },
       useLayout: false,
@@ -70,7 +75,9 @@ module['exports'] = function view (opts, callback) {
         return res.end(err.message);
       }
       $('.domains').html(result);
-      callback(null, $.html());
+      var out = $.html();
+      out = out.replace(/\{\{appName\}\}/g, appName);
+      callback(null, out);
       return;
       });
     });

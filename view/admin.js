@@ -17,6 +17,7 @@ var themes = require('../lib/resources/themes');
 var server = require('../lib/server');
 var languages = require('../lib/resources/programmingLanguage').languages;
 var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess');
+var config = require('../config');
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -368,6 +369,7 @@ module['exports'] = function view (opts, callback) {
 
         boot.examples = examples;
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+        out = out.replace(/\{\{appAdminEmail\}\}/g, config.app.adminEmail);
         return callback(null, out);
       });
 

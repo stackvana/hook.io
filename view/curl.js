@@ -1,3 +1,7 @@
 module['exports'] = function view (opts, callback) {
-  callback(null, this.$.html());
+  var $ = this.$, req = opts.req;
+  var out = $.html();
+  var appName = req.hostname;
+  out = out.replace(/\{\{appName\}\}/g, appName);
+  callback(null, out);
 };

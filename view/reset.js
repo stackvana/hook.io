@@ -8,7 +8,7 @@ module['exports'] = function resetPassword (opts, cb) {
       res = opts.response,
       params = req.resource.params,
       $ = this.$;
-
+  var appName = req.hostname;
   // If token has been provided check if it is valid and attempt to bypass password
   if (params.t && params.t.length > 0) {
     return user.find({ token: params.t }, function(err, results){
@@ -52,7 +52,7 @@ module['exports'] = function resetPassword (opts, cb) {
     var ip = req.connection.remoteAddress.toString();
     // TODO: add ip address, requested from: ' + ip
     var link = config.baseUrl + "/reset?t=" + u.token;
-    var tmpl = 'A password reset for your hook.io account was requested.' + '<br/><br/>';
+    var tmpl = 'A password reset for your ' + appName + ' account was requested.' + '<br/><br/>';
     tmpl += (' Account Name: ' + u.name + '<br/>');
     tmpl += (' Reset Link: <a href="' + link + '">' + link + '</a><br/>');
     // if user was found, check to see if they have an email
@@ -62,8 +62,8 @@ module['exports'] = function resetPassword (opts, cb) {
       api_user: config.email.api_user,
       api_key: config.email.api_key,
       to: u.email,
-      from: "hookmaster@hook.io",
-      subject: "hook.io password reset request",
+      from: config.app.adminEmail,
+      subject: appName + " password reset request",
       html: tmpl
     }, function (err, result) {
       if (err) {

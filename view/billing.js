@@ -1,8 +1,3 @@
-// Stripe info
-// Plan ID: BASIC_HOSTING_PLAN
-// Cost: $5.00 per 30 days, no trial
-// Statement: Hook.io Hosting Plan
-
 var hook = require('../lib/resources/hook');
 var user = require('../lib/resources/user');
 var config = require('../config');
@@ -228,7 +223,10 @@ module['exports'] = function view (opts, callback) {
         } else {
           // TODO: add copy on billing page for pricing options
           // $('.billingForm').html('<h3>No Billing Options Found!</h3>' + checkOut);
-          callback(null, $.html());
+          var appName = req.hostname;
+          var out = $.html();
+          out = out.replace(/\{\{appName\}\}/g, appName);
+          callback(null, out);
         }
       });
       // callback(null, $.html());
