@@ -40,34 +40,76 @@
     });
   });
 </script>
-<div align="left">
-  <h1>Keys</h1>
-  <div class="status"></div>
-  <p>Keys are used for managing security role access to services on hook.io</p>
-  <p>You can create new keys to allow third-party services or users to access restricted hook.io services like <a href="/docs#keys">private hooks</a>, the <a href="/datastore">datastore</a>, or <a href="/logs">logs</a>.</p>
-  <p>A common use-case would be creating a private hook service which is only accessible to clients who can provide a generated access key which has the role <code>hook::run</code></p>
-  <p><em>A full listing of security access roles is available at <a href="/roles">/roles</a></em></p>
-  <h2>Understanding Keys and Roles</h2>
-  <p>When creating a new access key, you <em>must</em> specify a set of roles associated with that key.</p>
-  <p>These roles determine what the new access key has permission to do.</p>
-  <h2>Creating New Keys</h2>
-  <p>To create new security access keys, simply use the form below.</p>
-  <h2>Using Keys and Roles to Access Restricted Services</h2>
-  <p>Accessing a role restricted service with a key is easy!</p>
-  <!-- ><h2>TODO: create example private hook with role restrictions / add to docs </h2> -->
-  <p>All you have to do is supply the generated <code>hook_private_key</code> <!-- and <code>hook_private_key</code > --> variable as a HTTP request parameter ( URL GET Query Data / POST Form Data / JSON RPC / etc ) and that HTTP client request will be granted the roles associated with that private key.</p>
-  <p>For convenience, we've pre-generated an <code>admin-access</code> key for every account. You can use the generated <code>hook_private_key</code> for <code>admin-access</code> to access any of your private services from a third-party source. You can also simply delete your <code>admin-access</code>key and create a new key with custom roles.</a></p>
-  <p><em>Remember: All <a href="/events">service level events</a> on hook.io are available as <a href="/roles">roles</a>, allowing granular access control.</em></p>
-  <!--
-  <div class="row loginBar">
-    <br/>
-    <div class="col-md-12" align="center">
-      <a href="/login" class="btn btn-social btn-github" style="padding: 14px 24px;font-size: 21px;"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
-    </div>
+
+<div class="blog-area">
+  <h1>Access Keys</h1>
+    <div class="container">
+      <div class="row">
+        <!-- blog-left-sidebar start -->
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Role Based Access Control</h3>
+              <ul class="sidebar_menu">
+                <li><a href="#">What are keys? </a></li>
+                <li><a href="#">What are roles? </a></li>
+                <li><a href="#">Generating Access Keys </a></li>
+              </ul>
+            </aside>
+            <!-- widget-categories end -->
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Role Checks</h3>
+              <ul class="sidebar_menu">
+                <li><a href="/datastore">What are Role Checks?</a> </li>
+                <li><a href="#">Automated Role Checks</a> </li>
+                <li><a href="#">Custom Role Checks</a> </li>
+              </ul>
+            </aside>
+
+            <!-- end widget-tag  -->            
+          </div>
+        </div>        
+        <!--end  blog-left-sidebar start -->
+        <!-- shop-content start -->
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <!-- end single  blog item-->         
+          <div class="col-lg-12 col-md-12 col-sm-12 item">
+            <div class="blog_content blogmt">
+
+                <div class="status"></div>
+                <p>Keys are used for managing security role access to services on {{appName}}</p>
+                <p>You can create new keys to allow third-party services or users to access restricted {{appName}} services like <a href="/docs#keys">private hooks</a>, the <a href="/datastore">datastore</a>, or <a href="/logs">logs</a>.</p>
+                <p>A common use-case would be creating a private hook service which is only accessible to clients who can provide a generated access key which has the role <code>hook::run</code></p>
+                <p><em>A full listing of security access roles is available at <a href="/roles">/roles</a></em></p>
+                <h2>Understanding Keys and Roles</h2>
+                <p>When creating a new access key, you <em>must</em> specify a set of roles associated with that key.</p>
+                <p>These roles determine what the new access key has permission to do.</p>
+                <h2>Creating New Keys</h2>
+                <p>To create new security access keys, simply use the form below.</p>
+                <h2>Using Keys and Roles to Access Restricted Services</h2>
+                <p>Accessing a role restricted service with a key is easy!</p>
+                <!-- ><h2>TODO: create example private hook with role restrictions / add to docs </h2> -->
+                <p>All you have to do is supply the generated <code>hook_private_key</code> <!-- and <code>hook_private_key</code > --> variable as a HTTP request parameter ( URL GET Query Data / POST Form Data / JSON RPC / etc ) and that HTTP client request will be granted the roles associated with that private key.</p>
+                <p>For convenience, we've pre-generated an <code>admin-access</code> key for every account. You can use the generated <code>hook_private_key</code> for <code>admin-access</code> to access any of your private services from a third-party source. You can also simply delete your <code>admin-access</code>key and create a new key with custom roles.</a></p>
+                <p><em>Remember: All <a href="/events">service level events</a> on {{appName}} are available as <a href="/roles">roles</a>, allowing granular access control.</em></p>
+                <!--
+                <div class="row loginBar">
+                  <br/>
+                  <div class="col-md-12" align="center">
+                    <a href="/login" class="btn btn-social btn-github" style="padding: 14px 24px;font-size: 21px;"><i class="fa fa-github"></i><span style="padding-left:60px"> Sign in with Github</span></a>
+                  </div>
+                </div>
+                -->
+                <p class="loginLink"><a href="/login">Login to create your first Key</a></p>
+                <div class="keys"></div>
+
+            </div>
+          </div>
+          <!-- end single  blog item-->
+        </div>
+        <!-- end shop-content start -->
+      </div>  
+    </div>  
   </div>
-  -->
-</div>
-<p class="loginLink"><a href="/login">Login to create your first Key</a></p>
-<div class="keys"></div>
-<br/>
-<br/>

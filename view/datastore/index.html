@@ -1,75 +1,134 @@
-<style>
-  .api {
-    font-size: 22px;
-    list-style: none;
-  }
-  .root {
-    font-size: 26px;
-  }
-</style>
-<div align="left">
-  <h1>Cloud Datastore<h1>
-  <h2>A powerful key-value database for storing and retrieving persistent data</h2>
-  
-  <p>
-    Hook.io's Datastore API allows developers to seamlessly set and retrieve documents from a persistent datastore using unique keys.
-  </p>
 
-  <!--
-  <div class="root">
-    <p>Current Datastore Root: <a href="#" class="currentRoot">loading...</a></p>
-    <p class="hint"><a href="/auth">Log in to see you own data</a></p>
+
+
+<div class="blog-area">
+  <h1>Cloud Datastore</h1>
+    <div class="container">
+      <div class="row">
+        <!-- blog-left-sidebar start -->
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Cloud Datastore</h3>
+              <ul class="sidebar_menu">
+                <li><a href="#">What is the Datastore? </a></li>
+                <li><a href="#">Using Datastore in a service</a> </li>
+                <li><a href="#">Using the Datastore HTTP API </a> </li>
+                <li><a href="#">Using the Datastore SDK </a> </li>
+              </ul>
+            </aside>
+            <!-- widget-categories end -->
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Datastore API</h3>
+              <ul class="sidebar_menu">
+                <li><a href="/datastore/set">Datastore.set</a></li>
+                <li><a href="/datastore/get">Datastore.get</a></li>
+                <li><a href="/datastore/del">Datastore.del</a></li>
+                <li><a href="/datastore/recent">Datastore.recent</a></li>
+              </ul>
+            </aside>
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Additional Resources</h3>
+              <ul class="sidebar_menu">
+                <li><a href="#">Limitations</a></li>
+                <li><a href="#">Datastore Access Roles</a></li>
+                <li><a href="#">Planned Features</a></li>
+                <li><a href="/wishlist">Request a Feature</a></li>
+              </ul>
+            </aside>
+
+            <!-- end widget-tag  -->            
+          </div>
+        </div>        
+        <!--end  blog-left-sidebar start -->
+        <!-- shop-content start -->
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <!-- end single  blog item-->         
+          <div class="col-lg-12 col-md-12 col-sm-12 item">
+            <div class="blog_content blogmt">
+
+              <style>
+                .api {
+                  font-size: 22px;
+                  list-style: none;
+                }
+                .root {
+                  font-size: 26px;
+                }
+              </style>
+              <div align="left">
+                <h2>A powerful key-value database for storing and retrieving persistent data</h2>
+
+                <p>
+                  Hook.io's Datastore API allows developers to seamlessly set and retrieve documents from a persistent datastore using unique keys.
+                </p>
+
+                <!--
+                <div class="root">
+                  <p>Current Datastore Root: <a href="#" class="currentRoot">loading...</a></p>
+                  <p class="hint"><a href="/auth">Log in to see you own data</a></p>
+                </div>
+
+                <div class="last">
+                  <h2>Your latests records</h2>
+                  <ul class="lastKeys">
+                    <li>list items go here</li>
+                  </ul>
+                </div>
+                -->
+                <h2>There are two ways to use access the Datastore API:</h2>
+                <a name="api"></a>
+
+                <h3>From inside a Hook service using the <code>hook.datastore</code> object</h3>
+                <p>Simply call any of the following Datastore methods from inside your Hook's source code.</p>
+                <ul class="api">
+                  <li><a href="/datastore/set">hook.datastore.set</a>(<em>key, value, callback</em>)</li>
+                  <li><a href="/datastore/get">hook.datastore.get</a>(<em>key, callback</em>)</li>
+                  <li><a href="/datastore/del">hook.datastore.del</a>(<em>key, callback</em>)</li>
+                  <li><a href="/datastore/recent">hook.datastore.recent</a>(<em>callback</em>)</li>
+                </ul>
+                <h4>Hook Datastore Example:</h4>
+                <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
+
+                <a name="http"></a>
+                <h3>From any location using HTTP requests</h3>
+                <p>All Datastore API methods are also available over HTTP.</p>
+                <p>Each of the following urls is a fully qualified API gateway capable of <a href="/keys">key based</a> authentication.</p>
+                <!-- ><p>Click on the individual URL to get the specific documentation per method.</p> -->
+                <ul class="api">
+                  <li>POST <a href="/datastore/set">https://hook.io/datastore/set</a></li>
+                  <li>GET <a href="/datastore/get">https://hook.io/datastore/get</a></li>
+                  <li>PUT <a href="/datastore/del">https://hook.io/datastore/del</a></li>
+                  <li>GET <a href="/datastore/recent">https://hook.io/datastore/recent</a></li>
+                </ul>
+
+                <p>Using the HTTP API will require logging in or providing a <code>hook_private_key</code> to <a href="/keys">access your private data</a>.</p>
+                <p><em>Note: All HTTP verbs are loosely enforced. Any of the Datastore API methods will work with any HTTP verb as long as the required API parameters are satisfied.</em></p>
+
+                <h2>Limitations</h2>
+                <p>This Datastore API is powered internally by Redis, so any native <a href="http://redis.io/commands">Redis commands</a> could become available. If you require an additional method not listed please <a href="http://github.com/bigcompany/hook.io/issues">file a support issue</a>.</p>
+                <p>Currently free development accounts have a soft-limit of 100 unique documents per account. If you require more than 100 documents you can updgrade to a <a href="/pricing">paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
+
+                <h2>Security</h2>
+                <p>You <strong>should not</strong> store any un-encrypted sensitive information in the Cloud Datastore ( such as passwords / credit cards / keys ).
+                </p> 
+                <p>At this time, hook.io does not offer automatic encryption of data stored in the Cloud Datastore. In the future, we will most likely add this feature.</p>
+
+                <!--
+                <h2>Datastore Example:</h3> <br/><br/>
+                <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
+                -->
+                <br/>
+                <br/>
+              </div>
+
+            </div>
+          </div>
+          <!-- end single  blog item-->
+        </div>
+        <!-- end shop-content start -->
+      </div>  
+    </div>  
   </div>
-
-  <div class="last">
-    <h2>Your latests records</h2>
-    <ul class="lastKeys">
-      <li>list items go here</li>
-    </ul>
-  </div>
-  -->
-  <h2>There are two ways to use access the Datastore API:</h2>
-  <a name="api"></a>
-  
-  <h3>From inside a Hook service using the <code>hook.datastore</code> object</h3>
-  <p>Simply call any of the following Datastore methods from inside your Hook's source code.</p>
-  <ul class="api">
-    <li><a href="/datastore/set">hook.datastore.set</a>(<em>key, value, callback</em>)</li>
-    <li><a href="/datastore/get">hook.datastore.get</a>(<em>key, callback</em>)</li>
-    <li><a href="/datastore/del">hook.datastore.del</a>(<em>key, callback</em>)</li>
-    <li><a href="/datastore/recent">hook.datastore.recent</a>(<em>callback</em>)</li>
-  </ul>
-  <h4>Hook Datastore Example:</h4>
-  <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
-  
-  <a name="http"></a>
-  <h3>From any location using HTTP requests</h3>
-  <p>All Datastore API methods are also available over HTTP.</p>
-  <p>Each of the following urls is a fully qualified API gateway capable of <a href="/keys">key based</a> authentication.</p>
-  <!-- ><p>Click on the individual URL to get the specific documentation per method.</p> -->
-  <ul class="api">
-    <li>POST <a href="/datastore/set">https://hook.io/datastore/set</a></li>
-    <li>GET <a href="/datastore/get">https://hook.io/datastore/get</a></li>
-    <li>PUT <a href="/datastore/del">https://hook.io/datastore/del</a></li>
-    <li>GET <a href="/datastore/recent">https://hook.io/datastore/recent</a></li>
-  </ul>
-
-  <p>Using the HTTP API will require logging in or providing a <code>hook_private_key</code> to <a href="/keys">access your private data</a>.</p>
-  <p><em>Note: All HTTP verbs are loosely enforced. Any of the Datastore API methods will work with any HTTP verb as long as the required API parameters are satisfied.</em></p>
-
-  <h2>Limitations</h2>
-  <p>This Datastore API is powered internally by Redis, so any native <a href="http://redis.io/commands">Redis commands</a> could become available. If you require an additional method not listed please <a href="http://github.com/bigcompany/hook.io/issues">file a support issue</a>.</p>
-  <p>Currently free development accounts have a soft-limit of 100 unique documents per account. If you require more than 100 documents you can updgrade to a <a href="/pricing">paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
-
-  <h2>Security</h2>
-  <p>You <strong>should not</strong> store any un-encrypted sensitive information in the Cloud Datastore ( such as passwords / credit cards / keys ).
-  </p> 
-  <p>At this time, hook.io does not offer automatic encryption of data stored in the Cloud Datastore. In the future, we will most likely add this feature.</p>
-
-  <!--
-  <h2>Datastore Example:</h3> <br/><br/>
-  <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
-  -->
-  <br/>
-  <br/>
-</div>

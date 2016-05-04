@@ -68,5 +68,15 @@ module['exports'] = function set (opts, callback) {
     }
   }
 
+};
 
+module['exports'].schema = {
+  "key": {
+    "type": "string",
+    "required": true
+  },
+  "value": {
+    "type": "any",
+    "required": true
+  }
 };

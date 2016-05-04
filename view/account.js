@@ -23,7 +23,8 @@ module['exports'] = function view (opts, callback) {
   if (!req.isAuthenticated()) { 
     req.session.redirectTo = "/account";
     // TODO: actual login screen, not just homepage login
-    return res.redirect('/');
+    //return callback(null, $.html());
+    return res.redirect('/login');
   }
 
   // TODO: refactor out most of this block using Resource.User.before() hooks
@@ -120,7 +121,7 @@ module['exports'] = function view (opts, callback) {
           if (typeof params.password !== 'undefined' && typeof params.confirmPassword !== 'undefined') {
             if (params.password.length > 0) {
               if (params.password !== params.confirmPassword) {
-                return res.end('passwords do not match!');
+                return res.end('Passwords do not match. Please go back and try again.');
               }
               _user.password = params.password;
             }
@@ -188,20 +189,16 @@ function showUserForm (user, cb) {
     disabled: true
   };
 
-  formSchema.previousName = {
-    default: user.name,
-    format: "hidden"
-  };
-
   formSchema.email.default = user.email || "";
   // formSchema.email.disabled = true;
 
+  /*
   formSchema.run = {
     "type": "string",
     "default": "true",
     "format": "hidden"
   };
-
+  */
   formSchema.paidStatus = {
     "type": "string",
     "label": "account paid status",
@@ -216,6 +213,11 @@ function showUserForm (user, cb) {
   formSchema.confirmPassword = {
     "type": "string",
     "format": "password"
+  };
+
+  formSchema.previousName = {
+    default: user.name,
+    format: "hidden"
   };
 
   /*

@@ -64,3 +64,10 @@ module['exports'] = function datasourceDelView (opts, callback) {
   }
 
 };
+
+module['exports'].schema = {
+  "key": {
+    "type": "string",
+    "required": true
+  }
+};

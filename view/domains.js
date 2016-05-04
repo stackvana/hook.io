@@ -41,8 +41,8 @@ module['exports'] = function view (opts, callback) {
       useLayout: false,
       form: {
         create: {
-          legend: 'Add a new Domain',
-          submit: "Add Domain"
+          legend: 'Add a new Domain or Subdomain',
+          submit: "Add Entry"
         },
         grid: {
           legend: 'Your Domains'
@@ -61,7 +61,7 @@ module['exports'] = function view (opts, callback) {
           type: 'string',
           label: "hook",
           placeholder: "/Marak/echo",
-          description: 'The Hook to point your domain to. Example: /Marak/echo',
+          description: 'The Service to point your domain to. Example: /Marak/echo',
           required: true,
           minLength: 1,
           maxLength: 50,
@@ -75,6 +75,10 @@ module['exports'] = function view (opts, callback) {
         return res.end(err.message);
       }
       $('.domains').html(result);
+      if (req.session.user !== "anonymous") {
+        $('.loginBar').remove();
+      }
+      
       var out = $.html();
       out = out.replace(/\{\{appName\}\}/g, appName);
       callback(null, out);

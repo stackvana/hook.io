@@ -1,0 +1,82 @@
+<!--
+<style>
+  p {
+    font-size: 22px;
+  }
+  input {
+    width: 600px;
+  }
+  .apiDiv {
+    text-align:left;
+  }
+</style>
+-->
+
+<div class="blog-area">
+  <h1>Developer API</h1>
+    <div class="container">
+      <div class="row">
+        <!-- blog-left-sidebar start -->
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Using the API</h3>
+              <ul class="sidebar_menu">
+                <li><a href="#">Hosted Microservices </a></li>
+                <li><a href="#">API Access Keys </a></li>
+                <li><a href="#">HTTP REST API </a></li>
+                <li><a href="#">Client SDK </a></li>
+              </ul>
+            </aside>
+            <!-- widget-categories end -->
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Additional Resources</h3>
+              <ul class="sidebar_menu">
+                <li><a href="/docs">Documentation</a></li>
+                <li><a href="/faq">Frequently Asked Questions</a></li>
+                <li><a href="/databases">Multi-Cloud Databases</a></li>
+                <li><a href="/files">Multi-Cloud File Storage</a></li>
+                <li><a href="/wishlist">Request a Feature</a></li>
+              </ul>
+            </aside>
+            <!-- end widget-tag  -->
+          </div>
+        </div>        
+        <!--end  blog-left-sidebar start -->
+        <!-- shop-content start -->
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <!-- end single  blog item-->
+          <div class="col-lg-12 col-md-12 col-sm-12 item">
+            <div class="blog_content blogmt">
+
+              <h2>Hosted Microservices and Webhooks</h2>
+              <p>It's important to understand that you don't have to use the {{appName}} API from an outside system</p>
+              <p>{{appName}} provides hosting for Microservices and Webhooks.</p>
+              <p>These hosted services has full integrated access to the {{appName}} API. This is very useful if you intend to run a block of code in response to HTTP requests</p>
+
+              <h2>API Access Keys</h2>
+              <p>Any authorized usage of the {{appName}} will require an API access key</p>
+              <p>Generating an API access key is simple. Just visit <a href="keys">/keys</a> and create a new key with the required roles you wish to use on the API</p>
+              <p class="hint">Generate new keys with granular roles per service in order to maximize your account's security.</p>
+
+              <h2>REST HTTP API</h2>
+              <p>All services on {{appName}} can be access over simple HTTP requests</p>
+              <p>Every page on {{appName}} is also an API endpoint capable of receiving data from a JSON post ( or `application/x-www-form-urlencoded`)</p>
+              <p>The content of the rendered result will be determined by the `accept` header of the incoming HTTP request to the API</p>
+              <p>We'll be releasing a nicely formatted API definition file soon. Until then, we recommend checking out the {{appName}}-sdk.</p>
+
+              <h2>Developer SDK</h2>
+              <p>The easiest way to programmatically interact with the the {{appName}} HTTP API is by using the {{appName}}-sdk client.</p>
+              <p>This SDK provides a full mapping of all {{appName}}'s API methods in an easy to use interface</p>
+              <p>If you'd like to see additional API SDK clients added, you can <a href="https://github.com/bigcompany/hook.io-sdk/issues/new">open an issue here</a>.</p>
+
+            </div>
+          </div>
+          <!-- end single  blog item-->
+        </div>
+        <!-- end shop-content start -->
+      </div>  
+    </div>  
+  </div>

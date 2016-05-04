@@ -72,3 +72,10 @@ module['exports'] = function view (opts, callback) {
 
 
 };
+
+module['exports'].schema = {
+  "key": {
+    "type": "string",
+    "required": true
+  }
+};

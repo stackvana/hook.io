@@ -15,7 +15,6 @@
     display: block;
   }
   #language {
-    font-size: 32px;
   }
   .warnLanguages {
     display: none;
@@ -272,44 +271,14 @@ input[type="checkbox"] {
 
 .themeRow {
   display: none;
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  width: 100%;
-  margin-bottom: 20px;
 }
 
 .hookHolder {
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-  margin-bottom: 30px;
+
 }
 
 .timeoutsHolder {
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-  margin-bottom: 30px;
+
 }
 
 
@@ -331,59 +300,17 @@ input[type="checkbox"] {
 }
 
 .dangerZone {
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-  margin-bottom: 20px;  
 }
 
 .securityHolder {
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-  margin-bottom: 20px;
+ 
 }
 
 .sourcesHolder {
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-  margin-bottom: 20px;
 }
 
 .analyticsHolder {
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-  margin-bottom: 20px;
+
 }
 
 
@@ -625,22 +552,26 @@ body legend {
     } else {
       // do nothing
     }
+    /*
     $('#agreeWarning').on('click', function () {
       $('.warnLanguages').hide();
       $('#save').attr('disabled', null);
       agreedToWarning = true;
       return false;
     });
+    */
 
     $('#language').change(function(e){
 
+      /*
       if (!agreedToWarning) {
         $('.warnLanguages').show();
         $('#save').attr('disabled', 'DISABLED');
       }
+      */
 
       var l = $('#language').val();
-      $('.currentLanguage').html($( "#language option:selected" ).text());
+      //$('.currentLanguage').html($( "#language option:selected" ).text());
       if (l === "javascript") {
         $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
         $('.warnLanguages').hide();
@@ -701,19 +632,19 @@ body legend {
 </script>
 
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
-<div style="font-size:22px;height:800px;text-align: left;" class="container">
+<div style="text-align: left;" class="container">
+  <h1 class="i18n">Manage Microservice</h1>
   <div class="message"></div>
   <form id="hookForm" method="POST" action="/admin" role="form">
-    <legend><h1 class="i18n">Manage Microservice</h1></legend>
     <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="clearLogs i18n">Clear Logs</a>&nbsp;|&nbsp;<a href="/keys" class="hookAccessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
     <h3><a href="" class="hookSource i18n">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource i18n">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView i18n">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter i18n">Presenter</a></h3>
     <br/>
     <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
       <br/>
-      The Gist will now be associated with the Hook service once you've completed this form.
+      The Gist will now be associated with the Service once you've completed this form.
     </div>
 
-    <div class="hookHolder">
+    <div class="hookHolder well">
       <h2 class="i18n">Service Information</h2>
       <div class="form-group">
         <label for="name" class="i18n">Name</label>
@@ -721,7 +652,7 @@ body legend {
         <input type="hidden" id="previousName" name="previousName" class="previousName"/>
         <input type="hidden" id="owner" name="owner" class="owner"/>
         <div class="tiny">
-          <em class="i18n">Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
+          <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
         </div>
       </div>
       <div class="form-group">
@@ -771,7 +702,7 @@ body legend {
             <option value="Development" class="i18n">Development</option>
             <option value="Production" class="i18n">Production</option>
           </select>
-          <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the hook by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+          <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
         </div>
 
 
@@ -826,7 +757,7 @@ body legend {
     </div>
 
 
-    <div class="analyticsHolder">
+    <div class="analyticsHolder well">
       <h2 class="i18n">Service Analytics</h2>
       <!-- private / tokens -->
       
@@ -837,7 +768,7 @@ body legend {
 
     </div>
 
-    <div class="timeoutsHolder">
+    <div class="timeoutsHolder well">
       <h2 class="i18n">Service Timeouts</h2>
       <!-- private / tokens -->
       <div class="form-group">
@@ -847,18 +778,18 @@ body legend {
 
     </div>
 
-    <div class="securityHolder">
+    <div class="securityHolder well">
       <h2 class="i18n">Service Security</h2>
       <!-- private / tokens -->
 
       <div class="form-group private">
 
         <label for="hookPublic">Public Service</label>
-        <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
+        <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
         &nbsp;
 
         <label for="hookPrivate">Private Service</label>
-        <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
+        <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
         <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.<br/></div>
         <div class="securityHints">
           <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
@@ -867,14 +798,13 @@ body legend {
       </div>
     </div>
 
-    <div class="sourcesHolder">
+    <div class="sourcesHolder well">
       <h2 class="i18n">Hook Source</h2>
 
       <div class="services"></div>
 
       <div class="form-group languages">
-        <div class="languageTitle"><strong class="i18n">Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></div>
-        <label class="smaller" for="language">Select Language:</label>
+        <label class="smaller" for="language">Programming Language:</label>
         <select name="language" id="language">
           <option value="javascript">JavaScript ( Recommended )</option>
           <option value="es7">ECMAScript 7 ( Supported )</option>
@@ -890,6 +820,7 @@ body legend {
           <option value="smalltalk">SmallTalk ( Experimental )</option>
           <option value="tcl">Tcl ( Experimental )</option>
         </select>
+        <!--
         <div class="warnLanguages">
           <h2 class="warning">Warning</h2>
           <p>We have <a href="/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
@@ -897,15 +828,16 @@ body legend {
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
         </div>
+        -->
       </div>
       <div class="form-group sources">
 
         <label for="editorSource">Code Editor</label>
-        <input tabindex="5" type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
+        <input tabindex="5" type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Service from text editor">
         &nbsp;
 
         <label for="gistSource">Github Gist</label>
-        <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist">
+        <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
 
       </div>
       <div class="tiny">
@@ -920,42 +852,42 @@ body legend {
         </div>
       </div>
 
-            <div class="form-group codeEditorHolder">
+      <div class="form-group codeEditorHolder well">
 
-                <!-- Create a simple CodeMirror instance -->
-                <link rel="stylesheet" href="/js/codemirror.css">
-                <script src="/js/codemirror.js"></script>
-                <script src="/js/javascript.js"></script>
-                <script type="text/javascript">
-                </script>
-                <style>
-                  .CodeMirror {
-                    /* Set height, width, borders, and global font properties here */
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                    font-family: monospace;
-                    height: 500px;
-                    color: black;
-                    border: solid;
-                    border-width: 1px;
-                    box-shadow: 10px 10px 5px #888888;
-                  }
-                </style>
+          <!-- Create a simple CodeMirror instance -->
+          <link rel="stylesheet" href="/js/codemirror.css">
+          <script src="/js/codemirror.js"></script>
+          <script src="/js/javascript.js"></script>
+          <script type="text/javascript">
+          </script>
+          <style>
+            .CodeMirror {
+              /* Set height, width, borders, and global font properties here */
+              margin-top: 10px;
+              margin-bottom: 10px;
+              font-family: monospace;
+              height: 500px;
+              color: black;
+              border: solid;
+              border-width: 1px;
+              box-shadow: 10px 10px 5px #888888;
+            }
+          </style>
 
-                  <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
-                  <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
-  hook.res.end('put your code here');
+            <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
+            <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
+hook.res.end('put your code here');
 };</textarea>
-                  <script type="text/javascript">
-                    var editor;
-                    editor = CodeMirror.fromTextArea($('textarea').get(0), {
-                      lineNumbers: true
-                    });
-                    editor.refresh();
-                    //editor.show();
-                  </script>
-                <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
-              </div>
+            <script type="text/javascript">
+              var editor;
+              editor = CodeMirror.fromTextArea($('textarea').get(0), {
+                lineNumbers: true
+              });
+              editor.refresh();
+              //editor.show();
+            </script>
+          <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
+        </div>
     </div>
 
     <!--
@@ -970,30 +902,30 @@ body legend {
 
 
     <div class="form-group">
-      <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
+      <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Service.">
       <label for="themeActive" class="i18n">Customize appearance of Hook with a Theme</label>
     </div>
 
     <div class="themeSelector well themeRow"></div>
 
     <div class="form-group">
-      <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
-      <label for="cronActive" class="i18n">Schedule Hook on a Timer using Cron</label>
+      <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Service will execute as a scheduled tasked based on provided Cron pattern.">
+      <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
     </div>
 
-    <div class="form-group cronRow">
+    <div class="form-group cronRow well">
       <h2>Hooks can be scheduled on a timer</h2>
 
       <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
       <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
-      <p class="superTiny">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
+      <p class="superTiny">By design, Crons will not pass any data into the Service. If you need to pass data into the scheduled Service, you can simply set default data in the Service or chain two Hooks together to pipe the data.</p>
       <p class="warning"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
       
       <h3>Cron Pattern</h3>
       <div class="cronDiv"></div>
     </div>
     
-    <div class="dangerZone">
+    <div class="dangerZone well">
       <div class="form-group danger">
         Danger Zone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>

@@ -23,6 +23,7 @@ module['exports'] = function view (opts, callback) {
  self.schema = self.schema || {};
 
  // TODO: only show form if logged in, if not, show login form
+ var appName = req.hostname;
 
  if (!req.isAuthenticated()) {
    $('.keys').remove();
@@ -45,7 +46,10 @@ module['exports'] = function view (opts, callback) {
        
        $('.keys').remove();
        req.session.redirectTo = "/keys";
-       return callback(null, $.html());
+       var out = $.html();
+       out = out.replace(/\{\{appName\}\}/g, appName);
+       return callback(null, out);
+       
        //return res.redirect('/login');
      } else {
        $('.loginBar').remove();
@@ -174,7 +178,9 @@ module['exports'] = function view (opts, callback) {
           return res.end(err.message);
         }
         $('.keys').html(result);
-        callback(null, $.html());
+        var out = $.html();
+        out = out.replace(/\{\{appName\}\}/g, appName);
+        callback(null, out);
         return;
         });
       });

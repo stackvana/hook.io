@@ -58,15 +58,15 @@ module['exports'] = function view (opts, callback) {
   });
 
   function finish () {
-    $('title').html(appName + ' - Create new Hook');
+    $('title').html(appName + ' - Create new Service');
 
       var gist = params.gist;
 
       if (req.method === "POST") {
 
         if (typeof params.name === 'undefined' || params.name.length === 0) {
-          
-          var msg = 'Hook name is required!';
+
+          var msg = 'Service name is required!';
           if (req.jsonResponse === true) {
             msg = {
               error: true,

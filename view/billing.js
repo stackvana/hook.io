@@ -208,7 +208,7 @@ module['exports'] = function view (opts, callback) {
       // not adding new billing data, just show existing
       if (!req.isAuthenticated()) {
         req.session.redirectTo = "/billing";
-        return res.redirect('/');
+        return res.redirect('/login');
       }
       billing.find({ owner: req.session.user }, function (err, results) {
         if (err) {

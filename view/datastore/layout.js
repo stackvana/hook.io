@@ -5,6 +5,9 @@ module['exports'] = function get (opts, cb) {
   //var $ = this.$.load(this.parent.parent.layout.template);
   //var $ = this.parent.$;
   var $ = this.$, req = opts.request;
+  
+  return cb(null, $.html());
+  
   console.log('hi', this.parent.parent.layout.template)
   //$('body').html($$.html())
   

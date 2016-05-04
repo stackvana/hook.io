@@ -1,0 +1,63 @@
+<div align="left">
+  <!-- Create a simple CodeMirror instance -->
+  <link rel="stylesheet" href="/js/codemirror.css">
+  <script src="/js/codemirror.js"></script>
+  <script src="/js/javascript.js"></script>
+  <script type="text/javascript">
+   $(document).ready(function(){
+     gatewayWidget({
+       target: '#gateway'
+     });
+   });
+  </script>
+  
+  <script type="text/javascript">
+  // creates code widget for running code
+  function gatewayWidget (opts) {
+
+    opts = opts || {};
+    opts.target = opts.target || 'body';
+
+    var editor = '<textarea name="codeEditor" class="codeEditor">hello</textarea>';
+    var curlCode = '<input class="curlCode" type="text"/>';
+    var runCodeBtn = '<button class="runCode">Run Code</button>';
+    var saveCodeBtn = '<button class="saveCode">Save Code</button>';
+    var formStart = '<form action=';
+
+    $(opts.target).html(editor + runCodeBtn + saveCodeBtn + '</form>');
+
+  };
+  </script>
+  
+  <style>
+    .CodeMirror {
+      /* Set height, width, borders, and global font properties here */
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-family: monospace;
+      height: 300px;
+      color: black;
+      border: solid;
+      border-width: 1px;
+      box-shadow: 10px 10px 5px #888888;
+    }
+  </style>
+  <h2>Hot-code Gateways</h2>
+  <form>
+    <h3>run code with curl</h3>
+    
+    <div id="gateway"></div>
+    <!--
+    <script type="text/javascript">
+      var editor;
+      editor = CodeMirror.fromTextArea($('textarea').get(0), {
+        lineNumbers: true
+      });
+    </script>
+    -->
+    
+    <br/>
+    <br/>
+  </form>
+
+</div>

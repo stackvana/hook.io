@@ -1,4 +1,6 @@
 module['exports'] = function unauthorizedRoleAccess (req, role) {
+  var config = require('../');
+
   // TODO: use a template instead of str concat
   var str = '',
   errorType = "unauthorized-role-access";
@@ -17,7 +19,7 @@ module['exports'] = function unauthorizedRoleAccess (req, role) {
   str += ('"' + req.session.user + '" does not have the role "' + role + '" which is required to access "' + req._parsedUrl.pathname + '"');
 
   if (req.session.user === "anonymous") {
-    str += "\n\nIf you are the owner of this service try logging in at https://hook.io"
+    str += "\n\nIf you are the owner of this resource try logging in at https://" + config.app.domain + "/login";
   }
 
   if (typeof req.resource.params.hook_private_key !== "undefined") {
