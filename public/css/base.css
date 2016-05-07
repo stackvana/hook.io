@@ -1,0 +1,98 @@
+/*
+form legend {
+  font-size: 2em;
+}
+*/
+
+label {
+  cursor: pointer;
+}
+
+.left {
+  text-align: left;
+}
+
+p {
+  display: block;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  margin-bottom: 22px;
+}
+
+label {
+  font-size: 1.2em;
+}
+
+
+.main_content ul li {
+  list-style: disc;
+  padding-bottom:10px;
+  margin-bottom:10px;
+}
+
+.main_content ul {
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+
+.hint {
+  font-size: 1em;
+  font-style: italic;
+}
+
+.red {
+  color: red;
+}
+
+.hidden {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.bigUl {
+  font-size: 22px;
+  margin: 0px;
+  padding: 0px !important;
+}
+
+.bigUl li{
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.control-group {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.controls {
+  padding-bottom: 10px;
+}
+.form-control {}
+
+.threeDform {
+  color: black;
+  background-color: #f5f5f5;
+  border: solid;
+  border-width: 1px;
+  box-shadow: 10px 10px 5px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.well {
+  background-color: #F5F5F5;
+  border: 1px solid #E1E1E1;
+  padding: 17px 17px 0px 17px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  margin-bottom: 30px;
+}
