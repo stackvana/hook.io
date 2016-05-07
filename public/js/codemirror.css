@@ -7,9 +7,14 @@
   font-family: monospace;
   height: 200px;
   color: black;
+  /*
   border: solid;
   border-width: 1px;
   box-shadow: 10px 10px 5px #888888;
+  */
+  background-color: #F5F5F5;
+  border: 1px solid #E1E1E1;
+  
 }
 
 /* PADDING */
