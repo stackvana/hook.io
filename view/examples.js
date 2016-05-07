@@ -26,7 +26,12 @@ module['exports'] = function (opts, callback) {
 
     Object.keys(grouped).forEach(function(key){
       // group headers per language
-      $('.examples').append('<h3>' + key + '</h3>')
+      $('.examples').append('<a name="' + key + '"></a>');
+      $('.examples').append('<h3>' + key + '</h3>');
+
+      // update side menu
+      $('.langMenu').append('<li><a href="#' + key + '">' + key + '</a> </li>');
+
       grouped[key].forEach(function(h){
         // TODO: add description of hook with h.description ( data is missing for most examples )
         $('.examples').append('<a href="/marak/' + h.name + '">' + h.name + '</a><br/>')

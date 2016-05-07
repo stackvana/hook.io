@@ -1,10 +1,8 @@
-<!--
 <style>
-  .example {
-    font-size:26px;padding-top: 20px;
+  .sidebar_menu {
+    text-transform: capitalize;
   }
 </style>
--->
 
 <div class="blog-area">
   <h1>Interactive Examples</h1>
@@ -17,8 +15,9 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Getting Started</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Runing Examples </a></li>
-                <li><a href="#">Forking Examples </a></li>
+                <li><a href="#running">Running Examples </a></li>
+                <li><a href="#forking">Forking Examples </a></li>
+                <li><a href="#basic">Basic Examples </a></li>
                 <li><a href="/new">Create new Service </a></li>
               </ul>
             </aside>
@@ -26,12 +25,7 @@
             <!-- widget-categories start -->
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Language Specific</h3>
-              <ul class="sidebar_menu">
-                <li><a href="/datastore">Built-in Datastore</a> </li>
-                <li><a href="#">CouchDB</a> </li>
-                <li><a href="#">Redis</a> </li>
-                <li><a href="#">MongoDB</a> </li>
-                <li><a href="#">DynamoDB</a> </li>
+              <ul class="sidebar_menu langMenu">
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
@@ -52,41 +46,39 @@
           <!-- end single  blog item-->         
           <div class="col-lg-12 col-md-12 col-sm-12 item">
             <div class="content">
+              <a name="running"></a>
+              <h2>Running Examples</h2>
+              <p>These examples can be run directly in the browser or from any client which speaks HTTP.</p>
+              <p>Using the browser is a good start. You can also send data using tools like <a href="/curl">cURL</a></p>
 
+              <a name="forking"></a>
+              <h2>Forking an Example</h2>
+              <p>To fork ( make your own copy ) any of these examples is simple!</p>
+              <p>Just click "fork" next to the example you wish to copy. You will need to register for a Free Account, it's very quick and easy!</p>
+              <p class="hint">Want to see more code examples? Simply open a Pull Request to <a href="https://github.com/bigcompany/hooks">this repository</a> and they will appear here.</p>
 
-                <h2>These examples can be run directly in the browser or from any client which speaks HTTP.</h2>
-                <br/>
-                <h3>Want to add more examples? Simply open a Pull Request to <a href="https://github.com/bigcompany/hooks">this repository</a>.</h3>
-                <br/>
-                <h2>Basic Examples</h2>
-                <div class="example">
-                  <a href="http://echo.{{appName}}">Echo incoming HTTP requests</a> <br/>
-                  <a href="/Marak/transform">Transform streams of HTTP data</a> <br/>
-                  <a href="/Marak/pipe">Pipe hooks into each together</a> <br/>
-                  <a href="/Marak/merge">Merge multiple hooks into a single hook</a> <br/>
-                  <a href="/Marak/isTheWebsiteDown">Check if a website is down</a> <br/>
-                  <!-- <a href="/Marak/image">Manipulate images</a> <br/> -->
-                  <a href="http://coin.{{appName}}">Crypto-currency price listings</a> <br/>
-                  <a href="http://markdown.{{appName}}">Streaming Markdown Parser</a> <br/>
-                  <a href="http://geoip.{{appName}}">GeoIP lookup with Google Maps</a> <br/>
-                  <br/>
-                </div>
-                <h2>Language Specific Examples</h2>
-                <div class="examples example">
-                </div>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+              <a name="basic"></a>
+              <h2>Basic Examples</h2>
+              <div class="example">
+                <a href="/marak/echo">Echo incoming HTTP requests</a> <br/>
+                <a href="/Marak/transform">Transform streams of HTTP data</a> <br/>
+                <a href="/Marak/pipe">Pipe hooks into each together</a> <br/>
+                <a href="/Marak/merge">Merge multiple hooks into a single hook</a> <br/>
+                <a href="/Marak/isTheWebsiteDown">Check if a website is down</a> <br/>
+                <!-- <a href="/Marak/image">Manipulate images</a> <br/> -->
+                <a href="/marak/coin">Crypto-currency price listings</a> <br/>
+                <a href="/marak/markdown">Streaming Markdown Parser</a> <br/>
+                <a href="/marak/geoip">GeoIP lookup with Google Maps</a> <br/>
                 <br/>
               </div>
-
+              <h2>Language Specific Examples</h2>
+              <div class="examples example"></div>
             </div>
           </div>
-          <!-- end single  blog item-->
         </div>
-        <!-- end shop-content start -->
-      </div>  
+        <!-- end single  blog item-->
+      </div>
+      <!-- end shop-content start -->
     </div>  
-  </div>
+  </div>  
+</div>
