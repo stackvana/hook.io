@@ -1,26 +1,32 @@
 <div align="left">
-  <h2>Datastore.set</h2>
-  <p class="help i18n">Sets a <code>Document</code> in the Datastore based on a unique<code>key</code></p>
-  <p class="help i18n">Will either create or update depending if a <code>Document</code> already exists for the <code>key</code> </p>
-  
-  <h3>Required parameters</h3>
-  <ul class="apiParams">
-    <li>key</li>
-    <li>value</li>
-  </ul>
+  <h1>Datastore.set</h1>
+  <div class="container content">
 
-  <form action="" method="POST" role="form" class="datastoreAPIForm">
-    <legend><h3>Datastore.set Form</h3></legend>
-    <div class="form-group">
-      <label for="key">key</label>
-      <input class="form-control" name="key" id="key" type="text" placeholder="/a/unique/key">
-    </div>
-    <div class="form-group">
-      <label for="key">value</label>
-      <textarea class="form-control" name="value" id="value" placeholder="enter value of the key ( can be String or JSON )"></textarea>
-    </div>
-    <button type="submit" class="btn">Set Document</button> <br/>
-  </form>
-  <br/>
-  <br/>
+    <p class="help i18n">Sets a <code>Document</code> in the Datastore based on a unique<code>key</code></p>
+    <p class="help i18n">Will either create or update depending if a <code>Document</code> already exists for the <code>key</code> </p>
+
+    <h3>Required parameters</h3>
+    <ul class="apiParams">
+      <li>key</li>
+      <li>value</li>
+    </ul>
+
+    <form action="" method="POST" role="form" class="datastoreAPIForm">
+      <legend><h3>Datastore.set Form</h3></legend>
+      <div class="form-group">
+        <label for="key">key</label>
+        <input class="form-control" name="key" id="key" type="text" placeholder="/a/unique/key">
+      </div>
+      <div class="form-group">
+        <label for="key">value</label>
+        <textarea class="form-control" name="value" id="value" placeholder="enter value of the key ( can be String or JSON )"></textarea>
+      </div>
+      
+      <div class="button_set_plain button_margin">
+        <div class="left newsl_button">
+          <button type="submit"><span>Set Document</span></button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

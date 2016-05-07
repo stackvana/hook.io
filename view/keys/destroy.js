@@ -23,9 +23,9 @@ module['exports'] = function destroyKeysPresenter (opts, callback) {
   function finish () {
     if (typeof params.hook_private_key !== 'undefined') {
       // TODO: move to resource.before hooks
-      checkRoleAccess({ req: req, res: res, role: "keys::create" }, function (err, hasPermission) {
+      checkRoleAccess({ req: req, res: res, role: "keys::destroy" }, function (err, hasPermission) {
         if (!hasPermission) {
-          return res.end(config.messages.unauthorizedRoleAccess(req, "keys::create"));
+          return res.end(config.messages.unauthorizedRoleAccess(req, "keys::destroy"));
         } else {
           var validate = mschema.validate(req.resource.params, self.schema);
           if (!validate.valid) {

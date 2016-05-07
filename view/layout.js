@@ -9,6 +9,9 @@ module['exports'] = function view (opts, callback) {
 
   if (!req.isAuthenticated()) {
     req.session.user = "anonymous";
+    $('.logoutLink').remove();
+  } else {
+    $('.loginLink').remove();
   }
 
   if (req.url !== "/login" && req.url !== "" && req.url !== "/") {
@@ -30,20 +33,27 @@ module['exports'] = function view (opts, callback) {
 
   var i = req.i18n;
 
-  //$('title').html(i.__('hook.io - Free Microservice and Webhook Hosting. Deploy your code in seconds.'));
-  //$('.splash').html(i.__('Instantly Build and Deploy HTTP Microservices'));
-  $('.supportedLang').html(i.__("%s Supported Programming Languages", "12+"));
-  //$('.deploymentsLink').html(i.__("Deployments"));
-
+  var pathName = require('url').parse(req.originalUrl).pathname;
+  if (pathName !== "/") {
+    $('.main-slider-area').remove();
+  }
   $('.features li a').each(function(index, item){
     var v = $(item).html();
     $(item).html(i.__(v));
   });
 
-  $('#footer .i18n').each(function(index, item){
+  $('.i18n').each(function(index, item){
     var v = $(item).html();
     $(item).html(i.__(v));
   });
-  
-  callback(null, $.html());
+
+  var out = $.html();
+  var appName = "hook.io",
+      appAdminEmail = "hookmaster@hook.io",
+      appPhonePrimary = "1-555-555-5555";
+  out = out.replace(/\{\{appName\}\}/g, appName);
+  out = out.replace(/\{\{appAdminEmail\}\}/g, appAdminEmail);
+  out = out.replace(/\{\{appPhonePrimary\}\}/g, appPhonePrimary);
+  callback(null, out);
+
 };

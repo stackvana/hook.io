@@ -1,4 +1,14 @@
+<style>
+.api li {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+.api ul {
+  padding-top:10px;
+  padding-bottom:10px;
+}
 
+</style>
 
 
 <div class="blog-area">
@@ -12,10 +22,10 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Cloud Datastore</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">What is the Datastore? </a></li>
-                <li><a href="#">Using Datastore in a service</a> </li>
-                <li><a href="#">Using the Datastore HTTP API </a> </li>
-                <li><a href="#">Using the Datastore SDK </a> </li>
+                <li><a href="#what-is-the-datastore">What is the Datastore? </a></li>
+                <li><a href="#hosted-services">Hosted Services</a> </li>
+                <li><a href="#">Datastore HTTP API </a> </li>
+                <li><a href="#">Datastore SDK </a> </li>
               </ul>
             </aside>
             <!-- widget-categories end -->
@@ -32,7 +42,7 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Additional Resources</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Limitations</a></li>
+                <li><a href="#limitations">Limitations</a></li>
                 <li><a href="#">Datastore Access Roles</a></li>
                 <li><a href="#">Planned Features</a></li>
                 <li><a href="/wishlist">Request a Feature</a></li>
@@ -47,7 +57,7 @@
         <div class="col-lg-9 col-md-9 col-sm-9">
           <!-- end single  blog item-->         
           <div class="col-lg-12 col-md-12 col-sm-12 item">
-            <div class="blog_content blogmt">
+            <div class="content">
 
               <style>
                 .api {
@@ -59,12 +69,16 @@
                 }
               </style>
               <div align="left">
-                <h2>A powerful key-value database for storing and retrieving persistent data</h2>
+                <a name="#what-is-the-datastore"></a>
+                <h2>What is the Datastore?</h2>
+                <p class="hint">A powerful key-value database for storing and retrieving persistent data</p>
 
                 <p>
                   Hook.io's Datastore API allows developers to seamlessly set and retrieve documents from a persistent datastore using unique keys.
                 </p>
 
+                <a name="#hosted-services"></a>
+                <h2>Hosted Services</h2>
                 <!--
                 <div class="root">
                   <p>Current Datastore Root: <a href="#" class="currentRoot">loading...</a></p>
@@ -79,6 +93,8 @@
                 </div>
                 -->
                 <h2>There are two ways to use access the Datastore API:</h2>
+                
+                <h2>Datastore HTTP API</h2>
                 <a name="api"></a>
 
                 <h3>From inside a Hook service using the <code>hook.datastore</code> object</h3>
@@ -103,10 +119,14 @@
                   <li>PUT <a href="/datastore/del">https://hook.io/datastore/del</a></li>
                   <li>GET <a href="/datastore/recent">https://hook.io/datastore/recent</a></li>
                 </ul>
+                
+                <h2>Datastore HTTP API</h2>
+                
 
                 <p>Using the HTTP API will require logging in or providing a <code>hook_private_key</code> to <a href="/keys">access your private data</a>.</p>
                 <p><em>Note: All HTTP verbs are loosely enforced. Any of the Datastore API methods will work with any HTTP verb as long as the required API parameters are satisfied.</em></p>
 
+                <a name="limitations"></a>
                 <h2>Limitations</h2>
                 <p>This Datastore API is powered internally by Redis, so any native <a href="http://redis.io/commands">Redis commands</a> could become available. If you require an additional method not listed please <a href="http://github.com/bigcompany/hook.io/issues">file a support issue</a>.</p>
                 <p>Currently free development accounts have a soft-limit of 100 unique documents per account. If you require more than 100 documents you can updgrade to a <a href="/pricing">paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>

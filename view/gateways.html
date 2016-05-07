@@ -1,35 +1,39 @@
-<h1>Hot-code Gateways</h1>
+<div>
+  <h1>Hot-code Gateways</h1>
+  <div class="container content">
 
-<a name="hot-code"></a>
-<p class="i18n">In most cases, you will want to save your service's source-code as a Hook.</p>
-<p class="i18n">In other situations, you may need to send code that has to be executed immediately and without any additional requests ( such as testing and developing hooks or executing dynamically created source code from a third-party service ).</p>
-<p>{{appName}} provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="https://{{appName}}#tuts">Interactive Example</a> on the {{appName}} homepage, you will notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
-<h2>Examples of using the Hot-Code Gateways</h2>
-<p>Here are two simple examples of using <code>echo</code> and <code>curl</code> to execute hot-code against {{appName}}'s gateway.</p>
+  <a name="hot-code"></a>
+  <p class="i18n">In most cases, you will want to save your Service's source-code as a Hook with an associated URL.</p>
+  <p class="i18n">In other situations, you may need to send code that has to be executed immediately and without any additional requests ( such as development testing or executing dynamically created source code from a third-party service ).</p>
+  <p>{{appName}} provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="/editor">Interactive Playground</a>, you may notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
+  <h2>Examples of using the Hot-Code Gateways</h2>
+  <p>Here are two simple examples of using <code>echo</code> and <code>curl</code> to execute hot-code against {{appName}}'s gateway.</p>
 
-<h3>JavasScript</h3>
-<pre><code>echo 'module["exports"] = function helloWorld (h) { h.res.end("Hello world!"); };' | curl --data-urlencode source@- http://javascript.{{appName}}</code></pre>
+  <h3>JavasScript</h3>
+  <pre><code>echo 'module["exports"] = function helloWorld (h) { h.res.end("Hello world!"); };' | curl --data-urlencode source@- http://javascript.{{appName}}</code></pre>
 
-<h3>Python</h3>
-<pre><code>echo 'print "hello world"' | curl --data-urlencode source@- http://python.{{appName}}/</code></pre>
+  <h3>Python</h3>
+  <pre><code>echo 'print "hello world"' | curl --data-urlencode source@- http://python.{{appName}}/</code></pre>
 
-<p>You can also simply open a url to the gateway like this: <a href="http://python.{{appName}}/?source=print%20%22hello%20world%22">http://python.{{appName}}/?source=print "hello world"</a>
-<br/>
+  <p>You can also simply open a url to the gateway like this: <a href="http://python.{{appName}}/?source=print%20%22hello%20world%22">http://python.{{appName}}/?source=print "hello world"</a>
+  <br/>
 
-<h2>Available Gateways</h2>
-<em>Note: Most gateways will an return an error or blank response if the <code>source</code> parameter is not provided</em>
+  <h2>Available Gateways</h2>
+  <em>Note: Most gateways will an return an error or blank response if the <code>source</code> parameter is not provided</em>
 
-<ul style="font-size:22px;padding-top:10px;list-style-type: disc;">
-  <li><a href="http://javascript.{{appName}}">javascript.{{appName}}</a></li>
-  <li><a href="http://coffee.{{appName}}">coffee.{{appName}}</a></li>
-  <li><a href="http://bash.{{appName}}">bash.{{appName}}</a></li>
-  <li><a href="http://lua.{{appName}}">lua.{{appName}}</a></li>
-  <li><a href="http://perl.{{appName}}">perl.{{appName}}</a></li>
-  <li><a href="http://php.{{appName}}">php.{{appName}}</a></li>
-  <li><a href="http://python.{{appName}}">python.{{appName}}</a></li>
-  <li><a href="http://python3.{{appName}}">python3.{{appName}}</a></li>
-  <li><a href="http://ruby.{{appName}}">ruby.{{appName}}</a></li>
-  <li><a href="http://scheme.{{appName}}">scheme.{{appName}}</a></li>
-  <li><a href="http://smalltalk.{{appName}}">smalltalk.{{appName}}</a></li>
-  <li><a href="http://tcl.{{appName}}">tcl.{{appName}}</a></li>
-</ul>
+  <ul style="font-size:22px;padding-top:10px;list-style-type: disc;">
+    <li><a href="http://javascript.{{appName}}">javascript.{{appName}}</a></li>
+    <li><a href="http://coffee.{{appName}}">coffee.{{appName}}</a></li>
+    <li><a href="http://bash.{{appName}}">bash.{{appName}}</a></li>
+    <li><a href="http://lua.{{appName}}">lua.{{appName}}</a></li>
+    <li><a href="http://perl.{{appName}}">perl.{{appName}}</a></li>
+    <li><a href="http://php.{{appName}}">php.{{appName}}</a></li>
+    <li><a href="http://python.{{appName}}">python.{{appName}}</a></li>
+    <li><a href="http://python3.{{appName}}">python3.{{appName}}</a></li>
+    <li><a href="http://ruby.{{appName}}">ruby.{{appName}}</a></li>
+    <li><a href="http://scheme.{{appName}}">scheme.{{appName}}</a></li>
+    <li><a href="http://smalltalk.{{appName}}">smalltalk.{{appName}}</a></li>
+    <li><a href="http://tcl.{{appName}}">tcl.{{appName}}</a></li>
+  </ul>
+  </div>
+</div>

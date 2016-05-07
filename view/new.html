@@ -614,15 +614,23 @@ body legend {
         <label for="name" class="i18n">Name</label>
         <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
         <div class="tiny">
-          <em>Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
+          <em class="hint">Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
         </div>
       </div>
       <div class="form-group">
         <label for="path" class="i18n">Route</label>
         <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
         <div class="tiny">
-          <em>Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
+          <em class="hint">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
           <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n">Route Formatting Help</button>
+          
+          <!--
+          <div class="left button_set_plain button_margin">                  
+            <div class="newsl_button">
+              <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n"><span>Route Formatting Help</span></button>
+            </div>
+          </div>
+          -->
         </div>
 
         <div class="tiny routeHint">
@@ -805,12 +813,13 @@ body legend {
           </style>
 
             <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
-            <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
-console.log(hook.params);
-console.log(hook.req.path);
-console.log(hook.req.method);
-console.log(hook.env);
-hook.res.end(JSON.stringify(hook.params, true, 2));
+            <textarea tabindex="8" name="codeEditor" class="codeEditor">
+module['exports'] = function echoHttp (hook) {
+  console.log(hook.params);
+  console.log(hook.req.path);
+  console.log(hook.req.method);
+  console.log(hook.env);
+  hook.res.end(JSON.stringify(hook.params, true, 2));
 };</textarea>
             <script type="text/javascript">
               var editor;
@@ -836,23 +845,23 @@ hook.res.end(JSON.stringify(hook.params, true, 2));
 
     <div class="form-group">
       <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
-      <label for="themeActive" class="i18n">Customize appearance of Hook with a Theme</label>
+      <label for="themeActive" class="i18n">Customize appearance of Service with a Theme</label>
     </div>
 
     <div class="themeSelector well themeRow"></div>
 
     <div class="form-group">
       <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
-      <label for="cronActive" class="i18n">Schedule Hook on a Timer using Cron</label>
+      <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
     </div>
 
     <div class="form-group cronRow">
-      <h2 class="i18n">Hooks can be scheduled on a timer</h2>
+      <h2 class="i18n">Services can be scheduled on a timer</h2>
 
-      <p class="i18n">All Hooks support the ability to schedule their execution based on a date time pattern.</p>
+      <p class="i18n">All Services support the ability to schedule their execution based on a date time pattern.</p>
       <p class="superTiny i18n">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
       <p class="superTiny i18n">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
-      <p class="warning i18n"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@{{appName}}">please let us know</a>. </p>
+      <p><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@{{appName}}">please let us know</a>. </p>
       <h3 class="i18n">Cron Pattern</h3>
       <div class="cronDiv"></div>
     </div>

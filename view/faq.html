@@ -9,11 +9,11 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Microservices</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">What is a microservice? </a></li>
-                <li><a href="#">Why build with microservices? </a> </li>
-                <li><a href="#">Do you support Webhooks? </a> </li>
-                <li><a href="#">Do you support Websockets? </a> </li>
-                <li><a href="#">Why can't I start a server? </a> </li>
+                <li><a href="#what-is-a-microservice">What are Microservices? </a></li>
+                <li><a href="#why-microservices">Why use Microservices? </a> </li>
+                <li><a href="#webhooks">Webhook Support?</a> </li>
+                <li><a href="#websockets">Websocket Support?</a> </li>
+                <li><a href="#no-servers">Why can't I start a server? </a> </li>
               </ul>
             </aside>
             <!-- widget-categories end -->
@@ -21,28 +21,54 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Deployment</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Deploying your first service</a></li>
-                <li><a href="#">Testing your service</a></li>
-                <li><a href="#">Running your service</a></li>
-                <li><a href="#">Sending data to your service</a></li>
+                <li><a href="#creating">Creating a new service</a></li>
+                <!--
+                  <li><a href="#testing">Testing your service</a></li>
+                -->
+                <li><a href="#running">Running your service</a></li>
+                <li><a href="#sending-data">Sending data to service</a></li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Logging and Events</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Deploying your first service</a></li>
-                <li><a href="#">Running your service</a></li>
-                <li><a href="#">Sending data to your service</a></li>
+                <li><a href="#logs">Service Logs</a></li>
+                <li><a href="#events">System Events</a></li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Roles and API Access Keys</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Deploying your first service</a></li>
+                <li><a href="#">Role Based Access Control</a></li>
                 <li><a href="#">Running your service</a></li>
                 <li><a href="#">Sending data to your service</a></li>
               </ul>
             </aside>
+            
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Multi-Cloud Databases</h3>
+              <ul class="sidebar_menu">
+                <li><a href="/docs">Documentation</a></li>
+                <li><a href="https://github.com/bigcompany/hook.io">Open-source Code</a></li>
+                <li><a href="/wishlist">Feature Wishlist</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/contact#security">Report Security Venerability</a></li>
+              </ul>
+            </aside>
+            
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Multi-Cloud Files</h3>
+              <ul class="sidebar_menu">
+                <li><a href="/docs">Documentation</a></li>
+                <li><a href="https://github.com/bigcompany/hook.io">Open-source Code</a></li>
+                <li><a href="/wishlist">Feature Wishlist</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/contact#security">Report Security Venerability</a></li>
+              </ul>
+            </aside>
+
+            
+            <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Additional Resources</h3>
               <ul class="sidebar_menu">
                 <li><a href="/docs">Documentation</a></li>
@@ -81,25 +107,44 @@
         <div class="col-lg-9 col-md-9 col-sm-9">
           <!-- end single  blog item-->         
           <div class="col-lg-12 col-md-12 col-sm-12 item">
-            <div class="blog_content blogmt">
+            <div class="content">
                 <h2>Microservices</h2>
-                <a name="#what-is-a-microservice"></a>
+                <a name="what-is-a-microservice"></a>
                 <h3>What are microservices?</h3>
                 <p>
                   Microservice are small, independent processes that communicate with each other to form complex applications which utilize language-agnostic APIs.
                 </p>
                 <p>These services are small building blocks, highly decoupled and focused on doing a small task, facilitating a modular approach to system-building</p>
                 <p>On {{appName}}, microservices are represented by single function matched to a single unique URL</p>
-                <a name="#what-is-a-microservice"></a>
-                <h3>Why build with microservice?</h3>
+                <a name="why-microservices"></a>
+                <h3>Why use microservice?</h3>
                 <p>
                   Building with microservices is advantegous for several reasons
                 </p>
                 <p>
-                  Decoupled Modular Application Design <br/>
-                  Stateless and Highly Fault Tolerant <br/>
-                  Easy to reason and maintain smaller functions </br>
+                  <ul>
+                    <li>Decoupled Modular Application Design</li>
+                    <li>Stateless and Highly Fault Tolerant</li>
+                    <li>Easy to reason and maintain smaller functions</li>
+                  </ul>
                 </p>
+                <a name="webhooks"></a>
+                <h3>Do you support Webhooks?</h3>
+                <p><strong>Yes!</strong> Every service on {{appName}} is a fully qualified HTTP Webhook endpoint</p>
+                <p>Click <a href="/webhooks">Webhooks</a> for more details.</p>
+
+                <a name="websockets"></a>
+                <h3>Do you support Websockets?</h3>
+                <p><strong>Yes!</strong> Every service on {{appName}} is a capable of accepting Websocket <code>ws://</code> connections.</p>
+                <p>Click <a href="/websockets">Websockets</a> for more details.</p>
+
+                <a name="no-servers"></a>
+                <h3>Why can't I start a server?</h3>
+                <p>On {{appName}}, we don't allow the deployment of long running services aimed to start listening TCP or HTTP servers. This is by design.</p>
+                <p>The reasoning for this is simple, {{appName}} is a hosting platform for Microservices and Webhooks. Instead of deploying a server to our platform, you simply deploy a single function. This function can then be accessed through a unique URL which we provide.</p>
+                <p>In other words, we've already built a server for you! All you need to do is give us the code which will be mapped to a single route, which is the Microservice.</p>
+
+
                 <hr/>
                 <br/>
                 <h2>Deployment</h2>
@@ -116,6 +161,7 @@
                 <h3>Running your service</h3>
                 <p>To run a service, simply visit the URL which was created with that service</p>
 
+                <a name="sending-data"></a>
                 <h3>Sending data to your service</h3>
                 <p>All services are automatically capable of parsing most types of incoming HTTP request data.</p>
                 <ul>
@@ -124,6 +170,27 @@
                   <li>Streaming HTTP / Streaming Binary Data</li>
                   <li>JSON</li>
                 </ul>
+                <hr/>
+
+                <h2>Logging and Events</h2>
+                <a name="logs"></a>
+                <h3>Service Logs</h3>
+                <p>All services are automatically capable of parsing most types of incoming HTTP request data.</p>
+                <p>
+                  <a href="/logs">Logs</a>
+                </p>
+                <a name="events"></a>
+                <h3>System Events</h3>
+                <p>All services are automatically capable of parsing most types of incoming HTTP request data.</p>
+                <p>
+                <a href="/events">Events</a>
+                </p>
+                
+                <h2>Supported Languages</h2>
+                <a name="languages"></a>
+                
+
+
             </div>
           </div>
           <!-- end single  blog item-->

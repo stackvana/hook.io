@@ -21,7 +21,6 @@ var address = {
 module['exports'] = function view (opts, callback) {
 
   var userResource = require('../lib/resources/user');
-  var domain = require('../lib/resources/domain');
 
   var $ = this.$,
       req = opts.request,

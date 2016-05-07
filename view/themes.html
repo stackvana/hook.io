@@ -1,46 +1,47 @@
-<div style="font-size:22px;text-align:left;">
+<div style="">
   <h1><strong>Themes</strong></h1>
-  <p>Hooks are fully theme-able through a simple and extensible theming engine.</p>
+  <div class="container">
+  <p>Services are fully theme-able through a simple and extensible theming engine.</p>
 
-  <p>Creating a Theme is a great way to customize the appearance of a Hook.</p>
-  <p>Theming is ideal for user facing Hooks which are intended to be visited in the browser.</p>
+  <p>Creating a Theme is a great way to customize the appearance of a Service.</p>
+  <p>Theming is ideal for user facing Services which are intended to be visited in the browser.</p>
 
-  <h2><strong>Creating a Hook Theme</strong></h2>
+  <h2><strong>Creating a Service Theme</strong></h2>
   
-  <p>A Hook Theme consists of two parts:</p> 
+  <p>A Service Theme consists of two parts:</p> 
   
   <p>1. A single HTML file ( the <strong>Theme View</strong> )</p>
   <p>2. An optional single JavaScript file ( the <strong>Theme Presenter</strong> )</p>
     <table class="table" align="center">
       <tr>
-        <td align="center"><h3><strong>Theme View</strong></h3><br/><span class="mega-octicon really-more-mega octicon-device-desktop"></span><br/><br/>A HTML file which contains the layout of the Hook. This file can also contain links to other assets such as images, CSS, and client-side JavaScript.<td>
+        <td align="center"><h3><strong>Theme View</strong></h3><br/><span class="mega-octicon really-more-mega octicon-device-desktop"></span><br/><br/>A HTML file which contains the layout of the Service. This file can also contain links to other assets such as images, CSS, and client-side JavaScript.<td>
         <td align="center"><h3><strong>Theme Presenter</strong></h3><br/><span class="mega-octicon really-more-mega octicon-file-code"></span><br/><br/>An optional JavaScript module which exports *one* method. When the Presenter is run on {{appName}}, it is given special properties to help perform server-side rendering of the Theme HTML.<td>
       </tr>
     </table>
   <br/>
   <h2><strong>Adding a Theme View</strong></h2>
   <p>Adding HTML to a Theme is easy!</p>
-  <p>To add a Theme View, simply set the <strong>Hook.theme</strong> property to url of the Theme HTML.</p>
+  <p>To add a Theme View, simply set the <strong>Service.theme</strong> property to url of the Theme HTML.</p>
   
-  <p>Here is an example of a Hook which uses the "simple" theme:</p>
+  <p>Here is an example of a Service which uses the "simple" theme:</p>
   <div data-gist="607ccd5106b099b8047f">Loading...</div>
   <p>This HTML file can be hosted <strong>anywhere</strong>. If required, <a href="http://gist.github.com">Github Gist</a> provides free hosting for assets and HTML.</p>
 
-  <p>Once a Theme HTML file is specified, the Hook will use that file for rendering output.</p>
-  <p style="font-size:16px;"><strong>Important:</strong> For performance reasons, changes made to the Hook.theme and Hook.presenter properties will not be reflected in the User Interface until the Hook has been run at least once. Updates to the actual contents of the Theme or Presenter will however; appear immediately.</p>
+  <p>Once a Theme HTML file is specified, the Service will use that file for rendering output.</p>
+  <p style="font-size:16px;"><strong>Important:</strong> For performance reasons, changes made to the Service.theme and Service.presenter properties will not be reflected in the User Interface until the Service has been run at least once. Updates to the actual contents of the Theme or Presenter will however; appear immediately.</p>
   <h3><strong>Mustache Style Replacements</strong></h3>
-  <p>By default, a <strong>{{key.value}}</strong> style replacement will be performed on the Theme HTML using the completed <strong>Hook</strong> object.</p>
+  <p>By default, a <strong>{{key.value}}</strong> style replacement will be performed on the Theme HTML using the completed <strong>Service</strong> object.</p>
 
   <p><strong>For example:</strong></p>
   <div data-gist="f48cebe949acd148676f">Loading...</div>
-  <p>When the Hook runs, <strong>{{hook.output}}</strong> will be replaced with the outputted result of the Hook.</p>
+  <p>When the Service runs, <strong>{{Service.output}}</strong> will be replaced with the outputted result of the Service.</p>
   
   <p>To bypass these replacements, simply do not place any matching <strong>{{key.value}}</strong> tags in the Theme HTML.</p>
   
-  <p> For most themes, this simple replacement style should be sufficient. If additional server-side rendering is required, a Hook Theme Presenter can be added.</p>
-  <h2><strong>Hook Theme Presenter</strong></h2>
+  <p> For most themes, this simple replacement style should be sufficient. If additional server-side rendering is required, a Service Theme Presenter can be added.</p>
+  <h2><strong>Service Theme Presenter</strong></h2>
   
-  <p>The Hook Theme Presenter is an optional JavaScript method which is performed server-side on the rendered Theme View before it's piped to the response. When the Presenter method is run on {{appName}}, it becomes a <a href="http://github.com/bigcompany/view/">View class</a>. This will give the Presenter special properties which allow for server-side rendering of the Theme View with JavaScript.</p>
+  <p>The Service Theme Presenter is an optional JavaScript method which is performed server-side on the rendered Theme View before it's piped to the response. When the Presenter method is run on {{appName}}, it becomes a <a href="http://github.com/bigcompany/view/">View class</a>. This will give the Presenter special properties which allow for server-side rendering of the Theme View with JavaScript.</p>
   
   <p><strong>For example:</strong></p>
   <div data-gist="ed9a84b1f1cd7be73f5e">Loading...</div>
@@ -52,17 +53,18 @@
   <p>Themes can be hosted anywhere. Free hosting is available through <a href="http://gist.github.com">Github Gist</a>.</p> 
   
   <h3><strong>Separation of Concerns</strong></h3>
-  <p>Performing a lot of logic in the Presenter is not recommended. While it is possible to do a lot inside a Theme Presenter, it's always better to create new Hooks and pipe them together. The Presenter should only focus on taking in data and outputting HTML.</p> 
+  <p>Performing a lot of logic in the Presenter is not recommended. While it is possible to do a lot inside a Theme Presenter, it's always better to create new Services and pipe them together. The Presenter should only focus on taking in data and outputting HTML.</p> 
   
   <h3><strong>Custom Templating Engines</strong></h3>
   <p>Want to use a custom templating engine? Not a problem! There are two methods in which custom templating engines can be implemented.</p>
-  <p><strong>Method 1</strong> ( Not Recommended ) - Require the custom templating engine directly in the Hook Presenter and modify the contents of $.html() directly.</p>
-  <p><strong>Method 2</strong> ( Recommended ) - Create a new Hook that is a generic processor for the custom templating engine. Once this Hook is created, output from other Hook's can be piped to it ( which will process the input using the custom templating engine ).</p>
+  <p><strong>Method 1</strong> ( Not Recommended ) - Require the custom templating engine directly in the Service Presenter and modify the contents of $.html() directly.</p>
+  <p><strong>Method 2</strong> ( Recommended ) - Create a new Service that is a generic processor for the custom templating engine. Once this Service is created, output from other Service's can be piped to it ( which will process the input using the custom templating engine ).</p>
   
   <h3><strong>Client-side JavaScript</strong></h3>
   <p>Any type of client-side JavaScript library can be used in the Theme HTML through the use of regular &lt;script&gt; tags.
 
   <h3><strong>Be Creative, Have Fun!</strong></h3>
-  <p>Themes are a great way to customize a Hook's appearance. They can also easily be shared for use with other Hooks. If you make a theme, open a <a href="http://github.com/bigcompany/{{appName}}/issues/new">Pull Request!</a> Your theme could very easily appear as a default theme option in the future.</p>
+  <p>Themes are a great way to customize a Service's appearance. They can also easily be shared for use with other Services. If you make a theme, open a <a href="http://github.com/bigcompany/{{appName}}/issues/new">Pull Request!</a> Your theme could very easily appear as a default theme option in the future.</p>
    <br/><br/>
+  </div>
 </div>

@@ -1,29 +1,26 @@
-<div align="left">
+<div>
   <h1>Software Development Kit</h1>
-  <p>Programmatically interact with the {{appName}} platform from inside your own applications</p>
-  <p class="hint">Note: All SDKs are powered by the <a href="/api">hook.io API</a>, which you may access directly at anytime using standard HTTP requests.</p>
-  <h2>Official SDK Open-Source Repository</h2>
-  <a href="https://github.com/bigcompany/hook.io-sdk">https://github.com/bigcompany/hook.io-sdk</a>
-  
-  <h3>Supported Client Platforms</h3>
-  <ul>
-    <li>Node.js</li>
-  </ul>
-  <p class='hint'>Please <a href="https://github.com/bigcompany/hook.io-sdk/issues/new">let us know</a> if you'd like to see additional SDKs added here for new target client platforms. We'll be glad to accept your pull request!</p>
-  <br/>
-  
-  <h3>Installation</h3>
-  <pre><code>npm install -g {{appSdkName}}</code></pre>
-  <h3>Usage</h3>
-  <pre>
-  <code>
-    var client = sdk.createClient(options);
-    client.hook.create('echo', { "source": 'echo "hello"', "language": "bash" }, function (err, res){
-      console.log(err, res)
-    });
-  </code>
-  </pre>
+  <div align="left" class="container content">
+    <p>Programmatically interact with the {{appName}} platform from any service or third-party application.</p>
+    <p class="hint">Note: All SDKs are powered by the <a href="/api">hook.io API</a>, which you may access directly at anytime using standard HTTP requests.</p>
+    <h2>Official SDK Open-Source Repository</h2>
+    <a href="https://github.com/bigcompany/hook.io-sdk">https://github.com/bigcompany/hook.io-sdk</a>
+    <h3>Supported Client Platforms</h3>
+    <ul>
+      <li>Node.js</li>
+    </ul>
+    <p class='hint'>Please <a href="https://github.com/bigcompany/hook.io-sdk/issues/new">let us know</a> if you'd like to see additional SDKs added here for new target client platforms. We'll be glad to accept your pull request!</p>
+    <br/>
+    <h3>Installation</h3>
+    <pre><code>npm install -g {{appSdkName}}</code></pre>
+    <h3>Usage</h3>
+    <code><pre>
+var client = sdk.createClient({ accessKey: "12345"});
+client.hook.create('echo', { "source": 'echo "hello"', "language": "bash" }, function (err, res){
+  console.log(err, res)
+});</pre>
 
-  <p>50+ SDK Code Examples <a href="https://github.com/bigcompany/hook.io-sdk/tree/master/examples">available here</a></p>
-  
+    </code>
+    <p>50+ SDK Code Examples <a href="https://github.com/bigcompany/hook.io-sdk/tree/master/examples">available here</a></p>
+  </div>
 </div>

@@ -15,6 +15,8 @@
                 <li><a href="/faq">What is a Microservice?</a></li>
                 <li><a href="/faq">Don't start a server!</a></li>
                 <li><a href="#language" class="i18n">Choosing a Language</a></li>
+                <li><a href="/examples" class="i18n">Interactive Examples</a></li>
+                <li><a href="/editor" class="i18n">Interactive Playground</a></li>
                 <li><a href="#creating" class="i18n">Creating a Service</a></li>
                 <li><a href="#forking" class="i18n">Forking an existing Service</a></li>
               </ul>
@@ -24,10 +26,10 @@
               <h3 class="sidebar_middle_title">Running Services</h3>
               <ul class="sidebar_menu">
                 <li><a href="#running" class="i18n">Running a Service</a></li>
-                <li><a href="#hook" class="i18n">Accessing the Hook object</a></li>
-                <li><a href="#logs" class="i18n">Service Debugging and Logs</a></li>
+                <li><a href="#hook" class="i18n">The Hook object</a></li>
+                <li><a href="#logs" class="i18n">Debugging and Logs</a></li>
                 <li><a href="#events" class="i18n">System Events Logs</a></li>
-                <li><a href="#hot-code" class="i18n">Hot-code Execution Gateway</a></li>
+                <li><a href="#hot-code" class="i18n">Hot-code Gateways</a></li>
               </ul>
             </aside>
 
@@ -36,7 +38,7 @@
               <ul class="sidebar_menu">
                 <li><a href="#data" class="i18n">Sending Data to a Service</a></li>
                 <li><a href="#content-type" class="i18n">Content-Type Routing</a></li>
-                <li><a href="#streams" class="i18n">Streaming HTTP Support</a></li>
+                <li><a href="#content-type" class="i18n">Streaming HTTP Support</a></li>
                 <li><a href="/curl" class="i18n">UNIX Pipe Support</a></li>
                 <li><a href="/sdk" class="i18n">Client SDK</a></li>
               </ul>
@@ -45,7 +47,7 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Managing Services</h3>
               <ul class="sidebar_menu">
-                <li><a href="#admin" class="i18n">Accessing Hook Admin Panel</a></li>
+                <li><a href="#admin" class="i18n">Admin Panel</a></li>
                 <li><a href="#code" class="i18n">Editing a Service</a></li>
                 <li><a href="#env" class="i18n">Environment variables</a></li>
                 <li><a href="#timeouts" class="i18n">Custom Service Timeouts</a></li>
@@ -54,12 +56,12 @@
             </aside>
 
             <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Additional Service Features</h3>
+              <h3 class="sidebar_middle_title">Service Features</h3>
               <ul class="sidebar_menu">
-                <li><a href="#schema" class="i18n">Specifying Service Schema</a></li>
+                <li><a href="#schema" class="i18n">Service Input Schema</a></li>
                 <li><a href="#forms" class="i18n">Schema Form Generator</a></li>
                 <li><a href="#themes" class="i18n">Themes</a></li>
-                <li><a href="/cron" class="i18n">Schedule Service as Cronjob</a></li>
+                <li><a href="/cron" class="i18n">Schedule Cronjob</a></li>
                 <li><a href="#cache" class="i18n">Cache Controls</a></li>
               </ul>
             </aside>
@@ -69,7 +71,7 @@
                 Restricting Access to Services
                 <ul>
                   <li><a href="#keys" class="i18n">Creating API Access Keys</a></li>
-                  <li><a href="#keys" class="i18n">Restricting access to Hook services ( private hooks )</a></li>
+                  <li><a href="#keys" class="i18n">Restricting access to Services ( private hooks )</a></li>
                   <li><a href="#roles" class="i18n">Using Role Based Access Control ( RBAC )</a></li>
                 </ul>
               </li>
@@ -87,10 +89,10 @@
             </ul>
             -->
             <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Role Based Access Control</h3>
+              <h3 class="sidebar_middle_title">Role Based Access</h3>
               <ul class="sidebar_menu">
-                <li><a href="#keys" class="i18n">Creating API Access Keys</a></li>
-                <li><a href="#keys" class="i18n">Restricting Access to Services</a></li>
+                <li><a href="#keys" class="i18n">API Access Keys</a></li>
+                <li><a href="#keys" class="i18n">Restricting Service Access</a></li>
                 <li><a href="#roles" class="i18n">Custom Role Checks</a></li>
               </ul>
             </aside>
@@ -98,9 +100,8 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Logging and Events</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Deploying your first service</a></li>
-                <li><a href="#">Running your service</a></li>
-                <li><a href="#">Sending data to your service</a></li>
+                <li><a href="/logs">Service Logs</a></li>
+                <li><a href="/events">System Events</a></li>
               </ul>
             </aside>
 
@@ -108,11 +109,7 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud Databases</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">What is a microservice? </a></li>
-                <li><a href="#">Why build with microservices? </a> </li>
-                <li><a href="#">Do you support Webhooks? </a> </li>
-                <li><a href="#">Do you support Websockets? </a> </li>
-                <li><a href="#">Why can't I start a server? </a> </li>
+                <li><a href="/databases">Documentation </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->
@@ -120,11 +117,7 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud File Storage</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Deploying your first service</a></li>
-                <li><a href="#">Testing your service</a></li>
-                <li><a href="#">Running your service</a></li>
-                <li><a href="#">Sending data to your service</a></li>
-                <li><a href="#"></a></li>
+                <li><a href="/files">Documentation </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->  
@@ -152,7 +145,7 @@
         <div class="col-lg-9 col-md-9 col-sm-9">
           <!-- end single  blog item-->         
           <div class="col-lg-12 col-md-12 col-sm-12 item">
-            <div class="blog_content blogmt">
+            <div class="content">
  
               <style>
                 .content p {
@@ -189,7 +182,7 @@
                       <li><a href="#files" class="i18n">Running Services</a></li>
                       <li><a href="#domains" class="i18n">Sending Data to Services</a></li>
                       <li><a href="#events" class="i18n">Managing Services</a></li>
-                      <li><a href="#api" class="i18n">Additional Service Features</a></li>
+                      <li><a href="#api" class="i18n">Service Features</a></li>
                       <li><a href="#ssl" class="i18n">Role Based Access Control</a></li>
                       <li><a href="#ssl" class="i18n">Logging and Events</a></li>
                       <li><a href="#ssl" class="i18n">Multi-Cloud Databases</a></li>
@@ -463,7 +456,9 @@
                 <h2 class="i18n">Hot-Code Execution Gateway</h2>
                 <p class="i18n">In most cases, you will want to save your service's source-code as a Hook.</p>
                 <p class="i18n">In other situations, you may need to send code that has to be executed immediately and without any additional requests ( such as testing and developing hooks or executing dynamically created source code from a third-party service ).</p>
+                <h3><a href="/gateways">Click here to see available gateways</a></h3>
                 <p>{{appName}} provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="https://{{appName}}#tuts">Interactive Example</a> on the {{appName}} homepage, you will notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
+
                 <h3>Examples of using the Hot-Code Gateways</h3>
                 <p>Here are two simple examples of using <code>echo</code> and <code>curl</code> to execute hot-code against {{appName}}'s gateway.</p>
 

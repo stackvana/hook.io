@@ -52,9 +52,9 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Role Based Access Control</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">What are keys? </a></li>
-                <li><a href="#">What are roles? </a></li>
-                <li><a href="#">Generating Access Keys </a></li>
+                <li><a href="#what-are-keys">What are keys? </a></li>
+                <li><a href="#what-are-roles">What are roles? </a></li>
+                <li><a href="#generate-keys">Generate Access Keys </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->
@@ -76,24 +76,26 @@
         <div class="col-lg-9 col-md-9 col-sm-9">
           <!-- end single  blog item-->         
           <div class="col-lg-12 col-md-12 col-sm-12 item">
-            <div class="blog_content blogmt">
+            <div class="content">
 
                 <div class="status"></div>
+
+                <a name="what-are-keys"></a>
+                <h2>What are Keys?</h2>
                 <p>Keys are used for managing security role access to services on {{appName}}</p>
                 <p>You can create new keys to allow third-party services or users to access restricted {{appName}} services like <a href="/docs#keys">private hooks</a>, the <a href="/datastore">datastore</a>, or <a href="/logs">logs</a>.</p>
                 <p>A common use-case would be creating a private hook service which is only accessible to clients who can provide a generated access key which has the role <code>hook::run</code></p>
                 <p><em>A full listing of security access roles is available at <a href="/roles">/roles</a></em></p>
-                <h2>Understanding Keys and Roles</h2>
+
+                <a name="what-are-roles"></a>
+                <h2>What are Roles?</h2>
                 <p>When creating a new access key, you <em>must</em> specify a set of roles associated with that key.</p>
                 <p>These roles determine what the new access key has permission to do.</p>
-                <h2>Creating New Keys</h2>
-                <p>To create new security access keys, simply use the form below.</p>
-                <h2>Using Keys and Roles to Access Restricted Services</h2>
-                <p>Accessing a role restricted service with a key is easy!</p>
-                <!-- ><h2>TODO: create example private hook with role restrictions / add to docs </h2> -->
-                <p>All you have to do is supply the generated <code>hook_private_key</code> <!-- and <code>hook_private_key</code > --> variable as a HTTP request parameter ( URL GET Query Data / POST Form Data / JSON RPC / etc ) and that HTTP client request will be granted the roles associated with that private key.</p>
-                <p>For convenience, we've pre-generated an <code>admin-access</code> key for every account. You can use the generated <code>hook_private_key</code> for <code>admin-access</code> to access any of your private services from a third-party source. You can also simply delete your <code>admin-access</code>key and create a new key with custom roles.</a></p>
-                <p><em>Remember: All <a href="/events">service level events</a> on {{appName}} are available as <a href="/roles">roles</a>, allowing granular access control.</em></p>
+
+                <a name="generate-keys"></a>
+                <h2>Generating New Keys</h2>
+                <p>To create new security access keys, simply login and use the form at the bottom of this page.</p>
+
                 <!--
                 <div class="row loginBar">
                   <br/>
@@ -102,7 +104,33 @@
                   </div>
                 </div>
                 -->
-                <p class="loginLink"><a href="/login">Login to create your first Key</a></p>
+
+                <h2>Role Checks</h2>
+
+                <a name="what-are-role-checks"></a>
+                <h3>What are role Checks?</h3>
+                <p>Role checks are used to determine if an incoming HTTP request has authorization to access the requested resource</p>
+                <p>{{appName}} offers several integrated roles and custom roles that may be associated with a generate Access Key</p>
+
+                <a name="private-services"></a>
+                <h3>Private Services</h3>
+
+                <p>Accessing a role restricted service with a key is easy!</p>
+                <!-- ><h2>TODO: create example private hook with role restrictions / add to docs </h2> -->
+                <p>All you have to do is supply the generated <code>hook_private_key</code> <!-- and <code>hook_private_key</code > --> variable as a HTTP request parameter ( URL GET Query Data / POST Form Data / JSON RPC / etc ) and that HTTP client request will be granted the roles associated with that private key.</p>
+                <p>For convenience, we've pre-generated an <code>admin-access</code> key for every account. You can use the generated <code>hook_private_key</code> for <code>admin-access</code> to access any of your private services from a third-party source. You can also simply delete your <code>admin-access</code>key and create a new key with custom roles.</a></p>
+                <p><em>Remember: All <a href="/events">service level events</a> on {{appName}} are available as <a href="/roles">roles</a>, allowing granular access control.</em></p>
+
+                <a name="custom-role-checks"></a>
+                <h3>Custom Role Checks</h3>
+                <p>It'a also possible to add a custom role value when creating an Access Key</p>
+                <p>You may perform a custom role checks using any string value one of two ways.</p>
+                
+                <p>keys.checkAccess API method</p>
+                <p>Inside a Hook service as <code>Hook.req.checkAccess('hook::run', function (err, hasAccess){})</code></p>
+
+                <p class="loginLink"><a href="/login">Login to Create Your First Key</a></p>
+                <a name="generate-keys"></a>
                 <div class="keys"></div>
 
             </div>

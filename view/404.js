@@ -17,7 +17,7 @@ module['exports'] = function (opts, cb) {
   }
   var out = $.html();
   out = out.replace(/\{\{appAdminEmail\}\}/g, appAdminEmail);
-  callback(null, out);
+  cb(null, out);
   
   //cb(null, $.html());
 };

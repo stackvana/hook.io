@@ -7,7 +7,7 @@ module['exports'] = function view (opts, callback) {
       params = req.resource.params;
 
   if (typeof params.signedMeUp !== "undefined" || typeof params.s !== "undefined") {
-    req.session.referredBy = req.params.owner;
+    req.session.referredBy = params.owner;
     return res.redirect("/");
   }
 
@@ -17,7 +17,7 @@ module['exports'] = function view (opts, callback) {
 
   // if there is no referral set, assign one based on the owner of the current hook
   if (typeof req.session.referredBy === "undefined") {
-    req.session.referredBy = req.params.owner;
+    req.session.referredBy = params.owner;
   }
 
   if (typeof opts.hooks === "object") {

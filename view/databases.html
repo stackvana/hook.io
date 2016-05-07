@@ -9,9 +9,9 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud Databases</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Which Databases do you support? </a></li>
-                <li><a href="#">How to use Databases in a service </a></li>
-                <li><a href="#">Consider the Cloud Datastore </a></li>
+                <li><a href="#supported-databases">Supported Databases</a></li>
+                <li><a href="#using-databases">Using Databases</a></li>
+                <li><a href="#datastore">Built-in Datastore </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->
@@ -19,19 +19,18 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Supported Databases</h3>
               <ul class="sidebar_menu">
-                <li><a href="/datastore">Built-in Datastore</a> </li>
-                <li><a href="#">CouchDB</a> </li>
-                <li><a href="#">Redis</a> </li>
-                <li><a href="#">MongoDB</a> </li>
-                <li><a href="#">DynamoDB</a> </li>
+                <li><a href="#datastore">Built-in Datastore</a> </li>
+                <li><a href="#couchdb">CouchDB</a> </li>
+                <li><a href="#redis">Redis</a> </li>
+                <li><a href="#mongodb">MongoDB</a> </li>
+                <li><a href="#dynamodb">DynamoDB</a> </li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Additional Resources</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Considerations</a></li>
-                <li><a href="#">Cloud Datastore</a></li>
-                <li><a href="#">Planned Features</a></li>
+                <li><a href="#considerations">Considerations</a></li>
+                <li><a href="/datastore">Cloud Datastore</a></li>
                 <li><a href="/wishlist">Request a Feature</a></li>
               </ul>
             </aside>
@@ -44,28 +43,68 @@
         <div class="col-lg-9 col-md-9 col-sm-9">
           <!-- end single  blog item-->         
           <div class="col-lg-12 col-md-12 col-sm-12 item">
-            <div class="blog_content blogmt">
-
+            <div class="content">
 
               <h2>Multi-cloud Databases</h2>
 
-              <p>{{appName}} works with all major known database technologies. We have tested and created examples for the following technologies:</p>
+              <p>{{appName}} works with all major known database technologies.</p>
+              <p>We've listed some of the Database we've tested, but most Database technologies should work.</p>
 
               <h2>Supported Databases</h2>
               <ul>
+                <li>Built-in Datastore</li>
                 <li>CouchDB</li>
                 <li>Redis</li>
                 <li>MongoDB</li>
                 <li>DynamoDB</li>
+                <li>more...</li>
               </ul>
 
+              <a name="using-databases"></a>
+              <h2>Using Databases in Hooks</h2>
+              <p>All JavaScript based Hooks have built in support for <a href="/packages/npm">npm</a>. Using standard npm packages, {{appName}} has support for all major databases.</p>
+              <p>Currently, we don't have much integrated support for provisioning new databases and automatically connecting to them. You'll need to provision your own database and require the necessary npm package for communicating to that database in the Service source code.</p> 
+              <p>We'll be adding more examples and better integrated Database support soon. Please <a href="/wishlist">let us know</a> if there is anything you'd like to see added.</p>
+
+              <a name="datastore"></a>
               <h2>Built-in Cloud Datastore</h2>
 
-              <p>Don't want to provision your own Database? We've got you covered!</p
+              <p>Don't want to provision your own Database? We've got you covered!</p>
 
-              <p>{{appName}} provides a simple integrated Datastore API using our own multi-cloud database.</p>
+              <p>{{appName}} provides a <a href="/datastore">simple integrated Datastore API</a> using our own multi-cloud database technology.</p> 
+              <p>The <a href="/datastore">Cloud Datastore</a> allows you to immediately start storing and retrieving persistent data without having to worry about provisioning a new Database.</p>
+
+              <!--
+              <a name="couchdb"></a>
+              <h3>CouchDB</h3>
+              <p>Couch is a supported database.</p>
+
+              <a name="redis"></a>
+              <h3>Redis</h3>
+              <p>Redis is a supported database.</p>
+
+              <a name="mongodb"></a>
+              <h3>MongoDB</h3>
+              <p>MongoDB is a supported database.</p>
 
 
+              <a name="dynamodb"></a>
+              <h3>DynamoDB</h3>
+              <p>DynamoDB is a supported database.</p>
+
+              <a name="more"></a>
+              <h3>Additional Support</h3>
+              <p>Just use npm!</p>
+              -->
+
+              <h2>Additional Resources</h2>
+
+              <a name="considerations"></a>
+              <h3>Considerations</h3>
+              <p>Should you choose to communicate with an outside database, storing of the Databases access should be done as <a href="/env">Service Environment Variables</a></p>
+              <p>The <a href="/datastore">Cloud Datastore</a> should currently be considered <em>insecure</em>, and you should not store any sensitive data in it.</p>
+              <p>Hooks should never deal with large sets of data or long running Database Queries. If you find yourself having to query a large amount of records, consider refactoring your query or dataset to retreive less items at a time ( using techniques such as pagination ).</p>
+              <h3><a href="/wishlist">Request a new Database Feature</a></h3>
             </div>
           </div>
           <!-- end single  blog item-->

@@ -51,16 +51,17 @@ module['exports'] = function view (opts, callback) {
         if (hooks[h].isPrivate) {
           priv = "Private ";
         }
-        $('.hooks').append('<tr><td class="col-md-8">' + priv + '<a href="' + hookLink + '/admin">' + hooks[h].name + '</a></td><td class="col-md-4" align="right"><a href="' + hookLink + '"><span class="mega-octicon octicon-triangle-right" style="min-width: 32px;"></span></a>&nbsp;&nbsp;<a href="' + hookLink + '/source"><span class="mega-octicon octicon-file-code" style="min-width: 32px;"></span></a>&nbsp;&nbsp;<a href="' + hookLink + '/logs"><span class="mega-octicon octicon-list-ordered" style="min-width: 32px;"></span></a>&nbsp;&nbsp;<a class="deleteLink" data-name="' + hooks[h].owner + "/" + hooks[h].name +'" href="' + hookLink + '/delete"><span class="mega-octicon octicon-trashcan" style="min-width: 32px;"></span></a></td></tr>')
+        $('.hooks').append('<tr><td class="col-md-8">' + priv + '<a title="Hook Admin" href="' + hookLink + '/admin">' + hooks[h].name + '</a></td><td class="col-md-1" align="left"><a title="Run Hook" href="' + hookLink + '"><span class="mega-octicon octicon-triangle-right"></span></a></td><td class="col-md-1" align="left"><a title="View Source" href="' + hookLink + '/source"><span class="mega-octicon octicon-file-code"></span></a></td><td class="col-md-1" align="left"><a title="View Logs" href="' + hookLink + '/logs"><span class="mega-octicon octicon-list-ordered"></span></a></td><td class="col-md-1" align="left"><a title="Delete Hook" class="deleteLink" data-name="' + hooks[h].owner + "/" + hooks[h].name +'" href="' + hookLink + '/delete"><span class="mega-octicon octicon-trashcan"></span></a></td></tr>')
       }
 
 
       if (Object.keys(hooks).length > 0) {
         $('.noHooks').remove();
+      } else {
+        $('.hooks').remove();
       }
     } else {
       //$('.navBar').remove();
-      
     }
     callback(null, $.html());
   });
