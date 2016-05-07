@@ -2,8 +2,7 @@ var psr = require('parse-service-request');
 var checkRoleAccess = require('../../lib/server/routeHandlers/checkRoleAccess');
 var config = require('../../config');
 
-
-module['exports'] = function datasourceDelView (opts, callback) {
+module['exports'] = function keysCheckAccessPresenter (opts, callback) {
 
   var $ = this.$, 
       req = opts.request,
@@ -18,11 +17,12 @@ module['exports'] = function datasourceDelView (opts, callback) {
   });
 
   function finish () {
+
     if (typeof params.hook_private_key !== 'undefined') {
       // TODO: move to resource.before hooks
       checkRoleAccess({ req: req, res: res, role: params.role }, function (err, hasPermission) {
         if (!hasPermission) {
-          return res.end(config.messages.unauthorizedRoleAccess(req, params.role));
+          return res.json({ hasAccess: false });
         } else {
           return res.json({ hasAccess: true });
         }

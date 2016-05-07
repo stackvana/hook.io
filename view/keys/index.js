@@ -85,6 +85,17 @@ module['exports'] = function view (opts, callback) {
        } 
      }
 
+     req.resource.params.roles = req.resource.params.roles || [];
+     if (typeof req.resource.params.customRoles === "string") {
+       // split by comma value for multiple roles
+       // TODO: trim any whitespace ?
+       var customRoles = req.resource.params.customRoles.split(',');
+       customRoles.forEach(function(customRole){
+         req.resource.params.roles.push(customRole);
+       });
+     }
+     //console.log('merged params', req.resource.params)
+
      var middle = forms.generate({
         view: 'grid-with-form',
         resource: keys,
@@ -100,7 +111,8 @@ module['exports'] = function view (opts, callback) {
             submit: "Add Key"
           },
           grid: {
-            legend: 'Your Keys'
+            legend: 'Your Keys',
+            keys: ['name', 'hook_private_key', 'roles']
           }
         },
         schema: {
@@ -147,6 +159,14 @@ module['exports'] = function view (opts, callback) {
             size: 40,
             default: uuid(),
             private: true
+          },
+          customRoles: {
+            label: "<h3>Custom Roles</h3>",
+            type: "string",
+            placeholder: 'foo::bar,hook::custom1,files::admin',
+            // TODO: make actual array type instead of string
+            // type: "array",
+            required: false
           },
           roles: {
             label: "<h3>Roles</h3>",
