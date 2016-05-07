@@ -1,3 +1,4 @@
+<!--
 <style>
   .logs h1 {
     padding-top: 20px;
@@ -10,17 +11,20 @@
     text-decoration: underline;
   }
 </style>
-<div align="left" class="logs">
+-->
+<div>
   <h1>Logging</h1>
 
-  <h2>Writing to Hook Logs</h2>
-  <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
-  <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
+  <div align="left" class="container content">
 
-  <h2>Accessing Hook Logs</h2>
-  <p>To access the logs for a Hook simply attach <code>/logs</code> to the end of the Hook service url.</p>
-  <p><strong>For example:</strong> <a href="https://{{appName}}/Marak/echo/logs">https://{{appName}}/Marak/echo/logs</a></p>
-  <p>The logging endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
+    <h2>Writing to Hook Logs</h2>
+    <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
+    <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
+
+    <h2>Accessing Hook Logs</h2>
+    <p>To access the logs for a Hook simply attach <code>/logs</code> to the end of the Hook service url.</p>
+    <p><strong>For example:</strong> <a href="https://{{appName}}/Marak/echo/logs">https://{{appName}}/Marak/echo/logs</a></p>
+    <p>The logging endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
 
     <h3>Streaming logs</h3>
     <p>To access streaming logs, request the logging endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
@@ -33,10 +37,8 @@
     <h3>Restricting Access To Logs</h3>
     <p class="apiAccess">You can access the the Logs API from outside this browser session by using an <a href="/keys">API Access Key</p>
 
-  <h2>Limitations</h2>
-  <p>Currently all Free accounts are limited to fifty logging entries per Hook. If you need to increase this limit you can upgrade to a paid account or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
-  
-  </br>
-  </br>
-  </br>
+    <h2>Limitations</h2>
+    <p>Currently all Free accounts are limited to fifty logging entries per Hook. If you need to increase this limit you can upgrade to a paid account or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
+
+  </div>
 </div>
