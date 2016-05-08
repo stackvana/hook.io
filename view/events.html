@@ -25,21 +25,19 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">System Events</h3>
               <ul class="sidebar_menu">
-                <li><a href="#">Events and Role Access </a></li>
-                <li><a href="#access">Accessing System Events </a></li>
+                <li><a href="#roles">Events and Role Access </a></li>
                 <li><a href="#writing">Writing to System Events </a></li>
-                <li><a href="#sdk">Client SDK </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->
             <!-- widget-categories start -->
             <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Reading System Events</h3>
+              <h3 class="sidebar_middle_title">Events API</h3>
               <ul class="sidebar_menu">
                 <li><a href="#auth">Authentication</a></li>
                 <li><a href="#streaming">Streaming Events</a></li>
                 <li><a href="#plain-text">Plain-text Events</a></li>
-                <li><a href="#limitations">Limitations</a></li>
+                <li><a href="#sdk">Client SDK </a></li>
               </ul>
             </aside>
             <!-- end widget-tag  -->
@@ -70,6 +68,8 @@
                 <!-- >
                 <h2>TODO: login to manage event settings</h2>
                 -->
+
+                <a name="roles"></a>
                 <h2>Events and Role Access</h2>
                 <p>It's important to note that all {{appName}} events are available as <a href="/roles">Access Roles</a>. This mapping allows granular <a href="/keys">role based key access</a> per System Event. <a href="/keys"></a></p>
 
@@ -79,34 +79,18 @@
                   <pre class="recent"></pre>
                 -->
 
-                <a name="access"></a>
-                <h2>Accessing System Events</h2>
-                <p>To access the System Event log for an account, simply attach <code>/events</code> to the end of your account homepage.</p>
-                <p><strong>For example:</strong> <a href="https://{{appName}}/marak/events">https://{{appName}}/marak/events</a></p>
-                <p>The events endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
-
                 <a name="writing"></a>
                 <h2>Writing to System Events</h2>
                 <p>Several useful events ( such as <code>hook::run</code> or <code>keys::authCheck</code>) are <em>automatically</em> written to your event service log.</p>
                 <p>A full listing of available events can currently be <a href="/roles">found here</a>.</p>
-                <p>Currently, {{appName}} does not support custom system events. We will probably add this feature in the near future.</p>
+                <p>Currently, {{appName}} does not support writing custom system events.</p>
 
+                <a name="api"></a>
+                <h2>Events API</h2>
 
-                <a name="sdk"></a>
-                <h3>Client SDK</h3>
-                <p>Using the <a href="/sdk">Client SDK</a> to access events is simple</p>
-                <p>Here are two examples of using the Client SDK. See <a href="/sdk">/sdk</a> for more information</p>
-                <code><pre>
-var sdk = require("hook.io-sdk");
-var client = sdk.createClient({});
-// callback style
-client.events.get('marak', function (err, events){
-  console.log(err, events)
-});
-// streaming
-client.events.stream('marak', process.stdout);
-                </pre></code>
-                <br/>
+                <p>To access the System Event log for an account, simply attach <code>/events</code> to the end of your account homepage.</p>
+                <p><strong>For example:</strong> <a href="/marak/events">https://{{appName}}/marak/events</a></p>
+                <p>The events endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
 
                 <a name="auth"></a>
                 <h3>Authentication</h3>
@@ -124,13 +108,28 @@ client.events.stream('marak', process.stdout);
                 <p>To access plain text events, request the events endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
                 <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://{{appName}}/marak/events</code></p>
 
+                <a name="sdk"></a>
+                <h3>Client SDK</h3>
+                <p>Using the <a href="/sdk">Client SDK</a> to access events is simple</p>
+                <p>Here are two examples of using the Client SDK. See <a href="/sdk">SDK</a> for more information</p>
+                <p>
+                <code><pre>
+var sdk = require("hook.io-sdk");
+var client = sdk.createClient({});
+// callback style
+client.events.get('marak', function (err, events) {
+  console.log(err, events);
+});
+// streaming
+client.events.stream('marak', process.stdout);
+                </pre></code>
+                </p>
+
+                <!--
                 <a name="limitations"></a>
                 <h2>Limitations</h2>
                 <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can <a href="https://{{appName}}/pricing">upgrade to a paid account</a> or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
-
-                </br>
-                </br>
-                </br>
+                -->
               </div>
 
             </div>

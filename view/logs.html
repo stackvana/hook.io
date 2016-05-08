@@ -12,33 +12,132 @@
   }
 </style>
 -->
-<div>
-  <h1>Logging</h1>
 
-  <div align="left" class="container content">
+<!--
+<style>
+  p {
+    font-size: 22px;
+  }
+  input {
+    width: 600px;
+  }
+  .apiDiv {
+    text-align:left;
+  }
+</style>
+-->
 
-    <h2>Writing to Hook Logs</h2>
-    <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
-    <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
+<div class="blog-area">
+  <h1>Service Logs</h1>
+    <div class="container">
+      <div class="row">
+        <!-- blog-left-sidebar start -->
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Service Logs</h3>
+              <ul class="sidebar_menu">
+                <li><a href="#writing">Writing to Logs </a></li>
+              </ul>
+            </aside>
+            <!-- widget-categories end -->
+            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Logs API</h3>
+              <ul class="sidebar_menu">
+                <li><a href="#auth">Authentication</a></li>
+                <li><a href="#streaming">Streaming Logs</a></li>
+                <li><a href="#plain-text">Plain-text Logs</a></li>
+                <li><a href="#sdk">Client SDK </a></li>
+              </ul>
+            </aside>
+            <!-- end widget-tag  -->
+          </div>
+        </div>        
+        <!--end  blog-left-sidebar start -->
+        <!-- shop-content start -->
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <!-- end single  blog item-->
+          <div class="col-lg-12 col-md-12 col-sm-12 item">
+            <div class="content">
 
-    <h2>Accessing Hook Logs</h2>
-    <p>To access the logs for a Hook simply attach <code>/logs</code> to the end of the Hook service url.</p>
-    <p><strong>For example:</strong> <a href="https://{{appName}}/Marak/echo/logs">https://{{appName}}/Marak/echo/logs</a></p>
-    <p>The logging endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
+              <style>
+                .events h1 {
+                  padding-top: 20px;
+                }
+                .events h2 {
+                  padding-top: 10px;
+                  text-decoration: underline;
+                }
+                .events h3 {
+                  text-decoration: underline;
+                }
+              </style>
+              <div align="left" class="events">
 
-    <h3>Streaming logs</h3>
-    <p>To access streaming logs, request the logging endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
-    <p><strong>Example: </strong><code>curl -N https://{{appName}}/Marak/echo/logs</code></p>
+                <p>{{appName}} provides a simple integrated interface for logging from any Hook service. This integrated logging service is can be helpful for Service debugging or monitoring.</p>
 
-    <h3>Plain Text Logs</h3>
-    <p>To access plain text logs, request the logging endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
-    <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://{{appName}}/Marak/echo/logs</code></p>
+                <a name="writing"></a>
+                <h2>Writing to Hook Logs</h2>
+                <p>To write to a Hook's logging output, simply call <code>console.log('hello logging');</code> from inside the Hook.</p>
+                <p>Calling <code>console.log</code> in the Hook will automatically make the console log statement available as a logging entry.</p>
 
-    <h3>Restricting Access To Logs</h3>
-    <p class="apiAccess">You can access the the Logs API from outside this browser session by using an <a href="/keys">API Access Key</p>
+                <a name="api"></a>
+                <h2>Logs API</h2>
 
-    <h2>Limitations</h2>
-    <p>Currently all Free accounts are limited to fifty logging entries per Hook. If you need to increase this limit you can upgrade to a paid account or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
+                <h3>Accessing Hook Logs</h3>
+                <p>To access the logs for a Hook simply attach <code>/logs</code> to the end of the Hook service url.</p>
+                <p><strong>For example:</strong> <a href="https://{{appName}}/Marak/echo/logs">https://{{appName}}/Marak/echo/logs</a></p>
+                <p>The logging endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
 
+                <a name="auth"></a>
+                <h3>Authentication</h3>
+                <p>For <a href="/docs#private">Private Hooks</a>, service logs are private. In order to access them from a third-party service, you'll need to generate a valid <a href="/keys">API Access Key</a> with the <code>logs::read</code> role.</p>
+                <p>Below is a link which contains a limited <a href="/roles">role</a> API Access Key created only for demonstration purposes.</p>
+                <p><a href="http://{{appName}}/marak/echo/logs?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e">http://{{appName}}/marak/echo/logs?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e</a></p>
+
+                <a name="streaming"></a>
+
+                <h3>Streaming logs</h3>
+                <p>To access streaming logs, request the logging endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
+                <p><strong>Example: </strong><code>curl -N https://{{appName}}/Marak/echo/logs</code></p>
+
+
+                <a name="plain-text"></a>
+                <h3>Plain Text Logs</h3>
+                <p>To access plain text logs, request the logging endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
+                <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://{{appName}}/Marak/echo/logs</code></p>
+
+                <a name="sdk"></a>
+                <h3>Client SDK</h3>
+                <p>Using the <a href="/sdk">Client SDK</a> to access events is simple</p>
+                <p>Here are two examples of using the Client SDK. See <a href="/sdk">SDK</a> for more information</p>
+                <p>
+                <code><pre>
+var sdk = require("hook.io-sdk");
+var client = sdk.createClient({});
+// callback style
+client.logs.get('marak/echo', function (err, logs) {
+  console.log(err, logs);
+});
+// streaming
+client.events.stream('marak/echo', process.stdout);
+                </pre></code>
+                </p>
+
+                <!--
+                <a name="limitations"></a>
+                <h2>Limitations</h2>
+                <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can <a href="https://{{appName}}/pricing">upgrade to a paid account</a> or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
+                -->
+              </div>
+
+            </div>
+          </div>
+          <!-- end single  blog item-->
+        </div>
+        <!-- end shop-content start -->
+      </div>  
+    </div>  
   </div>
-</div>
