@@ -1,6 +1,7 @@
 var config = require('../../config');
 var hook = require('../../lib/resources/hook');
 var hooks = require('hook.io-hooks');
+var psr = require('parse-service-request');
 
 module['exports'] = function view (opts, callback) {
 
@@ -15,19 +16,10 @@ module['exports'] = function view (opts, callback) {
   boot.baseUrl = config.baseUrl || "";
   var i = req.i18n;
 
-  boot.messages = {
-    "passwordBlank": i.__("password cannot be blank..."),
-    "passwordMismtach": i.__("passwords do not match..."),
-    "passwordConfirm": i.__("confirm account password..."),
-    "passwordInvalid": i.__("invalid password. try again..."),
-    "passwordReset": i.__("A password reset link has been emailed to:"),
-    "createAccount": i.__('Create New Account')
-  };
-
- 
+  boot.messages = {};
+  req.session.redirectTo = "/new";
   // TODO: gateway.hook.io for production
   $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway-javascript');
-
 
   var services = hooks.services;
   var examples = {};
@@ -82,8 +74,24 @@ module['exports'] = function view (opts, callback) {
   });
 
 
-  var out = $.html();
-  out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
-  return callback(null, out);
+  psr(req, res, function(){
+    var params = req.resource.params;
+
+    if (params.source) {
+      // TODO: better saving of temporary source
+      // Could implement a "clipboard" scratch type pattern for services / service code in the request session
+      // Similiar to revision history, but separate and temporary
+      // Could show a UI for it whenever an editor is around
+      req.session.tempSource = params.source;
+      req.session.tempLang = params.lang;
+      return res.redirect('/new');
+      // redirect to /new with new source, do not create
+    }
+
+    var out = $.html();
+    out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
+    return callback(null, out);
+
+  });
 
 };

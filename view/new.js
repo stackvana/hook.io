@@ -62,7 +62,7 @@ module['exports'] = function view (opts, callback) {
 
       var gist = params.gist;
 
-      if (req.method === "POST") {
+      if (req.method === "POST" && typeof params.scaffold === "undefined") {
 
         if (typeof params.name === 'undefined' || params.name.length === 0) {
 
@@ -130,6 +130,7 @@ module['exports'] = function view (opts, callback) {
             //return res.redirect('/' + h.owner + "/" + h.name + "?alreadyExists=true");
           }
           params.cron = params.cronString;
+
           if (params.hookSource === "code") {
             delete params.gist;
             params.source = params.source || params.codeEditor;
@@ -205,6 +206,19 @@ module['exports'] = function view (opts, callback) {
         $('.paidAccount').remove();
       } else {
         $('.securityHolder input').attr('disabled', 'DISABLED')
+      }
+
+      if (typeof req.session.tempSource !== "undefined") {
+        $('.codeEditor').html(req.session.tempSource);
+        // keep or destroy? maybe present option as clipboard in session?
+        // better to keep delete for now...is causing issue with examples
+        delete req.session.tempSource;
+      }
+
+      if (typeof req.session.tempLang === "string") {
+        // TODO: better default databinding ( instead of prepend ) in boot
+        $('#language').prepend('<option value="' + req.session.tempLang +'">' + req.session.tempLang + '</option>');
+        delete req.session.tempLang;
       }
 
       var services = hooks.services;

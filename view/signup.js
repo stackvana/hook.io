@@ -43,7 +43,7 @@ module['exports'] = function signup (opts, cb) {
         return res.end(err.stack);
       }
       if (results.length > 0) {
-        var str = "exists";
+        var str = "account name already exists! cannot create new account.";
         return res.end(str);
       }
       
@@ -54,14 +54,13 @@ module['exports'] = function signup (opts, cb) {
       } else {
         data.name = email;
       }
-      
-      if (data.type === "name" && typeof params.password === "undefined" || typeof params.email === "undefined") {
+      if (data.type === "name" && typeof params.password === "undefined" /*|| typeof params.email === "undefined"*/) {
         return res.end('available');
       } else {
 
         data.password = params.password;
         // todo: use user.signup
-        if (results.length === 0 && typeof params.password !== "undefined" && params.password.length !== 0 && (params.password === params.confirmPassword)) {
+        if (results.length === 0 && typeof params.password !== "undefined" && params.password.length !== 0 /*&& (params.password === params.confirmPassword) */) {
           // ready to signup new user...
           // do nothing?
         } else {
@@ -84,12 +83,21 @@ module['exports'] = function signup (opts, cb) {
               res: "valid",
             };
             // r.res = "redirect";
-            r.redirect = "/";
-            return res.end(JSON.stringify(r));
+            r.redirect = req.session.redirectTo || "/services";
+            //console.log('doing the redirect', r)
+            return res.redirect(r.redirect);
+            //return res.end(JSON.stringify(r));
           });
         });
       }
     });
   });
+};
 
+module['exports'].schema = {
+  "email": {
+    "type": "string",
+    "format": "email",
+    "required": true
+  }
 };

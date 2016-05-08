@@ -126,7 +126,6 @@
 
       $('#language').change(function(e){
 
-
         var l = $('#language').val();
         $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
 
@@ -135,7 +134,7 @@
           $('.selectSnippet').show();
           $('.transportActions').show();
           $('.runButton').attr('disabled', null);
-          $('.saveButton').attr('disabled', null);
+          //$('.saveButton').attr('disabled', null);
           $('.codeButton').attr('disabled', null);
         } else {
           $('.currentLanguage').html($( "#language" ).val());
@@ -179,9 +178,11 @@
         return false;
       };
 
-      function saveToGithub () {
-        $('.gistSource').val(editor.getValue()); // name="source"
-        $('.saveForm').submit();
+      function saveService () {
+        $('.serviceSource').val(editor.getValue()); // name="source"
+        var l = $('#language').val();
+        $('.serviceLang').val(l);
+        $('#saveForm').submit();
         return false;
       };
 
@@ -191,7 +192,7 @@
 
       $('.saveButton').on('click', function(){
         // post current code to be forked / saved in current session
-        saveToGithub();
+        saveService();
         return false;
       });
 
@@ -311,9 +312,9 @@
         color: black;
       }
     </style>
-    <h1>Live Coding Playground</h1>
+    <h1>Interactive Coding Playground</h1>
   
-    <form class="well">
+    <div class="well">
         <div class="row">
           <div class="col-md-12" align="left">
             <!--
@@ -356,10 +357,7 @@
                 <!-- /gist endpoint is used for creating new gists from source code as string -->
                   <button class="runButton btn btn-primary">Test Service</button>
                   <button class="codeButton btn btn-default">Edit Service</button>
-                <form name="saveForm" id="saveForm" class="saveForm" action="/gist" method="POST">
-                  <input name="source" class="gistSource" type="hidden"/>
                   <button class="saveButton btn btn-default">Save Service to URL</button>
-                </form>
               </div>
               <!--
                 <div class="transportControl">
@@ -370,21 +368,26 @@
             <a name="tuts"></a>
             <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
             <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway-javascript" method="POST" target="hookFrame" class="gatewayForm">
-            <textarea name="source" id="source">// A simple hello world microservice 
-      // Click "Deploy Service" to deploy this code
-      // Service will respond to HTTP requests with a string
-      module['exports'] = function helloWorld (hook) {
-        // hook.req is a Node.js http.IncomingMessage
-        var host = hook.req.host;
-        // hook.res is a Node.js httpServer.ServerResponse
-        // Respond to the request with a simple string
-        hook.res.end(host + ' says, "Hello world!"');
-      };</textarea>
+      <textarea name="source" id="source">// A simple hello world microservice 
+// Click "Deploy Service" to deploy this code
+// Service will respond to HTTP requests with a string
+module['exports'] = function helloWorld (hook) {
+  // hook.req is a Node.js http.IncomingMessage
+  var host = hook.req.host;
+  // hook.res is a Node.js httpServer.ServerResponse
+  // Respond to the request with a simple string
+  hook.res.end(host + ' says, "Hello world!"');
+};</textarea>
           </form>
           <iframe name="hookFrame" class="hookFrame"></iframe>
             <!-- <div class="hookOutput"></div> -->
           </div>
         </div>
-    </form>
+        <form name="saveForm" id="saveForm" class="saveForm" action="/editor" method="POST" style="margin:0px;padding:0px;">
+          <input name="source" class="serviceSource" type="hidden"/>
+          <input name="lang" class="serviceLang" type="hidden"/>
+        </form>
+        
+    </div>
   </div>
 </div>
