@@ -21,19 +21,21 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Deployment</h3>
               <ul class="sidebar_menu">
-                <li><a href="#creating">Creating a new service</a></li>
+                <li><a href="#creating">How to create a Service?</a></li>
                 <!--
                   <li><a href="#testing">Testing your service</a></li>
                 -->
-                <li><a href="#running">Running your service</a></li>
-                <li><a href="#sending-data">Sending data to service</a></li>
+                <li><a href="#running">How to run Service?</a></li>
+                <li><a href="#sending-data">How to send data to Service?</a></li>
+                <li><a href="#editing">How to edit Service?</a></li>
+                <li><a href="#private">What are Private Services?</a></li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Logging and Events</h3>
               <ul class="sidebar_menu">
-                <li><a href="#logs">Service Logs</a></li>
-                <li><a href="#events">System Events</a></li>
+                <li><a href="#logs">How can I access Logs?</a></li>
+                <li><a href="#events">What are System Events?</a></li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
@@ -48,26 +50,19 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud Databases</h3>
               <ul class="sidebar_menu">
-                <li><a href="{{appUrl}}/docs">Documentation</a></li>
-                <li><a href="https://github.com/bigcompany/hook.io">Open-source Code</a></li>
-                <li><a href="{{appUrl}}/wishlist">Feature Wishlist</a></li>
-                <li><a href="{{appUrl}}/contact">Contact Us</a></li>
-                <li><a href="{{appUrl}}/contact#security">Report Security Venerability</a></li>
+                <li><a href="{{appUrl}}/faq#databases">How to use Databases</a></li>
+                <li><a href="{{appUrl}}/faq#databases-supported">Supported Databases</a></li>
               </ul>
             </aside>
             
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud Files</h3>
               <ul class="sidebar_menu">
-                <li><a href="{{appUrl}}/docs">Documentation</a></li>
-                <li><a href="https://github.com/bigcompany/hook.io">Open-source Code</a></li>
-                <li><a href="{{appUrl}}/wishlist">Feature Wishlist</a></li>
-                <li><a href="{{appUrl}}/contact">Contact Us</a></li>
-                <li><a href="{{appUrl}}/contact#security">Report Security Venerability</a></li>
+                <li><a href="{{appUrl}}/faq#files">How to use Files</a></li>
+                <li><a href="{{appUrl}}/faq#files-providers">Cloud Providers</a></li>
               </ul>
             </aside>
 
-            
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Additional Resources</h3>
               <ul class="sidebar_menu">
@@ -75,10 +70,9 @@
                 <li><a href="https://github.com/bigcompany/hook.io">Open-source Code</a></li>
                 <li><a href="{{appUrl}}/wishlist">Feature Wishlist</a></li>
                 <li><a href="{{appUrl}}/contact">Contact Us</a></li>
-                <li><a href="{{appUrl}}/contact#security">Report Security Venerability</a></li>
               </ul>
             </aside>
-            
+
             <!-- widget-categories end -->  
           <!-- widget-tag start -->
             <aside class="left_middle_widget">
@@ -144,51 +138,111 @@
                 <p>The reasoning for this is simple, {{appName}} is a hosting platform for Microservices and Webhooks. Instead of deploying a server to our platform, you simply deploy a single function. This function can then be accessed through a unique URL which we provide.</p>
                 <p>In other words, we've already built a server for you! All you need to do is give us the code which will be mapped to a single route, which is the Microservice.</p>
 
-
                 <hr/>
-                <br/>
-                <h2>Deployment</h2>
-                <a name="#what-is-a-microservice"></a>
-                <h3>Deploying your first service</h3>
+
+                <a name="creating"></a>
+                <h2>How can I create a Service?</h2>
                 <p>
-                  Deploying microservices on {{appName}} is very easy!
+                  Creating microservices on {{appName}} is very easy!
                 </p>
                 <p>First, you'll need to register for a <a href="{{appUrl}}/new">Free Developer Account</a>. Once you have an account visit the <a href="{{appUrl}}/new">/new</a> page to create a new service.</p>
                 <p>When asked to build the service you'll need to provide a few key pieces of information such as:</p>
                 <p>Service Name / Service Code / explain defaults</p>
-                <a name="#what-is-a-microservice"></a>
 
+                <a name="running"></a>
                 <h3>Running your service</h3>
-                <p>To run a service, simply visit the URL which was created with that service</p>
+                <p>To run a service, simply visit the URL which was created with that service in your browser.</p>
+                <p>Any HTTP request from any source ( including streaming HTTP and Websockets ) will trigger the service to run. It's also possible to <a href="/cron">schedule services</a> to run on a timer.</p>
+                <p>Here are some examples of using the <a href="/curl">command line tool cURL</a> to run services on {{appName}}</p>
 
                 <a name="sending-data"></a>
                 <h3>Sending data to your service</h3>
-                <p>All services are automatically capable of parsing most types of incoming HTTP request data.</p>
+                <p>All services are automatically capable of parsing most types of incoming HTTP request data including:</p>
+                <p>
                 <ul>
                   <li>Query String Parameters</li>
                   <li>Form / Multipart Parameters</li>
                   <li>Streaming HTTP / Streaming Binary Data</li>
                   <li>JSON</li>
                 </ul>
-                <hr/>
+                <a href="/docs#data">Read More About Sending Data</a>
+                </p>
 
-                <h2>Logging and Events</h2>
+                <a name="editing"></a>
+                <h3>Editing a Service</h3>
+                <p>Login to your account and visit <a href="/services">/services</a>. From here you can click on the service name to load an editing page.</p>
+
+                <a name="private"></a>
+                <h3>Private Services</h3>
+                <p>Private services are an optional feature for paid accounts. A private service will be restricted for general access.</p>
+                <p>If a service is set to "Private", it will only be accessible through an API Access Key with an associated role of <code>hook::run</code>.</p>
+                <p><a href="/keys">Read More About Access Keys and Roles</a></p>
+
+                <hr/>
                 <a name="logs"></a>
+                <h2>Logging and Events</h2>
                 <h3>Service Logs</h3>
-                <p>All services are automatically capable of parsing most types of incoming HTTP request data.</p>
+                <p>{{appName}} provides a simple integrated interface for logging from any Hook service. This integrated logging service is can be helpful for Service debugging or monitoring.</p>
                 <p>
-                  <a href="{{appUrl}}/logs">Logs</a>
+                  <a href="{{appUrl}}/logs">Read more about Service Logs</a>
                 </p>
                 <a name="events"></a>
                 <h3>System Events</h3>
-                <p>All services are automatically capable of parsing most types of incoming HTTP request data.</p>
+                <p>All actions on {{appName}} are tracked internally as System Events. These events are useful for monitoring the actions your services are performing.</p>
                 <p>
-                <a href="{{appUrl}}/events">Events</a>
+                  <a href="{{appUrl}}/events">Read more about System Events</a>
                 </p>
                 <!--
                 <h2>Supported Languages</h2>
                 <a name="languages"></a>
                 -->
+
+                <hr/>
+                <a name="databases"></a>
+                <h2>Multi-cloud Databases</h2>
+                <p>supports multi-cloud databases across multiple providers</p>
+
+                <a name="databases-supported"></a>
+                <h3>Supported Databases</h3>
+                <ul>
+                  <li>Built-in Datastore</li>
+                  <li>CouchDB</li>
+                  <li>Redis</li>
+                  <li>MongoDB</li>
+                  <li>DynamoDB</li>
+                  <li>more...</li>
+                </ul>
+                <a href="/databases">Read More About Databases</a>
+
+                <hr/>
+                <a name="files"></a>
+                <h2>Multi-cloud Files</h2>
+                <p>supports multi-cloud files across multiple providers</p>
+
+                <a name="files-providers"></a>
+                <h3>Cloud Providers</h3>
+                <p>
+                <ul class="supportedAdapters">
+                  <li><a href="{{appUrl}}/files#sftp-ssh">Any SSH / SFTP server </a></li>
+                  <li><a href="{{appUrl}}/files">Built-in Virtual File System </a></li>
+                  <li><a href="{{appUrl}}/files#amazon">Amazon S3 </a></li>
+                  <li><a href="{{appUrl}}/files#google">Google Cloud </a></li>
+                  <li><a href="{{appUrl}}/files#rackspace">Rackspace Cloudfiles </a></li>
+                  <li><a href="{{appUrl}}/files#microsoft">Microsoft Azure </a></li>
+                </ul>
+                <a href="/docs#data">Read More About Files</a>
+                </p>
+
+                <hr/>
+                <a name="resources"></a>
+                <h2>Additional Resources</h2>
+                
+                <a href="{{appUrl}}/docs">Documentation</a><br/>
+                <a href="https://github.com/bigcompany/hook.io">Open-source Code</a><br/>
+                <a href="{{appUrl}}/wishlist">Feature Wishlist</a><br/>
+                <a href="{{appUrl}}/contact">Contact Us</a><br/>
+                
+
 
             </div>
           </div>

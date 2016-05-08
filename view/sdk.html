@@ -3,8 +3,8 @@
   <div align="left" class="container content">
     <h2>Getting Started</h2>
     <p>The {{appName}} client SDK makes it easy to interact with the {{appName}} platform from any service or third-party application.</p>
-    <p>Remember, you don't have to use the {{appName}} Developer API from an outside system! {{appName}} provides free hosting for Microservices and Webhooks. These hosted services have full integrated access to the {{appName}} Developer API.</p>
-    <p>If you intend to run a block of code in response to HTTP requests or as a <a href="{{appUrl}}/cron">scheduled task</a> we recommend <a href="{{appUrl}}/new">Creating a new hosted Microservice</a>.</p>
+    <p>Remember, you don't have to use the {{appName}} Developer API from an outside system! {{appName}} provides free hosting for Microservices and Webhooks. These hosted services have full integrated access to the {{appName}} Developer API. All JavaScript based Hook services have an available <code>Hook.sdk</code> parameter which contains the SDK.</p>
+    <p>If you intend to run a block of code in response to HTTP requests or as a scheduled task we recommend <a href="{{appUrl}}/new">Creating a new hosted Microservice</a>.</p>
     <h3>Supported Client Platforms</h3>
     <ul>
       <li>Node.js</li>
@@ -24,11 +24,9 @@ client.hook.create('echo', { "source": 'echo "hello"', "language": "bash" }, fun
     </code>
     </p>
     <p><a href="https://github.com/bigcompany/hook.io-sdk/tree/master/examples">Click Here For 30+ SDK Code Examples </a></p>
-    
+
     <h3>Official SDK Open-Source Repository</h3>
     <p><a href="https://github.com/bigcompany/hook.io-sdk">https://github.com/bigcompany/hook.io-sdk</a></p>
     <p class="hint">Note: All SDKs are powered by the <a href="{{appUrl}}/api">hook.io API</a>, which you may access directly at anytime using standard HTTP requests.</p>
-    
-    
   </div>
 </div>
