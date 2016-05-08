@@ -11,6 +11,8 @@ module['exports'] = function view (opts, callback) {
     return res.redirect('/login');
   }
 
+  $ = req.white($);
+
   return user.find({
     referredBy: req.session.user
   }, function (err, results){

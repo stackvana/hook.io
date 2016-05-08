@@ -8,10 +8,6 @@ module['exports'] = function doc (opts, callback) {
   Object.keys(langs.languages).forEach(function(l){
     $('.left_middle_widget .tag').append('<li><a href="#">' + l + '</a></li>&nbsp;');
   });
-  
-  var out = $.html();
-  var appName = req.hostname;
-  out = out.replace(/\{\{appName\}\}/g, appName);
-  //req.i18n.setLocale('de');
-  return callback(null, out);
+  $ = req.white($);
+  return callback(null, $.html());
 };

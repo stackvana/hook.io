@@ -7,6 +7,8 @@ module['exports'] = function view (opts, callback) {
       res = opts.response
       $ = this.$;
 
+  $ = req.white($);
+
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){
       var params = req.resource.params;

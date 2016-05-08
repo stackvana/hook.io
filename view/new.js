@@ -255,9 +255,9 @@ module['exports'] = function view (opts, callback) {
       self.parent.components.themeSelector.present({ request: req, response: res }, function(err, html){
         var el = $('.themeSelector')
         el.html(html);
+        $ = req.white($);
         var out = $.html();
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
-        out = out.replace(/\{\{appName\}\}/g, appName);
         callback(null, out);
       });
 

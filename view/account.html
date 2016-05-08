@@ -70,12 +70,15 @@
   });
 </script>
 <div id="main">
-  <h2><a href="/billing" class="yourBilling i18n">View Billing Information</a></h2>
-  <div class="status"></div>
-  <div class="userForm"></div>
-  <!-- <div class="billingForm"></div> -->
-  <!-- <div class="hooks"><a href="/hooks" class="myHooks">My Hooks</a></div> -->
-  <form action="/account" method="POST"></form>
+  <h1>Account</h1>
+  <div class="container content">
+    <h2><a href="{{appUrl}}/billing" class="yourBilling i18n">View Billing Information</a></h2>
+    <div class="status"></div>
+    <div class="userForm"></div>
+    <!-- <div class="billingForm"></div> -->
+    <!-- <div class="hooks"><a href="{{appUrl}}/hooks" class="myHooks">My Hooks</a></div> -->
+    <form action="/account" method="POST"></form>
+  </div>
 </div>
 
 <br/>

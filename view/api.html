@@ -16,8 +16,8 @@
   <h1>Developer API</h1>
     <div class="container">
       <div class="row">
-        <!-- blog-left-sidebar start -->
-        <div class="col-lg-3 col-md-3 col-sm-3">
+        <!-- blog-left-sidebar start TODO: make css class to fix mobile for all-->
+        <div class="col-lg-3 col-md-3 col-sm-3" style="padding-bottom:20px;">
           <div class="widget_area fix">
             <!-- widget-categories start -->
             <aside class="left_widget blog_border0">
@@ -34,11 +34,11 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Additional Resources</h3>
               <ul class="sidebar_menu">
-                <li><a href="/docs">Documentation</a></li>
-                <li><a href="/faq">Frequently Asked Questions</a></li>
-                <li><a href="/databases">Multi-Cloud Databases</a></li>
-                <li><a href="/files">Multi-Cloud File Storage</a></li>
-                <li><a href="/wishlist">Request a Feature</a></li>
+                <li><a href="{{appUrl}}/docs">Documentation</a></li>
+                <li><a href="{{appUrl}}/faq">Frequently Asked Questions</a></li>
+                <li><a href="{{appUrl}}/databases">Multi-Cloud Databases</a></li>
+                <li><a href="{{appUrl}}/files">Multi-Cloud File Storage</a></li>
+                <li><a href="{{appUrl}}/wishlist">Request a Feature</a></li>
               </ul>
             </aside>
             <!-- end widget-tag  -->
@@ -54,7 +54,7 @@
               <h2>Hosted Microservices and Webhooks</h2>
               <p>Remember, you don't have to use the {{appName}} Developer API from an outside system!</p>
               <p>{{appName}} provides free hosting for Microservices and Webhooks. These hosted services have full integrated access to the {{appName}} Developer API.</p>
-              <p><a href="/new">Deploying a new hosted Microservice</a> is easy to do, and can be very useful if you intend to run a block of code in response to HTTP requests or as a <a href="/cron">scheduled task</a>.</p>
+              <p><a href="{{appUrl}}/new">Deploying a new hosted Microservice</a> is easy to do, and can be very useful if you intend to run a block of code in response to HTTP requests or as a <a href="{{appUrl}}/cron">scheduled task</a>.</p>
 
               <a name="keys"></a>
               <h2>API Access Keys</h2>
@@ -66,12 +66,12 @@
               <h2>REST HTTP API</h2>
               <p>All services and URLs on {{appName}} can be communicated with using simple HTTP requests.</p>
               <p>Every actionable page on the {{appName}} website is also an API endpoint capable of receiving data from a JSON POST or Form POST.</p>
-              <p>The content of the rendered page result will be determined by the <code>content-type</code> header of the incoming HTTP request to the API. <a href="/docs#content-type">Read More</a>.</p>
-              <p>We'll be releasing a nicely formatted API definition file soon. Until then, we recommend checking out the <a href="/sdk">{{appName}}-sdk</a>.</p>
+              <p>The content of the rendered page result will be determined by the <code>content-type</code> header of the incoming HTTP request to the API. <a href="{{appUrl}}/docs#content-type">Read More</a>.</p>
+              <p>We'll be releasing a nicely formatted API definition file soon. Until then, we recommend checking out the <a href="{{appUrl}}/sdk">{{appName}}-sdk</a>.</p>
 
               <a name="sdk"></a>
               <h2>Client SDK</h2>
-              <p>The easiest way to programmatically interact with the the {{appName}} HTTP API is by using the <a href="/sdk">{{appName}}-sdk client</a>.</p>
+              <p>The easiest way to programmatically interact with the the {{appName}} HTTP API is by using the <a href="{{appUrl}}/sdk">{{appName}}-sdk client</a>.</p>
               <p>This SDK provides a full mapping of all {{appName}}'s API methods in an easy to use interface</p>
               <p>If you'd like to see additional API SDK clients added, you can <a href="https://github.com/bigcompany/hook.io-sdk/issues/new">open an issue here</a>.</p>
 

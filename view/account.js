@@ -18,6 +18,7 @@ module['exports'] = function view (opts, callback) {
 
   var $ = this.$;
   var req = opts.request, res = opts.response;
+  $ = req.white($);
 
   // if not logged in, kick out
   if (!req.isAuthenticated()) { 

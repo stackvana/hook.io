@@ -20,6 +20,8 @@ module['exports'] = function view (opts, callback) {
   var req = opts.request,
       res = opts.response;
 
+  $ = req.white($);
+
   parseRequest(req, res, function(err) {
     var params = req.resource.params;
 

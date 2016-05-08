@@ -71,7 +71,7 @@
 
                 <a name="roles"></a>
                 <h2>Events and Role Access</h2>
-                <p>It's important to note that all {{appName}} events are available as <a href="/roles">Access Roles</a>. This mapping allows granular <a href="/keys">role based key access</a> per System Event. <a href="/keys"></a></p>
+                <p>It's important to note that all {{appName}} events are available as <a href="{{appUrl}}/roles">Access Roles</a>. This mapping allows granular <a href="{{appUrl}}/keys">role based key access</a> per System Event. <a href="{{appUrl}}/keys"></a></p>
 
                 <!--
                   <h3>todo: add checklist for configuring events</h3>
@@ -82,20 +82,20 @@
                 <a name="writing"></a>
                 <h2>Writing to System Events</h2>
                 <p>Several useful events ( such as <code>hook::run</code> or <code>keys::authCheck</code>) are <em>automatically</em> written to your event service log.</p>
-                <p>A full listing of available events can currently be <a href="/roles">found here</a>.</p>
+                <p>A full listing of available events can currently be <a href="{{appUrl}}/roles">found here</a>.</p>
                 <p>Currently, {{appName}} does not support writing custom system events.</p>
 
                 <a name="api"></a>
                 <h2>Events API</h2>
 
                 <p>To access the System Event log for an account, simply attach <code>/events</code> to the end of your account homepage.</p>
-                <p><strong>For example:</strong> <a href="/marak/events">https://{{appName}}/marak/events</a></p>
+                <p><strong>For example:</strong> <a href="{{appUrl}}/marak/events">https://{{appName}}/marak/events</a></p>
                 <p>The events endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
 
                 <a name="auth"></a>
                 <h3>Authentication</h3>
-                <p>By default, {{appName}} system events are private. In order to access them from a third-party service, you'll need to generate a valid <a href="/keys">API Access Key</a> with the <code>events::read</code> role.</p>
-                <p>Below is a link which contains a limited <a href="/roles">role</a> API Access Key created only for demonstration purposes.</p>
+                <p>By default, {{appName}} system events are private. In order to access them from a third-party service, you'll need to generate a valid <a href="{{appUrl}}/keys">API Access Key</a> with the <code>events::read</code> role.</p>
+                <p>Below is a link which contains a limited <a href="{{appUrl}}/roles">role</a> API Access Key created only for demonstration purposes.</p>
                 <p><a href="http://{{appName}}/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e">http://{{appName}}/marak/events?hook_private_key=b4b1153f-ae6c-49f5-9cd7-1f554a6c1a1e</a></p>
 
                 <a name="streaming"></a>
@@ -110,8 +110,8 @@
 
                 <a name="sdk"></a>
                 <h3>Client SDK</h3>
-                <p>Using the <a href="/sdk">Client SDK</a> to access events is simple</p>
-                <p>Here are two examples of using the Client SDK. See <a href="/sdk">SDK</a> for more information</p>
+                <p>Using the <a href="{{appUrl}}/sdk">Client SDK</a> to access events is simple</p>
+                <p>Here are two examples of using the Client SDK. See <a href="{{appUrl}}/sdk">SDK</a> for more information</p>
                 <p>
                 <code><pre>
 var sdk = require("hook.io-sdk");

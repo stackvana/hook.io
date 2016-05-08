@@ -1,3 +1,6 @@
 module['exports'] = function view (opts, callback) {
-  callback(null, this.$.html());
+  var $ = this.$,
+  req = opts.req;
+  $ = req.white($);
+  callback(null, $.html());
 };

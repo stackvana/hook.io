@@ -15,12 +15,12 @@ module['exports'] = function view (opts, callback) {
 
   $('.currentRoot').html("/" + req.session.user);
   $('.currentRoot').attr('href', '/events')
-  
+
   events.recent('/' + req.session.user, function(err, results){
     //  results = JSON.parse(results[0])
     $('.recent').html(JSON.stringify(results, true, 2));
-    var out = $.html();
-    out = out.replace(/\{\{appName\}\}/g, appName);
-    callback(null, out);
+    $ = req.white($);
+    return callback(null, $.html());
   })
+
 };

@@ -327,7 +327,7 @@ body legend {
 }
 
 </style>
-<link href="/css/jquery-ui.css" rel="stylesheet">
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet">
 
 
 <script type="text/javascript">
@@ -621,7 +621,7 @@ body legend {
         <label for="path" class="i18n">Route</label>
         <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
         <div class="tiny">
-          <em class="hint">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
+          <em class="hint">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="{{appUrl}}/docs#hook">Read More</a></em><br/>
           <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n">Route Formatting Help</button>
           
           <!--
@@ -726,7 +726,7 @@ body legend {
         <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
         <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://{{appName}}/pricing">paid account</a>.<br/></div>
         <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
-        <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
+        <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
       </div>
     </div>
 
@@ -763,11 +763,11 @@ body legend {
           <h2 class="warning i18n">Warning</h2>
           <p>We have <a href="https://github.com/bigcompany/{{appName}}/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on {{appName}} is currently considered EXPERIMENTAL.</p>
-          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="/blog/new-multi-language-support" target="_blank">let us know</a>.</p>
+          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="{{appUrl}}/blog/new-multi-language-support" target="_blank">let us know</a>.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
         </div>
         <div class="helpLang">
-          <a class="mediumLink" href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguageShort">language</span> work better on {{appName}}?</a>
+          <a class="mediumLink" href="{{appUrl}}/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguageShort">language</span> work better on {{appName}}?</a>
         </div>
         -->
 
@@ -793,7 +793,7 @@ body legend {
       <div class="form-group codeEditorHolder">
 
           <!-- Create a simple CodeMirror instance -->
-          <link rel="stylesheet" href="/js/codemirror.css">
+          <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
           <script src="/js/codemirror.js"></script>
           <script src="/js/javascript.js"></script>
           <script type="text/javascript">

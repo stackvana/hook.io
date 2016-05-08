@@ -1,3 +1,5 @@
+var config = require('../config');
+
 module['exports'] = function view (opts, callback) {
   var req = opts.request,
       params = req.resource.params,
@@ -14,7 +16,9 @@ module['exports'] = function view (opts, callback) {
     $('.loginLink').remove();
   }
 
-  if (req.url !== "/login" && req.url !== "" && req.url !== "/") {
+  var _url = require('url').parse(req.url).pathname;
+  // console.log('WHAT IS PATH', _url)
+  if (_url !== "/login" && _url !== "/signup" && _url !== "" && _url !== "/") {
     req.session.redirectTo = req.url;
   }
 
@@ -47,13 +51,22 @@ module['exports'] = function view (opts, callback) {
     $(item).html(i.__(v));
   });
 
-  var out = $.html();
-  var appName = "hook.io",
-      appAdminEmail = "hookmaster@hook.io",
-      appPhonePrimary = "1-555-555-5555";
-  out = out.replace(/\{\{appName\}\}/g, appName);
-  out = out.replace(/\{\{appAdminEmail\}\}/g, appAdminEmail);
-  out = out.replace(/\{\{appPhonePrimary\}\}/g, appPhonePrimary);
-  callback(null, out);
+  // generic white-label function for performing {{mustache}} style replacements of site data
+  // Note: Site requires absolute links ( no relative links! )
+  req.white = function whiteLabel ($, opts) {
+    var out = $.html();
+    var appName = "hook.io",
+        appAdminEmail = "hookmaster@hook.io",
+        appPhonePrimary = "1-555-555-5555";
+    out = out.replace(/\{\{appName\}\}/g, appName);
+    out = out.replace(/\{\{appUrl\}\}/g, config.app.url);
+    out = out.replace(/\{\{appAdminEmail\}\}/g, appAdminEmail);
+    out = out.replace(/\{\{appPhonePrimary\}\}/g, appPhonePrimary);
+    return $.load(out);
+  };
+
+  $ = req.white($);
+
+  callback(null, $.html());
 
 };

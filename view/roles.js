@@ -15,16 +15,13 @@ module['exports'] = function view (opts, callback) {
   }
   */
 
+  var params = req.resource.params;
 
-    var params = req.resource.params;
-  
-    Object.keys(role.roles).sort().forEach(function(r){
-      $('.availableRoles').append('<div>' + r + '</div>');
-    });
+  Object.keys(role.roles).sort().forEach(function(r){
+    $('.availableRoles').append('<div>' + r + '</div>');
+  });
 
-    var out = $.html();
-    out = out.replace(/\{\{appName\}\}/g, appName);
-    callback(null, out);
-
+  $ = req.white($);
+  callback(null, $.html());
   
 };

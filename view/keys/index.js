@@ -198,10 +198,8 @@ module['exports'] = function view (opts, callback) {
           return res.end(err.message);
         }
         $('.keys').html(result);
-        var out = $.html();
-        out = out.replace(/\{\{appName\}\}/g, appName);
-        callback(null, out);
-        return;
+        $ = req.white($);
+        return callback(null, $.html());
         });
       });
  }

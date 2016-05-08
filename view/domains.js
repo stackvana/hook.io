@@ -79,10 +79,9 @@ module['exports'] = function view (opts, callback) {
         $('.loginBar').remove();
       }
       
-      var out = $.html();
-      out = out.replace(/\{\{appName\}\}/g, appName);
-      callback(null, out);
-      return;
+      $ = req.white($);
+      callback(null, $.html());
+
       });
     });
 

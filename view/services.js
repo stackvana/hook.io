@@ -20,6 +20,8 @@ module['exports'] = function view (opts, callback) {
     //$('.navBar').remove()
   }
 
+  $ = req.white($);
+
   hook.find({owner: req.params.owner }, function (err, hooks){
     if (err) {
       return res.end(err.message);

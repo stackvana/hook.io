@@ -12,11 +12,11 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Getting Started</h3>
               <ul class="sidebar_menu">
-                <li><a href="/faq">What is a Microservice?</a></li>
-                <li><a href="/faq">Don't start a server!</a></li>
+                <li><a href="{{appUrl}}/faq">What is a Microservice?</a></li>
+                <li><a href="{{appUrl}}/faq">Don't start a server!</a></li>
                 <li><a href="#language" class="i18n">Choosing a Language</a></li>
-                <li><a href="/examples" class="i18n">Interactive Examples</a></li>
-                <li><a href="/editor" class="i18n">Interactive Playground</a></li>
+                <li><a href="{{appUrl}}/examples" class="i18n">Interactive Examples</a></li>
+                <li><a href="{{appUrl}}/editor" class="i18n">Interactive Playground</a></li>
                 <li><a href="#creating" class="i18n">Creating a Service</a></li>
                 <li><a href="#forking" class="i18n">Forking an existing Service</a></li>
               </ul>
@@ -39,8 +39,8 @@
                 <li><a href="#data" class="i18n">Sending Data to a Service</a></li>
                 <li><a href="#content-type" class="i18n">Content-Type Routing</a></li>
                 <li><a href="#content-type" class="i18n">Streaming HTTP Support</a></li>
-                <li><a href="/curl" class="i18n">UNIX Pipe Support</a></li>
-                <li><a href="/sdk" class="i18n">Client SDK</a></li>
+                <li><a href="{{appUrl}}/curl" class="i18n">UNIX Pipe Support</a></li>
+                <li><a href="{{appUrl}}/sdk" class="i18n">Client SDK</a></li>
               </ul>
             </aside>
 
@@ -61,7 +61,7 @@
                 <li><a href="#schema" class="i18n">Service Input Schema</a></li>
                 <li><a href="#forms" class="i18n">Schema Form Generator</a></li>
                 <li><a href="#themes" class="i18n">Themes</a></li>
-                <li><a href="/cron" class="i18n">Schedule Cronjob</a></li>
+                <li><a href="{{appUrl}}/cron" class="i18n">Schedule Cronjob</a></li>
                 <li><a href="#cache" class="i18n">Cache Controls</a></li>
               </ul>
             </aside>
@@ -100,8 +100,8 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Logging and Events</h3>
               <ul class="sidebar_menu">
-                <li><a href="/logs">Service Logs</a></li>
-                <li><a href="/events">System Events</a></li>
+                <li><a href="{{appUrl}}/logs">Service Logs</a></li>
+                <li><a href="{{appUrl}}/events">System Events</a></li>
               </ul>
             </aside>
 
@@ -109,7 +109,7 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud Databases</h3>
               <ul class="sidebar_menu">
-                <li><a href="/databases">Documentation </a></li>
+                <li><a href="{{appUrl}}/databases">Documentation </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->
@@ -117,7 +117,7 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Multi-Cloud File Storage</h3>
               <ul class="sidebar_menu">
-                <li><a href="/files">Documentation </a></li>
+                <li><a href="{{appUrl}}/files">Documentation </a></li>
               </ul>
             </aside>
             <!-- widget-categories end -->  
@@ -175,7 +175,7 @@
                   <p class="i18n">A Hook is single function or block of code represented by a unique URL.</p>
                   <p class="i18n">The Hook can be executed by sending HTTP requests to this URL.</p>
                   <p><span class="i18n">To see live examples of using Hooks visit the:</span> <a class="i18n" href="https://{{appName}}/#tuts">Interactive Microservice Tutorial</a></p>
-                  <p><span>To see example Hooks which you can <a href="#forking">fork</a> visit:</span> <a class="i18n" href="/examples">Examples</a></p>
+                  <p><span>To see example Hooks which you can <a href="#forking">fork</a> visit:</span> <a class="i18n" href="{{appUrl}}/examples">Examples</a></p>
                   <p>
                     <ul style="font-size:22px;">
                       <li><a href="#datastore" class="i18n">Getting Started</a></li>
@@ -211,7 +211,7 @@
                   <p class="i18n">You may select new languages while creating or editing a service.</p>
                   <p><a  class="i18n" href="https://{{appName}}/#tuts">Click here for an Interactive Microservice Tutorial</a></p>
 
-                  <p>For those interested in helping support these new languages, we are <a href="/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
+                  <p>For those interested in helping support these new languages, we are <a href="{{appUrl}}/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">actively seeking Developer Community Managers</a>.</p>
 
                   <a name="creating"></a>
                   <h2 class="i18n">Creating a Hook</h2>
@@ -290,11 +290,11 @@
 
                   <h3><strong class="i18n">Streaming Data</strong></h3>
                   <p class="i18n">To send streaming data to the hook, simply open up a streaming http request.</p>
-                  <p><a class="i18n" href="/Marak/transform">Here is an example of streaming data to a hook</a></p>
+                  <p><a class="i18n" href="{{appUrl}}/Marak/transform">Here is an example of streaming data to a hook</a></p>
 
                   <h3><strong class="i18n">Websockets</strong></h3>
                   <p>To send data to a Hook over Websocket, simply connect to the endpoint using any <code>ws</code> client</p>
-                  <p>More detailed instructions can be found at <a href="/websockets"> https://{{appName}}/websockets</a></p>
+                  <p>More detailed instructions can be found at <a href="{{appUrl}}/websockets"> https://{{appName}}/websockets</a></p>
                   <hr/>
 
                   <a name="code"></a>
@@ -377,7 +377,7 @@
                   <hr/>
                   <a name="env"></a>
                   <h2 class="i18n">Setting Hook Environment Variables</h2>
-                  <p><span class="i18n">To set Hook Environment variables visit:</span> <a href="/env">https://{{appName}}/env</a></p>
+                  <p><span class="i18n">To set Hook Environment variables visit:</span> <a href="{{appUrl}}/env">https://{{appName}}/env</a></p>
                   <p class="i18n">Arbitrary key / value pairs can be set on your account so that all your Hooks will have access to the pairs in the <strong>Hook.env</strong> variable.</p> 
                   <p class="i18n">This is useful for protecting private authorization credentials from public view ( such as an API key or password ).</p>
                   <p class="i18n">After you have updated your environment variables they will be available in your hook's <strong>Hook.env</strong> </p>
@@ -387,7 +387,7 @@
                   <h2 class="i18n">Setting Custom Domains</h2>
                   <p class="i18n">Custom domains are a great way to brand the appearance of your service with it's own unique domain name.</p>
                   <p><span class="i18n">To add a Custom Domain, you will first need to set the domains</span> <code>A record</code> to <code>159.203.77.62</code> ( which is the ip address of {{appName}} ).</p>
-                  <p><span class="i18n">After setting the <code>A record</code> in your domain's DNS manager, simply visit:</span> <a href="/domains">https://{{appName}}/domains</a> <span class="i18n">to complete the process by mapping any of your Hooks to the Custom Domain.</span></p>
+                  <p><span class="i18n">After setting the <code>A record</code> in your domain's DNS manager, simply visit:</span> <a href="{{appUrl}}/domains">https://{{appName}}/domains</a> <span class="i18n">to complete the process by mapping any of your Hooks to the Custom Domain.</span></p>
                   <hr/>
 
                   <a name="content-type"></a>
@@ -456,7 +456,7 @@
                 <h2 class="i18n">Hot-Code Execution Gateway</h2>
                 <p class="i18n">In most cases, you will want to save your service's source-code as a Hook.</p>
                 <p class="i18n">In other situations, you may need to send code that has to be executed immediately and without any additional requests ( such as testing and developing hooks or executing dynamically created source code from a third-party service ).</p>
-                <h3><a href="/gateways">Click here to see available gateways</a></h3>
+                <h3><a href="{{appUrl}}/gateways">Click here to see available gateways</a></h3>
                 <p>{{appName}} provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="https://{{appName}}#tuts">Interactive Example</a> on the {{appName}} homepage, you will notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
 
                 <h3>Examples of using the Hot-Code Gateways</h3>
@@ -496,12 +496,12 @@
 
                 <h2>System Events</h2>
 
-                <p>All actions on {{appName}} are tracked internally as <a href="/events">System Events</a>.</a> 
+                <p>All actions on {{appName}} are tracked internally as <a href="{{appUrl}}/events">System Events</a>.</a> 
                 <p>These events are useful for monitoring the actions your services are performing, and who is performing them.</p>
 
                 <h3>The relation of System Events and Role Access</h3>
-                <p>It's important to note that all {{appName}} events are available as <a href="/keys">Access Roles</a>. This mapping allows granular role based key access per System Event.</p>
-                <p><a href="/keys">Read More about Role Based Access Control</a></p>
+                <p>It's important to note that all {{appName}} events are available as <a href="{{appUrl}}/keys">Access Roles</a>. This mapping allows granular role based key access per System Event.</p>
+                <p><a href="{{appUrl}}/keys">Read More about Role Based Access Control</a></p>
 
                 <hr/>
                 <br/>
@@ -523,15 +523,15 @@
                 <p><span class="i18n">A graphical interface exists for all of {{appName}}'s supported features at </span> <a href="https://{{appName}}">https://{{appName}}</a>.</p>
                 <p class="i18n">In some cases, you may want a third party script or client ( not your browser window ), to be able to access a specific {{appName}} platform feature ( such as logs, the datastore, or creating a new hook service ).</p>
                 <p class="i18n">Using {{appName}}'s HTTP API, you can access any platform feature that is available in our web app.</p> <p>To keep things simple ( and self documenting ), the routes in our web app are 1:1 with our API.</p>
-                <p>The <a href="/datastore/set">/datastore</a> or <a href="/logs">/logs</a> endpoints are well documented examples of how this works, but other endpoints like <a href="/new">/new</a> might require a small amount of reverse engineering.</p>
+                <p>The <a href="{{appUrl}}/datastore/set">/datastore</a> or <a href="{{appUrl}}/logs">/logs</a> endpoints are well documented examples of how this works, but other endpoints like <a href="{{appUrl}}/new">/new</a> might require a small amount of reverse engineering.</p>
                 <a name="keys"></a>
                 <h3>API Access Keys</h3>
 
                 <p class="i18n">{{appName}} provides a robust role based API key access system.</p>
-                <p><span class="i18n">All</span> <a href="/events">events</a> <span class="i18n">on {{appName}} are registered as</span> <a href="/roles">roles</a> <span class="i18n">which can be granted per</span> <a href="/keys"><span class="i18n">generated API access key</span></a></p>
+                <p><span class="i18n">All</span> <a href="{{appUrl}}/events">events</a> <span class="i18n">on {{appName}} are registered as</span> <a href="{{appUrl}}/roles">roles</a> <span class="i18n">which can be granted per</span> <a href="{{appUrl}}/keys"><span class="i18n">generated API access key</span></a></p>
 
 
-                <p>All API endpoints are backed by <a href="#roles">Role Based Access Control</a>, so if you provide a <code>hook_private_key</code> parameter in your request which matches a known API key containing the required role, that request will be granted access to the resource. <a href="/keys">Read More about Keys and Roles</a></p>
+                <p>All API endpoints are backed by <a href="#roles">Role Based Access Control</a>, so if you provide a <code>hook_private_key</code> parameter in your request which matches a known API key containing the required role, that request will be granted access to the resource. <a href="{{appUrl}}/keys">Read More about Keys and Roles</a></p>
 
                 <!--
                 <a name="metrics"></a>

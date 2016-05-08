@@ -88,6 +88,8 @@ module['exports'] = function view (opts, callback) {
       // redirect to /new with new source, do not create
     }
 
+    $ = req.white($);
+
     var out = $.html();
     out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
     return callback(null, out);

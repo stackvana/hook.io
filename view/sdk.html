@@ -1,26 +1,31 @@
 <div>
   <h1>Software Development Kit</h1>
   <div align="left" class="container content">
-    <p>Programmatically interact with the {{appName}} platform from any service or third-party application.</p>
-    <p class="hint">Note: All SDKs are powered by the <a href="/api">hook.io API</a>, which you may access directly at anytime using standard HTTP requests.</p>
-    <h2>Official SDK Open-Source Repository</h2>
-    <a href="https://github.com/bigcompany/hook.io-sdk">https://github.com/bigcompany/hook.io-sdk</a>
+    <h2>Programmatically interact with the {{appName}} platform from any service or third-party application.</h2>
     <h3>Supported Client Platforms</h3>
     <ul>
       <li>Node.js</li>
     </ul>
-    <p class='hint'>Please <a href="https://github.com/bigcompany/hook.io-sdk/issues/new">let us know</a> if you'd like to see additional SDKs added here for new target client platforms. We'll be glad to accept your pull request!</p>
-    <br/>
+    <p class='hint'>Please <a href="{{appUrl}}/wishlist">let us know</a> if you'd like to see additional SDKs added here for new target client platforms. We'll be glad to accept your pull request!</p>
     <h3>Installation</h3>
-    <pre><code>npm install -g {{appSdkName}}</code></pre>
+    <p>
+      <pre><code>npm install -g {{appSdkName}}</code></pre>
+    </p>
     <h3>Usage</h3>
+    <p>
     <code><pre>
 var client = sdk.createClient({ accessKey: "12345"});
 client.hook.create('echo', { "source": 'echo "hello"', "language": "bash" }, function (err, res){
   console.log(err, res)
 });</pre>
-
     </code>
-    <p>50+ SDK Code Examples <a href="https://github.com/bigcompany/hook.io-sdk/tree/master/examples">available here</a></p>
+    </p>
+    <p><a href="https://github.com/bigcompany/hook.io-sdk/tree/master/examples">Click Here For 30+ SDK Code Examples </a></p>
+    
+    <h3>Official SDK Open-Source Repository</h3>
+    <p><a href="https://github.com/bigcompany/hook.io-sdk">https://github.com/bigcompany/hook.io-sdk</a></p>
+    <p class="hint">Note: All SDKs are powered by the <a href="{{appUrl}}/api">hook.io API</a>, which you may access directly at anytime using standard HTTP requests.</p>
+    
+    
   </div>
 </div>
