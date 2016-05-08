@@ -350,24 +350,24 @@ body legend {
   // REMARK: WHY IS THIS NOT USING THEMES MODULE ?!?!
   var themes = {
     "debug": {
-      "theme": "https://{{appName}}/themes/debug/index.html",
-      "presenter": "https://{{appName}}/themes/debug/index.js"
+      "theme": "{{appUrl}}/themes/debug/index.html",
+      "presenter": "{{appUrl}}/themes/debug/index.js"
     },
     "form": {
-      "theme": "https://{{appName}}/themes/form/index.html",
-      "presenter": "https://{{appName}}/themes/form/index.js"
+      "theme": "{{appUrl}}/themes/form/index.html",
+      "presenter": "{{appUrl}}/themes/form/index.js"
     },
     "simple": {
-      "theme": "https://{{appName}}/themes/simple/index.html",
-      "presenter": "https://{{appName}}/themes/simple/index.js"
+      "theme": "{{appUrl}}/themes/simple/index.html",
+      "presenter": "{{appUrl}}/themes/simple/index.js"
     },
     "simple-form": {
-      "theme": "https://{{appName}}/themes/simple-form/index.html",
-      "presenter": "https://{{appName}}/themes/simple-form/index.js"
+      "theme": "{{appUrl}}/themes/simple-form/index.html",
+      "presenter": "{{appUrl}}/themes/simple-form/index.js"
     },
     "none": {
-      "theme": "https://{{appName}}/themes/none/index.html",
-      "presenter": "https://{{appName}}/themes/none/index.js"
+      "theme": "{{appUrl}}/themes/none/index.html",
+      "presenter": "{{appUrl}}/themes/none/index.js"
     },
     "custom": {
       "theme": "",
@@ -564,7 +564,7 @@ body legend {
 
 
   function drawHookLinks () {
-    var base = 'https://{{appName}}/' + boot.owner;
+    var base = '{{appUrl}' + boot.owner;
     var name = $('#name').val();
     var path = $('#path').val();
     if(name.length === 0 && path.length === 0) {
@@ -678,7 +678,7 @@ body legend {
         <table class="hookLinks" border="1">
           <tr>
             <td class="left"><strong class="i18n">Home</strong></td>
-            <td class="home">https://{{appName}}/Marak/hook-name</td>
+            <td class="home">{{appUrl}}/Marak/hook-name</td>
           </tr>
           <tr>
             <td><strong class="i18n">Optional Url Parameters</strong></td>
@@ -686,15 +686,15 @@ body legend {
           </tr>
           <tr>
             <td><strong class="i18n">Admin ( login required )</strong></td>
-            <td class="admin">https://{{appName}}/marak/hook-name/admin</td>
+            <td class="admin">{{appUrl}}/Marak/hook-name/admin</td>
           </tr>
           <tr>
             <td><strong class="i18n">Source Code</strong></td>
-            <td class="source">https://{{appName}}/marak/hook-name/source</td>
+            <td class="source">{{appUrl}}/Marak/hook-name/source</td>
           </tr>
           <tr>
             <td><strong class="i18n">Logs</strong></td>
-            <td class="logs">https://{{appName}}/marak/hook-name/logs</td>
+            <td class="logs">{{appUrl}}/Marak/hook-name/logs</td>
           </tr>
           <!--
           <tr>
@@ -724,7 +724,7 @@ body legend {
         &nbsp;
         <label for="hookPrivate">Private Service</label>
         <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
-        <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://{{appName}}/pricing">paid account</a>.<br/></div>
+        <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing">paid account</a>.<br/></div>
         <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
         <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
       </div>

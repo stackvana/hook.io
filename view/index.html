@@ -1,1 +1,10 @@
 <!-- empty index -->
+<script>
+  $(document).ready(function(){
+    // redirect for legacy links to old /#tuts section on homepage,
+    // now it goes to /editor ( interactive playground )
+    if (document.location.hash === "#tuts") {
+      document.location = "/editor";
+    }
+  });
+</script>

@@ -250,21 +250,11 @@
       //$('.splashImage img').hoverIntent(loadSplashSection);
       $('.splashImage img').click(loadSplashSection);
 
-      function checkStats () {
-        // TODO: add real-time info for other metrics
-        $.get('/metrics/hook/totalHits', function(res){
-          $('.totalRun').html(numberWithCommas(res.toString()));
-          setTimeout(checkStats, 500);
-        });
-      };
 
       function numberWithCommas(x) {
           return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
 
-      checkStats();
-
-      
       // Create new CodeMirror editor instance
       widget.applyCodeMirror('textarea');
 
