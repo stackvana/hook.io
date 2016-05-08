@@ -5,33 +5,32 @@
   }
 </style>
 
+<div>
 <h1>hook.io admin interface</h1>
-
-<h2>Find User By Email</h2>
-
-<form name="userSearch" class="userSearchForm" action="/_admin" method="GET">
-  <input name="name" type="text" placeholder="marak@hook.io">
-  <input type="submit" value="Search">
-</form>
-
-
-<div class="user">
-  <a class="loginAs" href="/_admin">Login as this user</a>
-  <textarea class="json"></textarea>
-  
+  <div class="container content">
+    <h2>Find User By Name or Email</h2>
+    <form name="userSearch" class="userSearchForm" action="/_admin" method="GET">
+      <div>
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="marak">
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="text" placeholder="marak@hook.io">
+      </div>
+      <input type="submit" value="Search">
+    </form>
+    <div class="user">
+      <a class="loginAs" href="{{appUrl}}/_admin">Login as this user</a><br/>
+      <textarea class="json"></textarea>
+    </div>
+    <div class="account"></div>
+    <!--
+    <a name="admin"></a>
+    <div align="left">
+      <h2>Views</h2>
+      <table class="table"></table>
+    </div>
+    -->
+  </div>
 </div>
-<div class="account"></div>
-
-<a name="admin"></a>
-
-
-<div align="left">
-  <h2>Views</h2>
-  <table class="table"></table>
-</div>
-
-
-<br/>
-<br/>
-<br/>
-<br/>
