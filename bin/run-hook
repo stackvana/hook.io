@@ -322,6 +322,7 @@ var dev = {
   hook_private_key: env.hookAccessKey
 }
 
+var sdk = sdk;
 var client = sdk.createClient(dev);
 // REMARK: Removed in favor of calling out over HTTP
   // Wrap datastore so that all entries are keyed to owner of hook
@@ -329,6 +330,7 @@ var client = sdk.createClient(dev);
   // var datastore = new Datastore({ root: _root, host: "redis" });
 
 var datastore = client.datastore;
+var fs = client.files;
 
 /* TODO: implement handlers for IPC messages
 // new IPC stdio[3] communication logic
@@ -345,6 +347,7 @@ psr(process.stdin, output, function(req, res, fields){
   for (var p in fields) {
     env.params[p] = fields[p];
   }
+
   // Helper method for performing role checks based on current request's `hook_private_key` parameter
   // You can use this in your service to perform custom role checks
   req.checkAccess = function hasAccess (role, cb) {
@@ -368,6 +371,8 @@ psr(process.stdin, output, function(req, res, fields){
       env: env.env,
       params: env.params,
       resource: env.resource,
+      fs: fs, // integrated fs virtual cloud file system
+      sdk: sdk, // since we already have the SDK loaded, might as well pass it into the VM
       datastore: datastore,
       keys: client.keys,
       isStreaming: env.isStreaming,
