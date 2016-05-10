@@ -69,6 +69,7 @@ module['exports'] = function view (opts, callback) {
             res: "valid",
           };
           // r.res = "redirect";
+          user.emit('login', u);
           r.redirect = req.session.redirectTo || "/services";
           return res.redirect(r.redirect);
           // return res.end(JSON.stringify(r));

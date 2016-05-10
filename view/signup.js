@@ -85,6 +85,7 @@ module['exports'] = function signup (opts, cb) {
             // r.res = "redirect";
             r.redirect = req.session.redirectTo || "/services";
             //console.log('doing the redirect', r)
+            user.emit('login', result);
             return res.redirect(r.redirect);
             //return res.end(JSON.stringify(r));
           });
