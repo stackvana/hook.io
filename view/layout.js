@@ -58,10 +58,22 @@ module['exports'] = function view (opts, callback) {
     var appName = "hook.io",
         appAdminEmail = "hookmaster@hook.io",
         appPhonePrimary = "1-917-267-2516";
-    out = out.replace(/\{\{appName\}\}/g, appName);
+
+    // TODO: move configuration override to hook.io-white
+    var white = {};
+    if (req.hostname === "stackvana.com") {
+      white.logo = "/img/stackvana-logo.png";
+      white.logoInverse = "/img/stackvana-logo-inverse.png";
+      white.name = "Stackvana";
+      white.url = "http://stackvana.com:9999";
+      white.email = "support@stackvana.com";
+    }
+    out = out.replace(/\{\{appName\}\}/g, white.name || appName);
+    out = out.replace(/\{\{appLogo\}\}/g, white.logo || config.app.logo);
+    out = out.replace(/\{\{appLogoInverse\}\}/g, white.logoInverse || config.app.logoInverse);
     out = out.replace(/\{\{appDomain\}\}/g, config.app.domain);
-    out = out.replace(/\{\{appUrl\}\}/g, config.app.url);
-    out = out.replace(/\{\{appAdminEmail\}\}/g, appAdminEmail);
+    out = out.replace(/\{\{appUrl\}\}/g, white.url || config.app.url);
+    out = out.replace(/\{\{appAdminEmail\}\}/g, white.email || appAdminEmail);
     out = out.replace(/\{\{appPhonePrimary\}\}/g, appPhonePrimary);
     return $.load(out);
   };
