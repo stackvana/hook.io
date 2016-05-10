@@ -85,6 +85,10 @@ label {
   margin-bottom: 30px;
 }
 
+.forkBtn {
+  cursor: pointer;
+}
+
 .well {
   background-color: #F5F5F5;
   border: 1px solid #E1E1E1;

@@ -89,7 +89,7 @@
                 <h2>Events API</h2>
 
                 <p>To access the System Event log for an account, simply attach <code>/events</code> to the end of your account homepage.</p>
-                <p><strong>For example:</strong> <a href="{{appUrl}}/marak/events">https://{{appName}}/marak/events</a></p>
+                <p><strong>For example:</strong> <a href="{{appUrl}}/marak/events">{{appUrl}}/Marak/events</a></p>
                 <p>The events endpoint for a Hook will intelligently respond based on the incoming HTTP <code>Accept</code> Header.</p>
 
                 <a name="auth"></a>
@@ -101,12 +101,12 @@
                 <a name="streaming"></a>
                 <h3>Streaming events</h3>
                 <p>To access streaming events, request the events endpoint with an <code>Accept</code> Header value of <code>*/*</code></p>
-                <p><strong>Example: </strong><code>curl -N https://{{appName}}/marak/events</code></p>
+                <p><strong>Example: </strong><code>curl -N {{appUrl}}/Marak/events</code></p>
 
                 <a name="plain-text"></a>
                 <h3>Plain Text Events</h3>
                 <p>To access plain text events, request the events endpoint with an <code>Accept</code> Header value of <code>text/plain</code></p>
-                <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" https://{{appName}}/marak/events</code></p>
+                <p><strong>Example: </strong ><code>curl -H "Accept: text/plain" {{appUrl}}/Marak/events</code></p>
 
                 <a name="sdk"></a>
                 <h3>Client SDK</h3>
@@ -128,7 +128,7 @@ client.events.stream('marak', process.stdout);
                 <!--
                 <a name="limitations"></a>
                 <h2>Limitations</h2>
-                <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can <a href="https://{{appName}}/pricing">upgrade to a paid account</a> or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
+                <p>Currently all Free accounts are limited to fifty System Events per account. If you need to increase this limit you can <a href="{{appUrl}}/pricing">upgrade to a paid account</a> or contact <a href="mailto:hookmaster@{{appName}}">hookmaster@{{appName}}</a>
                 -->
               </div>
 

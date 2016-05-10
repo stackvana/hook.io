@@ -1,6 +1,18 @@
+<!--
+<style>
+  .bigUl ul {
+    position: relative;
+  }
+  .bigUl li {
+    float: left;
+    padding-right: 10px;
+  }
+</style>
+-->
+
 <div align="center">
   <h1>Insight</h1>
-  <div class="content">
+  <div class="container content">
     <ul class="bigUl">
       <li><a href="{{appUrl}}/faq" class="i18n">FAQ</a></li>
       <li><a href="{{appUrl}}/docs" class="i18n">Documentation</a></li>
@@ -11,4 +23,99 @@
       <li><a href="{{appUrl}}/env" class="i18n">Environment Variables</a></li>
     </ul>
   </div>
+  <!--
+    <br/>
+    <img class="loading" src="/img/loading.gif"></img>
+    <div id="cloud"></div>
+  -->
 </div>
+
+<!--
+<script src="/js/d3.min.js"></script>
+
+<script src="/js/d3.layout.cloud.js"></script>
+<script>
+
+if (!String.prototype.trim) {
+    (function() {
+        // Make sure we trim BOM and NBSP
+        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+        String.prototype.trim = function() {
+            return this.replace(rtrim, '');
+        };
+    })();
+}
+
+$(document).ready(function(){
+  console.log(d3)
+  var fill = d3.scale.category20b();
+
+  var words = [];
+  
+  /*
+  $('li').each(function(i, item){
+    var text = $(item).text().trim().split(' ');
+    text.forEach(function(t){
+      words.push(t.trim());
+    })
+  });
+  */
+
+  keywords.forEach(function(w){
+    words.push(w);
+  })
+  var layout = d3.layout.cloud()
+      .size([500, 500])
+      .words(words.map(function(d) {
+        console.log(d)
+        return {text: d.value, size: 10 + Math.random() * 50, url: "haha"};
+      }))
+
+      /*
+      .words('Logging and Events Multi-cloud Databases Microservice are small, independent processes that communicate with each other to form complex applications which utilize language-agnostic APIs.'.split(' ').map(function(d) {
+        console.log(d)
+        return {text: d, size: 10 + Math.random() * 50, url: "/foo"};
+      }))
+      */
+      .spiral('archimedean')
+      .padding(5)
+      .font("Impact")
+      .fontSize(function(d) { return d.size; })
+      .on("end", draw);
+
+  layout.start();
+  function draw(words) {
+    d3.select("#cloud").append("svg")
+        .attr("width", layout.size()[0])
+        .attr("height", layout.size()[1])
+      .append("g")
+        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", function(d, i) { return fill(i); })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; })
+        .on("mouseover", function (d, i){
+            // window.open(d.url, "_blank");
+            //$(i).css('cursor', 'pointer');
+            //alert(d.url);
+         })
+        .on("click", function (d, i){
+            // window.open(d.url, "_blank");
+            alert(d.url);
+         });
+         $('.loading').remove();
+        
+  }
+  
+});
+
+
+</script>
+-->

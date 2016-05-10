@@ -22,6 +22,8 @@ module['exports'] = function view (opts, callback) {
  var self = this;
  self.schema = self.schema || {};
 
+ $ = req.white($);
+
  // TODO: only show form if logged in, if not, show login form
  var appName = req.hostname;
 
@@ -198,7 +200,6 @@ module['exports'] = function view (opts, callback) {
           return res.end(err.message);
         }
         $('.keys').html(result);
-        $ = req.white($);
         return callback(null, $.html());
         });
       });

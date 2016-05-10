@@ -1,4 +1,4 @@
-<link href="/css/jquery-ui.css" rel="stylesheet"/>
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet"/>
 
 <style>
   .hookTable .smaller  {
@@ -25,6 +25,7 @@
     font-size: 18px;
   }
   .message {
+    padding-bottom: 10px;
     font-size: 32px;
     color: rgb(68, 199, 68);
   }
@@ -392,7 +393,7 @@ body legend {
 }
 
 </style>
-<link href="/css/jquery-ui.css" rel="stylesheet">
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet">
 
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/jquery.croneditor.js"></script>
@@ -636,7 +637,7 @@ body legend {
   <h1 class="i18n">Manage Microservice</h1>
   <div class="message"></div>
   <form id="hookForm" method="POST" action="/admin" role="form">
-    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="clearLogs i18n">Clear Logs</a>&nbsp;|&nbsp;<a href="/keys" class="hookAccessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
+    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="clearLogs i18n">Clear Logs</a>&nbsp;|&nbsp;<a href="{{appUrl}}/keys" class="hookAccessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
     <h3><a href="" class="hookSource i18n">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource i18n">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView i18n">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter i18n">Presenter</a></h3>
     <br/>
     <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
@@ -659,7 +660,7 @@ body legend {
         <label for="path" class="i18n">Route</label>
         <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
         <div class="tiny">
-          <em class="i18n">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="/docs#hook">Read More</a></em><br/>
+          <em class="i18n">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="{{appUrl}}/docs#hook">Read More</a></em><br/>
           <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n">Route Formatting Help</button>
         </div>
 
@@ -793,7 +794,7 @@ body legend {
         <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.<br/></div>
         <div class="securityHints">
           <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
-          <p>A private service will be hidden and only allowed accessible through a <a href="/keys" target="_blank">role based key access credential</a>.</p>
+          <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
         </div>
       </div>
     </div>
@@ -823,7 +824,7 @@ body legend {
         <!--
         <div class="warnLanguages">
           <h2 class="warning">Warning</h2>
-          <p>We have <a href="/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+          <p>We have <a href="{{appUrl}}/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
           <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
           <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
           <button class="btn" id="agreeWarning">Agree to Terms</button>
@@ -855,7 +856,7 @@ body legend {
       <div class="form-group codeEditorHolder well">
 
           <!-- Create a simple CodeMirror instance -->
-          <link rel="stylesheet" href="/js/codemirror.css">
+          <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
           <script src="/js/codemirror.js"></script>
           <script src="/js/javascript.js"></script>
           <script type="text/javascript">
@@ -925,9 +926,9 @@ hook.res.end('put your code here');
       <div class="cronDiv"></div>
     </div>
     
-    <div class="dangerZone well">
+    <div class="dangerZone well" align="right">
       <div class="form-group danger">
-        Danger Zone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="warning"><strong>Danger Zone</strong></span>:
           <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>
       </div>
     </div>

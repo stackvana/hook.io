@@ -143,6 +143,18 @@ a:hover {
     color: #0F99DE;
 }
 
+.content a span {
+    color: black;
+}
+
+
+.content a span:hover {
+  color: #0F99DE;
+  text-decoration: none;
+}
+
+
+
 .content ul {
   padding-left: 30px;
   padding-bottom: 10px;

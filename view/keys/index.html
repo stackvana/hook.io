@@ -123,12 +123,18 @@
 
                 <a name="custom-role-checks"></a>
                 <h3>Custom Role Checks</h3>
-                <p>It'a also possible to add a custom role value when creating an Access Key</p>
-                <p>You may perform a custom role checks using any string value one of two ways.</p>
-                
-                <p>keys.checkAccess API method</p>
-                <p>Inside a Hook service as <code>Hook.req.checkAccess('hook::run', function (err, hasAccess){})</code></p>
-
+                <p>It'a also possible to add a custom role value when creating an Access Key. You may perform a custom role checks using any string value one of two ways.</p>
+                <p>Using the <a href="/keys/checkAccess">keys.checkAccess HTTP API method</a> ( available in <a href="/sdk">SDK</a>)</p>
+                <p>
+                  Inside a Hook service as:
+                  <code><pre>
+module['exports'] = function checkAccess (hook) {
+  hook.req.checkAccess('hook::run', function(err, h){
+    hook.res.json(h);
+  });
+};</pre></code>
+                </p>
+                <p class="hint">This will be scoped to the current user session or <code>hook_private_key</code> HTTP parameter</p>
                 <p class="loginLink"><a href="{{appUrl}}/login">Login to Create Your First Key</a></p>
                 <a name="generate-keys"></a>
                 <div class="keys"></div>

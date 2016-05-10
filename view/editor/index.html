@@ -96,13 +96,18 @@
     };
 
     Widget.prototype.loadingSnippet = function loadingSnippet () {
+      var self = this;
+      self.snippetLoading = true;
+      // console.log('loadingSnippet', self.snippetLoading);
       $('.CodeMirror').css('opacity', 0.4);
       $('.hookFrame').css('opacity', 0.4);
       $('.loadingImg').show();
     };
 
     Widget.prototype.snippetLoaded = function snippetLoaded () {
+      var self = this;
       self.snippetLoading = false;
+      // console.log('snippetLoaded', self.snippetLoading);
       $('.loadingImg').hide();
       $('.CodeMirror').css('opacity', 1);
       $('.hookFrame').css('opacity', 1);
@@ -129,11 +134,10 @@
         var l = $('#language').val();
         $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
 
-
         if (l === "javascript") {
           $('.selectSnippet').show();
           $('.transportActions').show();
-          $('.runButton').attr('disabled', null);
+          //$('.runButton').attr('disabled', null);
           //$('.saveButton').attr('disabled', null);
           $('.codeButton').attr('disabled', null);
         } else {
@@ -167,6 +171,7 @@
       });
 
       function deployCode () {
+        // console.log('deploying code', widget.snippetLoading)
         if (widget.snippetLoading) {
           // do not attempt to deploy code if a new snippet is still loading...
           return false;
@@ -209,16 +214,14 @@
         login();
         return false;
       });
+
       $('#loginForm').on('submit', function(){
         login();
         return false;
       });
 
-
-
-
       $('.runButton').on('click', function(){
-        widget.loadingSnippet();
+        //widget.loadingSnippet();
         deployCode();
         return false;
       });

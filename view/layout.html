@@ -112,7 +112,7 @@
                 </li>
                 <li><a href="{{appUrl}}/new"><i class="fa fa-cloud-upload"></i> <span  class="i18n">Create new Service</span></a></li>
                 <li class="loginLink"><a href="{{appUrl}}/login"><i class="fa fa-lock"> </i> <span class="i18n">Login</span> </a></li>
-                <li class="logoutLink"><a href="{{appUrl}}/login"><i class="fa fa-lock"> </i> <span class="i18n">Logout</span> </a></li>
+                <li class="logoutLink"><a href="{{appUrl}}/logout"><i class="fa fa-lock"> </i> <span class="i18n">Logout</span> </a></li>
               </ul>
             </div>
           </div>
@@ -650,62 +650,63 @@
         <script src="/js/main.js"></script>
         
         <script>
+        var keywords = keywords = [
+          { value: 'Account', data: '/account' },
+          { value: 'Affiliates', data: '/affiliates' },
+          { value: 'API Access Keys', data: '/api#access-keys' },
+          { value: 'Billing', data: '/billing' },
+          { value: 'Contact Us', data: '/contact' },
+          { value: 'Create new service', data: '/new' },
+          { value: 'cURL', data: '/curl' },
+          { value: 'Cron Jobs / Scheduled Tasks', data: '/cron' },
+          { value: 'Developer API', data: '/api' },
+          { value: 'Deploy', data: '/new' },
+          { value: 'Documentation', data: '/docs' },
+          { value: 'Domains', data: '/domains' },
+          { value: 'Databases', data: '/databases' },
+          { value: 'Datastore', data: '/datastore' },
+          { value: 'Examples', data: '/examples' },
+          { value: 'Events', data: '/events' },
+          { value: 'Environment Variables', data: '/env' },
+          { value: 'Files', data: '/files' },
+          { value: 'File System / File Storage', data: '/files' },
+          { value: 'Forms / Form Generator', data: '/forms' },
+          { value: 'FAQ', data: '/faq' },
+          { value: 'Frequently Asked Questions', data: '/faq' },
+          { value: 'Gateways', data: '/gateways' },
+          { value: 'Hot-code Gateways', data: '/gateways' },
+          { value: 'Help', data: '/faq' },
+          { value: 'Input Validators', data: '/docs#schema' },
+          { value: 'Keys', data: '/keys' },
+          { value: 'Login', data: '/login' },
+          { value: 'Logging', data: '/logs' },
+          { value: 'Logout', data: '/logout' },
+          { value: 'Logs', data: '/logs' },
+          { value: 'Metrics', data: '/metrics' },
+          { value: 'Microservice', data: '/faq#what-is-a-microservice' },
+          { value: 'Pricing', data: '/pricing' },
+          { value: 'Request a Feature', data: '/wishlist' },
+          { value: 'Role Based Access Control', data: '/roles' },
+          { value: 'Roles', data: '/roles' },
+          { value: 'Services', data: '/services' },
+          { value: 'System Events', data: '/events' },
+          { value: 'Schema', data: '/docs#schema' },
+          { value: 'Software Developer Kit ( SDK )', data: '/sdk' },
+          { value: 'Support', data: '/support' },
+          { value: 'SSL / HTTPS', data: '/ssl' },
+          { value: 'Streams', data: '/docs#streams' },
+          { value: 'Terms of Service', data: '/tos' },
+          { value: 'Themes', data: '/themes' },
+          { value: 'UNIX Pipes', data: '/curl' },
+          { value: 'Webhook', data: '/faq#what-is-a-webhook' },
+          { value: 'Wishlist', data: '/wishlist' }
+         ];
+        
         $(function(){
-          var currencies = [
-            { value: 'Account', data: '/account' },
-            { value: 'Affiliates', data: '/affiliates' },
-            { value: 'API Access Keys', data: '/api#access-keys' },
-            { value: 'Billing', data: '/billing' },
-            { value: 'Contact Us', data: '/contact' },
-            { value: 'Create new service', data: '/new' },
-            { value: 'cURL', data: '/curl' },
-            { value: 'Cron Jobs / Scheduled Tasks', data: '/cron' },
-            { value: 'Developer API', data: '/api' },
-            { value: 'Deploy', data: '/new' },
-            { value: 'Documentation', data: '/docs' },
-            { value: 'Domains', data: '/domains' },
-            { value: 'Databases', data: '/databases' },
-            { value: 'Datastore', data: '/datastore' },
-            { value: 'Examples', data: '/examples' },
-            { value: 'Events', data: '/events' },
-            { value: 'Environment Variables', data: '/env' },
-            { value: 'Files', data: '/files' },
-            { value: 'File System / File Storage', data: '/files' },
-            { value: 'Forms / Form Generator', data: '/forms' },
-            { value: 'FAQ', data: '/faq' },
-            { value: 'Frequently Asked Questions', data: '/faq' },
-            { value: 'Gateways', data: '/gateways' },
-            { value: 'Hot-code Gateways', data: '/gateways' },
-            { value: 'Help', data: '/faq' },
-            { value: 'Input Validators', data: '/docs#schema' },
-            { value: 'Keys', data: '/keys' },
-            { value: 'Login', data: '/login' },
-            { value: 'Logging', data: '/logs' },
-            { value: 'Logout', data: '/logout' },
-            { value: 'Logs', data: '/logs' },
-            { value: 'Metrics', data: '/metrics' },
-            { value: 'Microservice', data: '/faq#what-is-a-microservice' },
-            { value: 'Pricing', data: '/pricing' },
-            { value: 'Request a Feature', data: '/wishlist' },
-            { value: 'Role Based Access Control', data: '/roles' },
-            { value: 'Roles', data: '/roles' },
-            { value: 'Services', data: '/services' },
-            { value: 'System Events', data: '/events' },
-            { value: 'Schema', data: '/docs#schema' },
-            { value: 'Software Developer Kit ( SDK )', data: '/sdk' },
-            { value: 'Support', data: '/support' },
-            { value: 'SSL / HTTPS', data: '/ssl' },
-            { value: 'Streams', data: '/docs#streams' },
-            { value: 'Terms of Service', data: '/tos' },
-            { value: 'Themes', data: '/themes' },
-            { value: 'UNIX Pipes', data: '/curl' },
-            { value: 'Webhook', data: '/faq#what-is-a-webhook' },
-            { value: 'Wishlist', data: '/wishlist' }
-           ];
 
-          // setup autocomplete function pulling from currencies[] array
+          // setup autocomplete function pulling from keywords[] array
           $('#autocomplete').autocomplete({
-            lookup: currencies,
+            lookup: keywords,
             onSelect: function (suggestion) {
               document.location = suggestion.data;
             }

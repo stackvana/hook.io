@@ -34,7 +34,8 @@ module['exports'] = function (opts, callback) {
 
       grouped[key].forEach(function(h){
         // TODO: add description of hook with h.description ( data is missing for most examples )
-        $('.examples').append('<a href="{{appUrl}}/marak/' + h.name + '">' + h.name + '</a><br/>')
+        var serviceLink = '{{appUrl}}/marak/' + h.name + '';
+        $('.examples').append('<a href="' + serviceLink + '/source"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>&nbsp;<a href="' + serviceLink + '/fork"><span title="Fork Service" class="forkBtn octicon octicon-repo-forked"></span></a> <a href="' + serviceLink + '">' + h.name + '</a><br/>')
       });
       $('.examples').append('<br/>');
       // group by language type

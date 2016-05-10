@@ -28,7 +28,7 @@ module['exports'] = function view (opts, callback) {
       return 0;
     });
     for(var h in users) {
-      $('.hooks').append('<tr><td><a href="/' + users[h].name + '">' + users[h].name + '</a></td><td>' + users[h].email + '</td></tr>')
+      $('.hooks').append('<tr><td><a href="{{appUrl}}/' + users[h].name + '">' + users[h].name + '</a></td><td>' + users[h].email + '</td></tr>')
     }
 
     callback(null, $.html());

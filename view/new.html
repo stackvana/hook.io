@@ -564,7 +564,7 @@ body legend {
 
 
   function drawHookLinks () {
-    var base = '{{appUrl}' + boot.owner;
+    var base = '{{appUrl}}' + boot.owner;
     var name = $('#name').val();
     var path = $('#path').val();
     if(name.length === 0 && path.length === 0) {
@@ -794,8 +794,8 @@ body legend {
 
           <!-- Create a simple CodeMirror instance -->
           <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
-          <script src="/js/codemirror.js"></script>
-          <script src="/js/javascript.js"></script>
+          <script src="{{appUrl}}/js/codemirror.js"></script>
+          <script src="{{appUrl}}/js/javascript.js"></script>
           <script type="text/javascript">
           </script>
           <style>

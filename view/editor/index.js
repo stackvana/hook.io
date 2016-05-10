@@ -13,13 +13,13 @@ module['exports'] = function view (opts, callback) {
 
   var boot = {};
 
-  boot.baseUrl = config.baseUrl || "";
+  boot.baseUrl = config.app.url || "";
   var i = req.i18n;
 
   boot.messages = {};
   req.session.redirectTo = "/new";
   // TODO: gateway.hook.io for production
-  $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway-javascript');
+  $('#gatewayForm').attr('action', config.app.url + '/Marak/gateway-javascript');
 
   var services = hooks.services;
   var examples = {};
@@ -39,6 +39,8 @@ module['exports'] = function view (opts, callback) {
     "stream-merge",
     "stream-transform",
     "datastore",
+    "files-writefile",
+    "files-readfile",
     "fake-data"
   ];
   jsExamples = jsExamples.reverse();

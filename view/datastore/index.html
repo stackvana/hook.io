@@ -33,10 +33,10 @@
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Datastore API</h3>
               <ul class="sidebar_menu">
-                <li><a href="/datastore/set">Datastore.set</a></li>
-                <li><a href="/datastore/get">Datastore.get</a></li>
-                <li><a href="/datastore/del">Datastore.del</a></li>
-                <li><a href="/datastore/recent">Datastore.recent</a></li>
+                <li><a href="{{appUrl}}/datastore/set">Datastore.set</a></li>
+                <li><a href="{{appUrl}}/datastore/get">Datastore.get</a></li>
+                <li><a href="{{appUrl}}/datastore/del">Datastore.del</a></li>
+                <li><a href="{{appUrl}}/datastore/recent">Datastore.recent</a></li>
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
@@ -45,7 +45,7 @@
                 <li><a href="#limitations">Limitations</a></li>
                 <li><a href="#">Datastore Access Roles</a></li>
                 <li><a href="#">Planned Features</a></li>
-                <li><a href="/wishlist">Request a Feature</a></li>
+                <li><a href="{{appUrl}}/wishlist">Request a Feature</a></li>
               </ul>
             </aside>
 
@@ -82,7 +82,7 @@
                 <!--
                 <div class="root">
                   <p>Current Datastore Root: <a href="#" class="currentRoot">loading...</a></p>
-                  <p class="hint"><a href="/auth">Log in to see you own data</a></p>
+                  <p class="hint"><a href="{{appUrl}}/auth">Log in to see you own data</a></p>
                 </div>
 
                 <div class="last">
@@ -100,10 +100,10 @@
                 <h3>From inside a Hook service using the <code>hook.datastore</code> object</h3>
                 <p>Simply call any of the following Datastore methods from inside your Hook's source code.</p>
                 <ul class="api">
-                  <li><a href="/datastore/set">hook.datastore.set</a>(<em>key, value, callback</em>)</li>
-                  <li><a href="/datastore/get">hook.datastore.get</a>(<em>key, callback</em>)</li>
-                  <li><a href="/datastore/del">hook.datastore.del</a>(<em>key, callback</em>)</li>
-                  <li><a href="/datastore/recent">hook.datastore.recent</a>(<em>callback</em>)</li>
+                  <li><a href="{{appUrl}}/datastore/set">hook.datastore.set</a>(<em>key, value, callback</em>)</li>
+                  <li><a href="{{appUrl}}/datastore/get">hook.datastore.get</a>(<em>key, callback</em>)</li>
+                  <li><a href="{{appUrl}}/datastore/del">hook.datastore.del</a>(<em>key, callback</em>)</li>
+                  <li><a href="{{appUrl}}/datastore/recent">hook.datastore.recent</a>(<em>callback</em>)</li>
                 </ul>
                 <h4>Hook Datastore Example:</h4>
                 <div data-gist="57408d6e745479c4a2d7">Loading Gist...</div>
@@ -111,25 +111,25 @@
                 <a name="http"></a>
                 <h3>From any location using HTTP requests</h3>
                 <p>All Datastore API methods are also available over HTTP.</p>
-                <p>Each of the following urls is a fully qualified API gateway capable of <a href="/keys">key based</a> authentication.</p>
+                <p>Each of the following urls is a fully qualified API gateway capable of <a href="{{appUrl}}/keys">key based</a> authentication.</p>
                 <!-- ><p>Click on the individual URL to get the specific documentation per method.</p> -->
                 <ul class="api">
-                  <li>POST <a href="/datastore/set">https://hook.io/datastore/set</a></li>
-                  <li>GET <a href="/datastore/get">https://hook.io/datastore/get</a></li>
-                  <li>PUT <a href="/datastore/del">https://hook.io/datastore/del</a></li>
-                  <li>GET <a href="/datastore/recent">https://hook.io/datastore/recent</a></li>
+                  <li>POST <a href="{{appUrl}}/datastore/set">https://hook.io/datastore/set</a></li>
+                  <li>GET <a href="{{appUrl}}/datastore/get">https://hook.io/datastore/get</a></li>
+                  <li>PUT <a href="{{appUrl}}/datastore/del">https://hook.io/datastore/del</a></li>
+                  <li>GET <a href="{{appUrl}}/datastore/recent">https://hook.io/datastore/recent</a></li>
                 </ul>
                 
                 <h2>Datastore HTTP API</h2>
                 
 
-                <p>Using the HTTP API will require logging in or providing a <code>hook_private_key</code> to <a href="/keys">access your private data</a>.</p>
+                <p>Using the HTTP API will require logging in or providing a <code>hook_private_key</code> to <a href="{{appUrl}}/keys">access your private data</a>.</p>
                 <p><em>Note: All HTTP verbs are loosely enforced. Any of the Datastore API methods will work with any HTTP verb as long as the required API parameters are satisfied.</em></p>
 
                 <a name="limitations"></a>
                 <h2>Limitations</h2>
                 <p>This Datastore API is powered internally by Redis, so any native <a href="http://redis.io/commands">Redis commands</a> could become available. If you require an additional method not listed please <a href="http://github.com/bigcompany/hook.io/issues">file a support issue</a>.</p>
-                <p>Currently free development accounts have a soft-limit of 100 unique documents per account. If you require more than 100 documents you can updgrade to a <a href="/pricing">paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
+                <p>Currently free development accounts have a soft-limit of 100 unique documents per account. If you require more than 100 documents you can updgrade to a <a href="{{appUrl}}/pricing">paid account</a> or contact <a href="mailto:hookmaster@hook.io">hookmaster@hook.io</a></p>
 
                 <h2>Security</h2>
                 <p>You <strong>should not</strong> store any un-encrypted sensitive information in the Cloud Datastore ( such as passwords / credit cards / keys ).

@@ -51,7 +51,7 @@ module['exports'] = function resetPassword (opts, cb) {
     // TODO: use before / after resource hooks for user.reset action
     var ip = req.connection.remoteAddress.toString();
     // TODO: add ip address, requested from: ' + ip
-    var link = config.baseUrl + "/reset?t=" + u.token;
+    var link = config.app.url + "/reset?t=" + u.token;
     var tmpl = 'A password reset for your ' + appName + ' account was requested.' + '<br/><br/>';
     tmpl += (' Account Name: ' + u.name + '<br/>');
     tmpl += (' Reset Link: <a href="' + link + '">' + link + '</a><br/>');

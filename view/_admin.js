@@ -30,25 +30,24 @@ module['exports'] = function view (opts, callback) {
     return res.redirect('/services');
   }
 
+  /* not needed? can just check sessio name above?
+    if (!req.isAuthenticated()) {
+      req.session.redirectTo = "/_admin";
+      return res.redirect('/login');
+    }
+  */
+
    psr(req, res, function(req, res) {
      var params = req.resource.params;
-      
+
       // Special line only used for local docker dev
       // Not used in production
       if (typeof params.setBase === "string" && params.setBase.length > 0) {
         // update the baseUrl in the config
         var url = require('url');
-        config.baseUrl = "http://" + req.host + ":" + (params.port || "80");
-        return res.end('set baseUrl to: ' + config.baseUrl)
+        config.app.url = "http://" + req.host + ":" + (params.port || "80");
+        return res.end('set baseUrl to: ' + config.app.url)
       }
-
-      /* Commented out for tests
-      if (!req.isAuthenticated()) {
-        req.session.redirectTo = "/_admin";
-        return res.redirect('/login');
-      }
-      */
-
 
      function loadPresenter (code, callback) {
         var _presenter, 

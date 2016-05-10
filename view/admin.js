@@ -39,6 +39,8 @@ module['exports'] = function view (opts, callback) {
   }
   */
 
+  $ = req.white($);
+
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     params = opts.request.resource.params;
@@ -227,6 +229,14 @@ module['exports'] = function view (opts, callback) {
 
       for (var s in services) {
         $('.services').append(services[s]);
+      }
+
+      if (params.status === "forked") {
+        $('.message').html('Hook Forked!')
+      }
+
+      if (params.status === "refreshed") {
+        $('.message').html('Refreshed any cached sources.')
       }
 
       if (params.status === "created") {

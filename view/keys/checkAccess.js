@@ -17,7 +17,8 @@ module['exports'] = function keysCheckAccessPresenter (opts, callback) {
   });
 
   function finish () {
-
+    
+    // TODO: only allow for accounts with enabled featured 'customRoleChecks'
     if (typeof params.hook_private_key !== 'undefined') {
       // TODO: move to resource.before hooks
       checkRoleAccess({ req: req, res: res, role: params.role }, function (err, hasPermission) {

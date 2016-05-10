@@ -22,7 +22,8 @@ module['exports'] = function view (opts, callback) {
 
   $ = req.white($);
 
-  hook.find({owner: req.params.owner }, function (err, hooks){
+  var _owner = req.params.owner || req.session.user;
+  hook.find({owner: _owner }, function (err, hooks){
     if (err) {
       return res.end(err.message);
     }

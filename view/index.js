@@ -30,7 +30,7 @@ module['exports'] = function view (opts, callback) {
 
   var boot = {};
 
-  boot.baseUrl = config.baseUrl;
+  boot.baseUrl = config.app.url;
   var i = req.i18n;
 
   boot.messages = {
@@ -108,7 +108,7 @@ module['exports'] = function view (opts, callback) {
     return res.end(message);
   }
   // TODO: gateway.hook.io for production
-  $('#gatewayForm').attr('action', config.baseUrl + '/Marak/gateway-javascript');
+  $('#gatewayForm').attr('action', config.app.url + '/Marak/gateway-javascript');
 
 
   var services = hooks.services;
