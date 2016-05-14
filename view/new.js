@@ -111,9 +111,7 @@ module['exports'] = function view (opts, callback) {
 
         var query = { name: params.name, owner: req.resource.owner };
         //var query = { name: params.name, owner: req.session.user };
-        console.log('trying to find', query)
-        return hook.find(query, function(err, results){
-          console.log('FFFOUND', results)
+        return hook.find(query, function (err, results) {
           if (results.length > 0) {
             var h = results[0];
             var msg = 'Hook already exists ' + '/' + h.owner + "/" + h.name;
@@ -218,6 +216,7 @@ module['exports'] = function view (opts, callback) {
       if (typeof req.session.tempLang === "string") {
         // TODO: better default databinding ( instead of prepend ) in boot
         $('#language').prepend('<option value="' + req.session.tempLang +'">' + req.session.tempLang + '</option>');
+        $('#gatewayForm').attr('action', config.app.url + '/marak/gateway-' + req.session.tempLang);
         delete req.session.tempLang;
       }
 
