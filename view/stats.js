@@ -10,9 +10,15 @@ function numberWithCommas(x) {
 module['exports'] = function view (opts, callback) {
   var $ = this.$;
   metric.get('/user/count', function(err, userCount){
+    if (userCount === null) {
+      userCount = 0;
+    }
     $('.activeUsers').html(userCount.toString())
     metric.get('/hook/count', function(err, hookCount){
       metric.get('/hook/totalHits', function(err, m){
+        if (hookCount === null) {
+          hookCount = 0;
+        }
         $('.activeServices').html(hookCount.toString());
         var count = m.toString();
         $('.totalRun').html(numberWithCommas(count));
