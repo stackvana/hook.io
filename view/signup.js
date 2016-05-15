@@ -1,9 +1,9 @@
 var hook = require("../lib/resources/hook");
 var user = require("../lib/resources/user");
-var bodyParser = require('body-parser');
-var mergeParams = require('merge-params');
 var config = require('../config');
 var themes = require('../lib/resources/themes');
+
+var psr = require('parse-service-request');
 
 var slug = require('slug');
 slug.defaults.modes['rfc3986'] = {
@@ -23,12 +23,14 @@ module['exports'] = function signup (opts, cb) {
   var $ = this.$,
   self = this;
 
-  bodyParser()(req, res, function bodyParsed(){
-    mergeParams(req, res, function(){});
+  psr(req, res, function (req, res) {
     var params = req.resource.params;
     var email = params.email;
     if(typeof email === "undefined" || email.length < 3) {
-      return res.end('invalid');
+      var r = {
+        result: 'invalid'
+      };
+      return res.json(r);
     }
     var type = "name";
     // determine if username or email
@@ -43,8 +45,10 @@ module['exports'] = function signup (opts, cb) {
         return res.end(err.stack);
       }
       if (results.length > 0) {
-        var str = "account name already exists! cannot create new account.";
-        return res.end(str);
+        var r = {
+          result: "exists"
+        };
+        return res.json(r);
       }
       
       var data = {};
@@ -55,39 +59,56 @@ module['exports'] = function signup (opts, cb) {
         data.name = email;
       }
       if (data.type === "name" && typeof params.password === "undefined" /*|| typeof params.email === "undefined"*/) {
-        return res.end('available');
+        var r = {
+          result: "available"
+        };
+        return res.json(r);
       } else {
 
         data.password = params.password;
         // todo: use user.signup
         if (results.length === 0 && typeof params.password !== "undefined" && params.password.length !== 0 /*&& (params.password === params.confirmPassword) */) {
           // ready to signup new user...
-          // do nothing?
+          // do nothing, user.create will fire below
         } else {
           // can't signup user, something wrong with first password
           // somewhat non-descriptive error here
           // client mostly handles this first
-          return res.end('available');
+          var r = {
+            result: "available",
+          };
+          return res.json(r);
         }
-        return user.create(data, function (err, result){
+        return user.create(data, function (err, result) {
           if (err) {
-            return res.end(err.stack);
+            var r = {
+              result: "error",
+              error: err.stack
+            };
+            return res.json(r);
           }
           // todo: set token here
           req.login(result, function(err){
             if (err) {
-              return res.end(err.message);
+              var r = {
+                result: "error",
+                error: err.stack
+              };
+              return res.json(r);
             }
             req.session.user = result.name.toLowerCase();
             var r = {
-              res: "valid",
+              result: "valid",
             };
             // r.res = "redirect";
             r.redirect = req.session.redirectTo || "/services";
             //console.log('doing the redirect', r)
             user.emit('login', result);
-            return res.redirect(r.redirect);
-            //return res.end(JSON.stringify(r));
+            if (req.jsonResponse) {
+              return res.json(r);
+            } else {
+              return res.redirect(r.redirect);
+            }
           });
         });
       }

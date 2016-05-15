@@ -8,17 +8,17 @@
     </div>
     <div class="account_login">
       <div class="col-lg-6 col-md-6 col-sm-6">
-        <form name="signupForm" class="discount" action="/signup" method="POST">
+        <form name="signupForm" class="signupForm discount" action="/signup" method="POST">
           <h2>New Developers</h2>
           <div class="submit_review">
-            <p>By creating an account with our platform, you will be able to deploy your first microservice or webhook in seconds. It's free and very easy!</p>
+            <p class="signupMessage">By creating an account with our platform, you will be able to deploy your first microservice or webhook in seconds. It's free and very easy!</p>
             <div class="i_box">
-              <p class="fnone"><label class="label" for="email">Username or Email Address <em>*</em></label></p>
-              <input type="text" id="email" name="email">
+              <p class="fnone"><label class="label" for="signup_email">Username or Email Address <em>*</em></label></p>
+              <input type="text" id="signup_email" name="email">
             </div>
             <div class="i_box">
-              <p class="fnone"><label class="label" for="password">Password <em>*</em></label></p>
-              <input type="password" name="password" id="password">
+              <p class="fnone"><label class="label" for="signup_password">Password <em>*</em></label></p>
+              <input type="password" name="password" id="signup_password">
             </div>
             <div class="button_set button_margin">
               <div style='float:left;max-width:220px;text-align:left;'><a href="{{appUrl}}/tos">By creating an account you agree to our Terms of Service</a></div>
@@ -30,17 +30,18 @@
         </form>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6">
-        <form name="loginForm" class="discount" action="/login" method="POST">
+        <form name="loginForm" class="loginForm discount" action="/login" method="POST">
           <h2>Registered Developers</h2>
           <div class="submit_review">
-            <p>If you have an account with us, please log in.<br/></p>
+            <p class="loginMessage">If you have an account with us, please log in.</p>
+            <br/>
             <div class="i_box">
-              <p class="fnone"><label class="label" for="name">Username or Email Address<em>*</em></label></p>
-              <input type="text" name="name" id="name">
+              <p class="fnone"><label class="label" for="login_name">Username or Email Address<em>*</em></label></p>
+              <input type="text" name="name" id="login_name">
             </div>
             <div class="i_box">
-              <p class="fnone"><label class="label" for="password">Password <em>*</em></label></p>
-              <input type="password" name="password" id="password">
+              <p class="fnone"><label class="label" for="login_password">Password <em>*</em></label></p>
+              <input type="password" name="password" id="login_password">
             </div>
             <p class="actitle">* Required Fields</p>
             <div class="button_set button_margin">
@@ -55,3 +56,95 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+
+    // add ajax handlers for login form
+    $('.loginForm').on('submit', function () {
+
+      var error = function error (err) {
+        if (err) {
+          $('.loginMessage').html('Error: ' + err.message);
+          $('.loginMessage').addClass('error');
+        }
+      };
+
+      var success = function success (json, status) {
+        if (json.result === "invalid") {
+          // login is invalid, update the user-interface
+          $('.loginMessage').html('Invalid password! Try again or reset password.');
+          $('.loginMessage').addClass('error');
+          $('#login_password').addClass('errorInput');
+        }
+
+        if (json.result === "valid") {
+          // login is valid, redirect to wherever the session tells us to
+          window.location = json.redirect;
+        }
+
+        if (json.result === "available") {
+          // account name is available, update the signup form and suggest a signup
+          $('#signup_email').val(data.name);
+          $('#signup_password').val(data.password);
+          $('.loginMessage').html('Account name not found, but is available. You can  this register this account name on the signup form to the left.');
+          $('.loginMessage').addClass('error');
+        }
+
+      };
+
+      var data = {
+        "name": $('#login_name').val(),
+        "password": $('#login_password').val()
+      };
+
+      $.ajax({ url: '/login', dataType: "json", data: data, error: error, success: success });
+
+      return false;
+    });
+
+    // add ajax handlers for signup form
+    $('.signupForm').on('submit', function () {
+
+      var error = function error (err) {
+        if (err) {
+          $('.signupMessage').html('Error: ' + err.message);
+          $('.signupMessage').addClass('error');
+        }
+      };
+
+      var success = function success (json, status) {
+
+        if (json.result === "invalid") {
+          // login is invalid, update the user-interface
+          $('.signupMessage').html('Invalid! Try again.');
+          //$('.loginMessage').addClass('error');
+          //$('#login_password').addClass('errorInput');
+          //alert('Invalid password!');
+        }
+
+        if (json.result === "valid") {
+          // login is valid, redirect to wherever the session tells us to
+          window.location = json.redirect;
+          //console.log('ddd', data);
+        }
+
+        if (json.result === "available") {
+          $('.signupMessage').html('Account name available. Password is required.');
+          $('.signupMessage').addClass('error');
+        }
+
+      };
+
+      var data = {
+        "email": $('#signup_email').val(),
+        "password": $('#signup_password').val()
+      };
+
+      $.ajax({ url: '/signup', dataType: "json", data: data, error: error, success: success });
+
+      return false;
+    });
+
+  });
+</script>
