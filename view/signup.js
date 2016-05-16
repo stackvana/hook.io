@@ -97,6 +97,7 @@ module['exports'] = function signup (opts, cb) {
               return res.json(r);
             }
             req.session.user = result.name.toLowerCase();
+            req.session.email = result.email;
             var r = {
               result: "valid",
             };

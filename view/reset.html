@@ -1,1 +1,70 @@
-<h1>Reset Password</h1>
+<div>
+  <h1>Reset Password</h1>
+  <div class="account_reset container content">
+      <form name="resetForm" class="discount resetForm" action="/reset" method="POST">
+        <h2>Reset Account Password</h2>
+        <div class="submit_review">
+          <p class="resetMessage">Reset the password for an existing account based on email address.</p>
+          <div class="i_box">
+            <p class="fnone"><label class="label" for="email">Email Address <em>*</em></label></p>
+            <input type="text" id="email" name="email">
+          </div>
+          <div class="button_set button_margin">
+            <div style='float:left;text-align:left;position:relative;left:20px'>After clicking Reset Password an email will be sent to your account.</div>
+            <!-- If no email address is associated with the account you can <a href="/contact?t=Password Reset">Contact Support</a> -->
+            <div class="newsl_button">
+              <button type="submit"><span>Reset Password</span></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+
+    // add ajax handlers for login form
+    $('.resetForm').on('submit', function () {
+
+      var error = function error (err) {
+        if (err) {
+          console.log(err)
+          $('.resetMessage').html('Error: ' + err.message);
+          $('.resetMessage').addClass('error');
+        }
+      };
+
+      var success = function success (json, status) {
+        if (json.result === "invalid") {
+          // login is invalid, update the user-interface
+          $('.resetMessage').html('Account name or email not found!');
+          $('.resetMessage').addClass('error');
+          $('#email').addClass('errorInput');
+        }
+
+        if (json.result === "reset") {
+          $('.submit_review').html('An email has been sent with instructions on resetting your password.');
+          // login is valid, redirect to wherever the session tells us to
+          //window.location = json.redirect;
+        }
+
+        if (json.result === "no-email") {
+          $('.submit_review').html('Email address was not found.');
+          // login is valid, redirect to wherever the session tells us to
+          //window.location = json.redirect;
+        }
+
+      };
+
+      var data = {
+        "email": $('#email').val()
+      };
+
+      $.ajax({ url: '/reset', dataType: "json", data: data, error: error, success: success });
+
+      return false;
+    });
+
+  });
+</script>

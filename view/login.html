@@ -134,6 +134,12 @@
           $('.signupMessage').addClass('error');
         }
 
+        if (json.result === "exists") {
+          // account name exists
+          $('.signupMessage').html('Account name is not available. Login with this account or try a new name.');
+          $('.signupMessage').addClass('error');
+        }
+
       };
 
       var data = {

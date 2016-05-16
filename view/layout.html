@@ -442,6 +442,23 @@
   <!-- strart model product area -->
   <section class="model_product_area">
     <div class="">
+      <div class="row emailReminder">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="blog-area">
+            <div class="container content">
+              <p><span class="error"><strong class="i18n">Attention:</strong></span> <span class="i18n">Please verify your account with an email address.</span><br/>
+                  Without an email address on record, it's possible you may get locked out of your account.</p>
+              <form name="updateEmail" id="updateEmail" class="form">
+                <div class="form-group">
+                  <label for="email i18n">Email:</label>
+                  <input tabindex="1" class="form-control" type="text" name="email" id="email" placeholder="youremail@example.com..."/>
+                </div>
+                <button class="btn saveEmail i18n">Add Email Address</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 yield">
           <!--
@@ -743,6 +760,24 @@
 
           $('.jumpToSearch').on('click', function(){
             $('#autocomplete').focus();
+            return false;
+          });
+
+          // updates email address for account
+          $('#updateEmail .saveEmail').on('click', function(){
+            $.ajax({
+              type: "POST",
+              url: '/account',
+              data: {
+                "email": $('#email').val()
+              },
+              success: function (res) {
+                $('.emailReminder .content').html('<h2>Email set to: ' + $('#email').val() + "</h2>");
+              },
+              error: function (err) {
+                alert('error: ' + err.message);
+              }
+            })
             return false;
           });
 

@@ -188,11 +188,6 @@ module['exports'] = function view (opts, callback) {
         // do nothing
       }
       var u = results[0];
-      if(typeof u.email === "undefined" || u.email.length === 0) {
-        // do not remove emailReminder
-      } else {
-        $('.emailReminder').remove();
-      }
       $('.userBar .welcome').html(i.__('Welcome') + ' <strong>' + user + "</strong>!")
       $('.loginBar').remove();
       $('.featuresDiv').remove();

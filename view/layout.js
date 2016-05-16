@@ -18,7 +18,7 @@ module['exports'] = function view (opts, callback) {
 
   var _url = require('url').parse(req.url).pathname;
   // console.log('WHAT IS PATH', _url)
-  if (_url !== "/login" && _url !== "/signup" && _url !== "" && _url !== "/") {
+  if (_url !== "/login" && _url !== "/signup" && _url !== "" && _url !== "/" && _url !== "/reset") {
     req.session.redirectTo = req.url;
   }
 
@@ -50,6 +50,16 @@ module['exports'] = function view (opts, callback) {
     var v = $(item).html();
     $(item).html(i.__(v));
   });
+
+  if (typeof req.session === "undefined" || typeof req.session.user === "undefined" || req.session.user === "anonymous") {
+    $('.emailReminder').remove();
+  }
+
+  if (typeof req.session.email === "undefined" || req.session.email.length === 0) {
+    // no email found on account, we need to update the account!
+  } else {
+    $('.emailReminder').remove();
+  }
 
   // generic white-label function for performing {{mustache}} style replacements of site data
   // Note: Site requires absolute links ( no relative links! )
