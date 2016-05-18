@@ -28,7 +28,7 @@ module['exports'] = function view (opts, callback) {
     // TODO: move to resource.before hooks...maybe not. better to avoid the pre-processing logic...
     checkRoleAccess({ req: req, res: res, role: "hook::create" }, function (err, hasPermission) {
 
-      if (!hasPermission || req.resource.owner === "anonymous") { // don't allow anonymous hook creation
+      if (!hasPermission /* || req.resource.owner === "anonymous" */ ) { // don't allow anonymous hook creation
         if (req.jsonResponse !== true && typeof params.hook_private_key === "undefined") {
           req.session.redirectTo = "/new";
           return res.redirect('/login');

@@ -6,6 +6,8 @@ module['exports'] = function view (opts, callback) {
       req = opts.request, 
       params = req.resource.params;
 
+  $ = req.white($);
+
   // if not logged in, simply show documentation page
   if (!req.isAuthenticated()) {
     $('.last').remove();

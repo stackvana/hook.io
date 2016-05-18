@@ -24,10 +24,12 @@ module['exports'] = function view (opts, callback) {
         html: params.comment
       };
 
+/*
 // REMOVE THIS MOCK      
 console.log("SENDING", _config);
 $('#contactForm').remove();
 return callback(null, $.html());
+*/
 
       email.send(_config, function (err, result) {
         if (err) {

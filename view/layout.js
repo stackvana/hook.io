@@ -72,10 +72,10 @@ module['exports'] = function view (opts, callback) {
     // TODO: move configuration override to hook.io-white
     var white = {};
     if (req.hostname === "stackvana.com") {
-      white.logo = "/img/stackvana-logo.png";
-      white.logoInverse = "/img/stackvana-logo-inverse.png";
+      white.logo = "http://stackvana.com/img/stackvana-logo-inverse.png";
+      white.logoInverse = "http://stackvana.com/img/stackvana-logo-inverse.png";
       white.name = "Stackvana";
-      white.url = "http://stackvana.com:9999";
+      white.url = "http://stackvana.com";
       white.email = "support@stackvana.com";
     }
     out = out.replace(/\{\{appName\}\}/g, white.name || appName);
