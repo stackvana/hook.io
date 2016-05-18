@@ -148,6 +148,7 @@ module['exports'] = function view (opts, callback) {
               if (err) {
                 return res.end(err.message);
               }
+              req.session.email = result.email;
               // display user info in account form
               // TODO: if form post data, attempt to update user account information
               showUserForm(_user, function(err, result){
