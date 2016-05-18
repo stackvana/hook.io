@@ -74,8 +74,12 @@ module['exports'] = function view (opts, callback) {
 
   // Render a cURL friendly response
   if (req.headers.accept === "*/*") {
+    var address = "";
+    if (typeof req.connection !== "undefined" && typeof req.connection.remoteAddress !== "undefined") {
+      address = req.connection.remoteAddress.toString();
+    }
     // TODO: move curl welcome screen to new module
-    var message = "Greetings " + req.connection.remoteAddress.toString() + '\n';
+    var message = "Greetings " + address + '\n';
     message += "Thank you for cURLing hook.io! \n\n"
     message += "We understand that not everyone is super thrilled to use a 'web-browser',\n";
     message += "so we also provide terminal services for accessing our hosting platform.\n\n";
