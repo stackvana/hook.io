@@ -79,6 +79,7 @@ module['exports'] = function view (opts, callback) {
       white.email = "support@stackvana.com";
     }
     out = out.replace(/\{\{appName\}\}/g, white.name || appName);
+    out = out.replace(/\{\{appSdkName\}\}/g, white.appSdkName || "hook.io-sdk");
     out = out.replace(/\{\{appLogo\}\}/g, white.logo || config.app.logo);
     out = out.replace(/\{\{appLogoInverse\}\}/g, white.logoInverse || config.app.logoInverse);
     out = out.replace(/\{\{appDomain\}\}/g, config.app.domain);

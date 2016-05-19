@@ -1,0 +1,97 @@
+<script type="text/javascript" class="data">
+  var data = {
+    title: "Multi-cloud Virtual File System",
+    description: "",
+    url: "https://hook.io/blog/multi-cloud-virtual-file-system",
+    guid: "multi-cloud-virtual-file-system",
+    author: "Marak",
+    date: "Thu May 19 2016 01:06:21 GMT-0400 (EDT)"
+  };
+</script>
+
+<style>
+.managers p { font-size: 32px; padding-bottom: 10px; margin-bottom: 10px; }
+.managers li { font-size: 20px; }
+.managers h1, h2 {
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+.managers h1 {
+  font-size: 52px;
+}
+.managers h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+.managers ul {
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+ul li {
+  font-size:16px;
+}
+
+</style>
+<div class="container content"align="left">
+<h1>Multi-cloud Virtual File System</h1>
+
+<div class="poster_by_template">
+  <div class="">
+    Posted by <a href="#" class="postAuthor">Marak</a> in <a href="#">Updates</a> <a href=""><i class="fa fa-clock-o"></i> May 19, 2016</a>
+  </div>                        
+</div>
+
+<br/>
+
+<p>
+  hook.io is a 100% open-source hosting platform for webhooks and microservices. Our primary focus is delivering the best possible experience for developers looking to quickly and effortlessly host robust microservices.</p>
+<p>
+  A highly requested feature from developers for our platform has been persistent file storage. In order to fulfill this requested functionality, we are happy to announce today our <strong><a href="https://hook.io/files">Multi-Cloud Virtual Filesystem</a></strong>
+</p>
+<p>This new Virtual File System is available through the <a href="/api">HTTP REST API</a>, the <a href="/sdk">Client SDK</a>, and directly <a href="/examples#files">inside of your Hook Services</a></p>
+
+<p>
+  What does this mean for hook.io users? You now have access to seamlessly manage files across any of these five cloud file storage adapters:
+  
+  <ul>
+    <li>Amazon S3</li>
+    <li>Google Cloud Files</li>
+    <li>Microsoft Azure</li>
+    <li>Rackspace Cloud Files</li>
+    <li><strong>Any</strong> <code>SSH/SFTP</code> enabled server</li>
+  </ul>
+</p>
+
+<p>To keep things very easy, we've created a common file-system for communicating with any of these adapters. This one simple file-system API follows the same familiar API pattern as the Node.js core <a href="https://nodejs.org/api/fs.html">fs</a> module. Here is an example using our zero-configuration built-in file storage.</p>
+<p>
+  <code>
+<pre>
+module['exports'] = function readFile (hook) {
+  hook.fs.readFile('testing-file.txt', function(err, res){
+    if (err){ 
+      return res.end(err.message); 
+    }
+    hook.res.end(JSON.stringify(res, true, 2));
+  });
+};
+</pre>
+  </code>
+</p>
+<p>There are more forkable examples <a href="https://hook.io/examples#files">here</a>. Using your own cloud provider credentials is as simple as passing in the right configuration options.</p>
+
+
+<h2>Start managing cloud files instantly</h2>
+<br/>
+<p>
+  Interested in storing files instantly? We recommend starting at: <a href="https://hook.io/files">https://hook.io/files</a>
+</p>
+<p>From here you will be able to see live code examples for reading and writing to multiple cloud file providers. Simply pass in the correct configuration.</p>
+<p>Remember, we also have support for any SFTP / SSH servers as well as a zero-configuration built-in file storage which requires no additional API access keys or registration with third party platforms.</p>
+<p>Protip: You can store sensitive data as <a href="/env">Environment Variables</a></p>
+<p class="hint">
+  Stream all the multi-cloud files!
+</p>
+<br/>
+
+</div>

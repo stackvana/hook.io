@@ -9,7 +9,7 @@ module['exports'] = function view (opts, callback) {
     if(post.$) {
       var getData = new Function(post.$('.data').html() + ' return data;');
       var data = getData();
-      $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + config.app.host + "/blog/" +post.name + '">' + data.title + '</a></li>');
+      $('.posts').prepend('<li>' + df(new Date(data.date), "mm/dd") + ' - <a href="' + config.app.url + "/blog/" +post.name + '">' + data.title + '</a></li>');
     } else {
       console.log('not available', post.name)
     }
@@ -19,9 +19,9 @@ module['exports'] = function view (opts, callback) {
     'the-monolith-versus-the-microservice-a-tale-of-two-applications',
     'new-multi-language-support',
     'hook-in-your-language',
-    'role-based-access-control'
-    //,'websocket-hooks',
-    //"multi-cloud-virtual-file-system"
+    'role-based-access-control',
+    'websocket-hooks',
+    "multi-cloud-virtual-file-system"
   ];
 
   posts.forEach(function(p){
