@@ -29,7 +29,8 @@ module['exports'] = function view (opts, callback) {
     'new-multi-language-support',
     'hook-in-your-language',
     'role-based-access-control',
-    'websocket-hooks'
+    'websocket-hooks',
+    'multi-cloud-virtual-file-system'
   ];
 
   posts.forEach(function(p){
