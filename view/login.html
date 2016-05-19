@@ -63,6 +63,9 @@
     // add ajax handlers for login form
     $('.loginForm').on('submit', function () {
 
+      $('.loginMessage').removeClass('error');
+      $('#login_password').removeClass('errorInput');
+      $('.loginMessage').html('Authenticating...');
       var error = function error (err) {
         if (err) {
           $('.loginMessage').html('Error: ' + err.message);
@@ -76,6 +79,10 @@
           $('.loginMessage').html('Invalid password! Try again or reset password.');
           $('.loginMessage').addClass('error');
           $('#login_password').addClass('errorInput');
+          $('#login_password').addClass('shake shake-constant');
+          setTimeout(function(){
+            $('#login_password').removeClass('shake shake-constant');
+          }, 400);
         }
 
         if (json.result === "valid") {
