@@ -1,7 +1,9 @@
-var config = require('../');
+var config;
+process.nextTick(function(){
+  config = require('../');
+});
 
 module['exports'] = function unauthorizedRoleAccess (req, role) {
-
   // TODO: use a template instead of str concat
   var str = '',
   errorType = "unauthorized-role-access";
