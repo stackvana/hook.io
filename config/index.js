@@ -4,11 +4,48 @@ module['exports'] = {
     port: 9999,
     host: "0.0.0.0",
     https: process.env['NODE_ENV'] === 'production',
-    roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io"]
+    roots: ["hookio", "0.0.0.0", "192.168.59.103", "192.168.99.100", "localhost", "hook.io", "www.hook.io"],
+    secret: "secret",
+    redis: {
+      prefix: '/session/',
+      port: 6379,
+      password: "secret",
+      host: "redis"
+    }
   },
+  web: {
+    port: 11000,
+    host: "0.0.0.0",
+    https: process.env['NODE_ENV'] === 'production',
+    roots: ["hookio", "0.0.0.0", "192.168.59.103", "192.168.99.100", "localhost", "hook.io", "www.hook.io"],
+    secret: "secret",
+    redis: {
+      prefix: '/session/',
+      port: 6379,
+      password: "secret",
+      host: "redis"
+    }
+  },
+  balancer: {
+    port: 9999,
+    host: "0.0.0.0",
+    https: process.env['NODE_ENV'] === 'production',
+    roots: ["hookio", "0.0.0.0", "192.168.59.103", "192.168.99.100", "localhost", "hook.io", "www.hook.io"],
+    secret: "secret",
+    redis: {
+      prefix: '/session/',
+      port: 6379,
+      password: "password",
+      host: "redis"
+    }
+  },
+  webs: [
+    { host: "web0", port: "11000" }
+  ],
   workers: [
    { host: "worker0", port: "10000" }
   ],
+  //baseUrl: "http://localhost:9999",
   baseUrl: "http://localhost:9999",
   couch: {
     "database": "hook",
@@ -33,23 +70,16 @@ module['exports'] = {
     CLIENT_SECRET: "14ed41431983aaceef121d32f2f3f3087e0434ac",
     OAUTH_CALLBACK: "http://localhost:9999/login/github/callback"
   },
-  worker: {
-    //npmPath: path.resolve("~/"),
-    nproc: {
-      soft: 500,
-      hard: 1000
-    }
-  },
   defaultTheme : "http://localhost:9999/themes/none/index.html", // should be https?
   defaultPresenter : "http://localhost:9999/themes/none/index.js",
   stripe: {
-    secretKey: "sk_test_ZXdJj4I3Db2iB9ZRm0gqyzDV",
-    publicKey: "pk_test_axAR0vF3Qam8zs09JE7t8ZIo"
+    secretKey: "123",
+    publicKey: "abc"
   },
   email: {
     "provider": "mock",
-    "api_user": "marak",
-    "api_key": "abcd"
+    "api_user": "123",
+    "api_key": "asd"
   },
   cacheView: false,
   // tempDirectory: __dirname + "/../temp/",
@@ -58,11 +88,12 @@ module['exports'] = {
   chrootDirectory: '/var/chroot',
   //sslKeyDirectory: __dirname + '/../ssl/',
   //chrootDirectory: '/Users/chroot',
-  useChroot: true,
+  useChroot: false,
   locales: {
     locales: ['en', 'de']
   },
   worker: {
+    startingPort: 10000,
     nproc: {
       soft: 500,
       hard: 1000
@@ -75,5 +106,21 @@ module['exports'] = {
     childProcessSpawnError: require('./messages/childProcessSpawnError'),
     serviceExecutionTimeout: require('./messages/serviceExecutionTimeout'),
     unauthorizedRoleAccess: require('./messages/unauthorizedRoleAccess')
+  },
+  app: { // TODO: make able to white-label easily
+    name: "hook.io",
+    // host: "https://hook.io",
+    url: "http://localhost:9999",
+    //url: "https://hook.io",
+    domain: "hook.io",
+    logo: "http://localhost:9999/img/logo.png",
+    logoInverse: "http://localhost:9999/img/logo-inverse.png",
+    adminEmail: "hookmaster@hook.io"
+    /*
+      Client ID
+      
+      Client Secret
+      
+    */
   }
 };

@@ -2,17 +2,25 @@
 #trap 'killall node' SIGINT
 
 
-# start main front-end server
-node ./bin/server &
+# start loadbalancer1
+node ./bin/services/load-balancer &
+
+# start three front-end web servers
+node ./bin/services/web &
+node ./bin/services/web &
+node ./bin/services/web &
+
+# start websocket server
+# node ./bin/websocket-server &
 
 # start five workers to run hooks
+node ./bin/worker &
+node ./bin/worker &
+node ./bin/worker &
+node ./bin/worker &
+node ./bin/worker 
 
-node ./bin/worker &
-node ./bin/worker &
-node ./bin/worker &
-node ./bin/worker &
-node ./bin/worker &
-node ./bin/hpm-server
+# &node ./bin/hpm-server
 
 
 
