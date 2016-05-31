@@ -12,13 +12,17 @@ apt-get -y update
 apt-get -y install git-core
 
 # get latest stable node as tar
-wget https://github.com/joyent/node/tarball/v0.12.7
+wget https://github.com/nodejs/node/archive/v4.4.4.zip
+
+sudo apt-get install unzip
 
 # extract latest node
-tar xf v0.12.7
+# tar xf v4.4.4
+unzip v4.4.4.zip
 
 # change directory into node
-cd joyent-node-bf88623
+# cd joyent-node-bf88623
+cd node-4.4.4
 
 # install some missing deps
 apt-get -y install g++ curl libssl-dev apache2-utils
@@ -34,6 +38,8 @@ make
 
 # install node
 make install
+
+# node -v should be working at this point
 
 # install couchdb
 apt-get install couchdb -y
