@@ -1,0 +1,9 @@
+// front-facing web servers
+// currently handles static assets / views / and api endpoints
+var web = require('../../lib/web');
+web.start({}, function(err, app){
+  if (err) {
+    throw err;
+  }
+  console.log('web server started', app.server.address())
+});

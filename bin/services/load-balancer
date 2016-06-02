@@ -1,0 +1,7 @@
+var lb = require('../../lib/load-balancer');
+lb.start({}, function(err, app){
+  if (err) {
+    throw err;
+  }
+  console.log('lb started', app.server.address())
+});
