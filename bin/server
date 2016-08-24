@@ -1,7 +1,0 @@
-var server = require('../lib/server');
-server.start({}, function(err, app){
-  if (err) {
-    throw err;
-  }
-  console.log('server started', app.server.address())
-});
