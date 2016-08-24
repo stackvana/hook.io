@@ -1,6 +1,0 @@
-#!/usr/local/bin/scheme
-
-;;; It may look like this doesn't do anything yet...
-;;; ...but for some reason the tinyscheme binary works by passing in -c as code
-;;;
-;;; This means we have prepared a scheme payload as a string which was passed here
