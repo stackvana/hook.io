@@ -19,7 +19,7 @@ module['exports'] = function view (opts, callback) {
   boot.messages = {};
   req.session.redirectTo = "/new";
   // TODO: gateway.hook.io for production
-  $('#gatewayForm').attr('action', config.app.url + '/Marak/gateway-javascript');
+  $('#gatewayForm').attr('action', config.app.url + '/marak/gateway-javascript');
 
   var services = hooks.services;
   var examples = {};

@@ -28,12 +28,15 @@ module['exports'] = function view (opts, callback) {
       return res.end(err.message);
     }
 
+    if (req.jsonResponse) {
+      return res.json(hooks);
+    }
     // if there is no referral set, assign one based on the owner of the current hook
     if (typeof req.session.referredBy === "undefined") {
       req.session.referredBy = req.params.owner;
     }
     if (req.params.owner !== req.session.user) {
-      $('.navBar').remove();
+      //$('.navBar').remove();
       $('.servicesHeader').html(req.params.owner);
     }
     if (hooks.length > 0) {
