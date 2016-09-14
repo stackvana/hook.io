@@ -2,8 +2,8 @@ var config = require('../config');
 
 module['exports'] = function (opts, cb) {
   var $ = this.$,
-      req = opts.request,
-      res = opts.response;
+      req = opts.req,
+      res = opts.res;
 
   var appAdminEmail = config.app.adminEmail;
 
