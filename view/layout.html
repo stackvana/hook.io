@@ -12,8 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!-- google font  -->
+    <!-- TOOD: make local fonts available for development so we don't have to rely on the CDN -->
     <link href='https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700' rel='stylesheet' type='text/css'>
-        <!-- Favicon
+
+    <!-- Favicon
     ============================================ -->
     <!-- <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"> -->
 
@@ -448,7 +450,8 @@
       <div class="row emailReminder">
         <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="blog-area">
-            <div class="container content">
+            <div class="container content" style="position:relative;">
+              <p style="position:absolute;right:5px;top:5px;"><a href="#" class="closeWarning">Close [X]</a></p>
               <p><span class="error"><strong class="i18n">Attention:</strong></span> <span class="i18n">Please verify your account with an email address.</span><br/>
                   Without an email address on record, it's possible you may get locked out of your account.</p>
               <form name="updateEmail" id="updateEmail" class="form">
@@ -784,6 +787,11 @@
             return false;
           });
 
+          $('.closeWarning').on('click', function(){
+            $('.emailReminder').remove();
+            return false;
+          });
+
           /*
           $('.meanLink').on('click', function(){
             var childExpands = $('.mean-expand', $(this).parent());
@@ -801,5 +809,6 @@
           ga('create', 'UA-56831462-1', 'auto');
           ga('send', 'pageview');
         </script>
+        <script type="text/javascript" src="{{appUrl}}/js/gist-async.min.js"></script>
     </body>
 </html>

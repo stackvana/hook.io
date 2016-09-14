@@ -132,8 +132,7 @@
       $('#language').change(function(e){
 
         var l = $('#language').val();
-        $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
-
+        $('.serviceLang').val(l);
         if (l === "javascript") {
           $('.selectSnippet').show();
           $('.transportActions').show();
@@ -178,7 +177,7 @@
         }
         deployingCode = true;
         var now = new Date().getTime();
-        $('#source').val(editor.getValue());
+        $('#code').val(editor.getValue());
         $('.gatewayForm').submit();
         return false;
       };
@@ -360,8 +359,8 @@
             </div>
             <a name="tuts"></a>
             <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
-            <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway-javascript" method="POST" target="hookFrame" class="gatewayForm">
-      <textarea name="source" id="source">// A simple hello world microservice 
+            <form name="gatewayForm" id="gatewayForm" action="/gateway" method="POST" target="hookFrame" class="gatewayForm">
+      <textarea name="code" id="code">// A simple hello world microservice 
 // Click "Deploy Service" to deploy this code
 // Service will respond to HTTP requests with a string
 module['exports'] = function helloWorld (hook) {
@@ -371,6 +370,7 @@ module['exports'] = function helloWorld (hook) {
   // Respond to the request with a simple string
   hook.res.end(host + ' says, "Hello world!"');
 };</textarea>
+          <input name="language" class="serviceLang" type="hidden" value="javascript"/>
           </form>
           <iframe name="hookFrame" class="hookFrame"></iframe>
             <!-- <div class="hookOutput"></div> -->
@@ -378,7 +378,7 @@ module['exports'] = function helloWorld (hook) {
         </div>
         <form name="saveForm" id="saveForm" class="saveForm" action="/editor" method="POST" style="margin:0px;padding:0px;">
           <input name="source" class="serviceSource" type="hidden"/>
-          <input name="lang" class="serviceLang" type="hidden"/>
+          <input name="language" class="serviceLang" type="hidden" value="javascript"/>
         </form>
         
     </div>

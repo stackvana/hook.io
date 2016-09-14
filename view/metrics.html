@@ -4,9 +4,15 @@
 
   <h2>Accessing Metrics</h2>
 
-  <p><a href="#count">Finding Service Run Count</a></p>
-  <p>Simply use the following URL format to retrieve the amount of times a Service has been run</p>
-  <p><a href="{{appUrl}}/metrics/marak/echo/hits">/metrics/:owner/:hook/hits</a></p>
+  <h3>Service Executions</h3>
+  <p><a href="{{appUrl}}/metrics/examples/echo/hits">/metrics/:owner/:hook/hits</a></p>
+  <p>The total amount of times a Service has been run</p>
+
+  <h3>Total Executions per Account</h3>
+  <p><a href="{{appUrl}}/metrics/examples/hits">/metrics/:owner/hits</a></p>
+
+  <h3>Running Services</h3>
+  <p><a href="{{appUrl}}/metrics/examples/running">/metrics/:owner/running</a></p>
 
   <p>We are currently storing many more metrics, but do not have them exposed as public API endpoints.</p>
   <p class="hint">Please <a href="{{appUrl}}/wishlist">let us know</a> if you require additional service metrics.</p>

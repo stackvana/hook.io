@@ -19,14 +19,14 @@ module['exports'] = function view (opts, callback) {
   boot.messages = {};
   req.session.redirectTo = "/new";
   // TODO: gateway.hook.io for production
-  $('#gatewayForm').attr('action', config.app.url + '/marak/gateway-javascript');
+  $('#gatewayForm').attr('action', config.app.url + '/gateway');
 
   var services = hooks.services;
   var examples = {};
 
   // pull out helloworld examples for every langauge
   hook.languages.forEach(function(l){
-    examples[l] = services['examples-' + l + '-hello-world'];
+    examples[l] = services[l + '-hello-world'];
   });
 
   // list of js examples by order
@@ -45,8 +45,10 @@ module['exports'] = function view (opts, callback) {
   ];
   jsExamples = jsExamples.reverse();
   jsExamples.forEach(function (item){
-    var ex = services['examples-javascript-' + item];
-    $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.description + '</option>')
+    var ex = services['javascript-' + item];
+    if (ex) {
+      $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.description + '</option>')
+    }
   });
 
   /*

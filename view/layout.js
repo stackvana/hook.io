@@ -1,10 +1,10 @@
 var config = require('../config');
 
 module['exports'] = function view (opts, callback) {
-  var req = opts.request,
+  var req = opts.req,
       params = req.resource.params,
       $ = this.$;
-      
+
   if (req.user && req.session.user) {
     $('.myHooks').attr('href', '/' + req.session.user);
   }
@@ -63,7 +63,7 @@ module['exports'] = function view (opts, callback) {
 
   // generic white-label function for performing {{mustache}} style replacements of site data
   // Note: Site requires absolute links ( no relative links! )
-  req.white = function whiteLabel ($, opts) {
+  req.white = function whiteLabel ($, options) {
     var out = $.html();
     var appName = "hook.io",
         appAdminEmail = "hookmaster@hook.io",
@@ -76,6 +76,7 @@ module['exports'] = function view (opts, callback) {
       white.logoInverse = "https://stackvana.com/img/stackvana-logo-inverse.png";
       white.name = "Stackvana";
       white.url = "https://stackvana.com";
+      //white.url = "http://stackvana.com:9999";
       white.email = "support@stackvana.com";
     }
     out = out.replace(/\{\{appName\}\}/g, white.name || appName);

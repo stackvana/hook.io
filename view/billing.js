@@ -8,7 +8,6 @@ var billing = require('../lib/resources/billing')
 var stripe = require('stripe')(config.stripe.secretKey);
 
 var billingForm = require('./billingForm');
-var addPaymentOption = require('./addPaymentOption');
 
 module['exports'] = function view (opts, callback) {
 
@@ -132,7 +131,6 @@ module['exports'] = function view (opts, callback) {
 
     };
 
-    $('.addPaymentOption').html(addPaymentOption());
     // console.log('getting params', params);
     // if new billing information was posted ( from  account page ), add it
     if (params.addCustomer) {

@@ -137,8 +137,10 @@ module['exports'] = function view (opts, callback) {
   ];
   jsExamples = jsExamples.reverse();
   jsExamples.forEach(function (item){
-    var ex = services['examples-javascript-' + item];
-    $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.description + '</option>')
+    var ex = services['javascript-' + item];
+    if (typeof ex !== "undefined") {
+      $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.description + '</option>')
+    }
   });
 
   /*

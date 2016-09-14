@@ -7,8 +7,8 @@ module['exports'] = function view (opts, callback) {
 
   var $ = this.$;
 
-  var req = opts.request,
-      res = opts.response,
+  var req = opts.req,
+      res = opts.res,
       params = req.resource.params;
 
   if (typeof params.signedMeUp !== "undefined" || typeof params.s !== "undefined") {

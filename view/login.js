@@ -1,5 +1,4 @@
 var user = require('../lib/resources/user');
-var passport = require('passport');
 
 var psr = require('parse-service-request');
 
