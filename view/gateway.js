@@ -13,11 +13,13 @@ module['exports'] = function view (opts, callback) {
   var remoteHandler = hook.runRemote({ pool: pool });
 
   // TODO: pull value from config / paidPlans.js
-  var MAX_SERVICE_CONCURRENCY = 2;
-  var MAX_SERVICE_EXECUTIONS_PER_CYCLE = 1000;
-
+  /*
+  var config.MAX_SERVICE_CONCURRENCY = 2;
+  var config.MAX_SERVICE_EXECUTIONS_PER_CYCLE = 1000;
+  */
   // TODO: determine owner by API key or session
 
+  // Remark: is all session code already being handled?
   /*
   // TODO: replace hook::run with gateway::run role
   checkRoleAccess({ req: req, res: res, role: "hook::run" }, function (err, hasPermission) {
@@ -43,7 +45,7 @@ module['exports'] = function view (opts, callback) {
 
       // if total hits for user account is exceeded, rate-limit
       console.log('metric.' + req.params.owner + '.hits'.green, err, total);
-      if (Number(total) >= MAX_SERVICE_EXECUTIONS_PER_CYCLE) {
+      if (Number(total) >= config.MAX_SERVICE_EXECUTIONS_PER_CYCLE) {
         // TODO: better error message
         return res.end('max executions per cycle hit, upgrade plan, wait, or request more');
       }
@@ -56,13 +58,12 @@ module['exports'] = function view (opts, callback) {
         if (err) {
           return res.end(err.message);
         }
-        console.log('total'.green, total, MAX_SERVICE_CONCURRENCY)
-        if (Number(total) >= MAX_SERVICE_CONCURRENCY) {
+        console.log('total'.green, total, config.MAX_SERVICE_CONCURRENCY)
+        if (Number(total) >= config.MAX_SERVICE_CONCURRENCY) {
           // TODO: better error message
           return res.end('max concurrency hit, try again shortly.');
         }
         console.log('metric.' + req.params.owner + '.running'.green, err, total);
-        metric.incr("/" + req.params.owner + "/running");
         _runRemote();
       });
     });
