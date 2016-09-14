@@ -1,18 +1,17 @@
-var hook = require('../lib/resources/hook');
-var user = require('../lib/resources/user');
-var cache = require('../lib/resources/cache');
-var billing = require('../lib/resources/billing');
+var hook = require('../../lib/resources/hook');
+var user = require('../../lib/resources/user');
+var cache = require('../../lib/resources/cache');
+var billing = require('../../lib/resources/billing');
 var bodyParser = require('body-parser');
-var mergeParams = require('./mergeParams');
+var mergeParams = require('merge-params');
 var async = require('async');
-var colors = require('colors');
+var i18n = require('../helpers/i18n');
+
 // user schema used for form
 var userSchema = {
   name: { type: 'string', required: true },
   email: { type: 'string', format: 'email', required: false },
 };
-
-var addPaymentOption = require("./addPaymentOption");
 
 module['exports'] = function view (opts, callback) {
 
@@ -166,7 +165,6 @@ module['exports'] = function view (opts, callback) {
         // TODO: if form post data, attempt to update user account information
         showUserForm(r, function(err, result){
           $('.userForm').html(result);
-          var i18n = require('./helpers/i18n');
           i18n(req.i18n, $);
           callback(null, $.html());
         });
@@ -181,7 +179,6 @@ var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
 var mustache = require('mustache');
 
-var billingForm = require('./billingForm');
 
 function showUserForm (user, cb) {
   var formSchema = userSchema || {};
