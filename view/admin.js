@@ -51,7 +51,7 @@ module['exports'] = function view (opts, callback) {
       // console.log('check for role access', err, hasPermission)
       if (!hasPermission || req.resource.owner === "anonymous") { // don't allow anonymous hook update
         if (req.jsonResponse !== true && typeof params.hook_private_key === "undefined") {
-          req.session.redirectTo = "/new";
+          req.session.redirectTo = req.url;
           return res.redirect('/login');
         }
         return res.end(config.messages.unauthorizedRoleAccess(req, "hook::update"));
@@ -66,6 +66,7 @@ module['exports'] = function view (opts, callback) {
     });
 
     function next () {
+
       if (typeof params.owner === 'undefined' || params.owner.length === 0) {
         return res.redirect(301, '/' + req.session.user);
       }
@@ -120,10 +121,9 @@ module['exports'] = function view (opts, callback) {
 
       // manually assign properties
       var data = {};
-
       // strings
       data.gist = params.gist;
-      data.language = params.language || "javascript";
+      data.language = params.language;
 
       if (params.hookSource === "code") {
         delete params.gist;
@@ -143,10 +143,22 @@ module['exports'] = function view (opts, callback) {
         data.isPrivate = false;
       }
 
+      // make more API friendly
       if (params.themeActive) {
         data.themeStatus = "enabled";
       } else {
         data.themeStatus = "disabled";
+      }
+
+      if (params.schemaActive) {
+        data.mschema = JSON.parse(params.schema);
+      }
+
+      // TODO: also add view as new property name for public API
+      if (params.themeActive) {
+        data.themeStatus = "enabled";
+        data.themeSource = params.themeSource;
+        data.presenterSource = params.presenterSource;
       }
 
       data.themeName = params.themeSelect;
@@ -155,7 +167,7 @@ module['exports'] = function view (opts, callback) {
       data.mode = params.mode;
 
       // todo: only available for paid accounts
-      if (req.user.paidStatus === "paid" || req.session.paidStatus === "paid") {
+      if ((req.user && req.user.paidStatus === "paid") || req.session.paidStatus === "paid") {
         data.customTimeout = params.customTimeout || 10000;
       }
 
@@ -179,6 +191,10 @@ module['exports'] = function view (opts, callback) {
       data.id = req.hook.id;
       var key = '/hook/' + req.hook.owner + "/" + data.name;
       data.owner = req.hook.owner;
+
+      if (typeof data.language === "undefined") {
+        delete data.language;
+      }
 
       return hook.update(data, function(err, result){
         if (err) {
@@ -206,10 +222,34 @@ module['exports'] = function view (opts, callback) {
       });
 
     } else {
-      // get latest metric
-      metric.get('/' + req.hook.owner + "/" + req.hook.name + "/hits", function (err, count){
-        req.hook.ran = count || 0;
-        finish(req.hook);
+
+      var owner = req.hook.owner,
+          service = req.hook.name;
+      var getMetrics = [
+        '/' + owner + "/hits",
+        '/' + owner + "/totalHits",
+        '/' + owner + "/gateway/hits",
+        '/' + owner + "/running",
+        '/' + owner + "/" + service + "/hits",
+        '/' + owner + "/" + service + "/running"
+      ];
+      // get latest metrics
+      metric.all(req.hook.owner, req.hook.name, function (err, _metrics) {
+        req.hook.metrics = _metrics;
+
+        // filter out some metrics we don't want to show
+        // TODO: metric.mget method
+        Object.keys(_metrics).forEach(function(k){
+          var str = '<tr class="metricRow">\
+            <td class="metric"><a href="' + config.app.url + '/metrics' + k + '">/metrics' + k + '</a></td>\
+            <td class="count">' +  numberWithCommas(_metrics[k] || 0) + '</td>\
+          </tr>';
+          $('.hookMetrics table').append(str);
+        });
+        metric.get('/' + req.hook.owner + "/" + req.hook.name + "/hits", function (err, count){
+          req.hook.ran = count || 0;
+          finish(req.hook);
+        });
       });
     }
 
@@ -252,12 +292,20 @@ module['exports'] = function view (opts, callback) {
       $('.hookLink').attr('href', '/' + h.owner + '/' + h.name);
       $('.hookLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs");
       $('.clearLogs').attr('href', '/' + h.owner + '/' + h.name + "/logs?flush=true");
-      $('.hookSource').attr('href', '/' + h.owner + '/' + h.name + "/source");
+      $('.hookSource').attr('href', '/' + h.owner + '/' + h.name + "/_src");
       $('.hookResource').attr('href', '/' + h.owner + '/' + h.name + "/resource");
       $('.hookView').attr('href', '/' + h.owner + '/' + h.name + "/view");
       $('.hookPresenter').attr('href', '/' + h.owner + '/' + h.name + "/presenter");
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
+      $('.hookRevisions').attr('href', '/' + h.owner + '/' + h.name + '/_rev');
+      $('.hookAdmin').attr('href', '/' + h.owner + '/' + h.name + '/admin');
+      $('.hookRun').attr('href', '/' + h.owner + '/' + h.name);
+      $('#themeSource').html(h.themeSource);
+      $('#presenterSource').html(h.presenterSource);
 
+      if (typeof h.mschema !== "undefined") {
+        $('.hookSchema').html(JSON.stringify(h.mschema, true, 2));
+      }
       if (typeof h.customTimeout === "number") {
         $('.customTimeout').attr('value', h.customTimeout.toString());
       }
@@ -268,7 +316,6 @@ module['exports'] = function view (opts, callback) {
         $('.customTimeout').attr('disabled', 'DISABLED');
       }
 
-      $('.hookRan').attr('value', numberWithCommas(h.ran));
       $('#name').attr('value', h.name);
       $('.owner').attr('value', h.owner);
       if (h.isPrivate) {
@@ -314,7 +361,8 @@ module['exports'] = function view (opts, callback) {
 
       if (typeof h.language !== 'undefined') {
         $('#language').prepend('<option value="' + h.language + '">' + h.language + '</option>')
-        $('#gatewayForm').attr('action', '/Marak/gateway-' + h.language);
+        $('#gatewayLang').attr('value', h.language);
+        $('#gatewayForm').attr('action', '/gateway');
       }
 
       if (typeof h.status !== 'undefined') {
@@ -357,6 +405,8 @@ module['exports'] = function view (opts, callback) {
         var boot = {
           owner: req.session.user,
           source: h.source,
+          presenter: escape(h.presenterSource),
+          view: escape(h.themeSource),
           themes: themes,
           cron: h.cron
         };

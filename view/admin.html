@@ -12,6 +12,7 @@
   */
   label {
     cursor: hand;
+    padding-bottom: 5px;
   }
   .languages {
     display: block;
@@ -31,6 +32,28 @@
     font-size: 32px;
     color: rgb(68, 199, 68);
   }
+  .hookSchema {
+    width: 100%;
+    height: 200px;
+  }
+
+  .sticky {
+     position: fixed;
+     top: 0;
+  }
+
+  #sidebar.affix-top {
+      position: static;
+      margin-top:30px;
+      width:228px;
+    }
+
+  #sidebar.affix {
+    position: fixed;
+    top:70px;
+    width:228px;
+  }
+
 </style>
 
 <script type="text/javascript">
@@ -58,6 +81,15 @@
       var val = themes[$(this).val()];
       $('#theme').attr('value', val.theme);
       $('#presenter').attr('value', val.presenter);
+      // TODO: add mutex / cancel on gets with change
+      // load pre-defined theme View-Presenter as remote url request
+      $.get(val.theme, function (data, res) {
+        themeSource.setValue(data);
+      }, 'text');
+      $.get(val.presenter, function (data, res) {
+        alert(data.toString())
+        presenterSource.setValue(data.toString());
+      }, 'text');
     });
     
     $('.deleteLink').on('click', function(){
@@ -69,7 +101,6 @@
         return false;
       }
     });
-
 
     // client-side slugify
     // the server-side slugify code is much more robust covering much utf
@@ -126,7 +157,8 @@
   margin: 0px;
   padding: 0px;
   margin-bottom: 10px;
-  font-size: 32px;
+  margin-top: 10px;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -195,9 +227,12 @@ label {
 .hookFrame {
   display: none;
 }
+/* removed per breaking css
 .error {
   background-color: red;
 }
+*/
+
 /* do not group these rules */
 .error::-webkit-input-placeholder {
     color: white;
@@ -217,17 +252,6 @@ label {
 
 .cronRow {
   display: none;
-  color: black;
-  background-color: #f5f5f5;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-  margin-bottom: 20px;
 }
 
 .cronRow .tabs {
@@ -270,11 +294,18 @@ input[type="checkbox"] {
 
 .tiny {
   font-size: 16px;
+  padding-left: 0px;
+  padding-bottom: 10px;
 }
 
 .themeRow {
   display: none;
 }
+
+.schemaRow {
+  display: none;
+}
+
 
 .hookHolder {
 
@@ -286,12 +317,11 @@ input[type="checkbox"] {
 
 
 
-.hookHolder .form-control {
+.form-control {
   margin-bottom: 10px;
 }
 
 .hookHolder .form-group {
-  margin-bottom: 10px;
 }
 .gistUrlHolder {
   padding-top: 10px;
@@ -348,10 +378,8 @@ body legend {
 }
 
 .tiny .small-btn {
-  font-size: 16px;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 200px;
 }
 .tiny .small-btn:hover {
   font-weight: bold;
@@ -417,6 +445,12 @@ body legend {
 
   $(document).ready(function(){
 
+
+    $(function() {
+        $(window).scroll(sticky_relocate);
+        sticky_relocate();
+    });
+
     var deployingCode = false, snippetLoading = false;
 
     $('.hookFrame').on("load", function() {
@@ -468,6 +502,7 @@ body legend {
       deployingCode = true;
       var now = new Date().getTime();
       $('#source').val(editor.getValue());
+      $('#gatewaySchema').attr('value', schema.getValue());
       $('.gatewayForm').submit();
       //    $('iframe').show();
       return false;
@@ -526,6 +561,16 @@ body legend {
       }
     });
 
+    $('input[name="schemaActive"]').click(function(){
+      if($(this).prop('checked')) {
+        $('.schemaRow').show();
+        schema.refresh();
+      } else {
+        $('.schemaRow').hide();
+      }
+    });
+
+
     var options = {
       effect: 'drops',
       effectOptions: {
@@ -551,32 +596,19 @@ body legend {
       //$('#editorSource').attr('checked', 'CHECKED');
       //$('.gistUrlHolder').hide();
       //$('.codeEditorHolder').show();
+      presenterSource.setValue(unescape(boot.presenter));
+      themeSource.setValue(unescape(boot.view));
       editor.refresh();
     } else {
       // do nothing
     }
-    /*
-    $('#agreeWarning').on('click', function () {
-      $('.warnLanguages').hide();
-      $('#save').attr('disabled', null);
-      agreedToWarning = true;
-      return false;
-    });
-    */
 
     $('#language').change(function(e){
-
-      /*
-      if (!agreedToWarning) {
-        $('.warnLanguages').show();
-        $('#save').attr('disabled', 'DISABLED');
-      }
-      */
 
       var l = $('#language').val();
       //$('.currentLanguage').html($( "#language option:selected" ).text());
       if (l === "javascript") {
-        $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+        // $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
         $('.warnLanguages').hide();
         $('#save').attr('disabled', null);
       } else {
@@ -584,10 +616,11 @@ body legend {
         $('#gist').attr('value', '');
       }
 
-      $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+      //$('#gatewayForm').attr('action', config.app.url + '/gateway');
+      $('#gatewayLang').attr('value', l);
 
-      var keys = Object.keys(boot.examples[l]);
-      editor.setValue(boot.examples[l]['source']);
+      //var keys = Object.keys(boot.examples[l]);
+      //editor.setValue(boot.examples[l]['source']);
       $('#editorSource').click();
       $('.codeButton').click();
       //showCode();
@@ -618,6 +651,11 @@ body legend {
     $('.hookLinks .source').html(absLink(base, name + '/source'));
     $('.hookLinks .logs').html(absLink(base, name + '/logs'));
 
+    $('.hookSave').on('click', function(){
+      $('#save').click();
+      return false;
+    })
+
     if (path.length > 1) {
       $('.hookLinks .params').html(path);
     }
@@ -632,325 +670,523 @@ body legend {
   });
   */
   
+  function sticky_relocate() {
+      var window_top = $(window).scrollTop();
+      var div_top = $('#sticky-anchor').offset().top;
+      if (window_top > div_top)
+          $('#sticky-element').addClass('sticky');
+      else
+          $('#sticky-element').removeClass('sticky');
+  }
+
 </script>
 
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
-<div style="text-align: left;" class="container">
+
+<div style="text-align: left;" class="container content">
   <h1 class="i18n">Manage Microservice</h1>
-  <div class="message"></div>
-  <form id="hookForm" method="POST" action="/admin" role="form">
-    <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="clearLogs i18n">Clear Logs</a>&nbsp;|&nbsp;<a href="{{appUrl}}/keys" class="hookAccessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
-    <h3><a href="" class="hookSource i18n">View Source</a>&nbsp;|&nbsp;<a href="" class="hookResource i18n">Resource</a>&nbsp;|&nbsp;<a href="" class="hookView i18n">View</a>&nbsp;|&nbsp;<a href="" class="hookPresenter i18n">Presenter</a></h3>
-    <br/>
-    <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
-      <br/>
-      The Gist will now be associated with the Service once you've completed this form.
+
+  <div class="row" style="text-align: center;">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="message"></div>
     </div>
+  </div>
 
-    <div class="hookHolder well">
-      <h2 class="i18n">Service Information</h2>
-      <div class="form-group">
-        <label for="name" class="i18n">Name</label>
-        <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
-        <input type="hidden" id="previousName" name="previousName" class="previousName"/>
-        <input type="hidden" id="owner" name="owner" class="owner"/>
-        <div class="tiny">
-          <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="path" class="i18n">Route</label>
-        <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
-        <div class="tiny">
-          <em class="i18n">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="{{appUrl}}/docs#hook">Read More</a></em><br/>
-          <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n">Route Formatting Help</button>
-        </div>
-
-        <div class="tiny routeHint">
-          <h4 class="i18n">Route Formatting</h4>
-          <table class="routeExamples" border="1">
-            <tr>
-              <td><code>:name</code></td>
-              <td class="i18n">a named parameter to capture from the route</td>
-            </tr>
-            <tr>
-              <td><code>*splat</code></td>
-              <td class="i18n">a wildcard splat to capture from the route</td>
-            </tr>
-            <tr>
-              <td><code>()</code></td>
-              <td class="i18n">Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
-            </tr>
-            <tr>
-              <td><code>strings</code></td>
-              <td class="i18n">Anything else. Interpolate static strings with params.</td>
-            </tr>
-          </table>
-
-          <h4>Route Examples</h4>
-          <div class="routeExamples">
-            <code>
-              /:id/create <br/>
-              /some/(optional/):thing <br/>
-              /users/:id/comments/:comment/rating/:rating <br/>
-              /*a/foo/*b <br/>
-              /books/*section/:title <br/>
-            </code>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="mode" class="i18n">Mode</label>
-          <select class="form-control mode" name="mode">
-            <option value="Development" class="i18n">Development</option>
-            <option value="Production" class="i18n">Production</option>
-          </select>
-          <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
-        </div>
-
-
-      </div>
-
-      <div class="form-group">
-        <label for="path" class="i18n">Service URLs</label>
-
-
-        <div class="tiny">
-          <em class="i18n">The following URLs will be created to help manage the service.</em>
-        </div>
-
-        <table class="hookLinks" border="1">
-          <tr>
-            <td class="left"><strong>Home</strong></td>
-            <td class="home">loading...</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Optional Url Parameters</strong></td>
-            <td class="params">None</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Admin ( login required )</strong></td>
-            <td class="admin">loading...</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Source Code</strong></td>
-            <td class="source">loading...</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Logs</strong></td>
-            <td class="logs">loading...</td>
-          </tr>
-          <!--
-          <tr>
-            <td>View</td>
-            <td>http://hook.io/Marak/echo/view</td>
-          </tr>
-          <tr>
-            <td>Presenter</td>
-            <td>http://hook.io/Marak/echo/presenter</td>
-          </tr>
-          <tr>
-            <td>Fork</td>
-            <td>http://hook.io/Marak/echo/fork</td>
-          </tr>
+  <div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <div id="sticky-anchor"></div>
+      <div id="sticky-element" class="sticky">
+        <h2>Actions</h2>
+        <ul>
+          <li><a href="#run" class="hookRun" target="_blank">Run Service</a></li>
+          <li><a href="#" class="hookSave">Save Service</a></li>
+          <li><a href="#local" class="hookClone">Clone to local</a></li>
+          <!-- 
+          <li>Logs</li>
+          <li>Keys</li>
+          <li>Cache</li> 
           -->
-        </table>
-
-      </div>
-    </div>
-
-
-    <div class="analyticsHolder well">
-      <h2 class="i18n">Service Analytics</h2>
-      <!-- private / tokens -->
-      
-      <div class="form-group">
-        <label for="hookRan">Run Count</label>
-        <input type="text" class="form-control hookRan" id="hookRan" value="n/a" size="40">
-      </div>
-
-    </div>
-
-    <div class="timeoutsHolder well">
-      <h2 class="i18n">Service Timeouts</h2>
-      <!-- private / tokens -->
-      <div class="form-group">
-        <label for="customTimeout" class="i18n">Service Timeout</label>
-        <input name="customTimeout" type="text" class="form-control customTimeout" id="customTimeout" value="" size="40">
-      </div>
-
-    </div>
-
-    <div class="securityHolder well">
-      <h2 class="i18n">Service Security</h2>
-      <!-- private / tokens -->
-
-      <div class="form-group private">
-
-        <label for="hookPublic">Public Service</label>
-        <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
-        &nbsp;
-
-        <label for="hookPrivate">Private Service</label>
-        <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
-        <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.<br/></div>
-        <div class="securityHints">
-          <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
-          <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="sourcesHolder well">
-      <h2 class="i18n">Hook Source</h2>
-
-      <div class="services"></div>
-
-      <div class="form-group languages">
-        <label class="smaller" for="language">Programming Language:</label>
-        <select name="language" id="language">
-          <option value="javascript">JavaScript ( Recommended )</option>
-          <option value="es7">ECMAScript 7 ( Supported )</option>
-          <option value="coffee-script">CoffeeScript ( Supported )</option>
-          <option value="bash">Bash ( Experimental )</option>
-          <option value="lua">Lua ( Experimental )</option>
-          <option value="perl">Perl ( Experimental )</option>
-          <option value="php">PHP ( Experimental )</option>
-          <option value="python">Python ( Experimental )</option>
-          <option value="python3">Python 3 ( Experimental )</option>
-          <option value="ruby">Ruby ( Experimental )</option>
-          <option value="scheme">Scheme ( Experimental )</option>
-          <option value="smalltalk">SmallTalk ( Experimental )</option>
-          <option value="tcl">Tcl ( Experimental )</option>
-        </select>
-        <!--
-        <div class="warnLanguages">
-          <h2 class="warning">Warning</h2>
-          <p>We have <a href="{{appUrl}}/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
-          <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
-          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
-          <button class="btn" id="agreeWarning">Agree to Terms</button>
-        </div>
-        -->
-      </div>
-      <div class="form-group sources">
-
-        <label for="editorSource">Code Editor</label>
-        <input tabindex="5" type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Service from text editor">
-        &nbsp;
-
-        <label for="gistSource">Github Gist</label>
-        <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
-
-      </div>
-      <div class="tiny">
-        <em class="i18n">The source code to power the service. Can be provided as a Github Gist or as plain-text.</em>
+        </ul>
+        <br/>
+        <h2>Properties</h2>
+        <ul>
+          <li><a href="#endpoint">Endpoint</a></li>
+          <li><a href="#code">Code</a></li>
+          <li><a href="#schema">Schema</a></li>
+          <li><a href="#view">Theme / View</a></li>
+          <li><a href="#cron">Crontab</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#timeouts">Timeouts</a></li>
+          <li><a href="#metrics">Metrics</a></li>
+        </ul>
+        <br/>
+        <h2>Endpoints</h2>
+        <ul>
+          <li><a href="#endpoints" class="hookHome">Home Page</a></li>
+          <li><a href="#endpoints" class="hookAdmin">Admin Page</a></li>
+          <li><a href="#endpoints" class="">View Source</a></li>
+          <li><a href="#endpoints" class="hookLogs">View Logs</a></li>
+          <li><a href="#endpoints" class="hookRevisions">View Revisions</a></li>
+          <li><a href="#endpoints" class="hookFork">Share Fork</a></li>
+          <!--
+            <li><a href="#" class="hookRevisions">Fork Link</a></li>
+          -->
+        </ul>
       </div>
 
-      <div class="form-group gistUrlHolder">
-        <label for="gist">Gist Url</label>
-        <input tabindex="6" type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
-        <div class="tiny" style="padding-left:5px;padding-top:5px;">
-          <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
-        </div>
-      </div>
-
-      <div class="form-group codeEditorHolder well">
-
-          <!-- Create a simple CodeMirror instance -->
-          <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
-          <script src="/js/codemirror.js"></script>
-          <script src="/js/javascript.js"></script>
-          <script type="text/javascript">
-          </script>
-          <style>
-            .CodeMirror {
-              /* Set height, width, borders, and global font properties here */
-              margin-top: 10px;
-              margin-bottom: 10px;
-              font-family: monospace;
-              height: 500px;
-              color: black;
-              border: solid;
-              border-width: 1px;
-              box-shadow: 10px 10px 5px #888888;
-            }
-          </style>
-
-            <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
-            <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
-hook.res.end('put your code here');
-};</textarea>
-            <script type="text/javascript">
-              var editor;
-              editor = CodeMirror.fromTextArea($('textarea').get(0), {
-                lineNumbers: true
-              });
-              editor.refresh();
-              //editor.show();
-            </script>
-          <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
-        </div>
     </div>
+    <div class="col-lg-10 col-md-10 col-sm-10 serviceCol">
+        <form id="hookForm" method="POST" action="/admin" role="form">
+          <!--
+          <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="clearLogs i18n">Clear Logs</a>&nbsp;|&nbsp;<a href="{{appUrl}}/keys" class="hookAccessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
+          -->
+          <!--
+          <h3>
+            <a href="" class="hookSource i18n">View Service Source</a>
+              &nbsp;|&nbsp;
+              <a href="" class="hookResource i18n">Resource</a>&nbsp;|&nbsp;
+              <a href="" class="hookView i18n">View</a>&nbsp;|&nbsp;
+              <a href="" class="hookPresenter i18n">Presenter</a></h3>
+          <br/>
+          -->
+          <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
+            <br/>
+            The Gist will now be associated with the Service once you've completed this form.
+          </div>
 
-    <!--
-    <div class="form-group">
-      <label for="status">Hook Status</label>
-      <select class="form-control status" name="status">
-        <option value="active">Active</option>
-        <option value="disabled">Disabled</option>
-      </select>
+
+          <a name="endpoint"></a>
+          <div class="hookHolder well">
+            <h2 class="i18n">Endpoint</h2>
+            <div class="form-group">
+              <label for="name" class="i18n">Name</label>
+              <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
+              <input type="hidden" id="previousName" name="previousName" class="previousName"/>
+              <input type="hidden" id="owner" name="owner" class="owner"/>
+              <div class="tiny">
+                <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="path" class="i18n">Route</label>
+              <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
+              <div class="tiny">
+                <p>
+                  <em class="i18n">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope.</em>
+                  <a href="{{appUrl}}/docs#hook" target="_blank">Read More</a>
+                </p>
+                <button tabindex="3" type="button" class="routeTipsButton btn btn-primary small-btn i18n">Route Formatting Help</button>
+              </div>
+
+              <div class="tiny routeHint">
+                <h4 class="i18n"><strong>Route Formatting</strong></h4>
+                <table class="routeExamples" border="1">
+                  <tr>
+                    <td><code>:name</code></td>
+                    <td class="i18n">a named parameter to capture from the route</td>
+                  </tr>
+                  <tr>
+                    <td><code>*splat</code></td>
+                    <td class="i18n">a wildcard splat to capture from the route</td>
+                  </tr>
+                  <tr>
+                    <td><code>()</code></td>
+                    <td class="i18n">Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
+                  </tr>
+                  <tr>
+                    <td><code>strings</code></td>
+                    <td class="i18n">Anything else. Interpolate static strings with params.</td>
+                  </tr>
+                </table>
+
+                <h4>Route Examples</h4>
+                <div class="routeExamples">
+                  <code>
+                    /:id/create <br/>
+                    /some/(optional/):thing <br/>
+                    /users/:id/comments/:comment/rating/:rating <br/>
+                    /*a/foo/*b <br/>
+                    /books/*section/:title <br/>
+                  </code>
+                </div>
+              </div>
+
+
+            </div>
+            </div>
+            <!--
+            <div class="form-group">
+
+              <label for="path" class="i18n">Service URLs</label>
+
+              <div class="tiny">
+                <em class="i18n">The following URLs will be created to help manage the service.</em>
+              </div>
+
+              <table class="hookLinks" border="1">
+                <tr>
+                  <td class="left"><strong>Home</strong></td>
+                  <td class="home">loading...</td>
+                </tr>
+                <tr>
+                  <td><strong class="i18n">Optional Url Parameters</strong></td>
+                  <td class="params">None</td>
+                </tr>
+                <tr>
+                  <td><strong class="i18n">Admin ( login required )</strong></td>
+                  <td class="admin">loading...</td>
+                </tr>
+                <tr>
+                  <td><strong class="i18n">Source Code</strong></td>
+                  <td class="source">loading...</td>
+                </tr>
+                <tr>
+                  <td><strong class="i18n">Logs</strong></td>
+                  <td class="logs">loading...</td>
+                </tr>
+              </table>
+
+            </div>
+          </div>
+          -->
+
+          <a name="code"></a>
+          <div class="sourcesHolder well">
+            <h2 class="i18n">Source Code</h2>
+
+            <div class="services"></div>
+
+            <div class="form-group languages">
+              <label class="smaller" for="language">Language</label>
+              <select class="form-control" name="language" id="language">
+                <option value="javascript">JavaScript ( Recommended )</option>
+                <option value="es7">ECMAScript 7 ( Supported )</option>
+                <option value="coffee-script">CoffeeScript ( Supported )</option>
+                <option value="bash">Bash</option>
+                <option value="lua">Lua</option>
+                <option value="perl">Perl</option>
+                <option value="php">PHP</option>
+                <option value="python">Python</option>
+                <option value="python3">Python 3</option>
+                <option value="ruby">Ruby</option>
+                <option value="scheme">Scheme</option>
+                <option value="smalltalk">SmallTalk</option>
+                <option value="tcl">Tcl</option>
+              </select>
+              <!--
+              <div class="warnLanguages">
+                <h2 class="warning">Warning</h2>
+                <p>We have <a href="{{appUrl}}/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
+                <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
+                <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
+                <button class="btn" id="agreeWarning">Agree to Terms</button>
+              </div>
+              -->
+            </div>
+            <div class="form-group sources">
+
+              <div class="tiny">
+                <em class="i18n">The source code to power the service can be provided as a Github Gist or as plain-text.</em>
+              </div>
+
+              <div class="form-control">
+                  <label class="radio-inline" for="editorSource">
+                    <input tabindex="5" type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Service from text editor">
+                    Code Editor
+                  </label>
+                  <label class="radio-inline" for="gistSource">
+                    <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
+                    Github Gist
+                  </label>
+              </div>
+
+            </div>
+
+            <div class="form-group gistUrlHolder">
+              <label for="gist">Gist Url</label>
+              <input tabindex="6" type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
+              <div class="tiny" style="padding-left:5px;padding-top:5px;">
+                <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
+              </div>
+
+                <label for="mode" class="i18n">Mode</label>
+                <select class="form-control mode" name="mode">
+                  <option value="Development" class="i18n">Development</option>
+                  <option value="Production" class="i18n">Production</option>
+                </select>
+                <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+
+
+            </div>
+
+            <div class="form-group codeEditorHolder">
+
+                <!-- Create a simple CodeMirror instance -->
+                <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
+                <script src="/js/codemirror.js"></script>
+                <script src="/js/javascript.js"></script>
+                <script type="text/javascript">
+                </script>
+                <style>
+                  .CodeMirror {
+                    /* Set height, width, borders, and global font properties here */
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    font-family: monospace;
+                    height: 500px;
+                    color: black;
+                    border: solid;
+                    border-width: 1px;
+                    box-shadow: 10px 10px 5px #888888;
+                  }
+                </style>
+
+                  <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
+                  <button type="button" class="codeButton btn">Edit Code</button>
+                  <button type="button" class="helpButton btn">Help</button> <br/>
+
+                  <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
+      hook.res.end('put your code here');
+      };</textarea>
+                  <script type="text/javascript">
+
+                  var editor, schema, themeSource, presenterSource;
+
+                    $(document).ready(function(){
+                      schema = CodeMirror.fromTextArea($('.hookSchema').get(0), {
+                        lineNumbers: true
+                      });
+                      schema.refresh();
+                    });
+
+                    editor = CodeMirror.fromTextArea($('.codeEditor').get(0), {
+                      lineNumbers: true
+                    });
+                    editor.refresh();
+
+                  </script>
+                <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
+              </div>
+          </div>
+
+          <a name="schema"></a>
+
+          <div class="form-group">
+            <input tabindex="10" type="checkbox" class="schemaActive i18n" id="schemaActive" name="schemaActive" title="Themes are an easy way to customize the output of the Service.">
+            <label for="schemaActive" class="i18n">Use a Schema for Service Input Parameters</label>
+          </div>
+
+          <div class="well schemaRow">
+            <h2 class="i18n">Schema for HTTP Input Parameters</h2>
+            <button type="button" class="schemaHelpButton btn btn-primary">Schema Help</button> <br/>
+            <div class="form-group">
+              <textarea name="schema" class="hookSchema">{}</textarea>
+            </div>
+          </div>
+
+          <a name="view"></a>
+
+          <div class="form-group">
+            <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Service.">
+            <label for="themeActive" class="i18n">Customize appearance of Service with a Theme or View-Presenter</label>
+          </div>
+
+          <div class="themeSelector well themeRow"></div>
+
+          <a name="cron"></a>
+          <div class="form-group">
+            <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Service will execute as a scheduled tasked based on provided Cron pattern.">
+            <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
+          </div>
+
+          <div class="form-group cronRow well">
+            <h2>Hooks can be scheduled on a timer</h2>
+
+            <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
+            <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
+            <p class="superTiny">By design, Crons will not pass any data into the Service. If you need to pass data into the scheduled Service, you can simply set default data in the Service or chain two Hooks together to pipe the data.</p>
+            <p class="warning"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
+
+            <h3>Cron Pattern</h3>
+            <div class="cronDiv"></div>
+
+          </div>
+
+          <a name="metrics"></a>
+
+          <a name="security"></a>
+          <div class="securityHolder well">
+            <h2 class="i18n">Security</h2>
+            <!-- private / tokens -->
+
+            <div class="form-group private">
+
+              <p>
+                If a service is set to "Private", it will only be accessible when logged into the web app, or through an API Access Key with an associated role of <code>hook::run</code>.
+              </p>
+              <p>
+                Additionally, Private services restrict public access to potentially private information like your source code or logs. <a href="{{appUrl}}/keys">Read More.</a>
+              </p>
+
+              <div class="paidAccount">
+                <p>
+                  <span class="warning"><strong>Note:</strong> </span> In order to enable <a href="{{appUrl}}/faq#private">private services</a>, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
+                </p>
+              </div>
+
+              <label for="hookPublic">Public Service</label>
+              <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
+              &nbsp;
+
+              <label for="hookPrivate">Private Service</label>
+              <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
+              <div class="securityHints">
+                <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
+                <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
+              </div>
+            </div>
+          </div>
+
+          <a name="timeouts"></a>
+          <div class="timeoutsHolder well">
+            <h2 class="i18n">Timeouts</h2>
+            <!-- private / tokens -->
+            <p>The timeout value is how long your service will run in Milliseconds until {{appName}} automatically exits the service and ends the response</p>
+            <p>Some custom services may require longer timeouts, but most simply services should not. <a href="{{appUrl}}/docs#timeouts">Read More about Timeouts</a></p> 
+            <div class="paidAccount">
+              <p>
+                <span class="warning"><strong>Note:</strong> </span> In order increase the service timeout value enable, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="customTimeout" class="i18n">Service Timeout</label>
+              <input name="customTimeout" type="text" class="form-control customTimeout" id="customTimeout" value="" size="40">
+            </div>
+          </div>
+
+          <div class="analyticsHolder well">
+            <h2 class="i18n">Metrics </h2>
+            <!-- private / tokens -->
+            <div class="form-group">
+              <div class="hookMetrics">
+                <table class="table">
+                  <tr>
+                    <th>Metric</th>
+                    <th>Count</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <a name="endpoints"></a>
+          <div class="endpointHolder well">
+            <h2 class="i18n">Endpoints </h2>
+            <p>Your microservice contains the following unique URL endpoints. These are used for help managing the microservice.</p>
+            <p><strong>Note:</strong> These endpoints are currently: Public. In order to protect these URLs set the microservice to Private.</p>
+            <!-- private / tokens -->
+            <div class="form-group">
+              <div class="hookEndpoints">
+                <table class="table">
+                  <tr>
+                    <th>Endpoint</th>
+                    <th>URL</th>
+                  </tr>
+                  <tr>
+                    <td>Home Page</td>
+                    <td>/admin</td>
+                  </tr>
+                  <tr>
+                    <td>Administration Page</td>
+                    <td>/admin</td>
+                  </tr>
+                  <tr>
+                    <td>View Source</td>
+                    <td>/_src</td>
+                  </tr>
+                  <tr>
+                    <td>View Logs</td>
+                    <td>/_log</td>
+                  </tr>
+                  <tr>
+                    <td>View Revisions</td>
+                    <td>/_rev</td>
+                  </tr>
+                  <tr>
+                    <td>Share Fork</td>
+                    <td>/_fork</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <a name="local"></a>
+          <div class="localHolder well">
+            <h2 class="i18n">Local Development </h2>
+            <p>{{appName}} services may be cloned and run locally by installing the {{appName}} SDK.</p>
+            <h3>Quick SDK Install</h3>
+<pre><code>
+  sudo npm install -g hook.io-sdk
+</code></pre>
+<br/>
+            <p>
+              Once the SDK is installed, you will have access to the <code>hook-clone</code> CLI command.
+            </p>
+
+            <h3>Clone Service to Local</h3>
+            <div>
+<pre><code>
+  hook-clone examples/bash-schema
+  cd bash-schema
+  npm start
+</code></pre>
+  </div>
+    <br/>
+            <p>
+              This will start a local HTTP development server mounted with the cloned microservice.
+            </p>
+          </div>
+
+          <!--
+          <div class="form-group">
+            <label for="status">Hook Status</label>
+            <select class="form-control status" name="status">
+              <option value="active">Active</option>
+              <option value="disabled">Disabled</option>
+            </select>
+          </div>
+          -->
+
+
+          <!-- TODO - add form for hook schema -->
+          <div class="dangerZone well" align="right">
+            <div class="form-group danger">
+              <span class="warning"><strong>Danger Zone</strong></span>:
+                <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>
+            </div>
+          </div>
+
+          <a name="save"></a>
+          <div class="form-group">
+            <input tabindex="1" id="save" name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary">
+          </div>
+
+          <!-- 
+          <div class="form-group">
+            <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">
+            <label for="isPublic">Display Hook in public Hook registry</label>
+          </div>
+          -->
+        </form>
+
+        <form name="gatewayForm" id="gatewayForm" action="/gateway" method="POST" target="hookFrame" class="gatewayForm">
+            <input type="hidden" name="code" id="source"/>
+            <input type="hidden" name="language" id="gatewayLang"/>
+            <input type="hidden" name="schema" id="gatewaySchema"/>
+        </form>
     </div>
-    -->
-
-
-    <div class="form-group">
-      <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Service.">
-      <label for="themeActive" class="i18n">Customize appearance of Service with a Theme</label>
-    </div>
-
-    <div class="themeSelector well themeRow"></div>
-
-    <div class="form-group">
-      <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Service will execute as a scheduled tasked based on provided Cron pattern.">
-      <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
-    </div>
-
-    <div class="form-group cronRow well">
-      <h2>Hooks can be scheduled on a timer</h2>
-
-      <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
-      <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
-      <p class="superTiny">By design, Crons will not pass any data into the Service. If you need to pass data into the scheduled Service, you can simply set default data in the Service or chain two Hooks together to pipe the data.</p>
-      <p class="warning"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
-      
-      <h3>Cron Pattern</h3>
-      <div class="cronDiv"></div>
-    </div>
-    
-    <div class="dangerZone well" align="right">
-      <div class="form-group danger">
-        <span class="warning"><strong>Danger Zone</strong></span>:
-          <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>
-      </div>
-    </div>
-    <div class="form-group">
-      <input tabindex="1" id="save" name="save" type="submit" value="Save Hook"/ class="btn i18n">
-    </div>
-    
-    <!-- 
-    <div class="form-group">
-      <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">
-      <label for="isPublic">Display Hook in public Hook registry</label>
-    </div>
-    -->
-  </form>
-
-
-
-  <form name="gatewayForm" id="gatewayForm" action="/Marak/gateway" method="POST" target="hookFrame" class="gatewayForm">
-      <input type="hidden" name="source" id="source"/>
-  </form>
+  </div>
 
   <br/>
 
