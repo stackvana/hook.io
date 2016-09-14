@@ -19,7 +19,7 @@
   }
 </style>
 
-<h2>Customize the appearance of the Service</h2>
+<h2>Custom View Rendering</h2>
 <p>Themes are a great way to add static and dynamic HTML, CSS, and JavaScript to a Services's output.</p>
 <p class="superTiny">Themes use a View-Presenter pattern. <a href="https://hook.io/themes" target="_blank">Read more</a>.</p>
 <p class="superTiny">Theme rendering can be bypassed by requesting the hook with <code>application/json</code> content-type or specifying the <code>format</code> parameter to raw</p>
@@ -38,10 +38,58 @@
 
 <div class="form-group customTheme">
  <label for="theme">View</label>
- <input class="form-control" type="text" id="theme" name="theme" value="https://hook.io/themes/none/index.html" size="40"/>
+ <input class="form-control" type="text" id="theme" name="theme" value="" size="40"/>
 </div>
+
+<div class="form-group themeSource">
+ <label for="themeSource">Theme Source</label>
+ <textarea class="form-control" id="themeSource" name="themeSource" class="themeSource"</textarea>
+</div>
+
+<iframe id="preview"></iframe>
 
 <div class="form-group customTheme">
  <label for="presenter">Presenter</label>
- <input class="form-control" type="text" id="presenter" name="presenter" value="https://hook.io/themes/none/index.js" size="40"/> 
+ <input class="form-control" type="text" id="presenter" name="presenter" value="" size="40"/>
 </div>
+
+<div class="form-group presenterSource">
+ <label for="presenter">Presenter</label>
+ <input class="form-control" type="text" id="presenterSource" name="presenterSource" class="presenterSource" value="" size="40"/>
+</div>
+
+<script>
+
+  themeSource = CodeMirror.fromTextArea($('#themeSource').get(0), {
+    lineNumbers: true,
+    mode: 'text/html'
+  });
+  themeSource.refresh();
+
+
+  var delay;
+  // Initialize CodeMirror editor with a nice html5 canvas demo.
+
+  /*
+  // TODO: we could add a live preview to the HTML for the theme
+  themeSource.on("change", function() {
+    clearTimeout(delay);
+    delay = setTimeout(updatePreview, 300);
+  });
+  */
+
+  function updatePreview() {
+    var previewFrame = document.getElementById('preview');
+    var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+    preview.open();
+    preview.write(themeSource.getValue());
+    preview.close();
+  }
+  // setTimeout(updatePreview, 300);
+
+  presenterSource = CodeMirror.fromTextArea($('#presenterSource').get(0), {
+    lineNumbers: true
+  });
+  presenterSource.refresh();
+
+</script>
