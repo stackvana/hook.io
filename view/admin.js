@@ -152,6 +152,9 @@ module['exports'] = function view (opts, callback) {
 
       if (params.schemaActive) {
         data.mschema = JSON.parse(params.schema);
+        data.mschemaStatus = "enabled";
+      } else {
+        data.mschemaStatus = "disabled";
       }
 
       // TODO: also add view as new property name for public API
@@ -392,6 +395,11 @@ module['exports'] = function view (opts, callback) {
         if (h.themeStatus === "enabled") {
           $('#themeActive').attr('checked', 'CHECKED');
           $('.themeRow').attr('style', 'display: block;');
+        }
+
+        if (h.mschemaStatus === "enabled") {
+          $('#schemaActive').attr('checked', 'CHECKED');
+          $('.schemaRow').attr('style', 'display: block;');
         }
 
         var i18n = require('./helpers/i18n');

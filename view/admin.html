@@ -87,7 +87,6 @@
         themeSource.setValue(data);
       }, 'text');
       $.get(val.presenter, function (data, res) {
-        alert(data.toString())
         presenterSource.setValue(data.toString());
       }, 'text');
     });
@@ -188,6 +187,10 @@
 }
 
 .routeHint {
+  display: none;
+}
+
+.schemaHelp {
   display: none;
 }
 
@@ -445,18 +448,12 @@ body legend {
 
   $(document).ready(function(){
 
-
-    $(function() {
-        $(window).scroll(sticky_relocate);
-        sticky_relocate();
-    });
-
     var deployingCode = false, snippetLoading = false;
 
     $('.hookFrame').on("load", function() {
       if (deployingCode) {
         //snippetLoaded();
-        $('.CodeMirror').hide();
+        $('.codeEditorHolder .CodeMirror').hide();
         $('.hookFrame').show();
         deployingCode = false;
       }
@@ -502,7 +499,10 @@ body legend {
       deployingCode = true;
       var now = new Date().getTime();
       $('#source').val(editor.getValue());
-      $('#gatewaySchema').attr('value', schema.getValue());
+      // only apply schema to gateway if checkbox is checked
+      if ($('.schemaActive').is(':checked')) {
+        $('#gatewaySchema').attr('value', schema.getValue());
+      }
       $('.gatewayForm').submit();
       //    $('iframe').show();
       return false;
@@ -513,10 +513,10 @@ body legend {
       return false;
     });
 
-    $('.saveButton').on('click', function(){
+    $('.saveButton').on('click', function () {
     });
 
-    $('#name').on('click', function(){
+    $('#name').on('click', function () {
       $('#name').removeClass('error');
     });
 
@@ -535,6 +535,15 @@ body legend {
         $('.routeHint').show();
       } else {
         $('.routeHint').hide();
+      }
+      return false;
+    });
+
+    $('.schemaHelpButton').on('click', function(){
+      if ($('.schemaHelp').css('display') === "none") {
+        $('.schemaHelp').show();
+      } else {
+        $('.schemaHelp').hide();
       }
       return false;
     });
@@ -567,6 +576,7 @@ body legend {
         schema.refresh();
       } else {
         $('.schemaRow').hide();
+        $('#gatewaySchema').attr('value', '');
       }
     });
 
@@ -695,7 +705,7 @@ body legend {
   <div class="row">
     <div class="col-lg-2 col-md-2 col-sm-2">
       <div id="sticky-anchor"></div>
-      <div id="sticky-element" class="sticky">
+      <div>
         <h2>Actions</h2>
         <ul>
           <li><a href="#run" class="hookRun" target="_blank">Run Service</a></li>
@@ -979,6 +989,39 @@ body legend {
           <div class="well schemaRow">
             <h2 class="i18n">Schema for HTTP Input Parameters</h2>
             <button type="button" class="schemaHelpButton btn btn-primary">Schema Help</button> <br/>
+
+            <div class="schemaHelp tiny">
+              <br/>
+              <h3>Using a Schema for your service's input parameters.</h3>
+              <p>Adding a schema to a service provides an automated layer of validation and default values for incoming HTTP request parameters</p>
+              <p>Schemas are implemented using the <a href="https://github.com/mschema/mschema" target="_blank">mschema library.</a> Additional documentation for schema usage <a href="https://github.com/mschema/mschema" target="_blank">can be found here</a>.
+              <p>
+                Examples:
+              </p>
+              <div>
+                <pre><code>
+{
+  "name": {
+    "type": "string",
+    "minLength": 5,
+    "maxLength": 20,
+    "required": true
+  },
+  "password": {
+    "type": "string",
+    "minLength": 8,
+    "maxLength": 64
+  },
+  "age": {
+    "type": "number",
+    "required": true,
+    "default": 42
+  }
+}
+                </code></pre>
+              </div>
+            </div>
+
             <div class="form-group">
               <textarea name="schema" class="hookSchema">{}</textarea>
             </div>
@@ -1021,8 +1064,15 @@ body legend {
 
             <div class="form-group private">
 
+              <label for="hookPublic">Public Service</label>
+              <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
+              &nbsp;
+
+              <label for="hookPrivate">Private Service</label>
+              <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
+
               <p>
-                If a service is set to "Private", it will only be accessible when logged into the web app, or through an API Access Key with an associated role of <code>hook::run</code>.
+                If a service is set to "Private", it will only be accessible when logged into the web app, or through a valid API Access Key with an associated role of <code>hook::run</code>.
               </p>
               <p>
                 Additionally, Private services restrict public access to potentially private information like your source code or logs. <a href="{{appUrl}}/keys">Read More.</a>
@@ -1034,12 +1084,6 @@ body legend {
                 </p>
               </div>
 
-              <label for="hookPublic">Public Service</label>
-              <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
-              &nbsp;
-
-              <label for="hookPrivate">Private Service</label>
-              <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
               <div class="securityHints">
                 <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
                 <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
@@ -1093,28 +1137,28 @@ body legend {
                     <th>URL</th>
                   </tr>
                   <tr>
-                    <td>Home Page</td>
-                    <td>/admin</td>
+                    <td><a href="#" class="hookHome">Home Page</a></td>
+                    <td><a href="#" class="hookHome">/</a></td>
                   </tr>
                   <tr>
-                    <td>Administration Page</td>
-                    <td>/admin</td>
+                    <td><a href="#" class="hookAdmin">Administration Page</a></td>
+                    <td><a href="#" class="hookAdmin">/admin</a></td>
                   </tr>
                   <tr>
-                    <td>View Source</td>
-                    <td>/_src</td>
+                    <td><a href="#" class="hookSource">View Source</a></td>
+                    <td><a href="#" class="hookSource">/_src</a></td>
                   </tr>
                   <tr>
-                    <td>View Logs</td>
-                    <td>/_log</td>
+                    <td><a href="#" class="hookLogs">View Logs</a></td>
+                    <td><a href="#" class="hookLogs">/_log</a></td>
                   </tr>
                   <tr>
-                    <td>View Revisions</td>
-                    <td>/_rev</td>
+                    <td><a href="#" class="hookRevisions">View Revisions</a></td>
+                    <td><a href="#" class="hookRevisions">/_rev</a></td>
                   </tr>
                   <tr>
-                    <td>Share Fork</td>
-                    <td>/_fork</td>
+                    <td><a href="#" class="hookFork">Share Fork</a></td>
+                    <td><a href="#" class="hookFork">/_fork</a></td>
                   </tr>
                 </table>
               </div>
