@@ -20,9 +20,8 @@
 </style>
 
 <h2>Custom View Rendering</h2>
-<p>Themes are a great way to add static and dynamic HTML, CSS, and JavaScript to a Services's output.</p>
-<p class="superTiny">Themes use a View-Presenter pattern. <a href="https://hook.io/themes" target="_blank">Read more</a>.</p>
-<p class="superTiny">Theme rendering can be bypassed by requesting the hook with <code>application/json</code> content-type or specifying the <code>format</code> parameter to raw</p>
+<p>A Theme or custom View can be used to customize the output of a service using static and dynamic HTML, CSS, and JavaScript.</p>
+<p class="superTiny">Pick a predefined Theme or write your own custom View. <a href="https://hook.io/themes" target="_blank">Read more</a>.</p>
 
 <div class="form-group predefinedTheme">
  <select class="themeSelect form-control" name="themeSelect">
@@ -43,10 +42,10 @@
 
 <div class="form-group themeSource">
  <label for="themeSource">Theme Source</label>
- <textarea class="form-control" id="themeSource" name="themeSource" class="themeSource"</textarea>
+ <textarea class="form-control" id="themeSource" name="themeSource" class="themeSource"></textarea>
 </div>
 
-<iframe id="preview"></iframe>
+<!-- <iframe id="preview"></iframe> -->
 
 <div class="form-group customTheme">
  <label for="presenter">Presenter</label>

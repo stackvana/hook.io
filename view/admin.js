@@ -3,7 +3,7 @@
 var hook = require('../lib/resources/hook');
 var user = require('../lib/resources/user');
 var resource = require('resource');
-var hooks = require('hook.io-hooks');
+var hooks = require('microservice-examples');
 var cache = require('../lib/resources/cache');
 var billing = require('../lib/resources/billing');
 var metric = require('../lib/resources/metric');
@@ -66,7 +66,6 @@ module['exports'] = function view (opts, callback) {
     });
 
     function next () {
-
       if (typeof params.owner === 'undefined' || params.owner.length === 0) {
         return res.redirect(301, '/' + req.session.user);
       }
@@ -218,7 +217,7 @@ module['exports'] = function view (opts, callback) {
               "key": key,
               "value": result
             };
-            return res.json(rsp)
+            return res.json({ status: 'updated', hook: result });
           }
           return res.redirect('/admin?owner=' + req.hook.owner + "&name=" + data.name + "&status=saved");
         });
@@ -283,11 +282,11 @@ module['exports'] = function view (opts, callback) {
       }
 
       if (params.status === "created") {
-        $('.message').html('Hook Created!')
+        $('.message').html('Created new service.')
       }
 
       if (params.status === "saved") {
-        $('.message').html('Hook Saved!')
+        $('.message').html('Service saved.')
       }
 
       $('#owner').attr('value', h.owner);
@@ -301,8 +300,10 @@ module['exports'] = function view (opts, callback) {
       $('.hookPresenter').attr('href', '/' + h.owner + '/' + h.name + "/presenter");
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
       $('.hookRevisions').attr('href', '/' + h.owner + '/' + h.name + '/_rev');
-      $('.hookAdmin').attr('href', '/' + h.owner + '/' + h.name + '/admin');
+      $('.hookAdmin').attr('href', '/' + h.owner + '/' + h.name + '/_admin');
       $('.hookRun').attr('href', '/' + h.owner + '/' + h.name);
+      $('.hookFork').attr('href', '/' + h.owner + '/' + h.name + "/_fork");
+
       $('#themeSource').html(h.themeSource);
       $('#presenterSource').html(h.presenterSource);
 
@@ -321,6 +322,10 @@ module['exports'] = function view (opts, callback) {
 
       $('#name').attr('value', h.name);
       $('.owner').attr('value', h.owner);
+
+      $('.hookName').html(h.name);
+      $('.hookOwner').html(h.owner);
+
       if (h.isPrivate) {
         $('.hookPrivate').attr('checked', 'CHECKED');
       } else {

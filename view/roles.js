@@ -19,7 +19,9 @@ module['exports'] = function view (opts, callback) {
 
   Object.keys(role.roles).sort().forEach(function(r){
     $('.availableRoles').append('<div>' + r + '</div>');
+    $('.roles').append('<tr><td>' + r + '</td><td>' + (role.roles[r].description || "n/a") +'</td></tr>')
   });
+
 
   $ = req.white($);
   callback(null, $.html());

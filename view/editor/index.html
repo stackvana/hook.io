@@ -35,10 +35,12 @@
     padding-bottom: 10px;
     /* margin-right: 10px; */
     font-size: 22px;
-    /* float: left; */
+    /*float: left; */
     padding-top: 5px;  
   }
-  
+  .editorHolder {
+    display: none;
+  }
 </style>
 
 <div>
@@ -129,6 +131,48 @@
         selector: '#widget'
       });
 
+      viewEditor = CodeMirror.fromTextArea($('#view').get(0), {
+        lineNumbers: true
+      });
+      viewEditor.refresh();
+
+      presenterEditor = CodeMirror.fromTextArea($('#presenter').get(0), {
+        lineNumbers: true
+      });
+      presenterEditor.refresh();
+
+      schemaEditor = CodeMirror.fromTextArea($('#schema').get(0), {
+        lineNumbers: true
+      });
+      schemaEditor.refresh();
+
+      $('.codeHolder').show();
+      //editor.refresh();
+
+      $('.codeButton').on('click', function(){
+        $('.editorHolder').hide();
+        $('.codeHolder').show();
+      });
+
+      $('.viewButton').on('click', function(){
+        $('.editorHolder').hide();
+        $('.viewHolder').show();
+        viewEditor.refresh();
+      });
+
+      $('.presenterButton').on('click', function(){
+        $('.editorHolder').hide();
+        $('.presenterHolder').show();
+        presenterEditor.refresh();
+      });
+
+      $('.schemaButton').on('click', function(){
+        $('.editorHolder').hide();
+        $('.schemaHolder').show();
+        schemaEditor.refresh();
+      });
+
+
       $('#language').change(function(e){
 
         var l = $('#language').val();
@@ -178,6 +222,9 @@
         deployingCode = true;
         var now = new Date().getTime();
         $('#code').val(editor.getValue());
+        $('#gatewaySchema').attr('value', schemaEditor.getValue());
+        $('#gatewayView').attr('value', viewEditor.getValue());
+        $('#gatewayPresenter').attr('value', presenterEditor.getValue());
         $('.gatewayForm').submit();
         return false;
       };
@@ -262,7 +309,7 @@
 
       $('.selectSnippet').on('change', function(){
         // var item = $(this)
-        widget.loadSnippet($('.selectSnippet').val());
+        widget.loadSnippet('examples/' + $('.selectSnippet').val());
       });
 
       $('.nextSnippet').on('click', function() {
@@ -292,7 +339,7 @@
       widget.showCode();
 
     });
-    var editor;
+    var editor, viewEditor, presenterEditor, schemaEditor;
     </script>
     <style>
       .CodeMirror {
@@ -330,11 +377,9 @@
                    <option value="smalltalk">SmallTalk</option>
                    <option value="tcl">Tcl</option>
                  </select>
-                 <br/>
-              </div>
-              <div>
                 <select name="selectSnippet" class="selectSnippet btn btn-default">
                 </select>
+                <!--
                 <div class="transportControl transportActions">
                   <span class="transportControl prevControl">
                     <a class="prevSnippet" href="#prev"><span class="octicon octicon-playback-rewind"></span>&nbsp;Prev</a>
@@ -344,6 +389,7 @@
                     <a class="nextSnippet" href="#next">Next&nbsp;<span class="octicon octicon-playback-fast-forward"></span></a>
                   </span>
                 </div>
+                -->
               </div>
               <div class="transportControl">
                 <!-- /gist endpoint is used for creating new gists from source code as string -->
@@ -358,7 +404,13 @@
               -->
             </div>
             <a name="tuts"></a>
+
+            <div>
+              <button class="codeButton">Code</button> | <button class="viewButton">View</button> | <button class="presenterButton">Presenter</button> | <button class="schemaButton">Schema</button>
+            </div>
+
             <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
+            <div class="codeHolder editorHolder">
             <form name="gatewayForm" id="gatewayForm" action="/gateway" method="POST" target="hookFrame" class="gatewayForm">
       <textarea name="code" id="code">// A simple hello world microservice 
 // Click "Deploy Service" to deploy this code
@@ -371,7 +423,35 @@ module['exports'] = function helloWorld (hook) {
   hook.res.end(host + ' says, "Hello world!"');
 };</textarea>
           <input name="language" class="serviceLang" type="hidden" value="javascript"/>
+          <!-- <input type="hidden" name="code" id="source"/> -->
+          <!-- <input type="hidden" name="language" id="gatewayLang"/> -->
+          <input type="hidden" name="schema" id="gatewaySchema"/>
+          <input type="hidden" name="view" id="gatewayView"/>
+          <input type="hidden" name="presenter" id="gatewayPresenter"/>
           </form>
+          </div>
+
+          <div class="viewHolder editorHolder">
+            <div class="form-group themeSource">
+             <!-- <label for="view">Theme Source</label> -->
+             <textarea class="form-control" id="view" name="view" class="view"></textarea>
+            </div>
+          </div>
+
+          <div class="presenterHolder editorHolder">
+            <div class="form-group">
+             <!-- <label for="view">Theme Source</label> -->
+             <textarea class="form-control" id="presenter" name="presenter" class="presenter"></textarea>
+            </div>
+          </div>
+
+          <div class="schemaHolder editorHolder">
+            <div class="form-group">
+             <!-- <label for="view">Theme Source</label> -->
+             <textarea class="form-control" id="schema" name="schema" class="schema">{}</textarea>
+            </div>
+          </div>
+
           <iframe name="hookFrame" class="hookFrame"></iframe>
             <!-- <div class="hookOutput"></div> -->
           </div>

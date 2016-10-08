@@ -16,15 +16,11 @@
 </script>
 
 <style>
- .env input {
-   font-size:22px;
- }
- .env td {
-   font-size:22px;
- }
  .availableRoles div {
    font-size: 22px;
    padding: 5px;
+ }
+ .roles {
  }
 
 </style>
@@ -39,8 +35,16 @@
 
     <h2><a href="{{appUrl}}/keys">Create a new API Access Key using these roles</a></h2>
     <h2>Available Roles</h2>
-    <div class="availableRoles">
-    </div>
+    <table class="roles table">
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Description
+        </th>
+      </tr>
+    </table>
   </div>
 </div>
 

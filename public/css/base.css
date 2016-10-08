@@ -44,6 +44,11 @@ label {
   color: rgb(255, 2, 2) !important;
 }
 
+/* TODO: better style for warning? */
+.warning {
+  color: rgb(255, 2, 2) !important;
+}
+
 .errorInput {
   border: 2px solid red !important;
   color: rgb(255, 2, 2) !important;
@@ -123,4 +128,8 @@ label {
 .emailReminder h2 {
   padding: 0px;
   margin: 0px;
+}
+
+.closeWarning {
+  cursor: pointer;
 }

@@ -69,19 +69,19 @@ module['exports'] = function view (opts, callback) {
     switch (params.f) {
       
       case 'view.html':
-        $('#code').html(h.themeSource);
+        $('#code').text(h.themeSource);
       break;
 
       case 'presenter.js':
-        $('#code').html(h.presenterSource);
+        $('#code').text(h.presenterSource);
       break;
 
       case 'schema.js':
-        $('#code').html(JSON.stringify(h.mschema, true, 2));
+        $('#code').text(JSON.stringify(h.mschema, true, 2));
       break;
       
       default:
-        $('#code').html(h.source);
+        $('#code').text(h.source);
       break;
       
     }

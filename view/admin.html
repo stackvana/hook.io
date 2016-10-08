@@ -31,6 +31,7 @@
     padding-bottom: 10px;
     font-size: 32px;
     color: rgb(68, 199, 68);
+    text-align: left;
   }
   .hookSchema {
     width: 100%;
@@ -503,6 +504,14 @@ body legend {
       if ($('.schemaActive').is(':checked')) {
         $('#gatewaySchema').attr('value', schema.getValue());
       }
+
+      // TODO: view
+      if ($('.themeActive').is(':checked')) {
+        $('#gatewayView').attr('value', themeSource.getValue());
+        $('#gatewayPresenter').attr('value', presenterSource.getValue());
+      }
+
+      // presenter
       $('.gatewayForm').submit();
       //    $('iframe').show();
       return false;
@@ -952,8 +961,10 @@ body legend {
                 </style>
 
                   <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
-                  <button type="button" class="codeButton btn">Edit Code</button>
-                  <button type="button" class="helpButton btn">Help</button> <br/>
+                  <button type="button" class="codeButton btn">Edit Code</button> <br/>
+                  <!-- TODO: add help button for service code 
+                    <button type="button" class="helpButton btn">Help</button> <br/>
+                  -->
 
                   <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
       hook.res.end('put your code here');
@@ -992,19 +1003,16 @@ body legend {
 
             <div class="schemaHelp tiny">
               <br/>
-              <h3>Using a Schema for your service's input parameters.</h3>
-              <p>Adding a schema to a service provides an automated layer of validation and default values for incoming HTTP request parameters</p>
-              <p>Schemas are implemented using the <a href="https://github.com/mschema/mschema" target="_blank">mschema library.</a> Additional documentation for schema usage <a href="https://github.com/mschema/mschema" target="_blank">can be found here</a>.
+              <p>Adding a schema to a service provides an automated layer of validation and default values for incoming HTTP request parameters.</p>
+              <p>Schemas are useful for validating incoming service parameters or setting default service values without having to write any additional code.</p>
+              <p>Schemas are implemented using the <a href="https://github.com/mschema/mschema" target="_blank">mschema library.</a> Additional documentation and tests for schema usage <a href="https://github.com/mschema/mschema/tree/master/test" target="_blank">can be found here</a>.
               <p>
-                Examples:
+                Example Schema:
               </p>
               <div>
-                <pre><code>
-{
+                <pre><code>{
   "name": {
     "type": "string",
-    "minLength": 5,
-    "maxLength": 20,
     "required": true
   },
   "password": {
@@ -1048,7 +1056,7 @@ body legend {
             <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
             <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
             <p class="superTiny">By design, Crons will not pass any data into the Service. If you need to pass data into the scheduled Service, you can simply set default data in the Service or chain two Hooks together to pipe the data.</p>
-            <p class="warning"><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
+            <p><strong class="warning">Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
 
             <h3>Cron Pattern</h3>
             <div class="cronDiv"></div>
@@ -1062,27 +1070,28 @@ body legend {
             <h2 class="i18n">Security</h2>
             <!-- private / tokens -->
 
+            <div class="paidAccount">
+              <p>
+                <span class="warning"><strong>Note:</strong> </span> In order to enable <a href="{{appUrl}}/faq#private">private services</a>, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
+              </p>
+            </div>
+
             <div class="form-group private">
 
-              <label for="hookPublic">Public Service</label>
-              <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
-              &nbsp;
+              <div class="form-control">
+                <label for="hookPublic">Public Service</label>
+                <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
+                &nbsp;
 
-              <label for="hookPrivate">Private Service</label>
-              <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
-
+                <label for="hookPrivate">Private Service</label>
+                <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
+              </div>
               <p>
                 If a service is set to "Private", it will only be accessible when logged into the web app, or through a valid API Access Key with an associated role of <code>hook::run</code>.
               </p>
               <p>
                 Additionally, Private services restrict public access to potentially private information like your source code or logs. <a href="{{appUrl}}/keys">Read More.</a>
               </p>
-
-              <div class="paidAccount">
-                <p>
-                  <span class="warning"><strong>Note:</strong> </span> In order to enable <a href="{{appUrl}}/faq#private">private services</a>, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
-                </p>
-              </div>
 
               <div class="securityHints">
                 <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
@@ -1095,8 +1104,8 @@ body legend {
           <div class="timeoutsHolder well">
             <h2 class="i18n">Timeouts</h2>
             <!-- private / tokens -->
-            <p>The timeout value is how long your service will run in Milliseconds until {{appName}} automatically exits the service and ends the response</p>
-            <p>Some custom services may require longer timeouts, but most simply services should not. <a href="{{appUrl}}/docs#timeouts">Read More about Timeouts</a></p> 
+            <p>The timeout value is how long your service will run in Milliseconds until {{appName}} automatically exits the service and ends the response.</p>
+            <p>Some custom services may require longer timeouts, but most services should not. <a href="{{appUrl}}/docs#timeouts">Read More about Timeouts</a></p> 
             <div class="paidAccount">
               <p>
                 <span class="warning"><strong>Note:</strong> </span> In order increase the service timeout value enable, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
@@ -1175,14 +1184,15 @@ body legend {
 </code></pre>
 <br/>
             <p>
-              Once the SDK is installed, you will have access to the <code>hook-clone</code> CLI command.
+              Once the SDK is installed, you will have access to the <code>hook-clone</code> CLI command. Using <code>hook-clone</code> you can copy this service for local development running the following commands:
             </p>
 
             <h3>Clone Service to Local</h3>
             <div>
 <pre><code>
-  hook-clone examples/bash-schema
-  cd bash-schema
+  hook-clone <span class="hookOwner">examples</span>/<span class="hookName">bash-schema</span>
+  cd <span class="hookName">bash-schema</span>
+  npm install
   npm start
 </code></pre>
   </div>
@@ -1228,6 +1238,8 @@ body legend {
             <input type="hidden" name="code" id="source"/>
             <input type="hidden" name="language" id="gatewayLang"/>
             <input type="hidden" name="schema" id="gatewaySchema"/>
+            <input type="hidden" name="view" id="gatewayView"/>
+            <input type="hidden" name="presenter" id="gatewayPresenter"/>
         </form>
     </div>
   </div>

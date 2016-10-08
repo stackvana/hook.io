@@ -1,6 +1,6 @@
 var config = require('../../config');
 var hook = require('../../lib/resources/hook');
-var hooks = require('hook.io-hooks');
+var hooks = require('microservice-examples');
 var psr = require('parse-service-request');
 
 module['exports'] = function view (opts, callback) {
@@ -47,7 +47,7 @@ module['exports'] = function view (opts, callback) {
   jsExamples.forEach(function (item){
     var ex = services['javascript-' + item];
     if (ex) {
-      $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.description + '</option>')
+      $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.pkg.description + '</option>')
     }
   });
 

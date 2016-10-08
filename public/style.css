@@ -131,9 +131,8 @@ a:hover {
 }
 
 .content a:hover {
-    color: #0F99DE;
-    text-decoration: none;
-    font-weight: bold;
+    color: #CCCCCC;
+    text-decoration: underline;
 }
 
 

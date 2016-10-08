@@ -43,7 +43,7 @@ module['exports'] = function view (opts, callback) {
 
       _user.name = params.name;
 
-      user.update(_user, function(err, result){
+      user.update(_user, function (err, result) {
         if (err) {
           return res.end(err.message);
         }

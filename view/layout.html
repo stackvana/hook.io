@@ -32,48 +32,49 @@
 
     <link href="{{appUrl}}/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
 
-
     <!-- jquery.autocomplete.js CSS
     ============================================ -->      
-        <link rel="stylesheet" href="{{appUrl}}/css/autocomplete.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/autocomplete.css">
 
     <!-- owl.carousel CSS
     ============================================ -->      
-        <link rel="stylesheet" href="{{appUrl}}/css/owl.carousel.css">
-        
+    <link rel="stylesheet" href="{{appUrl}}/css/owl.carousel.css">
+
     <!-- owl.theme CSS
     ============================================ -->      
-        <link rel="stylesheet" href="{{appUrl}}/css/owl.theme.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/owl.theme.css">
             
     <!-- owl.transitions CSS
     ============================================ -->      
-        <link rel="stylesheet" href="{{appUrl}}/css/owl.transitions.css">
-        
+    <link rel="stylesheet" href="{{appUrl}}/css/owl.transitions.css">
+
     <!-- font-awesome.min CSS
     ============================================ -->      
-        <link rel="stylesheet" href="{{appUrl}}/css/font-awesome.min.css">
-        
+    <link rel="stylesheet" href="{{appUrl}}/css/font-awesome.min.css">
+
     <!-- animate CSS
     ============================================ -->         
-        <link rel="stylesheet" href="{{appUrl}}/css/animate.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/animate.css">
+
     <!-- meanmenu CSS
     ============================================ -->    
-        <link rel="stylesheet" href="{{appUrl}}/css/meanmenu.min.css">   
+    <link rel="stylesheet" href="{{appUrl}}/css/meanmenu.min.css">   
 
     <!-- nivo-slider css -->
     <link rel="stylesheet" href="{{appUrl}}/css/nivo-slider.css">       
 
     <!-- normalize CSS
     ============================================ -->        
-        <link rel="stylesheet" href="{{appUrl}}/css/normalize.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/normalize.css">
+
     <!-- fancyBox 
     ============================================ -->         
-        <link rel="stylesheet" href="{{appUrl}}/css/jquery.fancybox.css">         
-        <!-- main CSS
+    <link rel="stylesheet" href="{{appUrl}}/css/jquery.fancybox.css">         
+
+    <!-- main CSS
     ============================================ -->          
-        <link rel="stylesheet" href="{{appUrl}}/css/main.css">
-        
-        <!-- style CSS
+    <link rel="stylesheet" href="{{appUrl}}/css/main.css">
+    <!-- style CSS
     ============================================ -->          
         <link rel="stylesheet" href="{{appUrl}}/style.css">
     <!-- new base style CSS ( put new styles in here )
@@ -85,12 +86,12 @@
 
     <!-- responsive CSS
     ============================================ -->          
-        <link rel="stylesheet" href="{{appUrl}}/css/responsive.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/responsive.css">
 
-        <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-        <!-- jquery-1.11.3.min js
-        ============================================ -->         
-        <script src="/js/vendor/jquery-1.11.3.min.js"></script>
+    <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- jquery-1.11.3.min js
+    ============================================ -->
+    <script src="/js/vendor/jquery-1.11.3.min.js"></script>
 
     </head>
     <body>
@@ -106,11 +107,13 @@
           <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="top_menu">
               <ul>
-                <li><a href="{{appUrl}}/services"><i class="fa fa-cog"></i> <span class="i18n">Account</span> <i class="fa fa-angle-down"></i> </a>
+                <li><a href="{{appUrl}}/services"><i class="fa fa-cog"></i> <span class="i18n">Services</span> <i class="fa fa-angle-down"></i> </a>
                   <ul>
-                    <li><a href="{{appUrl}}/services" class="i18n">My Services</a></li>
-                    <li><a href="{{appUrl}}/account" class="i18n">My Account</a></li>
-                    <li><a href="{{appUrl}}/billing" class="i18n">My Billing</a></li>
+                    <li><a href="{{appUrl}}/account" class="i18n">Account</a></li>
+                    <li><a href="{{appUrl}}/keys" class="i18n">API Keys</a></li>
+                    <li><a href="{{appUrl}}/env" class="i18n">Env Vars</a></li>
+                    <li><a href="{{appUrl}}/events" class="i18n">Events</a></li>
+                    <li><a href="{{appUrl}}/logs" class="i18n">Logs</a></li>
                     <li><a class="logoutLink i18n" href="{{appUrl}}/logout">Log Out</a></li>
                     <li><a class="loginLink i18n" href="{{appUrl}}/login">Log In</a></li>
                   </ul>               
@@ -124,6 +127,7 @@
           <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="top_menu_right">
               <ul class="pull-right">
+                <li><a href="https://github.com/bigcompany/hook.io" target="_blank"><i class="fa fa-github"></i> <span class="i18n">100% Open-Source</span></a></li>
                 <li><a href="{{appUrl}}/wishlist"><i class="fa fa-heart-o"></i> <span class="i18n">Request a Feature</span></a></li>
                 <li><a href="#"><i class="fa fa-globe"></i> <span class="i18n">English</span> <i class="fa fa-angle-down"></i></a>
                   <ul>
@@ -450,7 +454,7 @@
       <div class="row emailReminder">
         <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="blog-area">
-            <div class="container content" style="position:relative;">
+            <div class="container content" style="position:relative;text-align:left;">
               <p style="position:absolute;right:5px;top:5px;"><a href="#" class="closeWarning">Close [X]</a></p>
               <p><span class="error"><strong class="i18n">Attention:</strong></span> <span class="i18n">Please verify your account with an email address.</span><br/>
                   Without an email address on record, it's possible you may get locked out of your account.</p>
@@ -544,6 +548,7 @@
                 <li><a href="{{appUrl}}/affiliates">Affiliates</a></li>
                 <li><a href="{{appUrl}}/privacy">Privacy Policy</a></li>
                 <li><a href="{{appUrl}}/ssl">Encryption</a></li>
+                <li><a href="https://github.com/bigcompany/hook.io">Open-Source</a></li>
                 <!-- <li><a href="{{appUrl}}/limits">Platform Limitations</a></li> -->
               </ul>
             </div>        

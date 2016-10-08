@@ -35,13 +35,18 @@ module['exports'] = function view (opts, callback) {
  }
 
  // TODO: move to resource.before hooks
- checkRoleAccess({ req: req, res: res, role: "keys::read" }, function (err, hasPermission) {
+ var _role = "keys::read";
+ if (req.method === "POST") {
+   _role = "keys::create";
+ }
+
+ checkRoleAccess({ req: req, res: res, role: _role }, function (err, hasPermission) {
    if (hasPermission) {
      $('.loginBar').remove();
      finish();
    } else {
      if (req.jsonResponse) {
-       return res.end(config.messages.unauthorizedRoleAccess(req, "keys::read"));
+       return res.end(config.messages.unauthorizedRoleAccess(req, role));
      }
      // if not logged in, kick out
      if (!req.isAuthenticated()) {
@@ -97,7 +102,6 @@ module['exports'] = function view (opts, callback) {
        });
      }
      //console.log('merged params', req.resource.params)
-
      var middle = forms.generate({
         view: 'grid-with-form',
         resource: keys,
@@ -179,7 +183,7 @@ module['exports'] = function view (opts, callback) {
             customValue: true,
             selectAll: true,
             selectNone: true,
-            enum: Object.keys(role.roles),
+            enum: role.roles,
             defaultState: "checked",
             required: true
           }

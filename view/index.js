@@ -1,6 +1,6 @@
 var config = require('../config');
 var hook = require('../lib/resources/hook');
-var hooks = require('hook.io-hooks');
+var hooks = require('microservice-examples');
 var slug = require('slug');
 slug.defaults.modes['rfc3986'] = {
     replacement: '-',      // replace spaces with replacement

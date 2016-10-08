@@ -31,7 +31,7 @@ module['exports'] = function view (opts, callback) {
     // if total hits for user account is exceeded, rate-limit
     // TODO: set json boolean that account is currently over
     
-    console.log('metric.' +  userName + '.hits'.green, err, accountHits);
+    // console.log('metric.' +  userName + '.hits'.green, err, accountHits);
     
     totals.hits = accountHits;
     /*
