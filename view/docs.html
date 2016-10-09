@@ -50,6 +50,8 @@
                 <li><a href="#admin" class="i18n">Admin Panel</a></li>
                 <li><a href="#code" class="i18n">Editing a Service</a></li>
                 <li><a href="#env" class="i18n">Environment variables</a></li>
+                <li><a href="#rateLimits" class="i18n">Rate Limits</a></li>
+                <li><a href="#concurrency" class="i18n">Concurrency Limits</a></li>
                 <li><a href="#timeouts" class="i18n">Custom Service Timeouts</a></li>
                 <li><a href="#viewsource" class="i18n">Service Source Code</a></li>
               </ul>
@@ -433,6 +435,28 @@
                 <br/>
                 <hr/>
 
+                <a name="rateLimits"></a>
+
+                <h2>Rate Limiting</h2>
+                <p>hook.io will limit the total amount of API requests made against every account. This includes all API endpoints and every execution of any Hooks associated with the account.</p>
+                <p>In the event the total amount of API requests exceeds the amount of requests allocated with the accounts plan, further requests will be rate-limited. To increase rate limits, you can upgrade the account to a larger plan or email support for a temporary reset.</p>
+                <p>Rate Limits will automatically reset at the start of every billing cycle.</p>
+                <h3>Rate Limiting HTTP Headers</h3>
+                <p>Every API response from hook.io will include special HTTP headers indicating the current status of Rate Limits and Concurrency Limits.</p>
+                <p>
+                  <code> X-RateLimit-Limit</code> - <em>Total amount of requests allowed per cycle</em> <br/>
+                  <code> X-RateLimit-Remaining</code> - <em>Total amount of requests remaining in cycle</em> <br/>
+                  <code> X-RateLimit-Running</code> - <em>Total amount of actively running requests</em> <br/>
+                <hr/>
+
+                <a name="concurrency"></a>
+                <h2>Hook Concurrency Limitations</h2>
+                <p>hook.io will limit the amount of total concurrently running services per account. This means that every account may only have a certain amount of services running at the exact same time. In the event that too many services are running concurrently, further incoming HTTP requests will be rate-limited until some of the running services complete.</p>
+                <p>
+                  To increase concurrency limits, you can upgrade the account to a larger plan or email support.
+                </p>
+                <hr/>
+
                 <a name="timeouts"></a>
 
                 <h2>Custom Service Timeouts</h2>
@@ -442,8 +466,6 @@
                 <p>In some other cases, you may be dealing with transferring a larger amount of data from a third-party service and the default timeout of ten seconds is not long enough to complete the transmission.</p> 
                 <p>If you think your service may require more than 10 seconds to execute, simply visit the <code>/admin</code> page for the Hook and set the form field for "Custom Timeout" in seconds. ( Note: A <a href="{{appUrl}}/pricing">paid account</a> may be required ).</p>
                 <hr/>
-
-
 
                 <br/>
 
