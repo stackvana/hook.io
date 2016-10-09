@@ -23,6 +23,9 @@ module['exports'] = function view (opts, callback) {
   var req = opts.request,
       res = opts.response;
 
+  $ = req.white($);
+
+
   var views = big.server.app.view;
 
   // TODO: create special hard-coded admin key for super-admin privledges
@@ -123,7 +126,8 @@ module['exports'] = function view (opts, callback) {
               return res.end(err.message);
             }
             $('.user .json').html(JSON.stringify(_user, true, 2));
-            $('.loginAs').attr('href', '?loginAs=' + params.name )
+            $('.loginAs').attr('href', '?loginAs=' + params.name );
+            $('.setPaid').attr('href', '?name=' + params.name + '&paid=true');
             return callback(null, $.html());
           })
         });
@@ -169,6 +173,7 @@ module['exports'] = function view (opts, callback) {
         });
       }
 
+      /*
 
       // This reload in-process code seems a bit buggy. Better to not use / put logic directly into View library with tests
       if (params.refreshView) {
@@ -215,6 +220,7 @@ module['exports'] = function view (opts, callback) {
 
         })
       }
+      */
 
       /*
 
@@ -238,10 +244,8 @@ module['exports'] = function view (opts, callback) {
         }
       });
       */
+
       return callback(null, $.html());
-   })
-
-
-
+   });
 
 };
