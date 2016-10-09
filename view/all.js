@@ -8,6 +8,8 @@ module['exports'] = function view (opts, callback) {
       res = opts.response,
       params = req.resource.params;
 
+  return res.end("Not implemented");
+
   if (!req.isAuthenticated()) {
     return res.redirect('/login');
   }
@@ -21,28 +23,28 @@ module['exports'] = function view (opts, callback) {
   }
 
 
-	hook.all(function(err, hooks){
-		console.log(err, hooks)
-		opts.hooks = hooks;
-		opts.hooks = opts.hooks.sort(function(a, b){
-			console.log(a, b)
-			if (a.owner.toLowerCase() > b.owner.toLowerCase()) {
-				return 1;
-			}
-			if (a.owner.toLowerCase() < b.owner.toLowerCase()) {
-				return -1;
-			}
-			return 0;
-		});
-	  for(var h in opts.hooks) {
-	    $('.hooks').append('<tr><td><a href="/' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '">' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '</a></td></tr>')
-	  }
+  hook.all(function(err, hooks){
+    console.log(err, hooks)
+    opts.hooks = hooks;
+    opts.hooks = opts.hooks.sort(function(a, b){
+      console.log(a, b)
+      if (a.owner.toLowerCase() > b.owner.toLowerCase()) {
+        return 1;
+      }
+      if (a.owner.toLowerCase() < b.owner.toLowerCase()) {
+        return -1;
+      }
+      return 0;
+    });
+    for(var h in opts.hooks) {
+      $('.hooks').append('<tr><td><a href="{{appUrl}}/' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '">' + opts.hooks[h].owner + "/" + opts.hooks[h].name + '</a></td></tr>')
+    }
 
-	  if (Object.keys(opts.hooks).length > 0) {
-	    $('.noHooks').remove();
-	  }
+    if (Object.keys(opts.hooks).length > 0) {
+      $('.noHooks').remove();
+    }
 
-	  callback(null, $.html());
-		
-	})
+    callback(null, $.html());
+    
+  })
 };
