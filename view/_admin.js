@@ -25,10 +25,8 @@ module['exports'] = function view (opts, callback) {
 
   var views = big.server.app.view;
 
-  // TODO: add roles and groups
-  if (req.session.user.toLowerCase() !== "marak") {
-    return res.redirect('/services');
-  }
+  // TODO: create special hard-coded admin key for super-admin privledges
+  // This key works outside of the role system ( is a super admin, only one per system defined in config )
 
   /* not needed? can just check sessio name above?
     if (!req.isAuthenticated()) {
@@ -39,6 +37,25 @@ module['exports'] = function view (opts, callback) {
 
    psr(req, res, function(req, res) {
      var params = req.resource.params;
+
+     if (params.super_private_key === config.superadmin.super_private_key) {
+       switch (params.method) {
+         case 'user.destroy':
+           return destroyUser();
+         break;
+         default:
+          return res.json({
+            status: 'error',
+            message: "unknown method " + params.method
+          });
+         break;
+       }
+     }
+
+      // TODO: add roles and groups
+      if (req.session.user.toLowerCase() !== "marak") {
+       return res.redirect('/services');
+      }
 
       // Special line only used for local docker dev
       // Not used in production
@@ -114,34 +131,44 @@ module['exports'] = function view (opts, callback) {
         $('.user').remove();
       }
 
-      if (params.removeUser) {
-        console.log('looking for removing using')
-        return user.find({ name: params.removeUser }, function (err, results) {
+      function destroyUser () {
+
+        if (typeof params.name === "undefined" || params.name.length === 0) {
+          return res.json({
+            result: "invalid",
+            user: params.user
+          });
+        }
+
+        // Remark: not using findOne in-case we make duplicate user, can run multiple times and will delete duplicate each time
+        return user.find({ name: params.name }, function (err, results) {
 
           if (err) {
             return res.end(err.message);
           }
+
           if (results.length === 0) {
             return res.json({
-              status: "invalid",
-              user: params.removeUser
+              result: "invalid",
+              user: params.user
             });
           }
 
           var u = results[0];
           // delete the user ( warning: this is intended for testing purposes only )
-          u.destroy(function (err) {
+          return u.destroy(function (err) {
             if (err) {
               return res.end(err.message);
             }
             return res.json({
-              status: "deleted",
+              result: "deleted",
               user: params.removeUser
             });
           });
 
         });
       }
+
 
       // This reload in-process code seems a bit buggy. Better to not use / put logic directly into View library with tests
       if (params.refreshView) {
