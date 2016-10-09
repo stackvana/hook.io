@@ -1,0 +1,45 @@
+<script>
+  $(document).ready(function(){
+    $('.cancelBtn').on('click', function(){
+      if ($('#confirmCancel').prop('checked') === false) {
+        $('#confirmCancel').parent().addClass('error');
+        return false;
+      }
+      var result = confirm('Are you sure you want to cancel your subscription?');
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+  });
+</script>
+
+<style>
+  .reason {
+    height: 400px !important;
+    width: 600px;
+  }
+</style>
+
+<div class="content container" align="">
+  <h2>Cancel Account</h2>
+  <div class="message"></div>
+  <div class="cancelForm">
+    <p>If you no longer wish to subscribe for a monthly subscription plan, you may cancel your paid subscription below.</p>
+    <form class="form" action="" method="POST">
+      <legend><h3>Cancel Paid Subscription</h3></legend>
+      <div class="form-group">
+        <label for="confirmCancel">
+           <input type="checkbox" name="confirmCancel" id="confirmCancel"/>
+           I want to cancel my paid subscription
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="reason">Reason for no longer using hook.io :</label><br/>
+        <textarea name="reason" class="form-control reason" id="reason">No reason for cancellation specified.</textarea>
+      </div>
+      <button class="cancelBtn btn btn-primary">Cancel Subscription</button>
+    </form>
+  </div>
+</div>
