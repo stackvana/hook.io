@@ -301,7 +301,12 @@ module['exports'] = function view (opts, callback) {
       $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
       $('.hookRevisions').attr('href', '/' + h.owner + '/' + h.name + '/_rev');
       $('.hookAdmin').attr('href', '/' + h.owner + '/' + h.name + '/_admin');
-      $('.hookRun').attr('href', '/' + h.owner + '/' + h.name);
+
+      if(h.isPrivate) {
+        $('.hookRun').attr('href', '/' + h.owner + '/' + h.name + '?hook_private_key=' + req.user.hookAccessKey);
+      } else {
+        $('.hookRun').attr('href', '/' + h.owner + '/' + h.name);
+      }
       $('.hookFork').attr('href', '/' + h.owner + '/' + h.name + "/_fork");
 
       $('#themeSource').html(h.themeSource);

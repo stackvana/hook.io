@@ -8,6 +8,11 @@ module['exports'] = function unauthorizedRoleAccess (req, role) {
   var str = '',
   errorType = "unauthorized-role-access";
 
+  // if no session, create temporary session scope for anonymous user error
+  if (typeof req.session === 'undefined') {
+    req.session = {};
+  }
+
   if (typeof req.session.user === "undefined") {
     req.session.user = "anonymous";
   }
