@@ -347,59 +347,10 @@ body legend {
 //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
   }
 
-  // lookup themes from curated theme list
-  // TODO: Create "themes" resource and persist this to database
-  // REMARK: WHY IS THIS NOT USING THEMES MODULE ?!?!
-  var themes = {
-    "debug": {
-      "theme": "{{appUrl}}/themes/debug/index.html",
-      "presenter": "{{appUrl}}/themes/debug/index.js"
-    },
-    "form": {
-      "theme": "{{appUrl}}/themes/form/index.html",
-      "presenter": "{{appUrl}}/themes/form/index.js"
-    },
-    "simple": {
-      "theme": "{{appUrl}}/themes/simple/index.html",
-      "presenter": "{{appUrl}}/themes/simple/index.js"
-    },
-    "simple-form": {
-      "theme": "{{appUrl}}/themes/simple-form/index.html",
-      "presenter": "{{appUrl}}/themes/simple-form/index.js"
-    },
-    "none": {
-      "theme": "{{appUrl}}/themes/none/index.html",
-      "presenter": "{{appUrl}}/themes/none/index.js"
-    },
-    "custom": {
-      "theme": "",
-      "presenter": ""
-    }
-  };
-
-  function showCode () {
-    $('.codeEditorHolder').show();
-    $('.gistUrlHolder').hide();
-    $('.CodeMirror').show();
-    //$('#editorSource').attr('checked', 'CHECKED');
-    editor.setCursor(0,0);
-    //editor.focus();
-    editor.refresh();
-    $('.hookFrame').hide();
-  };
 
   $(document).ready(function(){
 
     var deployingCode = false, snippetLoading = false;
-
-    $('.hookFrame').on("load", function() {
-      if (deployingCode) {
-        //snippetLoaded();
-        $('.CodeMirror').hide();
-        $('.hookFrame').show();
-        deployingCode = false;
-      }
-    });
 
     $('.codeButton').on('click', function(){
       showCode();
@@ -417,36 +368,6 @@ body legend {
       $('.gistUrlHolder').show();
     });
 
-    $('.cronDiv').croneditor();
-
-    $('input[name="cronActive"]').click(function(){
-      if($(this).prop('checked')) {
-        $('.cronRow').show();
-      } else {
-        $('.cronRow').hide();
-      }
-    });
-
-    function deployCode () {
-      if (snippetLoading) {
-        // do not attempt to deploy code if a new snippet is still loading...
-        return false;
-      }
-      deployingCode = true;
-      var now = new Date().getTime();
-      $('#source').val(editor.getValue());
-      $('.gatewayForm').submit();
-      //    $('iframe').show();
-      return false;
-    };
-
-    $('.testButton').on('click', function(){
-      deployCode();
-      return false;
-    });
-
-    $('.saveButton').on('click', function(){
-    });
 
     $('#name').on('click', function(){
       $('#name').removeClass('error');
@@ -482,17 +403,8 @@ body legend {
           $(this).removeClass('error');
         }
       }
-      drawHookLinks();
       if (e.keyCode === 13) {
-        $('#hookForm').submit();
-      }
-    });
-
-    $('input[name="themeActive"]').click(function(){
-      if($(this).prop('checked')) {
-        $('.themeRow').show();
-      } else {
-        $('.themeRow').hide();
+        // $('#hookForm').submit();
       }
     });
 
@@ -509,20 +421,6 @@ body legend {
 
     var p = $('#name').position();
     $('#name').focus();
-    $('.themeSelect').change(function(e){
-      var val = themes[$(this).val()];
-      $('#theme').attr('value', val.theme);
-      $('#presenter').attr('value', val.presenter);
-    });
-
-    /*
-    $('#agreeWarning').on('click', function () {
-      $('.warnLanguages').hide();
-      $('#create').attr('disabled', null);
-      agreedToWarning = true;
-      return false;
-    });
-    */
 
     $('#language').change(function(e){
 
@@ -537,7 +435,7 @@ body legend {
       $('.currentLanguage').html($( "#language option:selected" ).text());
       $('.currentLanguageShort').html($( "#language" ).val());
       if (l === "javascript") {
-        $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
+        // $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
         //$('.helpLang').hide();
       } else {
         // TODO: better default gist values for non-javascript langauges
@@ -545,7 +443,8 @@ body legend {
         //$('.helpLang').show();
       }
 
-      $('#gatewayForm').attr('action', '/Marak/gateway-' + l);
+      $('#gatewayLang').attr('value', l);
+      $('#gatewayForm').attr('action', '/gateway');
 
       // assume first file is source code
       // see: https://github.com/bigcompany/{{appName}}/issues/110
@@ -557,46 +456,12 @@ body legend {
       //var val = themes[$(this).val()];
     });
 
-    drawHookLinks();
-
     //$('.services').html(JSON.stringify(boot.examples));
 
 
   });
 
 
-  function drawHookLinks () {
-    var base = '{{appUrl}}/' + boot.owner;
-    var name = $('#name').val();
-    var path = $('#path').val();
-    if(name.length === 0 && path.length === 0) {
-      //$('.hookLinks .admin').html('');
-      //return;
-    }
-
-    if (name.length === 0) {
-      name = "hook-name";
-    }
-
-    $('.hookLinks .home').html(base + '/' + name + '');
-    $('.hookLinks .admin').html(base + '/' + name + '/admin');
-    $('.hookLinks .source').html(base + '/' + name + '/source');
-    $('.hookLinks .logs').html(base + '/' + name + '/logs');
-
-    if (path.length > 1) {
-      $('.hookLinks .params').html(path);
-    }
-
-  };
-  /*
-  $('#cronString').keydown(function(){
-    var job = new cron.CronTime($(this).val());
-    var start = new Date();
-    var next = job._getNextDateFrom(start);
-    $('#estimateRun').val(next);
-  });
-  */
-  
 </script>
 
 
@@ -670,56 +535,6 @@ body legend {
 
       </div>
 
-      <div class="form-group">
-        <label for="path" class="i18n">Service URLs</label>
-
-        <div class="tiny">
-          <em>The following URLs will be created to help manage the service.</em>
-        </div>
-
-        <table class="hookLinks" border="1">
-          <tr>
-            <td class="left"><strong class="i18n">Home</strong></td>
-            <td class="home">{{appUrl}}/Marak/hook-name</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Optional Url Parameters</strong></td>
-            <td class="params i18n">None</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Admin ( login required )</strong></td>
-            <td class="admin">{{appUrl}}/Marak/hook-name/admin</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Source Code</strong></td>
-            <td class="source">{{appUrl}}/Marak/hook-name/source</td>
-          </tr>
-          <tr>
-            <td><strong class="i18n">Logs</strong></td>
-            <td class="logs">{{appUrl}}/Marak/hook-name/logs</td>
-          </tr>
-          <!--
-          <tr>
-            <td>View</td>
-            <td>http://{{appName}}/Marak/echo/view</td>
-          </tr>
-          <tr>
-            <td>Presenter</td>
-            <td>http://{{appName}}/Marak/echo/presenter</td>
-          </tr>
-          <tr>
-            <td>Fork</td>
-            <td>http://{{appName}}/Marak/echo/fork</td>
-          </tr>
-          -->
-        </table>
-
-      </div>
-    </div>
-
-    <div class="securityHolder">
-      <h2 class="i18n">Service Security</h2>
-      <!-- private / tokens -->
       <div class="form-group private">
         <label for="hookPublic">Public Service</label>
         <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
@@ -727,158 +542,15 @@ body legend {
         <label for="hookPrivate">Private Service</label>
         <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
         <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing">paid account</a>.<br/></div>
-        <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
-        <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
-      </div>
-    </div>
-
-    <div class="sourcesHolder">
-      <h2 class="i18n">Hook Source</h2>
-
-      <div class="services"></div>
-
-      <div class="form-group languages">
-        <!--
-        <div class="languageTitle">
-          <p><strong class="i18n">Programming Language:</strong> <span class="currentLanguage">JavaScript ( Recommended )</span></p>
-        </div>
-        -->
-        <label class="smaller" for="language">Programming Language:</label>
-        <select name="language" id="language">
-          <option value="javascript">JavaScript ( Recommended )</option>
-          <option value="es7">ECMAScript 7 ( Supported )</option>
-          <option value="coffee-script">CoffeeScript ( Supported )</option>
-          <option value="bash">Bash ( Experimental )</option>
-          <option value="lua">Lua ( Experimental )</option>
-          <option value="perl">Perl ( Experimental )</option>
-          <option value="php">PHP ( Experimental )</option>
-          <option value="python">Python ( Experimental )</option>
-          <option value="python3">Python 3 ( Experimental )</option>
-          <option value="ruby">Ruby ( Experimental )</option>
-          <option value="scheme">Scheme ( Experimental )</option>
-          <option value="smalltalk">SmallTalk ( Experimental )</option>
-          <option value="tcl">Tcl ( Experimental )</option>
-        </select>
-
-        <!--
-        <div class="warnLanguages">
-          <h2 class="warning i18n">Warning</h2>
-          <p>We have <a href="https://github.com/bigcompany/{{appName}}/issues/117" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
-          <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on {{appName}} is currently considered EXPERIMENTAL.</p>
-          <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="{{appUrl}}/blog/new-multi-language-support" target="_blank">let us know</a>.</p>
-          <button class="btn" id="agreeWarning">Agree to Terms</button>
-        </div>
-        <div class="helpLang">
-          <a class="mediumLink" href="{{appUrl}}/blog/new-multi-language-support#seeking-developer-community-managers" target="_blank">Interested in making <span class="currentLanguageShort">language</span> work better on {{appName}}?</a>
-        </div>
-        -->
-
+        <p>A public service will be publicly indexed and available for anyone to access at anytime. A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
       </div>
 
-      <div class="form-group sources">
-        <label for="editorSource" class="i18n">Code Editor</label>
-        <input tabindex="5" type="radio" checked="CHECKED" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Hook from text editor">
-        &nbsp;
-        <label for="gistSource" class="i18n">Github Gist</label>
-        <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Hook as a Github Gist"><br/>
-        <em class="tiny hint i18n">The source code to power the service. Can be provided as a Github Gist or as plain-text.</em>
-      </div>
-
-      <div class="form-group gistUrlHolder">
-        <label for="gist" class="i18n">Gist Url</label>
-        <input tabindex="6" type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
-        <div class="tiny" style="padding-left:5px;padding-top:5px;">
-          <a class="i18n" href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
-        </div>
-      </div>
-
-      <div class="form-group codeEditorHolder">
-
-          <!-- Create a simple CodeMirror instance -->
-          <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
-          <script src="{{appUrl}}/js/codemirror.js"></script>
-          <script src="{{appUrl}}/js/javascript.js"></script>
-          <script type="text/javascript">
-          </script>
-          <style>
-            .CodeMirror {
-              /* Set height, width, borders, and global font properties here */
-              margin-top: 10px;
-              margin-bottom: 10px;
-              font-family: monospace;
-              height: 500px;
-              color: black;
-              border: solid;
-              border-width: 1px;
-              box-shadow: 10px 10px 5px #888888;
-            }
-          </style>
-
-            <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button> <button type="button" class="codeButton btn">Edit Code</button> <br/>
-            <textarea tabindex="8" name="codeEditor" class="codeEditor">
-module['exports'] = function echoHttp (hook) {
-  console.log(hook.params);
-  console.log(hook.req.path);
-  console.log(hook.req.method);
-  console.log(hook.env);
-  hook.res.end(JSON.stringify(hook.params, true, 2));
-};</textarea>
-            <script type="text/javascript">
-              var editor;
-              editor = CodeMirror.fromTextArea($('textarea').get(0), {
-                lineNumbers: true
-              });
-              editor.refresh();
-              //editor.show();
-            </script>
-          <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
-        </div>
     </div>
 
-    <!--
-    <div class="form-group">
-      <label for="status">Hook Status</label>
-      <select class="form-control status" name="status">
-        <option value="active">Active</option>
-        <option value="disabled">Disabled</option>
-      </select>
-    </div>
-    -->
-
-    <div class="form-group">
-      <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Hook.">
-      <label for="themeActive" class="i18n">Customize appearance of Service with a Theme</label>
-    </div>
-
-    <div class="themeSelector well themeRow"></div>
-
-    <div class="form-group">
-      <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Hook will execute as a scheduled tasked based on provided Cron pattern.">
-      <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
-    </div>
-
-    <div class="form-group cronRow">
-      <h2 class="i18n">Services can be scheduled on a timer</h2>
-
-      <p class="i18n">All Services support the ability to schedule their execution based on a date time pattern.</p>
-      <p class="superTiny i18n">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
-      <p class="superTiny i18n">By design, Crons will not pass any data into the Hook. If you need to pass data into the scheduled Hook, you can simply set default data in the Hook or chain two Hooks together to pipe the data.</p>
-      <p><strong>Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:hookmaster@{{appName}}">please let us know</a>. </p>
-      <h3 class="i18n">Cron Pattern</h3>
-      <div class="cronDiv"></div>
-    </div>
-    <!-- 
-    <div class="form-group">
-      <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">
-      <label for="isPublic">Display Hook in public Hook registry</label>
-    </div>
-    -->
-    <input tabindex="12" id="create" name="create" type="submit" value="Create new Service"/ class="btn i18n">
+    <input tabindex="12" id="create" name="create" type="submit" value="Save and Continue"/ class="btn i18n">
   </form>
 
-  <form name="gatewayForm" id="gatewayForm" action="/marak/gateway-javascript" method="POST" target="hookFrame" class="gatewayForm">
-      <input type="hidden" name="source" id="source"/>
-  </form>
+  <div class="codeEditor">
 
   <br/>
 
