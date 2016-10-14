@@ -7,18 +7,6 @@
     "example": "examples"
   },
   "bin": {
-    "npm-install": "./bin/npm-install",
-    "run-hook": "./bin/run-hook",
-    "run-hook-bash": "./bin/run-hook-bash",
-    "run-hook-lua": "./bin/run-hook-lua",
-    "run-hook-perl": "./bin/run-hook-perl",
-    "run-hook-php": "./bin/run-hook-php",
-    "run-hook-python": "./bin/run-hook-python",
-    "run-hook-python3": "./bin/run-hook-python3",
-    "run-hook-ruby": "./bin/run-hook-ruby",
-    "run-hook-scheme": "./bin/run-hook-scheme",
-    "run-hook-smalltalk": "./bin/run-hook-smalltalk",
-    "run-hook-tcl": "./bin/run-hook-tcl"
   },
   "dependencies": {
     "async": "^1.3.0",
@@ -41,7 +29,7 @@
     "debug": "^2.1.0",
     "github": "^0.2.2",
     "hook.io-datastore": "https://github.com/bigcompany/hook.io-datastore/tarball/master",
-    "hook.io-hooks": "https://github.com/bigcompany/hooks/tarball/master",
+    "microservice-examples": "3.x.x",
     "hook.io-i18n": "https://github.com/bigcompany/hook.io-i18n/tarball/master",
     "hook.io-logs": "https://github.com/bigcompany/hook.io-logs/tarball/master",
     "hook.io-sdk": "https://github.com/bigcompany/hook.io-sdk/tarball/master",
@@ -60,7 +48,7 @@
     "mschema-forms": "https://github.com/mschema/mschema-forms/tarball/master",
     "mschema-rpc": "https://github.com/mschema/mschema-rpc/tarball/master",
     "mustache": "^0.8.2",
-    "nano": "^6.1.5",
+    "nano": "^6.2.0",
     "node-slug": "0.0.2",
     "node-uuid": "^1.4.3",
     "npm": "*",
