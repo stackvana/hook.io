@@ -128,7 +128,7 @@ module['exports'] = function view (opts, callback) {
           // TODO: remove this line
           params.owner = req.resource.owner;
 
-          if (params.isPrivate || params.isPrivate === "true") {
+          if (params.isPrivate === true || params.isPrivate === "true") {
             params.isPrivate = true;
           } else {
             params.isPrivate = false;

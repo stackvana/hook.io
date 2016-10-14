@@ -78,19 +78,6 @@
       }
     });
     
-    $('.themeSelect').change(function(e){
-      var val = themes[$(this).val()];
-      $('#theme').attr('value', val.theme);
-      $('#presenter').attr('value', val.presenter);
-      // TODO: add mutex / cancel on gets with change
-      // load pre-defined theme View-Presenter as remote url request
-      $.get(val.theme, function (data, res) {
-        themeSource.setValue(data);
-      }, 'text');
-      $.get(val.presenter, function (data, res) {
-        presenterSource.setValue(data.toString());
-      }, 'text');
-    });
     
     $('.deleteLink').on('click', function(){
       var name = $(this).attr('data-name');
@@ -548,6 +535,7 @@ body legend {
         //alert('name required');
         return false;
       }
+
     });
 
     $('.routeTipsButton').on('click', function(){
@@ -626,8 +614,9 @@ body legend {
       //$('#editorSource').attr('checked', 'CHECKED');
       //$('.gistUrlHolder').hide();
       //$('.codeEditorHolder').show();
-      presenterSource.setValue(unescape(boot.presenter));
-      themeSource.setValue(unescape(boot.view));
+      presenterSource.setValue(atob(boot.presenter));
+      themeSource.setValue(atob(boot.view));
+      presenterSource.refresh();
       editor.refresh();
     } else {
       // do nothing

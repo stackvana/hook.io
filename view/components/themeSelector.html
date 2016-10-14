@@ -12,12 +12,12 @@
     font-size: 18px;
   }
   .themeSelect {
-    width: 150px;
   }
   p.superTiny {
     font-size: 18px;
   }
 </style>
+
 
 <h2>Custom View Rendering</h2>
 <p>A Theme or custom View can be used to customize the output of a service using static and dynamic HTML, CSS, and JavaScript.</p>
@@ -26,31 +26,40 @@
 <div class="form-group predefinedTheme">
  <select class="themeSelect form-control" name="themeSelect">
    <!-- <option value="form">Choose theme...</option> -->
-   <option value="none">none</option>
-   <option value="debug">debug</option>
-   <option value="form">form</option>
-   <option value="simple">simple</option>
-   <option value="simple-form">simple-form</option>
-   <option value="custom">custom</option>
+   <!-- ><option value="debug">debug</option> -->
+   <!-- ><option value="form">form</option> -->
+   <option value="simple">simple web page</option>
+   <option value="minimal">minimal API endpoint</option>
+   <option value="form">basic input form</option>
  </select>
 </div>
 
+<div class="form-group">
+ <label for="themeSource">Theme Description</label>
+ <span class="themeDescription"></span>
+</div>
+
+<!--
 <div class="form-group customTheme">
  <label for="theme">View</label>
  <input class="form-control" type="text" id="theme" name="theme" value="" size="40"/>
 </div>
+-->
 
 <div class="form-group themeSource">
  <label for="themeSource">Theme Source</label>
  <textarea class="form-control" id="themeSource" name="themeSource" class="themeSource"></textarea>
 </div>
 
+
 <!-- <iframe id="preview"></iframe> -->
 
+<!-- 
 <div class="form-group customTheme">
  <label for="presenter">Presenter</label>
  <input class="form-control" type="text" id="presenter" name="presenter" value="" size="40"/>
 </div>
+-->
 
 <div class="form-group presenterSource">
  <label for="presenter">Presenter</label>
@@ -90,5 +99,23 @@
     lineNumbers: true
   });
   presenterSource.refresh();
+
+  $('.themeSelect').change(function(e){
+    var val = themes[$(this).val()];
+    //$('#theme').attr('value', val.theme);
+    //$('#presenter').attr('value', val.presenter);
+    $('.themeDescription').html(val.description);
+
+    // TODO: add mutex / cancel on gets with change
+    // load pre-defined theme View-Presenter as remote url request
+    $.get(val.theme, function (data, res) {
+      themeSource.setValue(data);
+      themeSource.refresh();
+    }, 'text');
+    $.get(val.presenter, function (data, res) {
+      presenterSource.setValue(data);
+      presenterSource.refresh();
+    }, 'text');
+  });
 
 </script>

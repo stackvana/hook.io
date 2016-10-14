@@ -143,7 +143,7 @@ module['exports'] = function view (opts, callback) {
       data.name = params.name;
       data.path = params.path;
 
-      if (params.isPrivate || params.isPrivate === "true") {
+      if (params.isPrivate === true || params.isPrivate === "true") {
         data.isPrivate = true;
       } else {
         data.isPrivate = false;
@@ -420,8 +420,11 @@ module['exports'] = function view (opts, callback) {
 
         $('#theme').attr('value', h.theme);
         $('#presenter').attr('value', h.presenter);
+
         if (typeof h.themeName !== 'undefined' && h.themeName.length > 0) {
-          $('.themeSelect').prepend('<option>' + h.themeName + '</option>')
+          $('.themeSelect').prepend('<option>custom</option>')
+        } else {
+          $('.themeSelect').append('<option>custom</option>')
         }
 
         if (h.themeStatus === "enabled") {
@@ -445,8 +448,8 @@ module['exports'] = function view (opts, callback) {
         var boot = {
           owner: req.session.user,
           source: h.source,
-          presenter: escape(h.presenterSource),
-          view: escape(h.themeSource),
+          presenter: new Buffer(h.presenterSource).toString('base64'),
+          view: new Buffer(h.themeSource).toString('base64'),
           themes: themes,
           cron: h.cron
         };
