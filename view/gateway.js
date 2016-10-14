@@ -2,7 +2,7 @@ var hook = require('../lib/resources/hook');
 var metric = require('../lib/resources/metric');
 var config = require('../config');
 var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess')
-var stack = require('stackvana');
+var stack = require('microcule');
 
 module['exports'] = function view (opts, callback) {
   var $ = this.$,

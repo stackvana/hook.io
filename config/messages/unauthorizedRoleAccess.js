@@ -38,7 +38,7 @@ module['exports'] = function unauthorizedRoleAccess (req, role) {
     // do nothing
   } else {
     // provide instructions to provide keys
-    str += "\n\nIf any access keys have been created you can also provide a `hook_private_key` parameter to access the service.";
+    str += "\n\nIf any access keys have been created you can provide a `hook_private_key` parameter to access this URL.";
   }
 
   if (req.jsonResponse === true) {

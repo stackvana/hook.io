@@ -448,8 +448,8 @@ module['exports'] = function view (opts, callback) {
         var boot = {
           owner: req.session.user,
           source: h.source,
-          presenter: new Buffer(h.presenterSource).toString('base64'),
-          view: new Buffer(h.themeSource).toString('base64'),
+          presenter: new Buffer(h.presenterSource || "").toString('base64'),
+          view: new Buffer(h.themeSource || "").toString('base64'),
           themes: themes,
           cron: h.cron
         };
