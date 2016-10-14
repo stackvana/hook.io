@@ -45,6 +45,8 @@ module['exports'] = function view (opts, callback) {
   function finish () {
     $ = req.white($);
     params.query = params.query || {};
+    // TODO: allow public listing / index of public services
+    //       currently it will only allow viewing of your own services
     var _owner = params.query.owner || req.resource.owner || req.params.owner || req.session.user;
     var query = {};
 
@@ -91,7 +93,7 @@ module['exports'] = function view (opts, callback) {
           var priv = "";
           if (hooks[h].isPrivate) {
             priv = '<span title="Private Service / Restricted Access" class="octicon octicon-lock"></span> ';
-            if (req.params.owner === req.session.user) {
+            if (req.params.owner === req.session.user || req.url === "/services") {
               $('.hooks').append('<tr><td class="col-md-8">' + priv + '<a title="Hook Admin" href="' + hookLink + '/admin">' + hooks[h].name + '</a></td><td class="col-md-1" align="left"><a title="Run Hook" href="' + hookLink + '"><span class="mega-octicon octicon-triangle-right"></span></a></td><td class="col-md-1" align="left"><a title="View Source" href="' + hookLink + '/source"><span class="mega-octicon octicon-file-code"></span></a></td><td class="col-md-1" align="left"><a title="View Logs" href="' + hookLink + '/logs"><span class="mega-octicon octicon-list-ordered"></span></a></td><td class="col-md-1" align="left"><a title="Delete Hook" class="deleteLink" data-name="' + hooks[h].owner + "/" + hooks[h].name +'" href="' + hookLink + '/delete"><span class="mega-octicon octicon-trashcan"></span></a></td></tr>')
             }
           } else {
