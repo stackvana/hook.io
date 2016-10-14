@@ -61,6 +61,7 @@ module['exports'] = function view (opts, callback) {
             result: "valid",
           };
           user.emit('login', u);
+          req.session.hookAccessKey = u.hookAccessKey;
           r.redirect = req.session.redirectTo || "/services";
           if (req.jsonResponse) {
             return res.json(r);
