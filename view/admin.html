@@ -332,6 +332,13 @@ input[type="checkbox"] {
   width: 100%;
 }
 
+.githubRepoHolder {
+  padding-top: 10px;
+  width: 100%;
+  display: none;
+}
+
+
 .missingFeature {
   color: #CCCCCC;
 }
@@ -474,15 +481,23 @@ body legend {
 
     $('#editorSource').on('click', function(){
       $('.gistUrlHolder').hide();
+      $('.githubRepoHolder').hide();
       $('.codeEditorHolder').show();
       editor.refresh();
     });
 
-
     $('#gistSource').on('click', function(){
       $('.codeEditorHolder').hide();
+      $('.githubRepoHolder').hide();
       $('.gistUrlHolder').show();
     });
+
+    $('#githubRepoSource').on('click', function(){
+      $('.codeEditorHolder').hide();
+      $('.gistUrlHolder').hide();
+      $('.githubRepoHolder').show();
+    });
+
 
     $('input[name="cronActive"]').click(function(){
       if($(this).prop('checked')) {
@@ -910,12 +925,16 @@ body legend {
 
               <div class="form-control">
                   <label class="radio-inline" for="editorSource">
-                    <input tabindex="5" type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Service from text editor">
+                    <input type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Service from text editor">
                     Code Editor
                   </label>
                   <label class="radio-inline" for="gistSource">
-                    <input tabindex="4" type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
+                    <input type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
                     Github Gist
+                  </label>
+                  <label class="radio-inline" for="githubRepoSource">
+                    <input type="radio" value="githubRepo" class="githubRepoSource" id="githubRepoSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
+                    Github Repo
                   </label>
               </div>
 
@@ -923,19 +942,43 @@ body legend {
 
             <div class="form-group gistUrlHolder">
               <label for="gist">Gist Url</label>
-              <input tabindex="6" type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80">
+              <input type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80"/>
               <div class="tiny" style="padding-left:5px;padding-top:5px;">
                 <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
               </div>
 
-                <label for="mode" class="i18n">Mode</label>
-                <select class="form-control mode" name="mode">
-                  <option value="Development" class="i18n">Development</option>
-                  <option value="Production" class="i18n">Production</option>
-                </select>
-                <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+              <label for="gistMainEntry">Main Entry Point</label>
+              <input type="text" class="form-control gistMainEntry" name="gistMainEntry" id="gistMainEntry" placeholder="index.js" value="" size="80"/>
 
+              <!-- 
+              <label for="mode" class="i18n">Mode</label>
+              <select class="form-control mode" name="mode">
+                <option value="Development" class="i18n">Development</option>
+                <option value="Production" class="i18n">Production</option>
+              </select>
+              <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+              -->
 
+            </div>
+
+            <div class="form-group githubRepoHolder">
+              <label for="repo">Repo Name</label>
+              <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microservice-examples" value="" size="80"/>
+
+              <label for="repo">Repo Branch</label>
+              <input type="text" class="form-control repo" name="branch" id="branch" placeholder="master" value="" size="80"/>
+
+              <label for="githubMainEntry">Main Entry Point</label>
+              <input type="text" class="form-control githubMainEntry" name="githubMainEntry" id="githubMainEntry" placeholder="index.js" value="" size="80"/>
+
+              <!-- 
+              <label for="mode" class="i18n">Mode</label>
+              <select class="form-control mode" name="mode">
+                <option value="Development" class="i18n">Development</option>
+                <option value="Production" class="i18n">Production</option>
+              </select>
+              <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
+              -->
             </div>
 
             <div class="form-group codeEditorHolder">

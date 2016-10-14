@@ -129,6 +129,11 @@ module['exports'] = function view (opts, callback) {
         params.source = params.codeEditor;
       } else if (params.hookSource === "gist") {
         delete params.source;
+        data.mainEntry = params.gistMainEntry;
+      } else if (params.hookSource === "githubRepo") {
+        data.githubRepo = params.repo;
+        data.githubBranch = params.branch;
+        data.mainEntry = params.githubMainEntry;
       }
 
       data.sourceType = params.hookSource;
@@ -343,6 +348,9 @@ module['exports'] = function view (opts, callback) {
 
       if (h.sourceType === "gist") {
         $('#gist').attr('value', h.gist);
+        $('#gistSource').attr('checked', 'CHECKED');
+      } else if (h.sourceType === "githubRepo") {
+        $('#repo').attr('value', h.repo);
         $('#gistSource').attr('checked', 'CHECKED');
       } else {
         $('#editorSource').attr('checked', 'CHECKED');
