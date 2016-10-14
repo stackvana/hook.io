@@ -18,7 +18,7 @@ module['exports'] = function view (opts, callback) {
     }
 
     var h = result[0];
-
+    req.resource.owner = req.params.owner;
     checkRoleAccess({ req: req, res: res, role: "hook::source::read" }, function (err, hasPermission) {
 
       // only protect source of private services
