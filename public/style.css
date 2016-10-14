@@ -130,19 +130,19 @@ a:hover {
     text-decoration: none;
 }
 
-.content a:hover {
+.content a:not(.btn):hover {
     color: #CCCCCC;
     text-decoration: underline;
 }
 
 
-.content a {
+.content a:not(.btn) {
     transition: all 0.3s ease 0s;
     text-decoration: none;
     color: #0F99DE;
 }
 
-.content a span {
+.content a:not(.btn) span {
     color: black;
 }
 

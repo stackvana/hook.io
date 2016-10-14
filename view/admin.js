@@ -32,6 +32,8 @@ module['exports'] = function view (opts, callback) {
 
   var params;
 
+  req.session.redirectTo = req.url;
+
   /* Remark: Removed in favor or role check
   if (!req.isAuthenticated()) {
     req.session.redirectTo = req.url;
@@ -46,10 +48,10 @@ module['exports'] = function view (opts, callback) {
     params = opts.request.resource.params;
 
     // params.owner = req.session.user;
-
+    // TODO: ensure that users can only read their own hooks!
     checkRoleAccess({ req: req, res: res, role: "hook::update" }, function (err, hasPermission) {
       // console.log('check for role access', err, hasPermission)
-      if (!hasPermission || req.resource.owner === "anonymous") { // don't allow anonymous hook update
+      if (!hasPermission) { // don't allow anonymous hook update
         if (req.jsonResponse !== true && typeof params.hook_private_key === "undefined") {
           req.session.redirectTo = req.url;
           return res.redirect('/login');
@@ -141,7 +143,7 @@ module['exports'] = function view (opts, callback) {
       data.name = params.name;
       data.path = params.path;
 
-      if (params.isPrivate === "true") {
+      if (params.isPrivate || params.isPrivate === "true") {
         data.isPrivate = true;
       } else {
         data.isPrivate = false;
@@ -271,6 +273,9 @@ module['exports'] = function view (opts, callback) {
         $('.paidAccount').remove();
       } else {
         $('.securityHolder input').attr('disabled', 'DISABLED')
+        // TODO: 
+        $('.hookPrivate').attr('DISABLED', 'DISABLED');
+        $('.hookPrivateLabel').css('color', '#aaa');
         $('.securityHints').remove();
       }
 
@@ -308,7 +313,7 @@ module['exports'] = function view (opts, callback) {
       $('.hookAdmin').attr('href', '/' + h.owner + '/' + h.name + '/_admin');
 
       if(h.isPrivate) {
-        $('.hookRun').attr('href', '/' + h.owner + '/' + h.name + '?hook_private_key=' + req.user.hookAccessKey);
+        $('.hookRun').attr('href', '/' + h.owner + '/' + h.name + '?hook_private_key=' + req.session.hookAccessKey);
       } else {
         $('.hookRun').attr('href', '/' + h.owner + '/' + h.name);
       }
@@ -345,6 +350,15 @@ module['exports'] = function view (opts, callback) {
       $('.previousName').attr('value', h.name);
 
       $('.hookSource').attr('value', h.gist);
+
+      if (typeof req.user.accessToken === "undefined") {
+        $('.githubRepoSource').attr('DISABLED', 'DISABLED');
+        $('.gistSource').attr('DISABLED', 'DISABLED');
+        $('.gistRepoLabel').css('color', '#aaa');
+        $('.gistSourceLabel').css('color', '#aaa');
+      } else {
+        $('.githubRequired').remove();
+      }
 
       if (h.sourceType === "gist") {
         $('#gist').attr('value', h.gist);

@@ -122,11 +122,18 @@ module['exports'] = function view (opts, callback) {
             // updated 9/2/16 to allow .code parameter ( instead of source )
             params.source = params.source || params.code || params.codeEditor;
             if (typeof params.source === "undefined") {
-              params.source = "module['exports'] = function (hook) {hook.res.end('no source code has been associated with this service yet')};";
+              params.source = "module['exports'] = function myService (hook) {  \n  hook.res.end('no source code has been associated with this service yet'); \n};";
             }
           }
           // TODO: remove this line
           params.owner = req.resource.owner;
+
+          if (params.isPrivate || params.isPrivate === "true") {
+            params.isPrivate = true;
+          } else {
+            params.isPrivate = false;
+          }
+
           // TODO: filter params for only specified resource fields?
           return hook.create.call({ req: req, res: res }, params, function (err, result) {
             if (err) {
@@ -191,7 +198,8 @@ module['exports'] = function view (opts, callback) {
       if (req.session.paidStatus === "paid") {
         $('.paidAccount').remove();
       } else {
-        $('.securityHolder input').attr('disabled', 'DISABLED')
+        $('.hookPrivate').attr('DISABLED', 'DISABLED');
+        $('.hookPrivateLabel').css('color', '#aaa');
       }
 
       if (typeof req.session.tempSource !== "undefined") {

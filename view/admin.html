@@ -107,8 +107,8 @@
     function slugify(text) {
       return text.toString().toLowerCase()
         .replace(/\s+/g, '-')           // Replace spaces with -
-        .replace(/\//g, '-');           // Replace / with -
-        //      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\//g, '-')         // Replace / with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
         //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
     }
 
@@ -393,7 +393,7 @@ body legend {
   margin-bottom: 10px;
 }
 .tiny .small-btn:hover {
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .codeEditorHolder .btn {
@@ -404,10 +404,6 @@ body legend {
 .btn {
   margin-top: 10px;
   width: 200px;
-}
-
-.btn:hover {
-  font-weight: bold;
 }
 
 .hookFrame {
@@ -583,7 +579,7 @@ body legend {
           $(this).removeClass('error');
         }
       }
-      drawHookLinks();
+      //drawHookLinks();
     });
 
     $('input[name="themeActive"]').click(function(){
@@ -717,7 +713,7 @@ body legend {
 
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 
-<div style="text-align: left;" class="container content">
+<div style="text-align: left;" class="container content"> <!--  -->
   <h1 class="i18n">Manage Microservice</h1>
 
   <div class="row" style="text-align: center;">
@@ -907,15 +903,6 @@ body legend {
                 <option value="smalltalk">SmallTalk</option>
                 <option value="tcl">Tcl</option>
               </select>
-              <!--
-              <div class="warnLanguages">
-                <h2 class="warning">Warning</h2>
-                <p>We have <a href="{{appUrl}}/blog/new-multi-language-support" target="_blank">just recently added support</a> for additional languages outside of JavaScript.</p> 
-                <p>By clicking "Agree to Terms", you acknowledge that using any language besides JavaScript on hook.io is currently considered EXPERIMENTAL.</p>
-                <p>If you have any questions, find something that doesn't work, or have any feedback please <a href="https://github.com/bigcompany/hook.io/issues" target="_blank">let us know</a>.</p>
-                <button class="btn" id="agreeWarning">Agree to Terms</button>
-              </div>
-              -->
             </div>
             <div class="form-group sources">
 
@@ -928,16 +915,21 @@ body legend {
                     <input type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Service from text editor">
                     Code Editor
                   </label>
-                  <label class="radio-inline" for="gistSource">
+                  <label class="radio-inline gistSourceLabel" for="gistSource">
                     <input type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
                     Github Gist
                   </label>
-                  <label class="radio-inline" for="githubRepoSource">
+                  <label class="radio-inline gistRepoLabel" for="githubRepoSource">
                     <input type="radio" value="githubRepo" class="githubRepoSource" id="githubRepoSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
                     Github Repo
                   </label>
               </div>
-
+              <div class="githubRequired">
+                <span class="warning tiny">
+                  Github sources are not available unless {{appName}} is authorized to read from your Github account.
+                </span>
+                <a href="{{appUrl}}/login/github" class="btn btn-social btn-github" style="height:60px;width:260px;"><i class="fa fa-github"></i> <span style="top: 14px;position:relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connect Github Account</span></a>
+              </div>
             </div>
 
             <div class="form-group gistUrlHolder">
@@ -1126,7 +1118,7 @@ body legend {
                 <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
                 &nbsp;
 
-                <label for="hookPrivate">Private Service</label>
+                <label for="hookPrivate" class="hookPrivateLabel">Private Service</label>
                 <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
               </div>
               <p>
@@ -1220,7 +1212,7 @@ body legend {
           <a name="local"></a>
           <div class="localHolder well">
             <h2 class="i18n">Local Development </h2>
-            <p>{{appName}} services may be cloned and run locally by installing the {{appName}} SDK.</p>
+            <p>{{appName}} services may be cloned and run locally by installing the <a href="/sdk">{{appName}} SDK and Microcule.</a></p>
             <h3>Quick SDK Install</h3>
 <pre><code>
   sudo npm install -g hook.io-sdk

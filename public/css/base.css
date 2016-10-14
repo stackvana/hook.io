@@ -49,6 +49,10 @@ label {
   color: rgb(255, 2, 2) !important;
 }
 
+.warning a {
+  color: #337ab7 !important;
+}
+
 .errorInput {
   border: 2px solid red !important;
   color: rgb(255, 2, 2) !important;
@@ -113,6 +117,11 @@ label {
   padding-right: 20px;
   width: 100%;
   margin-bottom: 30px;
+}
+
+/* hide for now, too frequently popping up */
+.emailReminder {
+  display: none;
 }
 
 .emailReminder .content {

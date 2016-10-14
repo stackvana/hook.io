@@ -105,26 +105,28 @@ label {
 .hookFrame {
   display: none;
 }
-/*
 .error {
   background-color: red;
 }
-*/
 /* do not group these rules */
 .error::-webkit-input-placeholder {
-    color: white;
+  background-color: red;
+    color: red;
 }
 .error*:-moz-placeholder {
     /* FF 4-18 */
-    color: white;
+    background-color: red;
+    color: red;
 }
 .error*::-moz-placeholder {
     /* FF 19+ */
-    color: white;
+    background-color: red;
+    color: red;
 }
 .error*:-ms-input-placeholder {
     /* IE 10+ */
-    color: white;
+    background-color: red;
+    color: red;
 }
 
 .securityHolder {
@@ -328,22 +330,35 @@ body legend {
   margin-bottom: 10px;
 }
 
+.error::-webkit-input-placeholder {
+    color: white;
+}
+.error*:-moz-placeholder {
+    /* FF 4-18 */
+    color: white;
+}
+.error*::-moz-placeholder {
+    /* FF 19+ */
+    color: white;
+}
+.error*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white;
+}
+
 </style>
 <link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet">
 
 
 <script type="text/javascript">
 
-  var boot = {{hook}};
-
-  var agreedToWarning = false;
-
   // client-side slugify
   // the server-side slugify code is much more robust covering much utf
   function slugify(text) {
     return text.toString().toLowerCase()
-      .replace(/\s+/g, '-');           // Replace spaces with -
-//      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/\//g, '-')         // Replace / with -
+    .replace(/[^\w\-]+/g, '');       // Remove all non-word chars
 //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
   }
 
@@ -376,7 +391,7 @@ body legend {
     $('#hookForm').on('submit', function(){
       var name = $('#name').val();
       if (name.length === 0) {
-        $('#name').addClass('error').focus();
+        $('#name').addClass('error');
         $('#name').attr('placeholder', 'name is required...')
         //alert('name required');
         return false;
@@ -468,7 +483,7 @@ body legend {
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="text-align:left;" class="container">
   <form id="hookForm" method="POST" action="/new" role="form" enctype="application/x-www-form-urlencoded">
-    <legend><h1 class="i18n">Create New Service</h1></legend>
+    <legend><h1 class="i18n">Create New Microservice</h1></legend>
 
     <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href=""  class="i18n">here</a><br/>
       <br/>
@@ -476,78 +491,26 @@ body legend {
     </div>
 
     <div class="hookHolder">
-      <h2 class="i18n">Service Information</h2>
+      <h2 class="i18n">Basic Information</h2>
       <div class="form-group">
         <label for="name" class="i18n">Name</label>
-        <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
-        <div class="tiny">
-          <em class="hint">Will be part of the url to access the hook. Cannot contain non-url safe characters.</em>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="path" class="i18n">Route</label>
-        <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
-        <div class="tiny">
-          <em class="hint">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope. <a href="{{appUrl}}/docs#hook">Read More</a></em><br/>
-          <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n">Route Formatting Help</button>
-          
-          <!--
-          <div class="left button_set_plain button_margin">                  
-            <div class="newsl_button">
-              <button tabindex="3" type="button" class="routeTipsButton btn small-btn i18n"><span>Route Formatting Help</span></button>
-            </div>
-          </div>
-          -->
-        </div>
-
-        <div class="tiny routeHint">
-          <h4 class="i18n">Route Formatting</h4>
-          <table class="routeExamples" border="1">
-            <tr>
-              <td><code>:name</code></td>
-              <td class="i18n">a named parameter to capture from the route</td>
-            </tr>
-            <tr>
-              <td><code>*splat</code></td>
-              <td class="i18n">a wildcard splat to capture from the route</td>
-            </tr>
-            <tr>
-              <td><code>()</code></td>
-              <td class="i18n">Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
-            </tr>
-            <tr>
-              <td><code>strings</code></td>
-              <td class="i18n">Anything else. Interpolate static strings with params.</td>
-            </tr>
-          </table>
-
-          <h4>Route Examples</h4>
-          <div class="routeExamples">
-            <code>
-              /:id/create <br/>
-              /some/(optional/):thing <br/>
-              /users/:id/comments/:comment/rating/:rating <br/>
-              /*a/foo/*b <br/>
-              /books/*section/:title <br/>
-            </code>
-          </div>
-        </div>
-
+        <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of microservice..." size="40"/>
       </div>
 
       <div class="form-group private">
         <label for="hookPublic">Public Service</label>
-        <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
+        <input tabindex="5" type="radio" CHECKED="CHECKED" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
         &nbsp;
-        <label for="hookPrivate">Private Service</label>
+        <label for="hookPrivate" class="hookPrivateLabel">Private Service</label>
         <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
-        <div class="paidAccount">In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing">paid account</a>.<br/></div>
-        <p>A public service will be publicly indexed and available for anyone to access at anytime. A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
       </div>
-
+      <div class="tiny">
+        Public services and their source codes will be accessible to anyone. Private services are protected through <a href="{{appUrl}}/keys" target="_blank">API Access Keys</a>. <br/>
+        <span class="paidAccount warning tiny">Notice: In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing" class="warning">paid account</a>.</span>
+        </div>
     </div>
 
-    <input tabindex="12" id="create" name="create" type="submit" value="Save and Continue"/ class="btn i18n">
+    <input tabindex="12" id="create" name="create" type="submit" value="Save and Continue"/ class="btn btn-primary i18n">
   </form>
 
   <div class="codeEditor">
