@@ -70,7 +70,7 @@
     "run-remote-service": "https://github.com/bigcompany/run-remote-service/tarball/master",
     "run-service": "https://github.com/bigcompany/run-service/tarball/master",
     "slug": "^0.8.0",
-    "stackvana": "^1.2.0",
+    "microcule": "4.x.x",
     "stream-buffers": "^1.1.0",
     "stripe": "^3.3.4",
     "then-sleep": "^1.0.1",
