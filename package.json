@@ -52,7 +52,6 @@
     "node-slug": "0.0.2",
     "node-uuid": "^1.4.3",
     "npm": "*",
-    "oys": "^1.0.0",
     "parse-service-request": "https://github.com/bigcompany/parse-service-request/tarball/master",
     "passport": "^0.2.1",
     "passport-github": "^0.1.5",
