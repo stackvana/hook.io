@@ -11,13 +11,12 @@ var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
 var mustache = require('mustache');
-var mergeParams = require('merge-params');
-var bodyParser = require('body-parser');
 var themes = require('../lib/resources/themes');
 var web = require('../lib/web');
 var languages = require('../lib/resources/programmingLanguage').languages;
 var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess');
 var config = require('../config');
+var psr = require('parse-service-request');
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -43,8 +42,8 @@ module['exports'] = function view (opts, callback) {
 
   $ = req.white($);
 
-  bodyParser()(req, res, function bodyParsed(){
-    mergeParams(req, res, function(){});
+  psr(req, res, function(req, res, fields){
+
     params = opts.request.resource.params;
 
     // params.owner = req.session.user;
@@ -150,7 +149,7 @@ module['exports'] = function view (opts, callback) {
       }
 
       // make more API friendly
-      if (params.themeActive) {
+      if (params.themeActive || params.themeStatus === "enabled") {
         data.themeStatus = "enabled";
       } else {
         data.themeStatus = "disabled";
