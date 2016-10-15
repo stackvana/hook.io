@@ -44,6 +44,8 @@ module['exports'] = function view (opts, callback) {
       // metric.incr("/" + service.owner + "/" + "gateway" + '/hits');
     // WARNING: currently using default limit values ( see above note )
     stack.plugins.rateLimiter({
+      maxLimit: 100000,
+      maxConcurrency: 10,
       provider: metric
     })(req, res, function () {
       _runRemote();
