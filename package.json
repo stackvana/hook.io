@@ -6,8 +6,7 @@
   "directories": {
     "example": "examples"
   },
-  "bin": {
-  },
+  "bin": {},
   "dependencies": {
     "async": "^1.3.0",
     "babel-core": "^6.13.2",
@@ -25,11 +24,10 @@
     "colors": "^1.0.3",
     "cron-parser": "^0.4.5",
     "datauri": "^0.5.5",
-    "dateformat": "^1.0.8",
+    "dateformat": "^1.0.12",
     "debug": "^2.1.0",
     "github": "^0.2.2",
     "hook.io-datastore": "https://github.com/bigcompany/hook.io-datastore/tarball/master",
-    "microservice-examples": "3.x.x",
     "hook.io-i18n": "https://github.com/bigcompany/hook.io-i18n/tarball/master",
     "hook.io-logs": "https://github.com/bigcompany/hook.io-logs/tarball/master",
     "hook.io-sdk": "https://github.com/bigcompany/hook.io-sdk/tarball/master",
@@ -41,6 +39,8 @@
     "jugglingdb-nano": "https://github.com/Marak/nano-adapter/tarball/master",
     "merge-params": "https://github.com/bigcompany/merge-params/tarball/master",
     "merge-stream": "^0.1.8",
+    "microcule": "4.x.x",
+    "microservice-examples": "3.x.x",
     "mime": "^1.2.11",
     "minimist": "^1.1.1",
     "mkdirp": "^0.5.0",
@@ -70,7 +70,6 @@
     "run-remote-service": "https://github.com/bigcompany/run-remote-service/tarball/master",
     "run-service": "https://github.com/bigcompany/run-service/tarball/master",
     "slug": "^0.8.0",
-    "microcule": "4.x.x",
     "stream-buffers": "^1.1.0",
     "stripe": "^3.3.4",
     "then-sleep": "^1.0.1",
