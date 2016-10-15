@@ -52,6 +52,7 @@ module['exports'] = {
   "stripe": "2.9.0",
   "stream-transcoder": "0.0.5",
   "through2": "0.6.3",
+  "then-sleep": "*",
   "trycatch": "1.5.11",
   "twilio": "1.8.0",
   "twit": "1.1.18",
