@@ -18,8 +18,8 @@ var translate = module['exports'].translate = function (i, $, item) {
       $(item).attr('title', i.__(t));
     break;
     default:
-      var v = $(item).text();
-      $(item).text(i.__(v));
+      var v = $(item).html();
+      $(item).html(i.__(v));
     break;
   }
 }
