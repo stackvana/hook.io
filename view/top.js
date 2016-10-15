@@ -3,6 +3,9 @@ var metric = require('../lib/resources/metric');
 module['exports'] = function topPresenter (opts, callback) {
   var req = opts.req, res = opts.res, $ = this.$;
   var appName = req.hostname;
+  if (req.session.user !== "marak") {
+    return res.end('unauthorized');
+  }
   metric.top('running', function(err, members){
     if (err) {
       return res.end(err.message);
