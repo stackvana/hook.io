@@ -3,6 +3,7 @@ var user = require('../../lib/resources/user');
 var cache = require('../../lib/resources/cache');
 var billing = require('../../lib/resources/billing');
 var bodyParser = require('body-parser');
+// TODO: replace with psr
 var mergeParams = require('merge-params');
 var async = require('async');
 var i18n = require('../helpers/i18n');

@@ -5,6 +5,9 @@
     font-size: 16px;
     padding-top:8px;
   }
+  select {
+    cursor: pointer;
+  }
   /*
   .error {
     background-color: red;
@@ -706,7 +709,9 @@ body legend {
   <h1 class="i18n">Manage Microservice</h1>
 
   <div class="row" style="text-align: center;">
-    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-2 col-md-2 col-sm-2">
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-10">
       <div class="message"></div>
     </div>
   </div>
@@ -876,22 +881,24 @@ body legend {
             <div class="services"></div>
 
             <div class="form-group languages">
-              <label class="smaller" for="language">Language</label>
-              <select class="form-control" name="language" id="language">
-                <option value="javascript">JavaScript ( Recommended )</option>
-                <option value="es7">ECMAScript 7 ( Supported )</option>
-                <option value="coffee-script">CoffeeScript ( Supported )</option>
-                <option value="bash">Bash</option>
-                <option value="lua">Lua</option>
-                <option value="perl">Perl</option>
-                <option value="php">PHP</option>
-                <option value="python">Python</option>
-                <option value="python3">Python 3</option>
-                <option value="ruby">Ruby</option>
-                <option value="scheme">Scheme</option>
-                <option value="smalltalk">SmallTalk</option>
-                <option value="tcl">Tcl</option>
-              </select>
+              <label class="smaller" for="language">
+                Language
+                <select class="form-control" name="language" id="language">
+                  <option value="javascript">JavaScript ( Recommended )</option>
+                  <option value="es7">ECMAScript 7 ( Supported )</option>
+                  <option value="coffee-script">CoffeeScript ( Supported )</option>
+                  <option value="bash">Bash</option>
+                  <option value="lua">Lua</option>
+                  <option value="perl">Perl</option>
+                  <option value="php">PHP</option>
+                  <option value="python">Python</option>
+                  <option value="python3">Python 3</option>
+                  <option value="ruby">Ruby</option>
+                  <option value="scheme">Scheme</option>
+                  <option value="smalltalk">SmallTalk</option>
+                  <option value="tcl">Tcl</option>
+                </select>
+              </label>
             </div>
             <div class="form-group sources">
 
@@ -1028,7 +1035,7 @@ body legend {
             <div class="schemaHelp tiny">
               <br/>
               <p>Adding a schema to a service provides an automated layer of validation and default values for incoming HTTP request parameters.</p>
-              <p>Schemas are useful for validating incoming service parameters or setting default service values without having to write any additional code.</p>
+              <p>Schemas are useful for validating incoming service parameters or setting default service values without having to write any additional validation code.</p>
               <p>Schemas are implemented using the <a href="https://github.com/mschema/mschema" target="_blank">mschema library.</a> Additional documentation and tests for schema usage <a href="https://github.com/mschema/mschema/tree/master/test" target="_blank">can be found here</a>.
               <p>
                 Example Schema:
@@ -1055,7 +1062,23 @@ body legend {
             </div>
 
             <div class="form-group">
-              <textarea name="schema" class="hookSchema">{}</textarea>
+              <textarea name="schema" class="hookSchema">{
+  "name": {
+    "type": "string",
+    "required": true
+  },
+  "password": {
+    "type": "string",
+    "minLength": 8,
+    "maxLength": 64
+  },
+  "age": {
+    "type": "number",
+    "required": true,
+    "default": 42
+  }
+}
+              </textarea>
             </div>
           </div>
 
