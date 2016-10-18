@@ -31,7 +31,10 @@ module['exports'] = function view (opts, callback) {
 
   function finish () {
     $('.root .owner').html(req.resource.owner);
-    var datastore = new Datastore({ root: req.resource.owner });
+    var datastore = new Datastore({
+      root: req.resource.owner,
+      password: config.redis.password
+    });
     datastore.recent(function(err, keys){
       if (err) {
         return callback(err.message);
@@ -40,7 +43,7 @@ module['exports'] = function view (opts, callback) {
         return callback(null, JSON.stringify(keys, true, 2))
       }
       if (keys.length === 0) {
-        $('.lastKeys').html('No documents exists in datastore yet. Try <a href="{{appUrl}}/datastore/set">creating one</a>?');
+        $('.lastKeys').html('No documents exists in datastore yet. Try <a href="' + config.app.url + '/datastore/set">creating one</a>?');
         return callback(null, $.html());
       }
       var str = '';

@@ -54,7 +54,10 @@ module['exports'] = function set (opts, callback) {
         if (!hasPermission) {
           return res.end(config.messages.unauthorizedRoleAccess(req, "datastore::set"));
         } else {
-          var datastore = new Datastore({ root: req.resource.owner });
+          var datastore = new Datastore({
+            root: req.resource.owner,
+            password: config.redis.password
+          });
           datastore.set(params.key, params.value, function(err, result){
             if (err) {
               return callback(err);

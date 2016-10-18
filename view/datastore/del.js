@@ -49,7 +49,10 @@ module['exports'] = function datasourceDelView (opts, callback) {
         if (!hasPermission) {
           return res.end(config.messages.unauthorizedRoleAccess(req, "datastore::del" ));
         } else {
-          var datastore = new Datastore({ root: req.resource.owner });
+          var datastore = new Datastore({
+            root: req.resource.owner,
+            password: config.redis.password
+          });
           datastore.del(params.key, function(err, result){
             if (err) {
               return callback(err);
