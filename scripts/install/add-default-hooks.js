@@ -71,6 +71,7 @@ function addHook () {
       _h.presenterSource = newHook.presenterSource;
       _h.mschema = newHook.mschema;
       _h.pkg = newHook.pkg;
+      _h.pkg.scripts.start = "microcule .";
       _h.themeStatus = newHook.themeStatus;
 
       if (typeof hook.view !== "undefined" && hook.view.length > 0) {
