@@ -83,6 +83,9 @@ module['exports'] = function view (opts, callback) {
 
         req.hook = h;
 
+        $('.hookName').html(h.owner + "/" + h.name);
+        $('.hookLink').attr('href', config.app.url + '/' + h.owner + '/' + h.name);
+
         switch (params.f) {
 
           case 'view.html':

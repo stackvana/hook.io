@@ -30,8 +30,8 @@ module['exports'] = function (opts, cb) {
         provider: config.email.provider,
         api_user: config.email.api_user,
         api_key: config.email.api_key,
-        to: "contact-hookio@marak.com",
-        from: "hookmaster@hook.io",
+        to: "hookmaster@hook.io",
+        from: "accounts@hook.io",
         subject: 'hook.io - cancel account',
         html: JSON.stringify(cancel, true, 2)
       };
@@ -40,8 +40,9 @@ module['exports'] = function (opts, cb) {
           // TODO: better errors here with /config/messages/*.js errors 
           return res.end('error communicating with mail provider ' + err.message);
         }
-        $('#cancelForm').remove();
-        return callback(null, $.html());
+        $('.cancelForm').remove();
+        $('.message').html('Your account subscription will be cancelled soon.')
+        return cb(null, $.html());
       });
     } else {
       var out = $.html();

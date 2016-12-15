@@ -122,7 +122,7 @@ module['exports'] = function view (opts, callback) {
             // updated 9/2/16 to allow .code parameter ( instead of source )
             params.source = params.source || params.code || params.codeEditor;
             if (typeof params.source === "undefined") {
-              params.source = "module['exports'] = function myService (hook) {  \n  hook.res.end('no source code has been associated with this service yet'); \n};";
+              params.source = "module['exports'] = function myService (hook) {  \n  hook.res.json(hook.params); \n};";
             }
           }
           // TODO: remove this line

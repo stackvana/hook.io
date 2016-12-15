@@ -455,9 +455,10 @@ module['exports'] = function view (opts, callback) {
 
         var services = hooks.services;
         var examples = {};
-        // pull out helloworld examples for every langauge
+
+        // pull out base examples for every langauge
         hook.languages.forEach(function(l){
-          examples[l] = services['examples-' + l + '-hello-world'];
+          examples[l] = services['' + l + ''];
         });
 
         for (var s in services) {

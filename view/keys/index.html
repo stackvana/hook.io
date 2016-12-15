@@ -81,6 +81,7 @@
                 <div class="status"></div>
 
                 <a name="what-are-keys"></a>
+                <h2 class="myKeys"><a href="#my-keys">View Your Keys</a></h2>
                 <h2>What are Keys?</h2>
                 <p>Keys are used for managing security role access to services on {{appName}}</p>
                 <p>You can create new keys to allow third-party services or users to access restricted {{appName}} services like <a href="{{appUrl}}/docs#keys">private hooks</a>, the <a href="{{appUrl}}/datastore">datastore</a>, or <a href="{{appUrl}}/logs">logs</a>.</p>
@@ -137,6 +138,7 @@ module['exports'] = function checkAccess (hook) {
                 <p class="hint">This will be scoped to the current user session or <code>hook_private_key</code> HTTP parameter</p>
                 <p class="loginLink"><a href="{{appUrl}}/login">Login to Create Your First Key</a></p>
                 <a name="generate-keys"></a>
+                <a name="my-keys"></a>
                 <div class="keys"></div>
 
             </div>

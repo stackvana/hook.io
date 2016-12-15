@@ -10,7 +10,7 @@ module['exports'] = function view (opts, callback) {
   }
 
   if (!req.isAuthenticated()) {
-    req.session.user = "anonymous";
+    //req.session.user = "anonymous";
     $('.logoutLink').remove();
   } else {
     $('.loginLink').remove();

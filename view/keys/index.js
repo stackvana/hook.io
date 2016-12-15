@@ -50,13 +50,12 @@ module['exports'] = function view (opts, callback) {
      }
      // if not logged in, kick out
      if (!req.isAuthenticated()) {
-       
        $('.keys').remove();
+       $('.myKeys').remove();
        req.session.redirectTo = "/keys";
        var out = $.html();
        out = out.replace(/\{\{appName\}\}/g, appName);
        return callback(null, out);
-       
        //return res.redirect('/login');
      } else {
        $('.loginBar').remove();
