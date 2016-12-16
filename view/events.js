@@ -1,4 +1,5 @@
 var events = require('../lib/resources/events');
+var config = require('../config');
 
 module['exports'] = function view (opts, callback) {
   var $ = this.$,
@@ -15,6 +16,9 @@ module['exports'] = function view (opts, callback) {
 
   $('.currentRoot').html("/" + req.session.user);
   $('.currentRoot').attr('href', '/events')
+  $('.systemEvents').attr('href', config.app.url + "/" + req.session.user + "/events");
+  $('.exampleSystemEventsLink').attr('href', config.app.url + "/" + req.session.user + "/events");
+  $('.exampleSystemEventsLink').html(config.app.url + "/" + req.session.user + "/events");
 
   events.recent('/' + req.session.user, function(err, results){
     //  results = JSON.parse(results[0])

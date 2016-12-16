@@ -19,11 +19,12 @@ module['exports'] = function billingForm (data, cb) {
     disabled: true
   };
 
-  var amt = (data.amount / 100).toString() + ".00";
+  var amt = '$' + (data.amount / 100).toString() + ".00 billed per month";
+
   billingSchema.amount = {
     type: "number",
     default: amt,
-    disabled: true
+    disabled: false
   };
 
   billingSchema.plan = {
