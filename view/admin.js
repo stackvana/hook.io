@@ -457,7 +457,7 @@ module['exports'] = function view (opts, callback) {
         var examples = {};
 
         // pull out base examples for every langauge
-        hook.languages.forEach(function(l){
+        Object.keys(hook.languages).forEach(function(l){
           examples[l] = services['' + l + ''];
         });
 
@@ -466,7 +466,7 @@ module['exports'] = function view (opts, callback) {
           var type = s.split('-')[0],
               lang = s.split('-')[1];
           if (type === "examples" && lang === "javascript") {
-            $('.selectSnippet').prepend('<option value="' + 'marak/' + s + '">' + e.description + '</option>')
+            $('.selectSnippet').prepend('<option value="' + 'examples/' + s + '">' + e.description + '</option>')
           }
         }
 
