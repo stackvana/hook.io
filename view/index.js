@@ -114,12 +114,13 @@ module['exports'] = function view (opts, callback) {
   // TODO: gateway.hook.io for production
   $('#gatewayForm').attr('action', config.app.url + '/Marak/gateway-javascript');
 
-
+  
   var services = hooks.services;
   var examples = {};
 
+  /*
   // pull out helloworld examples for every langauge
-  hook.languages.forEach(function(l){
+  Object.keys(hook.languages).forEach(function(l){
     examples[l] = services['examples-' + l + '-hello-world'];
   });
 
@@ -142,6 +143,7 @@ module['exports'] = function view (opts, callback) {
       $('.selectSnippet').prepend('<option value="' + ex.name + '">' + ex.description + '</option>')
     }
   });
+  */
 
   /*
   for (var s in services) {

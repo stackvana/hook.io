@@ -218,25 +218,6 @@ module['exports'] = function view (opts, callback) {
 
       var services = hooks.services;
       var examples = {};
-
-      // pull out helloworld examples for every langauge
-      hook.languages.forEach(function(l){
-        examples[l] = services['examples-' + l + '-hello-world'];
-      });
-
-      var i18n = require('./helpers/i18n');
-      var i = req.i18n;
-      i18n(i, $);
-
-      for (var s in services) {
-        var e = services[s];
-        var type = s.split('-')[0], 
-            lang = s.split('-')[1];
-        if (type === "examples" && lang === "javascript") {
-          $('.selectSnippet').prepend('<option value="' + 'marak/' + s + '">' + e.description + '</option>')
-        }
-      }
-
       boot.examples = examples;
 
       /*

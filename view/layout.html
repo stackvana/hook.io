@@ -742,11 +742,11 @@
           });
           
           // if login page, auto-select login form on document ready so users can press enter key to login
-          if(document.location.pathname === "/login") {
-            $('#name').select();
-          } else {
-            // if not the login page, autoselect the autocomplete search box
+          if(document.location.pathname === "/") {
             $('#autocomplete').select();
+          } else {
+            //
+            // $('#name').select();
           }
           function checkStats () {
             // TODO: add real-time info for other metrics
