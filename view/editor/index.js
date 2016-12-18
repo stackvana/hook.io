@@ -25,8 +25,8 @@ module['exports'] = function view (opts, callback) {
   var examples = {};
 
   // pull out helloworld examples for every langauge
-  hook.languages.forEach(function(l){
-    examples[l] = services[l + '-hello-world'];
+  Object.keys(hook.languages).forEach(function(l){
+    examples[l] = services[l];
   });
 
   // list of js examples by order
