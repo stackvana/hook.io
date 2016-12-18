@@ -362,13 +362,22 @@ module['exports'] = function view (opts, callback) {
       if (h.sourceType === "gist") {
         $('#gist').attr('value', h.gist);
         $('#gistSource').attr('checked', 'CHECKED');
+        $('.gistUrlHolder').attr('style', 'display:block;');
+        $('.codeEditorHolder').attr('style', 'display:none;');
+        $('.githubRepoHolder').attr('style', 'display:none;');
       } else if (h.sourceType === "githubRepo") {
-        $('#repo').attr('value', h.repo);
-        $('#gistSource').attr('checked', 'CHECKED');
+        $('#repo').attr('value', h.githubRepo);
+        $('#branch').attr('value', h.githubBranch);
+        $('#githubMainEntry').attr('value', h.mainEntry);
+        $('#githubRepoSource').attr('checked', 'CHECKED');
+        $('.gistUrlHolder').attr('style', 'display:none;');
+        $('.codeEditorHolder').attr('style', 'display:none;');
+        $('.githubRepoHolder').attr('style', 'display:block;');
       } else {
         $('#editorSource').attr('checked', 'CHECKED');
         $('.gistUrlHolder').attr('style', 'display:none;');
         $('.codeEditorHolder').attr('style', 'display:block;');
+        $('.githubRepoHolder').attr('style', 'display:none;');
       }
       /*
       if (h.gist && h.gist.length > 5) {
