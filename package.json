@@ -39,8 +39,8 @@
     "jugglingdb-nano": "https://github.com/Marak/nano-adapter/tarball/master",
     "merge-params": "https://github.com/bigcompany/merge-params/tarball/master",
     "merge-stream": "^0.1.8",
-    "microcule": "4.x.x",
-    "microservice-examples": "3.x.x",
+    "microcule": "https://github.com/stackvana/microcule/tarball/master",
+    "microservice-examples": "https://github.com/stackvana/microcule-examples/tarball/master",
     "mime": "^1.2.11",
     "minimist": "^1.1.1",
     "mkdirp": "^0.5.0",
@@ -87,6 +87,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "sh scripts/start.sh"
+  },
+  "nyc": {
+    "all": false,
+    "exclude": [
+      "coverage",
+      "locales",
+      "modules",
+      "white",
+      "docs",
+      "docker",
+      "public",
+      "reports",
+      "tests",
+      "node_modules"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "clover"
+    ],
+    "report-dir": "./reports/coverage"
   },
   "author": "Marak",
   "license": "AGPL"
