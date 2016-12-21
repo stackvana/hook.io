@@ -19,6 +19,9 @@ module['exports'] = function view (opts, callback) {
         if (hookCount === null) {
           hookCount = 0;
         }
+        if (m === null) {
+          m = 0;
+        }
         $('.activeServices').html(hookCount.toString());
         var count = m.toString();
         $('.totalRun').html(numberWithCommas(count));
