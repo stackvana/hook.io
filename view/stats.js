@@ -13,9 +13,10 @@ module['exports'] = function view (opts, callback) {
     if (userCount === null) {
       userCount = 0;
     }
-    $('.activeUsers').html(userCount.toString())
+    $('.activeUsers').html(userCount.toString());
     metric.get('/hook/count', function(err, hookCount){
-      metric.get('/hook/totalHits', function(err, m){
+      metric.zscore('totalHits', 'tallies', function (err, m) {
+      //metric.get('/hook/totalHits', function(err, m){
         if (hookCount === null) {
           hookCount = 0;
         }
