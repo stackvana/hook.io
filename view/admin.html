@@ -746,7 +746,6 @@ body legend {
         <br/>
         <h2>Endpoints</h2>
         <ul>
-          <li><a href="#endpoints" class="hookHome">Home Page</a></li>
           <li><a href="#endpoints" class="hookAdmin">Admin Page</a></li>
           <li><a href="#endpoints" class="">View Source</a></li>
           <li><a href="#endpoints" class="hookLogs">View Logs</a></li>
@@ -903,20 +902,20 @@ body legend {
             <div class="form-group sources">
 
               <div class="tiny">
-                <em class="i18n">The source code to power the service can be provided as a Github Gist or as plain-text.</em>
+                <span class="i18n">Select where the service's source code will come from.</span>
               </div>
 
               <div class="form-control">
-                  <label class="radio-inline" for="editorSource">
-                    <input type="radio" value="code" class="editorSource" id="editorSource" name="hookSource" title="Specify the source of the Service from text editor">
+                  <label class="radio-inline" for="editorSource" title="Specify the source of the Service from text editor">
+                    <input type="radio" value="code" class="editorSource" id="editorSource" name="hookSource">
                     Code Editor
                   </label>
-                  <label class="radio-inline gistSourceLabel" for="gistSource">
-                    <input type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
+                  <label class="radio-inline gistSourceLabel" for="gistSource" title="Specify the source of the Service as a Github Gist">
+                    <input type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource">
                     Github Gist
                   </label>
-                  <label class="radio-inline gistRepoLabel" for="githubRepoSource">
-                    <input type="radio" value="githubRepo" class="githubRepoSource" id="githubRepoSource" name="hookSource" title="Specify the source of the Service as a Github Gist">
+                  <label class="radio-inline gistRepoLabel" for="githubRepoSource" title="Specify the source of the Service as a Github Repository">
+                    <input type="radio" value="githubRepo" class="githubRepoSource" id="githubRepoSource" name="hookSource">
                     Github Repo
                   </label>
               </div>
@@ -929,14 +928,17 @@ body legend {
             </div>
 
             <div class="form-group gistUrlHolder">
+              <p>Pull service source code from Github Gist</p>
               <label for="gist">Gist Url</label>
               <input type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80"/>
-              <div class="tiny" style="padding-left:5px;padding-top:5px;">
+              <div class="tiny" style="padding-top:5px;">
                 <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
               </div>
 
               <label for="gistMainEntry">Main Entry Point</label>
               <input type="text" class="form-control gistMainEntry" name="gistMainEntry" id="gistMainEntry" placeholder="index.js" value="" size="80"/>
+
+              <input tabindex="1" id="save" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary"><br/>
 
               <!-- 
               <label for="mode" class="i18n">Mode</label>
@@ -950,6 +952,7 @@ body legend {
             </div>
 
             <div class="form-group githubRepoHolder">
+              <p>Pull service source code from a Github Repository</p>
               <label for="repo">Repo Name</label>
               <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microservice-examples" value="" size="80"/>
 
@@ -967,6 +970,7 @@ body legend {
               </select>
               <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
               -->
+              <input tabindex="1" id="save" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary"><br/>
             </div>
 
             <div class="form-group codeEditorHolder">
@@ -990,9 +994,13 @@ body legend {
                     box-shadow: 10px 10px 5px #888888;
                   }
                 </style>
+                <p>Using the Code Editor, source is stored directly on hook.io</p>
+
 
                   <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
-                  <button type="button" class="codeButton btn">Edit Code</button> <br/>
+                  <button type="button" class="codeButton btn">Edit Code</button>
+                  <input tabindex="1" id="save" name="save" type="submit" value="Save Code"/ class="btn i18n btn"><br/>
+
                   <!-- TODO: add help button for service code 
                     <button type="button" class="helpButton btn">Help</button> <br/>
                   -->
@@ -1152,7 +1160,7 @@ body legend {
             <h2 class="i18n">Timeouts</h2>
             <!-- private / tokens -->
             <p>The timeout value is how long your service will run in Milliseconds until {{appName}} automatically exits the service and ends the response.</p>
-            <p>Some custom services may require longer timeouts, but most services should not. <a href="{{appUrl}}/docs#timeouts">Read More about Timeouts</a></p> 
+            <p>Some custom services may require longer timeouts, but most services should not. <a href="{{appUrl}}/docs#timeouts" target="_blank">Read More about Timeouts</a></p> 
             <div class="paidAccount">
               <p>
                 <span class="warning"><strong>Note:</strong> </span> In order increase the service timeout value enable, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
@@ -1191,10 +1199,6 @@ body legend {
                   <tr>
                     <th>Endpoint</th>
                     <th>URL</th>
-                  </tr>
-                  <tr>
-                    <td><a href="#" class="hookHome">Home Page</a></td>
-                    <td><a href="#" class="hookHome">/</a></td>
                   </tr>
                   <tr>
                     <td><a href="#" class="hookAdmin">Administration Page</a></td>
@@ -1272,7 +1276,6 @@ body legend {
           <div class="form-group">
             <input tabindex="1" id="save" name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary">
           </div>
-
           <!-- 
           <div class="form-group">
             <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">

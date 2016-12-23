@@ -34,10 +34,12 @@
  </select>
 </div>
 
+<!--
 <div class="form-group">
  <label for="themeSource">Theme Description</label>
  <span class="themeDescription"></span>
 </div>
+-->
 
 <!--
 <div class="form-group customTheme">
@@ -47,7 +49,8 @@
 -->
 
 <div class="form-group themeSource">
- <label for="themeSource">Theme Source</label>
+ <label for="themeSource">View</label>
+ <p>The View is a single HTML page used to render the output of the Service</p>
  <textarea class="form-control" id="themeSource" name="themeSource" class="themeSource"></textarea>
 </div>
 
@@ -63,6 +66,7 @@
 
 <div class="form-group presenterSource">
  <label for="presenter">Presenter</label>
+ <p>The Theme Source is a single JavaScript function used to present the Service's View</p>
  <input class="form-control" type="text" id="presenterSource" name="presenterSource" class="presenterSource" value="" size="40"/>
 </div>
 
