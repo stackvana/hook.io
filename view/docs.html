@@ -61,7 +61,9 @@
               <h3 class="sidebar_middle_title">Service Features</h3>
               <ul class="sidebar_menu">
                 <li><a href="#schema" class="i18n">Service Input Schema</a></li>
-                <li><a href="#forms" class="i18n">Schema Form Generator</a></li>
+                <!--
+                  <li><a href="#forms" class="i18n">Schema Form Generator</a></li>
+                -->
                 <li><a href="#themes" class="i18n">Themes</a></li>
                 <li><a href="{{appUrl}}/cron" class="i18n">Schedule Cronjob</a></li>
                 <li><a href="#cache" class="i18n">Cache Controls</a></li>
@@ -212,6 +214,8 @@
                   <a name="creating"></a>
                   <h2 class="i18n">Creating a Hook</h2>
                   <p><span class="i18n">To create a Hook visit: </span><a href="{{appUrl}}/new">{{appUrl}}/new</a></p>
+
+                  <!--
                   <p class="i18n">On this page, the following properties can be specified to create a Hook:</p>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Name</strong> <em class="i18n">required</em> - <span class="i18n">Name of hook</span></p>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Path</strong> <em class="i18n">optional</em> - <span class="i18n">url regex route for the hook. Supports named parameters, splats, and groups.</span></p>
@@ -219,7 +223,7 @@
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Gist</strong> <em class="i18n">required</em> - <span class="i18n">Source code of the Hook as a Github Gist</span></p>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Theme</strong> <em class="i18n">optional</em> - <span class="i18n">A View-Presenter that will render the output of the Hook, see:</span> <a href="{{appUrl}}/themes">Themes</a></p>
                   <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="i18n">Cron</strong> <em class="i18n">optional</em> - <span class="i18n">Run this Hook on a Cron schedule, see: </span><a class="i18n" href="{{appUrl}}/cron">Cron</a></p>
-
+                  -->
 
                   <a name="forking"></a>
                   <h2 class="i18n">Forking an existing Hook</h2>
@@ -228,7 +232,8 @@
 
                   <p class="i18n">Once a Hook is created the browser will redirect to the admin page for that Hook.</p>
 
-                  <p><strong class="i18n">Example:</strong> <a href="{{appUrl}}/marak/echo/fork">{{appUrl}}/marak/echo/fork</a>
+                  <p><strong class="i18n">Try It Now:</strong> <a href="{{appUrl}}/examples/echo/fork">{{appUrl}}/examples/echo/fork</a></p>
+                  <p><strong class="i18n">Many Examples To Fork From:</strong> <a href="{{appUrl}}/examples">{{appUrl}}/examples</a></p>
                   <hr/>
 
                   <a name="running"></a>
@@ -245,16 +250,16 @@
 
                   <a name="viewsource"></a>
                   <h2 class="i18n">View Hook Source</h2>
-                  <p class="i18n">To view the source code of any Hook simply attach <code>/source</code> to the Hook service url.</p>
+                  <p class="i18n">To view the source code of any Hook simply attach <code>/_src</code> to the Hook service url.</p>
                   <p class="i18n">This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
 
-                  <p><strong class="i18n">Source Code:</strong> <a href="{{appUrl}}/marak/echo/source">{{appUrl}}/marak/echo/source</a></p>
+                  <p><strong class="i18n">Source Code:</strong> <a href="{{appUrl}}/marak/echo/_src">{{appUrl}}/marak/echo/_src</a></p>
                   <p><strong class="i18n">Logs:</strong> <a href="{{appUrl}}/marak/echo/logs">{{appUrl}}/marak/echo/logs</a></p>
                   <p><strong class="i18n">Resource:</strong> <a href="{{appUrl}}/marak/echo/resource">{{appUrl}}/marak/echo/resource</a></p>
                   <p><strong class="i18n">View:</strong> <a href="{{appUrl}}/marak/echo/view">{{appUrl}}/marak/echo/view</a></p>
                   <p><strong class="i18n">Presenter:</strong> <a href="{{appUrl}}/marak/echo/presenter">{{appUrl}}/marak/echo/presenter</a></p>
 
-                  <p class="i18n">If you require the source code of a Hook to remain private, upgrade to a paid account and set the Hook to <code>Private</code>
+                  <p class="i18n">If you require the source code of a Hook to remain private, upgrade to a <a href="{{appUrl}}/pricing">paid account</a> and set the Hook to <code>Private</code>
 
                   <a name="admin"></a>
                   <h2 class="i18n">Hook Admin Panel</h2>
@@ -295,21 +300,23 @@
 
                   <a name="code"></a>
                   <h2 class="i18n">Editing Hook source code</h2>
-                  <p class="i18n">The source code for a Hook is stored as a Github Gist</p>
-                  <p class="i18n">There are currently two options available for editing the source code of a Hook.</p>
-                  <h3 class="i18n">Git Deploy Updates</h3>
-                  <p class="i18n">To update the source code of a Hook using Git, you simply need to clone the Gist source code to your local development machine, commit changes, and push back to the Gist.</p>
-                  <p class="i18n">The location of a Hook's git endpoints can be found on it's <code>/admin</code> page.</p>
-                  <h3 class="i18n">Edit source on gist.github.com</h3>
-                  <p class="i18n">It's also possible to simply edit the source directly on the gist.github.com website using Github's web editor.</p>
-                  <p>
-                    <em><span class="i18n">If you want to edit a Hook which you do not own, you can</span> <a href="#forking">Fork It</a>.</em>
-                  </p>
+                  <p class="i18n">There are three options for specifying the source code for a Hook. Source code can be set on the <code>/admin</code> page for the Hook. <em><span class="i18n">To quickly get started, we recommend </span> <a href="#forking">Forking</a> an existing service.</em></p>
+
+                  <h3 class="i18n">Code Editor</h3>
+                  <p class="i18n">Uses a built-in Code Editor and stores source code of the service in {{appName}}</p>
+
+                  <h3 class="i18n">Github Repository</h3>
+                  <p class="i18n">Pulls the source code of the service from a Github Repository.</p>
+
+                  <h3 class="i18n">Github Gist</h3>
+                  <p class="i18n">Pulls the source code of the service from a Github Gist.</p>
+
                   <hr/>
 
                   <a name="hook"></a>
                   <h2 class="i18n">Accessing the Hook object inside your code</h2>
-                  <p><span class="i18n">Every Service receives a </span><strong>Hook</strong> <span class="i18n">object as it's first argument.</span></p>
+                  <p>All services are populated with a <code>Hook</code> object containing many useful properties.</p>
+                  <p>For JavaScript based services, <code>Hook</code> will be the first function argument and <code>Hook.req</code> and <code>Hook.req</code> will be streams. For other programming languages, <code>Hook</code> will be defined globally in the script and <code>STDIN</code> and <code>STDOUT</code> streams will be available. The best way to understand how this works is by looking at <a href="{{appUrl}}/examples">the examples</a>.</p>
                   <p>
                     <!-- 
                     deprecated in favor of `console.log` <strong>Hook.debug</strong> - Logging method for sending debug messages to the debug console <br/>
@@ -319,7 +326,7 @@
                     <strong>Hook.res</strong> - <span class="i18n">Outgoing</span> <a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">httpServer.ServerResponse</a> stream<br/>
                     <strong>Hook.datastore</strong> - <span class="i18n">Contains methods for getting and setting key-values from the datastore</span><br/>
                     <strong>Hook.fs</strong> - <span class="i18n">Contains methods for using the <a href="{{appUrl}}/files">Cloud Files API</a></span><br/>
-                    <strong>Hook.sdk</strong> - <span class="i18n">Contains a reference copy of the <a href="{{appUrl}}/sdk">hook.io-sdk</a></span><br/>
+                    <strong>Hook.sdk</strong> - <span class="i18n">Contains a reference copy of the <a href="{{appUrl}}/sdk">{{appName}}-sdk</a></span><br/>
                     <!-- <strong>Hook.open</strong> - <span class="i18n">Method for opening URLs ( such as another Hook ). Options pass through to</span> <a href="https://github.com/substack/hyperquest">Hyperquest API</a>.<br/> -->
                     <strong>Hook.schema</strong> - <span>Optional <a href="https://github.com/mschema/mschema">mschema</a> for <strong>hook.params</strong><br/>
                     <strong>Hook.env</strong> - <span class="i18n">Optional. Key / value pairs stored by the owner of the Hook. See:</span>  <a class="i18n" href="#env">Setting Hook Environment</a><br/>
@@ -329,48 +336,41 @@
 
                   <a name="datastore"></a>
                   <h2 class="i18n">Using the Cloud Datastore</h2>
-                  <p class="i18n">Hooks have access to a key-value cloud datastore which can be used to manage persistent data.</p>
 
-                  <p class="i18n">This is useful for storing persistent information which you may want to retrieve later ( such as a user signup ).</p>
-
-                  <p><span class="i18n">More information about using the cloud datastore can be found here</span> <a href="{{appUrl}}/datastore">{{appUrl}}/datastore</a></p> 
+                  <p class="i18n">Hooks have access to a key-value cloud datastore which can be used to store ange manage persistent data. This is useful for storing persistent information which you may want to retrieve later.</p> 
+                  <p class="i18n">Read more about cloud datastore: <a href="{{appUrl}}/datastore">{{appUrl}}/datastore</a></p>
 
                   <a name="schema"></a>
                   <h2 class="i18n">Specifying Optional Schema</h2>
-                  <p><span>Through the use of</span> <a href="https://github.com/mschema/mschema">mschema</a>, <span>it is possible to enable validation and default values for incoming hook parameters.</span></p>
-
-                  <p class="i18n">To create a mschema for the incoming hook parameters, simply specify the schema property of the hook.</p> 
+                  <p><span>Through the use of</span> <code>mschema</code>, <span>it is possible to enable validation and default values for incoming hook parameters.</span></p>
+                  <p class="i18n">To create a schema for the incoming hook parameters, simply specify the schema property on the <code>/admin</code> page for the hook. HTTP params will then be available in <code>Hook.params</code>.</p> 
+                  <!--
                   <p>
                     <strong class="i18n">Example:</strong>
                     <div data-gist="33f13d0f9a390c9601f9">Loading...</div>
                   </p>
+                  -->
                   <p class="i18n">
                     Documentation for mschema can be found <a href="http://github.com/mschema/mschema/">here</a>.
                   </p>
 
-                  <p><strong class="i18n">Important:</strong><span class="i18n"> For performance reasons, the Hook may need to be run to update it's schema.</span></p>
                   <hr/>
 
                   <a name="files"></a>
                   <h2 class="i18n">Using the Mutli-Cloud Virtual File System</h2>
-                  <p class="i18n">Hooks have access to a robust multi-cloud virtual system which can be used to manage files across multiple adapters.</p>
-
-                  <p class="i18n">This is useful for storing persistent files which you may want to retrieve later ( such as an image ).</p>
-
-                  <p><span class="i18n">More information about using the multi-cloud virtual file system can be found here</span> <a href="{{appUrl}}/files">{{appUrl}}/files</a></p> 
+                  <p class="i18n">Hooks have access to a robust multi-cloud virtual file-system which can be used to manage files across multiple adapters. This is useful for storing persistent files which you may want to retrieve later.</p>
+                  <p>Read more about multi-cloud virtual file system: </span> <a href="{{appUrl}}/files">{{appUrl}}/files</a></p>
 
                   <hr/>
 
+                  <!--
                   <a name="forms"></a>
                   <h2>Using Schema Based Forms</h2>
                   <p>Through the use of <a href="https://github.com/mschema/mschema-forms">mschema-forms</a>, all Hooks have the ability to auto-generate an HTML form element populated with input fields matching that Hook's <strong>Hook.schema</strong></p>
 
                   <p>Forms are automatically generated in the <strong>friendly</strong> format when a <strong>Hook.schema</strong> is specified.</p> 
                   <p>
-                  <p>
-                    <strong>Important:</strong> Forms will not be updated until the Hook is run at least once.
-                  </p>
-
+                  -->
                   <hr/>
                   <a name="env"></a>
                   <h2 class="i18n">Setting Hook Environment Variables</h2>
@@ -438,11 +438,11 @@
                 <a name="rateLimits"></a>
 
                 <h2>Rate Limiting</h2>
-                <p>hook.io will limit the total amount of API requests made against every account. This includes all API endpoints and every execution of any Hooks associated with the account.</p>
-                <p>In the event the total amount of API requests exceeds the amount of requests allocated with the accounts plan, further requests will be rate-limited. To increase rate limits, you can upgrade the account to a larger plan or email support for a temporary reset.</p>
+                <p>{{appName}} will limit the total amount of API requests made against every account. This includes all API endpoints and every execution of any Hooks associated with the account.</p>
+                <p>In the event the total amount of API requests exceeds the amount of requests allocated with the accounts plan, further requests will be rate-limited. To increase rate limits, you can <a href="{{appUrl}}/pricing">upgrade the account</a> to a larger plan or <a href="{{appUrl}}/contact?t=Rate Limit Reset Request">email support</a> for a temporary reset.</p>
                 <p>Rate Limits will automatically reset at the start of every billing cycle.</p>
                 <h3>Rate Limiting HTTP Headers</h3>
-                <p>Every API response from hook.io will include special HTTP headers indicating the current status of Rate Limits and Concurrency Limits.</p>
+                <p>Every API response from {{appName}} will include special HTTP headers indicating the current status of Rate Limits and Concurrency Limits.</p>
                 <p>
                   <code> X-RateLimit-Limit</code> - <em>Total amount of requests allowed per cycle</em> <br/>
                   <code> X-RateLimit-Remaining</code> - <em>Total amount of requests remaining in cycle</em> <br/>
@@ -451,29 +451,25 @@
 
                 <a name="concurrency"></a>
                 <h2>Hook Concurrency Limitations</h2>
-                <p>hook.io will limit the of total amount services running concurrently per account. This means that every account may only have a certain amount of services running at the exact same time. In the event that too many services are running concurrently per account, further incoming HTTP requests will be rate-limited until some of the running services complete.</p>
+                <p>{{appName}} will limit the of total amount services running concurrently per account. This means that every account may only have a certain amount of services running at the exact same time. In the event that too many services are running concurrently per account, further incoming HTTP requests will be rate-limited until some of the running services complete.</p>
                 <p>
-                  To increase concurrency limits, you can upgrade the account to a larger plan or email support.
+                  To increase concurrency limits, you can <a href="{{appUrl}}/pricing">upgrade the account</a> to a larger plan or email support.
                 </p>
                 <hr/>
 
                 <a name="timeouts"></a>
 
                 <h2>Custom Service Timeouts</h2>
-                <p>All hooks have a <code>10 second</code> timeout value by default. If the execution of your service takes longer than this value, the client will receive a <code>service timeout</code> error.</p>
-                <p>In the majority of cases, <strong>a time-out error</strong> indicates that the service failed to end properly and <strong>usually indicates a programming error</strong>.</p>
-                <p align="center"><strong>Attempting to run an HTTP or TCP server in a Hook will not work! <br/>Hooks are microservices ( think functions ), not servers.</strong>
-                <p>In some other cases, you may be dealing with transferring a larger amount of data from a third-party service and the default timeout of ten seconds is not long enough to complete the transmission.</p> 
-                <p>If you think your service may require more than 10 seconds to execute, simply visit the <code>/admin</code> page for the Hook and set the form field for "Custom Timeout" in seconds. ( Note: A <a href="{{appUrl}}/pricing">paid account</a> may be required ).</p>
+                <p>All hooks have a <code>10000</code> millisecond timeout ( 10 second ) value by default. If the execution of your service takes longer than this value, the client will receive a <code>service timeout</code> error.</p>
+                <p>In the majority of cases, <strong>a time-out error</strong> indicates that the service failed to end properly and <strong>usually indicates a programming error</strong>. Attempting to run an HTTP or TCP server in a Hook will not work! Hooks are microservices ( think functions ), not servers.</p>
+                <p>In some other cases, you may be dealing with transferring a larger amount of data from a third-party service or communicating with a slow responding third-party service and the default timeout of ten seconds is not long enough to complete the transmission. If you think your service may require more than 10 seconds to execute, simply visit the <code>/admin</code> page for the Hook and set the form field for "Custom Timeout" in milliseconds. Note: A <a href="{{appUrl}}/pricing">paid account</a> may be required.</p>
                 <hr/>
-
                 <br/>
-
                 <a name="hot-code"></a>
                 <h2 class="i18n">Hot-Code Execution Gateway</h2>
                 <p class="i18n">In most cases, you will want to save your service's source-code as a Hook.</p>
                 <p class="i18n">In other situations, you may need to send code that has to be executed immediately and without any additional requests ( such as testing and developing hooks or executing dynamically created source code from a third-party service ).</p>
-                <h3><a href="{{appUrl}}/gateways">Click here to see available gateways</a></h3>
+                <h3>Read more on <a href="{{appUrl}}/gateways">{{appUrl}}/gateways</a></h3>
                 <p>{{appName}} provides a hot-code gateway which allows users to send code to be executed immediately. In fact, if you look at the <a href="https://{{appName}}#tuts">Interactive Example</a> on the {{appName}} homepage, you will notice it is powered by several hot-code gateways ( a separate gateway for each specific programming language ).</p>
 
                 <h3>Examples of using the Hot-Code Gateways</h3>
@@ -495,7 +491,7 @@
                 <h3>Available Gateways</h3>
                 <em>Note: Most gateways will an return an error or blank response if the <code>source</code> parameter is not provided</em>
 
-                <ul style="font-size:22px;padding-top:10px;list-style-type: disc;">
+                <ul style="padding-top:10px;list-style-type: disc;">
                   <li><a href="http://javascript.{{appName}}">javascript.{{appName}}</a></li>
                   <li><a href="http://coffee.{{appName}}">coffee.{{appName}}</a></li>
                   <li><a href="http://bash.{{appName}}">bash.{{appName}}</a></li>
@@ -541,10 +537,12 @@
                 <a name="api"></a>
                 <h2>Using {{appName}} as an HTTP API</h2>
 
-                <p><span class="i18n">A graphical interface exists for all of {{appName}}'s supported features at </span> <a href="https://{{appName}}">https://{{appName}}</a>.</p>
-                <p class="i18n">In some cases, you may want a third party script or client ( not your browser window ), to be able to access a specific {{appName}} platform feature ( such as logs, the datastore, or creating a new hook service ).</p>
-                <p class="i18n">Using {{appName}}'s HTTP API, you can access any platform feature that is available in our web app.</p> <p>To keep things simple ( and self documenting ), the routes in our web app are 1:1 with our API.</p>
-                <p>The <a href="{{appUrl}}/datastore/set">/datastore</a> or <a href="{{appUrl}}/logs">/logs</a> endpoints are well documented examples of how this works, but other endpoints like <a href="{{appUrl}}/new">/new</a> might require a small amount of reverse engineering.</p>
+                <p><span class="i18n">A graphical interface exists for all of {{appName}}'s supported features at </span> <a href="{{appUrl}}">{{appUrl}}</a> In some cases, you may want a third party script or client ( not your browser window ), to be able to access a specific {{appName}} platform feature ( such as logs, the datastore, or creating a new hook service ). Using {{appName}}'s HTTP API, you can access any platform feature that is available in our web app.</p>
+                <p>To keep things simple ( and self documenting ), the routes in our web app are 1:1 with our API. The <a href="{{appUrl}}/datastore/set">/datastore</a> or <a href="{{appUrl}}/logs">/logs</a> endpoints are well documented examples of how this works, but other endpoints like <a href="{{appUrl}}/new">/new</a> might require a small amount of reverse engineering.</p>
+
+                <h3>{{appName}} SDK</h3>
+                <p>An easy way to access the {{appName}} API programmatically is through the {{appName}} SDK. Read more on <a href="{{appUrl}}/sdk">{{appUrl}}/sdk</a></p>
+
                 <a name="keys"></a>
                 <h3>API Access Keys</h3>
 
