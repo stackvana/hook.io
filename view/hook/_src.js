@@ -83,8 +83,12 @@ module['exports'] = function view (opts, callback) {
 
         req.hook = h;
 
-        $('.hookName').html(h.owner + "/" + h.name);
-        $('.hookLink').attr('href', config.app.url + '/' + h.owner + '/' + h.name);
+        //$('.hookName').html(h.owner + "/" + h.name);
+        //$('.hookLink').attr('href', config.app.url + '/' + h.owner + '/' + h.name);
+
+        $('.hookRun').attr('href', config.app.url + '/' + h.owner + '/' + h.name);
+        $('.hookAdmin').attr('href', config.app.url + '/' + h.owner + '/' + h.name + '/admin');
+        $('.hookAdmin').html(h.owner + '/' + h.name);
 
         switch (params.f) {
 
