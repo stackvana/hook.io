@@ -21,14 +21,15 @@
   <br/>
   <h2><strong>Adding a Theme View</strong></h2>
   <p>Adding HTML to a Theme is easy!</p>
-  <p>To add a Theme View, simply set the <strong>Service.theme</strong> property to url of the Theme HTML.</p>
-  
+  <p>To add a Theme View, simply enabled the Theme option in the <code>/admin</code> page for the Hook.</p>
+
+  <!--
   <p>Here is an example of a Service which uses the "simple" theme:</p>
   <div data-gist="607ccd5106b099b8047f">Loading...</div>
   <p>This HTML file can be hosted <strong>anywhere</strong>. If required, <a href="http://gist.github.com">Github Gist</a> provides free hosting for assets and HTML.</p>
+  -->
 
   <p>Once a Theme HTML file is specified, the Service will use that file for rendering output.</p>
-  <p style="font-size:16px;"><strong>Important:</strong> For performance reasons, changes made to the Service.theme and Service.presenter properties will not be reflected in the User Interface until the Service has been run at least once. Updates to the actual contents of the Theme or Presenter will however; appear immediately.</p>
   <h3><strong>Mustache Style Replacements</strong></h3>
   <p>By default, a <strong>{{key.value}}</strong> style replacement will be performed on the Theme HTML using the completed <strong>Service</strong> object.</p>
 
@@ -39,27 +40,29 @@
   <p>To bypass these replacements, simply do not place any matching <strong>{{key.value}}</strong> tags in the Theme HTML.</p>
   
   <p> For most themes, this simple replacement style should be sufficient. If additional server-side rendering is required, a Service Theme Presenter can be added.</p>
-  <h2><strong>Service Theme Presenter</strong></h2>
-  
+  <h2><strong>Adding a Theme Presenter</strong></h2>
+
   <p>The Service Theme Presenter is an optional JavaScript method which is performed server-side on the rendered Theme View before it's piped to the response. When the Presenter method is run on {{appName}}, it becomes a <a href="http://github.com/bigcompany/view/">View class</a>. This will give the Presenter special properties which allow for server-side rendering of the Theme View with JavaScript.</p>
-  
+
   <p><strong>For example:</strong></p>
   <div data-gist="ed9a84b1f1cd7be73f5e">Loading...</div>
    <p>For full documentation on using the <strong>$</strong> object see: <a href="https://github.com/cheeriojs/cheerio">cheeriojs/cheerio</a></p>
    <p>For seeing how the <strong>View</strong> class is implemented see: <a href="http://github.com/bigcompany/view">bigcompany/view</a>
   <h2><strong>Important Tips</strong></h2>
 
+  <!--
   <h3><strong>Theme Hosting</strong></h3>
   <p>Themes can be hosted anywhere. Free hosting is available through <a href="http://gist.github.com">Github Gist</a>.</p> 
-  
+  -->
+
   <h3><strong>Separation of Concerns</strong></h3>
   <p>Performing a lot of logic in the Presenter is not recommended. While it is possible to do a lot inside a Theme Presenter, it's always better to create new Services and pipe them together. The Presenter should only focus on taking in data and outputting HTML.</p> 
-  
+
   <h3><strong>Custom Templating Engines</strong></h3>
   <p>Want to use a custom templating engine? Not a problem! There are two methods in which custom templating engines can be implemented.</p>
   <p><strong>Method 1</strong> ( Not Recommended ) - Require the custom templating engine directly in the Service Presenter and modify the contents of $.html() directly.</p>
   <p><strong>Method 2</strong> ( Recommended ) - Create a new Service that is a generic processor for the custom templating engine. Once this Service is created, output from other Service's can be piped to it ( which will process the input using the custom templating engine ).</p>
-  
+
   <h3><strong>Client-side JavaScript</strong></h3>
   <p>Any type of client-side JavaScript library can be used in the Theme HTML through the use of regular &lt;script&gt; tags.
 

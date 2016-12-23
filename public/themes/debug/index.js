@@ -14,6 +14,7 @@ function numberWithCommas(x) {
 module['exports'] = function view (opts, callback) {
   var params = opts.request.resource.params;
   var req = opts.request,
+      service = opts.service,
       res = opts.response
       result = opts;
   var $ = this.$;
@@ -26,18 +27,11 @@ module['exports'] = function view (opts, callback) {
   // $('.hookDocs').html(docs);
   $('.hookDocs .docsHeader').remove();
 
-  /* TODO: req has no passport session in worker, session info should be forwarded */
-  if (req.session.user && req.session.user === req.params.owner) {
-    $('#fork').remove();
-  } else {
-    $('#edit').remove();
-  }
-
   if (params.theme) {
     $('.theme').attr('value', params.theme);
   }
   if (params.edit) {
-    return res.redirect(301, config.baseUrl + "/admin?owner=" + req.params.owner + "&hook=" + req.params.hook);
+    return res.redirect(301, config.app.url + "/admin?owner=" + req.params.owner + "&hook=" + req.params.hook);
   }
 
   if (true) {
@@ -106,7 +100,7 @@ module['exports'] = function view (opts, callback) {
    $('.hookDebugOutput').html(JSON.stringify(result.debug, true, 2));    
    //return callback(null, $.html());
 
-   $('.hookName').html(req.hook.name);
+   $('.hookName').html(service.name);
    // $('.httpMethod').html(req.method.toUpperCase());
 
   }
@@ -119,8 +113,8 @@ module['exports'] = function view (opts, callback) {
    }
  }
 
- $('.forkButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
- $('.editButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?admin=true");
+ //$('.forkButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
+ //$('.editButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?admin=true");
 
   // $('.counter').html('<em>' + req.hook.name + ' has run ' + numberWithCommas(req.hook.ran.toString()) + ' times since ' + dateFormat(new Date(req.hook.ctime), "mmmm dS, yyyy, h:MM:ss TT") + '</em>');
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
@@ -138,7 +132,7 @@ module['exports'] = function view (opts, callback) {
     $('.notice').html('<strong class="success">Hook already exists! Here it is.</strong>');
   }
 
-  var formSchema = req.hook.mschema || {};
+  var formSchema = service.mschema || {};
 
   for (var p in formSchema) {
     if(typeof params[p] !== 'undefined') {
@@ -167,9 +161,9 @@ module['exports'] = function view (opts, callback) {
   forms.generate({
     type: "generic",
     form: {
-      legend: req.hook.name + ' test form',
+      legend: service.name + ' test form',
       submit: "Test Hook",
-      action: "/" + req.params.owner + "/" + req.params.hook
+      action: "/" + service.owner + "/" + service.name
     },
     schema: formSchema,
     }, function (err, result){

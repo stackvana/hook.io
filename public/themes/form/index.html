@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="text/javascript" src="{{{config.baseUrl}}}/js/jquery.js"></script>
-    <script type="text/javascript" src="{{{config.baseUrl}}}/js/jquery.rumble.js"></script>
-    <script type="text/javascript" src="{{{config.baseUrl}}}/js/jquery.hoverIntent.js"></script>
-    <script type="text/javascript" src="{{{config.baseUrl}}}/js/jquery.scrollTo.js"></script>
-    <link href="{{{config.baseUrl}}}/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="{{{config.baseUrl}}}/css/font-awesome.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="{{{config.baseUrl}}}/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="{{{config.baseUrl}}}/themes/debug/css/jumbotron-narrow.css" media="all" rel="stylesheet"type="text/css" />
+    <script type="text/javascript" src="{{config.app.url}}/js/jquery.js"></script>
+    <script type="text/javascript" src="{{config.app.url}}/js/jquery.rumble.js"></script>
+    <script type="text/javascript" src="{{config.app.url}}/js/jquery.hoverIntent.js"></script>
+    <script type="text/javascript" src="{{config.app.url}}/js/jquery.scrollTo.js"></script>
+    <link href="{{config.app.url}}/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{config.app.url}}/css/font-awesome.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{config.app.url}}/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{config.app.url}}/themes/debug/css/jumbotron-narrow.css" media="all" rel="stylesheet"type="text/css" />
     <title>hook</title>
     <meta charset='utf-8'/>
-    <link href="{{{config.baseUrl}}}/css/social.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{config.app.url}}/css/social.css" media="all" rel="stylesheet" type="text/css" />
     <script style="text/javascript">
       $(document).ready(function(){
         $('.footerNav img').jrumble({
@@ -212,10 +212,10 @@
     <div class="container">
     <div id="header" class="header">
         <div style="float: left;bottom: 10px;">
-          <a href="{{{config.baseUrl}}}"><img alt="hook.io" src="{{{config.baseUrl}}}/img/logo.png"/></a>
+          <a href="{{config.app.url}}"><img alt="hook.io" src="{{config.app.url}}/img/logo.png"/></a>
         </div>
         <div align="right" style="bottom: 0px;right: -4px;">
-          <a href="{{{config.baseUrl}}}"><img alt="pipe" src="{{{config.baseUrl}}}/img/pipe.gif" style="height: 125px;padding-bottom: 10px;padding-top:10px;"/></a>
+          <a href="{{config.app.url}}"><img alt="pipe" src="{{config.app.url}}/img/pipe.gif" style="height: 125px;padding-bottom: 10px;padding-top:10px;"/></a>
         </div>
       </div>
 
@@ -259,7 +259,7 @@
 
       <div class="row">
         <div class="col-md-12" style="margin-left:5px;margin-right:5px;">
-          <em>Did you know this page is a fully qualified web-service? Read more <a href="{{{config.baseUrl}}}/docs#data">here</a>.</em>
+          <em>Did you know this page is a fully qualified web-service? Read more <a href="{{config.app.url}}/docs#data">here</a>.</em>
         </div>
         <br/>
         <br/>
@@ -270,10 +270,10 @@
     <div id="footer" class="navbar navbar-fixed-bottom">
       <!-- <a href=""><img src="./img/block.png"/></a> -->
       <div class="footerNav">
-        Copyright <a href="{{{config.baseUrl}}}/">hook.io</a> 2016
-        <div style="position: absolute;right: 129px;bottom: 4px;"><a href="/modules"><img src="{{{config.baseUrl}}}/img/tinynpm.png"/></a></div>
-        <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img src="{{{config.baseUrl}}}/img/littlecat.png"/></a></div>
-        <div style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="/"><img height="32" width="32" src="{{{config.baseUrl}}}/img/pipe.gif"/></a></div>
+        Copyright <a href="{{config.app.url}}/">hook.io</a> 2016
+        <div style="position: absolute;right: 129px;bottom: 4px;"><a href="{{appUrl}}/modules"><img src="{{config.app.url}}/img/tinynpm.png"/></a></div>
+        <div style="position: absolute;right: 69px;bottom: 0px;"><a href="http://github.com/bigcompany/hook.io/issues"><img src="{{config.app.url}}/img/littlecat.png"/></a></div>
+        <div style="position: absolute;right: 19px;bottom: 4px;"><a class="myHooks" href="{{appUrl}}/"><img height="32" width="32" src="{{config.app.url}}/img/pipe.gif"/></a></div>
         </div>
     </div>
     </div>

@@ -8,13 +8,14 @@ module['exports'] = function view (opts, callback) {
   var params = opts.request.resource.params;
 
   var req = opts.request,
-      res = opts.response
+      res = opts.response,
+      service = opts.service,
       result = opts;
 
   var $ = this.$;
   var run = params.run;
-  $('title').html(req.params.owner + "/" + req.params.hook);
-  $('.hookTitle').html(req.params.hook + ' hook');
+  $('title').html(service.owner + "/" + service.name);
+  $('.hookTitle').html(service.name + ' hook');
   
   var gist = opts.gist || params.gist;
   $('.gistEmbed').html('<script src="' + gist + '.js"></script>');
@@ -40,7 +41,7 @@ module['exports'] = function view (opts, callback) {
 
   showForm(callback);
   function showForm (cb) {
-    var formSchema = req.hook.mschema || {};
+    var formSchema = service.mschema || {};
 
     for (var p in formSchema) {
       if(typeof params[p] !== 'undefined') {

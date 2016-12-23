@@ -8,12 +8,13 @@ module['exports'] = function view (opts, callback) {
   var params = opts.request.resource.params;
 
   var req = opts.request,
-      res = opts.response
+      res = opts.response,
+      service = opts.service,
       result = opts;
 
   var $ = this.$;
   var run = params.run;
-  $('title').html(req.params.owner + "/" + req.params.hook);
+  //$('title').html(req.params.owner + "/" + req.params.hook);
   
   
 //  $('.themeSelector').append('<option>' + req.hook.theme + '</option>')
@@ -51,12 +52,12 @@ module['exports'] = function view (opts, callback) {
    }
  }
 
- $('.forkButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
+ // $('.forkButton').attr('data-url', 'https://hook.io/' + req.hook.owner + "/" + req.hook.name + "?fork=true");
 
   // $('.hookResult').remove();
   showForm(callback);
   function showForm (cb) {
-    var formSchema = req.hook.mschema || {};
+    var formSchema = service.mschema || {};
 
     for (var p in formSchema) {
       if(typeof params[p] !== 'undefined') {
@@ -96,7 +97,7 @@ module['exports'] = function view (opts, callback) {
     forms.generate({
       type: "generic",
       form: {
-        legend: req.hook.name + ' form',
+        legend: service.name + ' form',
         submit: "Submit",
         action: ""
       },

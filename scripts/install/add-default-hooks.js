@@ -44,12 +44,13 @@ function addHook () {
     sourceType: "code",
     pkg: hook.pkg
   };
-
+  if (typeof newHook.mschema === "object" && Object.keys(newHook.mschema).length > 0) {
+    newHook.mschemaStatus = "enabled";
+  }
   hookM.find({ owner: "examples", name: h }, function (err, results) {
     if (err) {
       throw err;
     }
-
     if (results.length === 0) {
       console.log('creating'.red, newHook)
       hookM.create(newHook, function(err, res){
@@ -70,6 +71,10 @@ function addHook () {
       _h.themeSource = newHook.themeSource;
       _h.presenterSource = newHook.presenterSource;
       _h.mschema = newHook.mschema;
+      if (typeof _h.mschema === "object" && Object.keys(_h.mschema).length > 0) {
+        _h.mschemaStatus = "enabled";
+      }
+
       _h.pkg = newHook.pkg;
       _h.pkg.scripts.start = "microcule .";
       _h.themeStatus = newHook.themeStatus;
@@ -79,6 +84,7 @@ function addHook () {
       } else {
         hook.themeStatus = "disabled";
       }
+      // TODO: Must invalidate Hook cache here or changes will not be applied...
       _h.save(function(){
         if(err) {
           throw err;

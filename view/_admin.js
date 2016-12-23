@@ -56,8 +56,8 @@ module['exports'] = function view (opts, callback) {
      }
 
       // TODO: add roles and groups
-      if (req.session.user.toLowerCase() !== "marak") {
-       return res.redirect('/services');
+      if (typeof req.session.user === "undefined" || req.session.user.toLowerCase() !== "marak") {
+        return res.redirect('/services');
       }
 
       // Special line only used for local docker dev
