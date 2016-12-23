@@ -59,7 +59,7 @@ module['exports'] = function view (opts, callback) {
                 if (params.env[k] === null || params.env[k] === "null") {
                   delete _env[k];
                 } else {
-                  _env[k] = params.env[k];
+                  _env[k.trim()] = params.env[k];
                 }
               }
               //_env = params.env;
@@ -67,7 +67,7 @@ module['exports'] = function view (opts, callback) {
             // old form based API with comma delimited key / value fields
             if (params.key)  {
               if (typeof params.key === "string") {
-                params.key = [params.key];
+                params.key = [params.key.trim()];
               }
               if (typeof params.value === "string") {
                 params.value = [params.value];
@@ -86,7 +86,7 @@ module['exports'] = function view (opts, callback) {
                   if (val === null || typeof val === "undefined") {
                     delete _env[k];
                   } else {
-                    _env[k] = val;
+                    _env[k.trim()] = val;
                   }
                 }
               });
