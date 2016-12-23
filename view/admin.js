@@ -449,13 +449,26 @@ module['exports'] = function view (opts, callback) {
         var i = req.i18n;
         i18n(i, $);
 
+        var _source = h.source;
+        if (typeof req.session.tempSource !== "undefined") {
+          _source = req.session.tempSource;
+          delete req.session.tempSource;
+        }
+
+        if (typeof req.session.tempLang === "string") {
+          // TODO: better default databinding ( instead of prepend ) in boot
+          $('#language').prepend('<option value="' + req.session.tempLang +'">' + req.session.tempLang + '</option>');
+          $('#gatewayForm').attr('action', config.app.url + '/examples/gateway-' + req.session.tempLang);
+          delete req.session.tempLang;
+        }
+
         var out = $.html();
         h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
         var boot = {
           owner: req.session.user,
-          source: h.source,
+          source: _source,
           presenter: new Buffer(h.presenterSource || "").toString('base64'),
           view: new Buffer(h.themeSource || "").toString('base64'),
           themes: themes,
@@ -478,6 +491,7 @@ module['exports'] = function view (opts, callback) {
             $('.selectSnippet').prepend('<option value="' + 'examples/' + s + '">' + e.description + '</option>')
           }
         }
+
 
         boot.examples = examples;
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));

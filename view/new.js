@@ -202,19 +202,6 @@ module['exports'] = function view (opts, callback) {
         $('.hookPrivateLabel').css('color', '#aaa');
       }
 
-      if (typeof req.session.tempSource !== "undefined") {
-        $('.codeEditor').html(req.session.tempSource);
-        // keep or destroy? maybe present option as clipboard in session?
-        // better to keep delete for now...is causing issue with examples
-        delete req.session.tempSource;
-      }
-
-      if (typeof req.session.tempLang === "string") {
-        // TODO: better default databinding ( instead of prepend ) in boot
-        $('#language').prepend('<option value="' + req.session.tempLang +'">' + req.session.tempLang + '</option>');
-        $('#gatewayForm').attr('action', config.app.url + '/marak/gateway-' + req.session.tempLang);
-        delete req.session.tempLang;
-      }
 
       var services = hooks.services;
       var examples = {};
