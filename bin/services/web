@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // front-facing web servers
 // currently handles static assets / views / and api endpoints
 var web = require('../../lib/web');

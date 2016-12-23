@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var lb = require('../../lib/load-balancer');
 var cluster = require('cluster');
 

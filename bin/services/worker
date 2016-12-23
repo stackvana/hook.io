@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var colors = require('colors');
 var worker = require('../../lib/worker');
 
