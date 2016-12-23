@@ -16,13 +16,12 @@ module['exports'] = function view (opts, callback) {
     //return res.redirect("/");
   }
 
+  if (!req.isAuthenticated() && req.url === "/services") {
+    return res.redirect('/login');
+  }
+
   /*
   var loggedIn = false;
-  if (!opts.request.isAuthenticated()) {
-    loggedIn = true;
-    //return res.redirect('/login');
-    //$('.navBar').remove()
-  }
   */
 
   psr(req, res, function (req, res, fields){
@@ -58,7 +57,7 @@ module['exports'] = function view (opts, callback) {
     }
     query.owner = _owner;
 
-    hook.find(query , function (err, hooks){
+    hook.find(query , function (err, hooks) {
       if (err) {
         return res.end(err.message);
       }
