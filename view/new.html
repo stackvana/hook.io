@@ -495,8 +495,11 @@ body legend {
       <div class="form-group">
         <label for="name" class="i18n">Name</label>
         <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of microservice..." size="40"/>
+        <div class="tiny">
+          <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
+        </div>
+        <br/>
       </div>
-
       <div class="form-group private">
         <label for="hookPublic">Public Service</label>
         <input tabindex="5" type="radio" CHECKED="CHECKED" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">

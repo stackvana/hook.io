@@ -1,8 +1,8 @@
 
 module['exports'] = function (opts, callback) {
-
-  var $ = this.$, req = opts.req, res = opts.res;
   var hook = require('../lib/resources/hook');
+  //return opts.res.end('fml');
+  var $ = this.$, req = opts.req, res = opts.res;
   var appName = req.hostname;
 
   hook.find({ owner: "examples" }, function (err, results){

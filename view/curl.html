@@ -11,7 +11,7 @@
 <div class="curlDiv">
   <h1>Curl</h1>
   <div class="container content">
-    <p><a href="http://curl.haxx.se/">Curl</a> is a command line tool for making HTTP requests. It comes prepackaged on most machines or can be easily installed.</p>
+    <p><a href="http://curl.haxx.se/" target="_blank">Curl</a> is a command line tool for making HTTP requests. It comes prepackaged on most machines or can be easily installed.</p>
 
     <p>Curl is useful not only for debugging simple requests, but also connecting your Hooks directly to the Unix Toolchain through standard Unix Pipes.</p>
 
@@ -22,7 +22,7 @@
     <p>To perform a simple HTTP Get request with query string variables try the following command:</p>
 
     <p>
-      <input type="text" value="curl {{appUrl}}/Marak/isTheWebsiteDown?url=http://google.com"/>
+      <input type="text" value="curl {{appUrl}}/examples/isTheWebsiteDown?url=http://google.com"/>
     </p>
 
     <br/>
@@ -32,7 +32,7 @@
     <p>To perform an HTTP POST form submission with some data fields try the following command:</p>
 
     <p>
-      <input type="text" value="curl --data 'foo=bar&hello=there' {{appUrl}}/marak/echo"/>
+      <input type="text" value="curl --data 'foo=bar&hello=there' {{appUrl}}/examples/echo"/>
     </p>
 
     <br/>
@@ -42,7 +42,7 @@
     <p>To perform a simple HTTP JSON POST with some data fields try the following command:</p>
 
     <p>
-      <input type="text" value="curl -H &quot;Content-Type: application/json&quot; -X POST -d '{&quot;foo&quot;:&quot;bar&quot;,&quot;hello&quot;:&quot;there&quot;}' http://echo.{{appName}}
+      <input type="text" value="curl -H &quot;Content-Type: application/json&quot; -X POST -d '{&quot;foo&quot;:&quot;bar&quot;,&quot;hello&quot;:&quot;there&quot;}' {{appUrl}}/examples/echo
       "/>
     </p>
 
@@ -53,7 +53,7 @@
     <p>To HTTP POST multipart form files, you'll need a file to send. Assuming "cat.png" is an image on your local machine try the following command:</p>
 
     <p>
-      <input type="text" value="cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' {{appUrl}}/Marak/image/rotate &#62; upsidedown-cat.png"/>
+      <input type="text" value="cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' {{appUrl}}/examples/image/rotate &#62; upsidedown-cat.png"/>
     </p>
 
     <br/>
@@ -64,12 +64,12 @@
 
     <p>
       This example will pipe the output of <strong>echo</strong> to a simple transform Hook that will append text to the stream.
-      <input type="text" value="echo 'foo' | curl --header 'content-type: application/octet-stream' --data-binary @- {{appUrl}}/Marak/transform"/>
+      <input type="text" value="echo 'foo' | curl --header 'content-type: application/octet-stream' --data-binary @- {{appUrl}}/examples/javascript-stream-transform"/>
     </p>
     <br/>
     <p>
       This example will <strong>cat</strong> the local "cat.png" file, pipe it to an image resize Hook and then pipe the result back to the local file system as "upsidedown-cat.png".
-      <input type="text" value="cat cat.png | curl --header 'content-type: application/octet-stream' --data-binary @- {{appUrl}}/Marak/image/rotate?degrees=180 &#62; upsidedowncat.png" />
+      <input type="text" value="cat cat.png | curl --header 'content-type: application/octet-stream' --data-binary @- {{appUrl}}/examples/image/rotate?degrees=180 &#62; upsidedowncat.png" />
     </p>
 
     <h2><strong>Use Your Imagination</strong></h2>

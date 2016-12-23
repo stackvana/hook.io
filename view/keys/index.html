@@ -110,8 +110,8 @@
 
                 <a name="what-are-role-checks"></a>
                 <h3>What are role Checks?</h3>
-                <p>Role checks are used to determine if an incoming HTTP request has authorization to access the requested resource</p>
-                <p>{{appName}} offers several integrated roles and custom roles that may be associated with a generate Access Key</p>
+                <p>Role checks are used to determine if an incoming HTTP request has authorization to access the requested resource.</p>
+                <p>{{appName}} offers several integrated roles and custom roles that may be associated with a generated Access Key.</p>
 
                 <a name="private-services"></a>
                 <h3>Private Services</h3>
@@ -119,7 +119,7 @@
                 <p>Accessing a role restricted service with a key is easy!</p>
                 <!-- ><h2>TODO: create example private hook with role restrictions / add to docs </h2> -->
                 <p>All you have to do is supply the generated <code>hook_private_key</code> <!-- and <code>hook_private_key</code > --> variable as a HTTP request parameter ( URL GET Query Data / POST Form Data / JSON RPC / etc ) and that HTTP client request will be granted the roles associated with that private key.</p>
-                <p>For convenience, we've pre-generated an <code>admin-access</code> key for every account. You can use the generated <code>hook_private_key</code> for <code>admin-access</code> to access any of your private services from a third-party source. You can also simply delete your <code>admin-access</code>key and create a new key with custom roles.</a></p>
+                <p>For convenience, we've pre-generated an <code>admin-access</code> key for every account. You can use the generated <code>hook_private_key</code> for <code>admin-access</code> to access any of your private services from a third-party source. You can also simply delete your <code>admin-access</code> key and create a new key with custom roles.</a></p>
                 <p><em>Remember: All <a href="{{appUrl}}/events">service level events</a> on {{appName}} are available as <a href="{{appUrl}}/roles">roles</a>, allowing granular access control.</em></p>
 
                 <a name="custom-role-checks"></a>

@@ -122,6 +122,7 @@ module['exports'] = function view (opts, callback) {
     out = out.replace(/\{\{appLogoInverse\}\}/g, white.logoInverse || config.app.logoInverse);
     out = out.replace(/\{\{appDomain\}\}/g, config.app.domain);
     out = out.replace(/\{\{appUrl\}\}/g, white.url || config.app.url);
+    out = out.replace(/\{\{appWs\}\}/g, white.url || config.app.ws);
     out = out.replace(/\{\{appDomain\}\}/g, white.host || config.app.domain);
     out = out.replace(/\{\{appPort\}\}/g, white.port || config.app.port);
     out = out.replace(/\{\{appAdminEmail\}\}/g, white.email || appAdminEmail);

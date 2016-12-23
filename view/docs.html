@@ -264,7 +264,7 @@
                   <a name="logs"></a>
                   <hr/>
                   <h2 class="i18n">Hook Debugging and Logs</h2>
-                  <p class="i18n">{{appName}} provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simple call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
+                  <p class="i18n">{{appName}} provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simply call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
                   <p class="i18n">Streaming log endpoints are available for real-time consumption on all Hook service urls as <code>/logs</code>.</p>
                   <p><strong>Example:</strong> <a href="{{appUrl}}/marak/echo/logs">{{appUrl}}/marak/echo/logs</a>
                   <p>Complete logging documentation can be found at <a href="{{appUrl}}/logs">{{appUrl}}/logs</a>
@@ -353,7 +353,7 @@
 
                   <a name="files"></a>
                   <h2 class="i18n">Using the Mutli-Cloud Virtual File System</h2>
-                  <p class="i18n">Hooks have access to robust multi-cloud virtual system which can be used to manage files across multiple adapters.</p>
+                  <p class="i18n">Hooks have access to a robust multi-cloud virtual system which can be used to manage files across multiple adapters.</p>
 
                   <p class="i18n">This is useful for storing persistent files which you may want to retrieve later ( such as an image ).</p>
 
@@ -389,7 +389,7 @@
 
                   <a name="content-type"></a>
                   <h2 class="i18n">Content-Type Routing</h2>
-                  <p class="i18n">Based on the Content-Type header, {{appName}} will process the incoming request differently.</p>
+                  <p class="i18n">Based on the <code>Content-Type</code> header, {{appName}} will process the incoming request differently.</p>
                   <br/>
                   <p>
                     <strong>application/json</strong><br/>
@@ -402,7 +402,7 @@
                   </p>
 
                   <p><strong>multipart/form-data</strong><br/>
-                    <span class="i18n">Will attach any multipart file uploads as streams to <em>Hook.params</em>. File uploads can be then be handled as streams inside the Hook.</span>
+                    <span class="i18n">Will attach any multipart file uploads as streams to <em>Hook.params</em>. File uploads can then be handled as streams inside the Hook.</span>
                   </p>
 
                   <p><strong>application/octet-stream</strong><br/>
@@ -451,7 +451,7 @@
 
                 <a name="concurrency"></a>
                 <h2>Hook Concurrency Limitations</h2>
-                <p>hook.io will limit the amount of total concurrently running services per account. This means that every account may only have a certain amount of services running at the exact same time. In the event that too many services are running concurrently, further incoming HTTP requests will be rate-limited until some of the running services complete.</p>
+                <p>hook.io will limit the of total amount services running concurrently per account. This means that every account may only have a certain amount of services running at the exact same time. In the event that too many services are running concurrently per account, further incoming HTTP requests will be rate-limited until some of the running services complete.</p>
                 <p>
                   To increase concurrency limits, you can upgrade the account to a larger plan or email support.
                 </p>
@@ -521,7 +521,7 @@
                 <p>These events are useful for monitoring the actions your services are performing, and who is performing them.</p>
 
                 <h3>The relation of System Events and Role Access</h3>
-                <p>It's important to note that all {{appName}} events are available as <a href="{{appUrl}}/keys">Access Roles</a>. This mapping allows granular role based key access per System Event.</p>
+                <p>It's important to note that all {{appName}} events are available as Access Roles. This mapping allows granular role based key access per System Event.</p>
                 <p><a href="{{appUrl}}/keys">Read More about Role Based Access Control</a></p>
 
                 <hr/>
@@ -549,10 +549,9 @@
                 <h3>API Access Keys</h3>
 
                 <p class="i18n">{{appName}} provides a robust role based API key access system.</p>
-                <p><span class="i18n">All</span> <a href="{{appUrl}}/events">events</a> <span class="i18n">on {{appName}} are registered as</span> <a href="{{appUrl}}/roles">roles</a> <span class="i18n">which can be granted per</span> <a href="{{appUrl}}/keys"><span class="i18n">generated API access key</span></a></p>
+                <p><span class="i18n">All</span> <a href="{{appUrl}}/events">events</a> <span class="i18n">on {{appName}} are registered as</span> roles <span class="i18n">which can be granted per</span> <a href="{{appUrl}}/keys"><span class="i18n">generated API access key</span></a></p>
 
-
-                <p>All API endpoints are backed by <a href="#roles">Role Based Access Control</a>, so if you provide a <code>hook_private_key</code> parameter in your request which matches a known API key containing the required role, that request will be granted access to the resource. <a href="{{appUrl}}/keys">Read More about Keys and Roles</a></p>
+                <p>All API endpoints are backed by <a href="#roles">Role Based Access Control</a>, so if you provide a <code>hook_private_key</code> parameter in your request which matches a known API key containing the required role that request will be granted access to the resource. <a href="{{appUrl}}/keys">Read More about Keys and Roles</a></p>
 
                 <!--
                 <a name="metrics"></a>
