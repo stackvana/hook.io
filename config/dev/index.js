@@ -109,8 +109,8 @@ module['exports'] = {
   worker: {
     startingPort: 10000,
     nproc: {
-      soft: 500,
-      hard: 1000
+      soft: 15000,
+      hard: 20000
     },
     npmPath: "/Users/chroot/"
   },
