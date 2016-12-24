@@ -1,6 +1,7 @@
 var psr = require('parse-service-request');
 var checkRoleAccess = require('../../lib/server/routeHandlers/checkRoleAccess');
 var config = require('../../config');
+var user = require('../../lib/resources/user');
 
 module['exports'] = function keysCheckAccessPresenter (opts, callback) {
 
@@ -21,12 +22,27 @@ module['exports'] = function keysCheckAccessPresenter (opts, callback) {
     // TODO: only allow for accounts with enabled featured 'customRoleChecks'
     if (typeof params.hook_private_key !== 'undefined') {
       // TODO: move to resource.before hooks
-      checkRoleAccess({ req: req, res: res, role: params.role }, function (err, hasPermission) {
-        if (!hasPermission) {
-          return res.json({ hasAccess: false });
-        } else {
-          return res.json({ hasAccess: true });
+      checkRoleAccess({ req: req, res: res, role: params.role, include_doc: true }, function (err, result) {
+        if (err) {
+          return res.end(err.message);
         }
+
+        if (!result.hasAccess) {
+          return res.json({
+            hasAccess: result.hasAccess
+          });
+        }
+
+        user.findOne({ name: result.key.owner }, function (err, _user) {
+          if (err) {
+            return res.end(err.message);
+          }
+          result.user = {
+            name: _user.name,
+            email: _user.email
+          };
+          return res.json(result);
+        });
       });
     } else {
       return res.json({ hasAccess: false });
