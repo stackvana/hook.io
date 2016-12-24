@@ -57,7 +57,8 @@ module['exports'] = function view (opts, callback) {
         }
         return res.end(config.messages.unauthorizedRoleAccess(req, "hook::update"));
       } else {
-        user = req.resource.owner;
+        //user = req.resource.owner;
+        user = req.resource.params.owner;
         boot = {
           owner: user
         };
