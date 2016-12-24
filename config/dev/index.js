@@ -15,7 +15,7 @@ module['exports'] = {
     redis: {
       prefix: '/session/',
       port: 6379,
-      password: null,
+      password: "password",
       host: "redis"
     }
   },
@@ -24,8 +24,7 @@ module['exports'] = {
     // Note: All services will auto-port up based on the first available port after the starting port
     // this allows us define ranges of ports of the elastic pool instead of pre-configuring the pool statically
     // Note: All configuration values are capable of push / pull updates via integrated `OceanYetStorms.com` server
-    webs: [ { host: "web0", port: "11000" }],
-    workers: [ { host: "worker0", port: "10000"}],
+    web: [],
     worker: [],
     lb: []
   },
@@ -38,7 +37,7 @@ module['exports'] = {
     redis: {
       prefix: '/session/',
       port: 6379,
-      password: null,
+      password: "password",
       host: "redis"
     }
   },
@@ -46,21 +45,15 @@ module['exports'] = {
     port: 9999,
     host: "0.0.0.0",
     https: false,
-    roots: ["hookio", "0.0.0.0", "192.168.59.103", "192.168.99.100", "localhost", "hook.io", "www.hook.io"],
+    roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io", "couch"],
     secret: "change secret",
     redis: {
       prefix: '/session/',
       port: 6379,
-      password: null,
+      password: "password",
       host: "redis"
     }
   },
-  webPool: [
-    { host: "web0", port: "11000" }
-  ],
-  workers: [
-   { host: "worker0", port: "10000" }
-  ],
   //baseUrl: "http://localhost:9999",
   baseUrl: "http://localhost:9999",
   couch: {
@@ -71,9 +64,14 @@ module['exports'] = {
     "port": 5984,
     "host": "couch"
   },
+  redisCache: {
+    port: 6379,
+    password: "password",
+    host: "redis"
+  },
   redis: {
     port: 6379,
-    password: null,
+    password: "password",
     host: "redis"
   },
   github: {
@@ -94,8 +92,8 @@ module['exports'] = {
   },
   email: {
     "provider": "mock",
-    "api_user": "change secret",
-    "api_key": "change secret"
+    "api_user": "abc",
+    "api_key": "1234"
   },
   cacheView: false,
   // tempDirectory: __dirname + "/../temp/",
@@ -116,7 +114,9 @@ module['exports'] = {
     },
     npmPath: "/Users/chroot/"
   },
-  customDomains: true,
+  customDomains: false,
+  MAX_SERVICE_EXECUTIONS_PER_CYCLE: Infinity,
+  MAX_SERVICE_CONCURRENCY: 10,
   UNTRUSTED_HOOK_TIMEOUT: 10000,
   messages: {
     childProcessSpawnError: require('../messages/childProcessSpawnError'),
@@ -127,8 +127,10 @@ module['exports'] = {
     name: "hook.io",
     // host: "https://hook.io",
     url: "http://localhost:9999",
+    ws: "ws://localhost:9999/",
     //url: "https://hook.io",
-    domain: "hook.io",
+    domain: "localhost",
+    port: "9999",
     logo: "http://localhost:9999/img/logo.png",
     logoInverse: "http://localhost:9999/img/logo-inverse.png",
     adminEmail: "hookmaster@hook.io"

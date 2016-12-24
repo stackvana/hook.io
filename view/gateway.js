@@ -10,7 +10,7 @@ module['exports'] = function view (opts, callback) {
   req = opts.req,
   params = req.resource.params;
 
-  var pool = config.workers;
+  var pool = config.pools.worker;
   var remoteHandler = hook.runRemote({ pool: pool });
 
   // TODO: determine owner by API key or session
@@ -43,13 +43,16 @@ module['exports'] = function view (opts, callback) {
     // TODO: add back specific gateway hits
       // metric.incr("/" + service.owner + "/" + "gateway" + '/hits');
     // WARNING: currently using default limit values ( see above note )
-    stack.plugins.rateLimiter({
-      maxLimit: 100000,
-      maxConcurrency: 10,
-      provider: metric
-    })(req, res, function () {
-      _runRemote();
-    });
+    //stack.plugins.bodyParser()(req, res, function(){
+      stack.plugins.rateLimiter({
+        maxLimit: 100000,
+        maxConcurrency: 10,
+        provider: metric
+      })(req, res, function () {
+        _runRemote();
+      });
+    //});
+
   }
 
   // run hook on remote worker

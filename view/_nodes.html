@@ -1,0 +1,39 @@
+<script>
+  $(document).ready(function(){
+    $('button').on('click', function(){
+      var d = $(this).attr('data-node');
+      
+      var node = JSON.parse(d);
+      var pool = node.pool;
+      delete node.pool;
+      $.ajax({
+        type: "POST",
+        url: "/_nodes",
+        data: JSON.stringify({ remove: {
+          node: node,
+          pool: pool
+        } }),
+        contentType: 'application/json; charset=UTF-8',
+        success: function (res) {
+          // TODO: add save status message
+          document.location = '/_nodes';
+        },
+        error: function (err) {
+          document.location = '/_nodes';
+        },
+        dataType: "json"
+      });
+
+    });
+  });
+</script>
+
+<table class="table nodes">
+  <tr>
+    <th>Pool</th>
+    <th>Host</th>
+    <th>Port</th>
+    <th>Status</th>
+    <th>Remove</th>
+  </tr>
+</table>
