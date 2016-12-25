@@ -1,0 +1,30 @@
+<style>
+  .content {
+    text-align: left;
+  }
+  .content ul {
+    font-size: 32px;
+  }
+  .content .installed {
+    width: 40%;
+    text-align: left;
+  }
+  .content .status {
+    font-size: 32px;
+  }
+</style>
+
+<div class="content container">
+  <h1>Install NPM Packages into hook.io</h1>
+  <span class="status"></span>
+  <form class="form" role="form" method="POST" action="">
+    <div class="form-group">
+      <label for="packages">Package
+        <input class="form-control" type="text" name="packages" id="packages"/>
+      </label>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary">Install Package</button>
+    </div>
+  </form>
+</div>
