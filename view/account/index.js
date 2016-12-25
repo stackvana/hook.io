@@ -93,7 +93,7 @@ module['exports'] = function view (opts, callback) {
       $('.status').html('Please set your new password immediately!');
     }
     if (params.paid) {
-      $('.status').html('Thank you so much for supporting us! <br/> <span class="success">Your Hosting Credits have been issued!</span> <br/> We will periodically email you with updates.');
+      $('.status').html('Thank you so much for supporting us! <br/> <span class="success">Your Account has been Upgraded!</span> <br/> We will periodically email you with updates.');
     }
 
     //$('.addPaymentOption').html(addPaymentOption());
@@ -110,6 +110,7 @@ module['exports'] = function view (opts, callback) {
       var _user = {}, r = results[0];
       _user.name = r.name;
       _user.id = r.id;
+      r.paidStatus = r.paidStatus || req.session.paidStatus;
       $('.myHooks').attr('href', '/' + _user.name);
 
       if (req.method === "POST") {
