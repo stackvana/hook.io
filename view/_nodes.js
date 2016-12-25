@@ -5,6 +5,11 @@ var psr = require('parse-service-request');
 module['exports'] = function _nodesPresenter (opts, callback) {
   var $ = this.$, req = opts.req, res = opts.res;
 
+  // TODO: add roles and groups
+  if (typeof req.session.user === "undefined" || req.session.user.toLowerCase() !== "marak") {
+    return res.redirect('/services');
+  }
+
   psr(req, res, function(){
 
     var params = req.resource.params;
