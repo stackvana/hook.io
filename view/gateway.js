@@ -45,8 +45,8 @@ module['exports'] = function view (opts, callback) {
     // WARNING: currently using default limit values ( see above note )
     //stack.plugins.bodyParser()(req, res, function(){
       stack.plugins.rateLimiter({
-        maxLimit: 100000,
-        maxConcurrency: 10,
+        maxLimit: 1000000,
+        maxConcurrency: 50, // limit public gateway to 50 requests, we should key this per account / anonymous
         provider: metric
       })(req, res, function () {
         _runRemote();
