@@ -76,7 +76,7 @@
     "through2": "^0.6.3",
     "tree-kill": "^0.1.1",
     "trycatch": "^1.5.20",
-    "view": "https://github.com/bigcompany/view/tarball/master",
+    "view": "1.0.0",
     "websocket-stream": "^3.1.0",
     "ws": "^1.0.1"
   },
