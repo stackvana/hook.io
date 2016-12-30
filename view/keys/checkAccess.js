@@ -27,7 +27,13 @@ module['exports'] = function keysCheckAccessPresenter (opts, callback) {
           return res.end(err.message);
         }
 
-        if (!result.hasAccess) {
+        if (typeof result === "boolean" && !result) {
+          if (!result.hasAccess) {
+            return res.json({
+              hasAccess: false
+            });
+          }
+        } else {
           return res.json({
             hasAccess: result.hasAccess
           });
