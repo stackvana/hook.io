@@ -37,14 +37,21 @@ module['exports'] = function destroyKeysPresenter (opts, callback) {
               if (err) {
                 return res.end(err.message)
               }
+              var keyPath = '/keys/' + k.owner + '/' + k.hook_private_key;
+              // console.log('about to delete', keyPath)
+              // TODO: remove key from cache
               k.destroy(function(err){
                 if (err) {
                   return res.end(err.message)
                 }
-                return res.json({ status: 'deleted' });
+                cache.del(keyPath, function (err) {
+                  if (err) {
+                    console.log(err.message);
+                  }
+                  return res.json({ status: 'deleted' });
+                });
               });
             })
-            
           }
         }
       });
