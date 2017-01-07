@@ -77,7 +77,6 @@ module['exports'] = function view (opts, callback) {
     $(item).html(i.__(v));
   });
 
-
   psr(req, res, function(){
     var params = req.resource.params;
 
@@ -87,7 +86,7 @@ module['exports'] = function view (opts, callback) {
       // Similiar to revision history, but separate and temporary
       // Could show a UI for it whenever an editor is around
       req.session.tempSource = params.source;
-      req.session.tempLang = params.lang;
+      req.session.tempLang = params.language;
       return res.redirect('/new');
       // redirect to /new with new source, do not create
     }
