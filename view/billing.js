@@ -44,6 +44,7 @@ module['exports'] = function view (opts, callback) {
               req.session.paidStatus = "paid";
               req.user = req.user || {};
               req.user.paidStatus = "paid";
+              user.emit('login', result);
               complete(result)
             });
           } else {
@@ -52,6 +53,7 @@ module['exports'] = function view (opts, callback) {
             req.user = req.user || {};
             req.user.paidStatus = "paid";
             req.session.paidStatus = "paid";
+            user.emit('login', u);
             u.save(function(err, r){
               if (err) {
                 return res.end(err.message);
