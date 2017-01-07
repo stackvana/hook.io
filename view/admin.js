@@ -47,7 +47,6 @@ module['exports'] = function view (opts, callback) {
     params = opts.request.resource.params;
 
     // params.owner = req.session.user;
-    // TODO: ensure that users can only read their own hooks!
     checkRoleAccess({ req: req, res: res, role: "hook::update" }, function (err, hasPermission) {
       // console.log('check for role access', err, hasPermission)
       if (!hasPermission) { // don't allow anonymous hook update
