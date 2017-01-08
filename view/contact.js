@@ -18,7 +18,7 @@ module['exports'] = function view (opts, callback) {
         provider: config.email.provider,
         api_user: config.email.api_user,
         api_key: config.email.api_key,
-        to: "contact-hookio@marak.com",
+        to: "ltsiaxic@incoming.intercom.io",
         from: params.email,
         subject: 'hook.io - contact - ' + params.subject,
         html: params.comment
