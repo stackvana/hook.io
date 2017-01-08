@@ -3,6 +3,7 @@ var checkRoleAccess = require('../../lib/server/routeHandlers/checkRoleAccess');
 var config = require('../../config');
 var mschema = require('mschema');
 var keys = require('../../lib/resources/keys');
+var cache = require('../../lib/resources/cache');
 
 module['exports'] = function destroyKeysPresenter (opts, callback) {
 
@@ -32,13 +33,11 @@ module['exports'] = function destroyKeysPresenter (opts, callback) {
             validate.status = "error";
             return res.json(validate);
           } else {
-            
             return keys.findOne({ name: params.name }, function (err, k) {
               if (err) {
                 return res.end(err.message)
               }
               var keyPath = '/keys/' + k.owner + '/' + k.hook_private_key;
-              // console.log('about to delete', keyPath)
               // TODO: remove key from cache
               k.destroy(function(err){
                 if (err) {
@@ -46,7 +45,7 @@ module['exports'] = function destroyKeysPresenter (opts, callback) {
                 }
                 cache.del(keyPath, function (err) {
                   if (err) {
-                    console.log(err.message);
+                    console.log('keys.destroy cache.del error', err.message);
                   }
                   return res.json({ status: 'deleted' });
                 });
