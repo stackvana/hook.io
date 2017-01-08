@@ -458,7 +458,6 @@ module['exports'] = function view (opts, callback) {
         if (typeof req.session.tempLang === "string") {
           // TODO: better default databinding ( instead of prepend ) in boot
           $('#language').prepend('<option value="' + req.session.tempLang +'">' + req.session.tempLang + '</option>');
-          $('#gatewayForm').attr('action', config.app.url + '/examples/gateway-' + req.session.tempLang);
           delete req.session.tempLang;
         }
 
