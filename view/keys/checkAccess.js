@@ -26,7 +26,7 @@ module['exports'] = function keysCheckAccessPresenter (opts, callback) {
         if (err) {
           return res.end(err.message);
         }
-        if (typeof result === "boolean") {
+        if (typeof result === false) {
           return res.json({ hasAccess: false });
         }
         user.findOne({ name: result.key.owner }, function (err, _user) {
@@ -35,8 +35,9 @@ module['exports'] = function keysCheckAccessPresenter (opts, callback) {
           }
           result.user = {
             name: _user.name,
-            email: _user.email
+            email: _user.email,
           };
+          result.hasAccess = true;
           return res.json(result);
         });
       });
