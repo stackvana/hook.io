@@ -22,23 +22,25 @@ module['exports'] = function keysCheckAccessPresenter (opts, callback) {
     // TODO: only allow for accounts with enabled featured 'customRoleChecks'
     if (typeof params.hook_private_key !== 'undefined') {
       // TODO: move to resource.before hooks
-      checkRoleAccess({ req: req, res: res, role: params.role, include_doc: true }, function (err, result) {
+      checkRoleAccess({ req: req, res: res, role: params.role, include_doc: true }, function (err, result, _key) {
         if (err) {
           return res.end(err.message);
         }
-        if (typeof result === false) {
+        if (result === false) {
           return res.json({ hasAccess: false });
         }
-        user.findOne({ name: result.key.owner }, function (err, _user) {
+        user.findOne({ name: _key.owner }, function (err, _user) {
           if (err) {
             return res.end(err.message);
           }
-          result.user = {
-            name: _user.name,
-            email: _user.email,
+          var rsp = {};
+          rsp.key = _key;
+          rsp.user = {
+              name: _user.name,
+              email: _user.email,
           };
-          result.hasAccess = true;
-          return res.json(result);
+          rsp.hasAccess = true;
+          return res.json(rsp);
         });
       });
     } else {
