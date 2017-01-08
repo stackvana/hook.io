@@ -1,6 +1,7 @@
 var cache = require('../lib/resources/cache');
 var config = require('../config');
 var psr = require('parse-service-request');
+var df = require('dateformat');
 
 module['exports'] = function _nodesPresenter (opts, callback) {
   var $ = this.$, req = opts.req, res = opts.res;
@@ -44,12 +45,12 @@ module['exports'] = function _nodesPresenter (opts, callback) {
 
           workers.forEach(function(w){
             w.pool = "worker";
-            $('.table').append('<tr><td>' + 'worker'+ '</td><td>' + w.host + '</td><td>' + w.port + '</td><td>' + w.status + '</td><td><button data-node=\'' + (JSON.stringify(w)) + '\'">Remove</button></td></tr>')
+            $('.table').append('<tr><td>' + 'worker'+ '</td><td>' + w.host + '</td><td>' + w.port + '</td><td>' + df(w.spawned) + '</td><td>' + w.status + '</td><td><button data-node=\'' + (JSON.stringify(w)) + '\'">Remove</button></td></tr>')
           });
 
           webs.forEach(function(w){
             w.pool = "web";
-            $('.table').append('<tr><td>' + 'web'+ '</td><td>' + w.host + '</td><td>' + w.port + '</td><td>' + w.status + '</td><td><button data-node=\'' + (JSON.stringify(w)) + '\'">Remove</button></td></tr>')
+            $('.table').append('<tr><td>' + 'web'+ '</td><td>' + w.host + '</td><td>' + w.port + '</td><td>' + df(w.spawned) + '</td><td>' + w.status + '</td><td><button data-node=\'' + (JSON.stringify(w)) + '\'">Remove</button></td></tr>')
           });
 
           callback(null, $.html());
