@@ -922,7 +922,7 @@ body legend {
               <div class="githubRequired">
                 <span class="warning tiny">
                   Github sources are not available unless {{appName}} is authorized to read from your Github account.
-                </span>
+                </span><br/>
                 <a href="{{appUrl}}/login/github" class="btn btn-social btn-github" style="height:60px;width:260px;"><i class="fa fa-github"></i> <span style="top: 14px;position:relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connect Github Account</span></a>
               </div>
             </div>
@@ -952,7 +952,7 @@ body legend {
             </div>
 
             <div class="form-group githubRepoHolder">
-              <p>Pull service source code from a Github Repository</p>
+              <p>Pull service source code from a Github Repository<br/>Note: Private Github Repos require you grant additional access: <a href="{{appUrl}}/login/github/private-repos">Here</a></p>
               <label for="repo">Repo Name</label>
               <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microservice-examples" value="" size="80"/>
 
