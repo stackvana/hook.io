@@ -3,7 +3,7 @@
 var hook = require('../lib/resources/hook');
 var user = require('../lib/resources/user');
 var resource = require('resource');
-var hooks = require('microservice-examples');
+var hooks = require('microcule-examples');
 var cache = require('../lib/resources/cache');
 var billing = require('../lib/resources/billing');
 var metric = require('../lib/resources/metric');
@@ -174,6 +174,17 @@ module['exports'] = function view (opts, callback) {
       data.presenter = params.presenter;
       data.mode = params.mode;
 
+      // TODO: this should be part of the psr / mschema code path, not here
+      if (typeof params.customTimeout  === "string") {
+        params.customTimeout  = parseInt(params.customTimeout , 10);
+        if (params.customTimeout.toString() !== "NaN") {
+
+        } else {
+          params.customTimeout = 10000;
+        }
+          // a non NaN number was parsed, assign it as validation value and to instance value
+      }
+
       // todo: only available for paid accounts
       if ((req.user && req.user.paidStatus === "paid") || req.session.paidStatus === "paid") {
         data.customTimeout = params.customTimeout || 10000;
@@ -324,6 +335,7 @@ module['exports'] = function view (opts, callback) {
       if (typeof h.mschema !== "undefined") {
         $('.hookSchema').html(JSON.stringify(h.mschema, true, 2));
       }
+
       if (typeof h.customTimeout === "number") {
         $('.customTimeout').attr('value', h.customTimeout.toString());
       }
@@ -466,6 +478,7 @@ module['exports'] = function view (opts, callback) {
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
         var boot = {
+          baseUrl: config.app.url,
           owner: req.session.user,
           source: _source,
           presenter: new Buffer(h.presenterSource || "").toString('base64'),
@@ -490,7 +503,6 @@ module['exports'] = function view (opts, callback) {
             $('.selectSnippet').prepend('<option value="' + 'examples/' + s + '">' + e.description + '</option>')
           }
         }
-
 
         boot.examples = examples;
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));

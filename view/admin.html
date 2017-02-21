@@ -538,7 +538,29 @@ body legend {
         //alert('name required');
         return false;
       }
-
+      $('.hookSave').attr('DISABLED', 'DISABLED');
+      $.ajax({
+           type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+           url         : boot.baseUrl + '/admin', // the url where we want to POST
+           data        : $( this ).serialize(), // our data object
+           dataType    : 'json', // what type of data do we expect back from the server
+           encode          : true,
+           error: function (err) {
+            $('.hookSave').attr('disabled', null);
+            console.log(err)
+            $.growl.error({ message: 'Issue communicating with server. Please contact support or try again.' });
+           },
+           success: function(res){
+              $('.hookSave').attr('disabled', null);
+              if (res.status === 'updated') {
+                $.growl.notice({ message: "Service updated." });
+                return;
+              }
+              console.log(res);
+              alert('did not update ' + res.status);
+            }
+       });
+      return false;
     });
 
     $('.routeTipsButton').on('click', function(){
@@ -549,6 +571,7 @@ body legend {
       }
       return false;
     });
+
 
     $('.schemaHelpButton').on('click', function(){
       if ($('.schemaHelp').css('display') === "none") {
@@ -632,7 +655,7 @@ body legend {
       if (l === "javascript") {
         // $('#gist').attr('value', 'https://gist.github.com/Marak/357645b8a17daeb17458');
         $('.warnLanguages').hide();
-        $('#save').attr('disabled', null);
+        $('.hookSave').attr('disabled', null);
       } else {
         // TODO: better default gist values for non-javascript langauges
         $('#gist').attr('value', '');
@@ -674,7 +697,7 @@ body legend {
     $('.hookLinks .logs').html(absLink(base, name + '/logs'));
 
     $('.hookSave').on('click', function(){
-      $('#save').click();
+      $('#hookForm').submit();
       return false;
     })
 
@@ -938,7 +961,7 @@ body legend {
               <label for="gistMainEntry">Main Entry Point (optional, defaults to first file)</label>
               <input type="text" class="form-control gistMainEntry" name="gistMainEntry" id="gistMainEntry" placeholder="index.js" value="" size="80"/>
 
-              <input tabindex="1" id="save" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary"><br/>
+              <input tabindex="1" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary hookSave"><br/>
 
               <!-- 
               <label for="mode" class="i18n">Mode</label>
@@ -954,7 +977,7 @@ body legend {
             <div class="form-group githubRepoHolder">
               <p>Pull service source code from a Github Repository<br/>Note: Private Github Repos require you grant additional access: <a href="{{appUrl}}/login/github/private-repos">Here</a></p>
               <label for="repo">Repo Name</label>
-              <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microservice-examples" value="" size="80"/>
+              <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microcule-examples" value="" size="80"/>
 
               <label for="repo">Repo Branch</label>
               <input type="text" class="form-control repo" name="branch" id="branch" placeholder="master" value="" size="80"/>
@@ -970,7 +993,7 @@ body legend {
               </select>
               <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
               -->
-              <input tabindex="1" id="save" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary"><br/>
+              <input tabindex="1" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary hookSave"><br/>
             </div>
 
             <div class="form-group codeEditorHolder">
@@ -999,7 +1022,7 @@ body legend {
 
                   <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
                   <button type="button" class="codeButton btn">Edit Code</button>
-                  <input tabindex="1" id="save" name="save" type="submit" value="Save Code"/ class="btn i18n btn"><br/>
+                  <input tabindex="1" name="save" type="submit" value="Save Code"/ class="btn i18n btn hookSave"><br/>
 
                   <!-- TODO: add help button for service code 
                     <button type="button" class="helpButton btn">Help</button> <br/>
@@ -1274,7 +1297,7 @@ body legend {
 
           <a name="save"></a>
           <div class="form-group">
-            <input tabindex="1" id="save" name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary">
+            <input tabindex="1" name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary hookSave">
           </div>
           <!-- 
           <div class="form-group">
