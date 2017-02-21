@@ -530,6 +530,10 @@ body legend {
       $('#name').removeClass('error');
     });
 
+    $('.hookSaveLink').click(function(){
+      $('#hookForm').submit();
+    });
+
     $('#hookForm').on('submit', function(){
       var name = $('#name').val();
       if (name.length === 0) {
@@ -539,6 +543,7 @@ body legend {
         return false;
       }
       $('.hookSave').attr('DISABLED', 'DISABLED');
+      $.growl.warning({ message: 'Attempting to save...' });
       $.ajax({
            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
            url         : boot.baseUrl + '/admin', // the url where we want to POST
@@ -553,7 +558,7 @@ body legend {
            success: function(res){
               $('.hookSave').attr('disabled', null);
               if (res.status === 'updated') {
-                $.growl.notice({ message: "Service updated." });
+                $.growl.notice({ message: "Service saved." });
                 return;
               }
               console.log(res);
@@ -746,7 +751,7 @@ body legend {
         <h2>Actions</h2>
         <ul>
           <li><a href="#run" class="hookRun" target="_blank">Run Service</a></li>
-          <li><a href="#" class="hookSave">Save Service</a></li>
+          <li><a href="#" class="hookSaveLink">Save Service</a></li>
           <li><a href="#local" class="hookClone">Clone to local</a></li>
           <!-- 
           <li>Logs</li>
