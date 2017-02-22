@@ -1,15 +1,13 @@
-
 module['exports'] = function (opts, callback) {
   var hook = require('../lib/resources/hook');
   //return opts.res.end('fml');
   var $ = this.$, req = opts.req, res = opts.res;
   var appName = req.hostname;
 
-  hook.find({ owner: "examples" }, function (err, results){
+  hook.find({ owner: 'examples' }, function (err, results) {
     if (err) {
       return res.end(err.message);
     }
-
     var grouped = {};
     results.forEach(function(h) {
       h.language = h.language || "javascript";
@@ -24,6 +22,12 @@ module['exports'] = function (opts, callback) {
 
       // update side menu
       $('.langMenu').append('<li><a href="#' + key + '">' + key + '</a> </li>');
+
+      grouped[key].sort(function(a, b){
+          if(a.name < b.name) return -1;
+          if(a.name > b.name) return 1;
+          return 0;
+      })
 
       grouped[key].forEach(function(h){
         // TODO: add description of hook with h.description ( data is missing for most examples )
@@ -43,3 +47,5 @@ module['exports'] = function (opts, callback) {
   });
 
 };
+
+module['exports'].cache = 0;
