@@ -1,9 +1,9 @@
 var hook = require("../lib/resources/hook");
-var hooks = require("microservice-examples");
+var hooks = require("microcule-examples");
 var psr = require('parse-service-request');
 var config = require('../config');
 var themes = require('../lib/resources/themes');
-var hooks = require('microservice-examples');
+var hooks = require('microcule-examples');
 var resource = require('resource');
 var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess');
 
@@ -96,6 +96,9 @@ module['exports'] = function view (opts, callback) {
           params.themeStatus = "enabled";
         }
 
+        req.resource.owner = req.resource.owner.toLowerCase();
+        params.name = params.name.toLowerCase();
+
         var query = { name: params.name, owner: req.resource.owner };
         return hook.find(query, function (err, results) {
           if (err) {
@@ -122,7 +125,7 @@ module['exports'] = function view (opts, callback) {
             // updated 9/2/16 to allow .code parameter ( instead of source )
             params.source = params.source || params.code || params.codeEditor;
             if (typeof params.source === "undefined") {
-              params.source = "module['exports'] = function myService (hook) {  \n  hook.res.json(hook.params); \n};";
+              params.source = "module['exports'] = function myService (req, res, next) {  \n  res.json(req.params); \n};";
             }
           }
           // TODO: remove this line
