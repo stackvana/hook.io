@@ -58,6 +58,39 @@
     width:228px;
   }
 
+  body.dragging, body.dragging * {
+    cursor: move !important;
+  }
+
+  .dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+  }
+
+  .inputsHolder {
+    display: none;
+  }
+
+  ol.plugins {
+    font-size: 18px;
+  }
+
+  ol.plugins li {
+    list-style: none;
+  }
+
+  ol li {
+    position: relative;
+    /** More li styles **/
+    cursor: pointer;
+  }
+  ol li:before {
+    position: absolute;
+    /** Define arrowhead **/
+    cursor: pointer;
+  }
+
 </style>
 
 <script type="text/javascript">
@@ -80,8 +113,49 @@
         $('.cronRow').hide();
       }
     });
-    
-    
+
+    $('.addInput').on('click', function () {
+      var input = $('#input').val();
+      if (input.length === 0) {
+        return false;
+      }
+      // TODO: check if hook exists
+      $.ajax({
+           type        : 'GET', // define the type of HTTP verb we want to use (POST for our form)
+           url         : boot.baseUrl + '/' + input + '/resource', // the url where we want to POST
+           dataType    : 'json', // what type of data do we expect back from the server
+           encode          : true,
+           error: function (res) {
+             if (res.status === 404) {
+               $.growl.error({ message: 'Could not find service.' });
+               return;
+             }
+            $.growl.error({ message: 'Issue communicating with server. Please contact support or try again.' });
+           },
+           success: function(res){
+             // $('.inputsHolder').css('display', 'block');
+             // $('.hookSave').attr('disabled', null);
+             if (res.status === 'updated') {
+               $.growl.notice({ message: "Added plugin." });
+               return;
+             }
+             // alert('did not update ' + res.status);
+             $('.plugins').append('<li><i class="icon-move">' + input + '</i>&nbsp;&nbsp;&nbsp;<a href="" class="removeInput">X</a></li>');
+             $('#input').val('');
+             removeSortable();
+             bindSortable();
+             serializeInputs();
+             $('.removeInput:last').on('click', function(){
+               var index = $(this).parent().index();
+               $('.plugins li').get(index).remove();
+               serializeInputs();
+               return false;
+             });
+           }
+      });
+      return false;
+    });
+
     $('.deleteLink').on('click', function(){
       var name = $(this).attr('data-name');
       var result = confirm('Are you certain you want to destroy:\n\n' + name);
@@ -91,6 +165,55 @@
         return false;
       }
     });
+
+    $('.removeInput').on('click', function(){
+      var index = $(this).parent().index();
+      $('.plugins li').get(index).remove();
+      serializeInputs();
+      return false;
+    });
+
+    function serializeInputs () {
+      $('#inputs').val('');
+      $('.plugins li i').each(function(i, item){
+        var val = $('#inputs').val();
+        if (val.length > 0) {
+          $('#inputs').val(val + ',' + $(item).html());
+        } else {
+          $('#inputs').val($(item).html());
+        }
+      });
+    }
+
+    function removeSortable () {
+      sortable('ol.plugins')[0].removeEventListener('sortstop', function(e) {
+          /*
+
+          This event is triggered when the user stops sorting. The DOM position may have changed.
+
+          e.detail.item contains the element that was dragged.
+          e.detail.startparent contains the element that the dragged item came from.
+
+          */
+          serializeInputs();
+      });
+    }
+
+    function bindSortable () {
+      sortable('ol.plugins');
+      sortable('ol.plugins')[0].addEventListener('sortstop', function(e) {
+          /*
+
+          This event is triggered when the user stops sorting. The DOM position may have changed.
+
+          e.detail.item contains the element that was dragged.
+          e.detail.startparent contains the element that the dragged item came from.
+
+          */
+          serializeInputs();
+      });
+    }
+    bindSortable();
 
     // client-side slugify
     // the server-side slugify code is much more robust covering much utf
@@ -766,6 +889,7 @@ body legend {
         <ul>
           <li><a href="#endpoint">Endpoint</a></li>
           <li><a href="#code">Code</a></li>
+          <li><a href="#middlewares">Middlewares</a></li>
           <li><a href="#schema">Schema</a></li>
           <li><a href="#view">Theme / View</a></li>
           <li><a href="#cron">Crontab</a></li>
@@ -863,7 +987,6 @@ body legend {
                   </code>
                 </div>
               </div>
-
 
             </div>
             </div>
@@ -1059,6 +1182,27 @@ body legend {
               </div>
           </div>
 
+          <a name="middlewares"></a>
+          <div class="well">
+            <h2>Service Middlewares</h2>
+            <p>Chain multiple services together as middlewares to create composite services. An example use-case would be adding the <a href="/examples/basic-auth">examples/basic-auth</a> service (<a href="/examples/basic-auth/_src" target="_blank">view source)</a> as the first step middleware in the chain, adding a Basic Authentication layer.</p>
+            <p>Any existing hook.io service can be used as a middleware. You can also create custom services to be used as middlewares. Circular chains will halt during execution.</p>
+            <p><strong>Note:</strong> *This* service will be the last executed service in the chain.</p>
+            <p>
+              <em>You may drag and drop services to change their order.</em>
+            </p>
+            <ol class="plugins">
+            </ol>
+            <div class="form-group inputsHolder">
+              <label for="inputs" class="i18n">Inputs</label>
+              <input type="text" class="chainServices i18n" id="inputs" name="inputs" placeholder="examples/basic-auth">
+            </div>
+            <div class="form-group">
+              <label for="input" class="i18n">Input</label>
+              <input tabindex="10" type="text" class="input i18n" id="input" name="input" title="input uri">
+              <button class="addInput">Add Service Input</button>
+            </div>
+          </div>
           <a name="schema"></a>
 
           <div class="form-group">

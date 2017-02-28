@@ -174,6 +174,18 @@ module['exports'] = function view (opts, callback) {
       data.presenter = params.presenter;
       data.mode = params.mode;
 
+      // We don't want to let users setup an infinite chain ( since it will never respond or timeout )
+      // Remark: In most cases, this should already be covered server-side ( see: ./lib/resources/hook/run.js)
+      // TODO: better gaurds against circular / self referencing chains
+      // TODO: do not allow users to chain services to themself ( infinite chain loop currently can't be caught )
+      // TODO: do not allow the same named service to appear in the chain twice ( not a performance risk, but seems like bad design )
+
+      data.inputs = [];
+      params.inputs = params.inputs || [];
+      if (params.inputs.length > 0) {
+        data.inputs = params.inputs.split(',') || [];
+      }
+
       // TODO: this should be part of the psr / mschema code path, not here
       if (typeof params.customTimeout  === "string") {
         params.customTimeout  = parseInt(params.customTimeout , 10);
@@ -375,7 +387,7 @@ module['exports'] = function view (opts, callback) {
         $('#gist').attr('value', h.gist);
         $('#gistSource').attr('checked', 'CHECKED');
         $('.gistUrlHolder').attr('style', 'display:block;');
-        $('.codeEditorHolder').attr('style', 'display:none;');
+        $('.codeEditorHolderHolder').attr('style', 'display:none;');
         $('.githubRepoHolder').attr('style', 'display:none;');
       } else if (h.sourceType === "githubRepo") {
         $('#repo').attr('value', h.githubRepo);
@@ -404,6 +416,16 @@ module['exports'] = function view (opts, callback) {
 
       if (typeof h.cron !== 'undefined') {
         $//('#cronString').attr('value', h.cron);
+      }
+
+      if (h.inputs) {
+        $('#inputs').val(h.inputs);
+        if (h.inputs.length > 0) {
+          // $('.inputsHolder').css('display', 'block');
+        }
+        h.inputs.forEach(function(input){
+          $('.plugins').append('<li><i class="icon-move">' + input + '</i>&nbsp;&nbsp;&nbsp;<a href="" class="removeInput">X</a></li>');
+        })
       }
 
       $('.isPublic').attr('checked', 'CHECKED');
