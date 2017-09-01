@@ -1,6 +1,6 @@
 var config = require('../../config');
 var hook = require('../../lib/resources/hook');
-var hooks = require('microservice-examples');
+var hooks = require('microcule-examples');
 var psr = require('parse-service-request');
 
 module['exports'] = function view (opts, callback) {
