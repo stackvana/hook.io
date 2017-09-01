@@ -63,7 +63,9 @@ module['exports'] = function resetPassword (opts, cb) {
     var query = {};
     nameOrEmail = nameOrEmail.toLowerCase();
     query[type] = nameOrEmail;
-    user.reset({ query: query }, function (err, u) {
+
+    user.reset(query, function (err, u) {
+
       if (err) {
         var r = {
           result: 'invalid',
