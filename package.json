@@ -85,11 +85,15 @@
     "gulp-rename": "*"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tap tests/**/*-test.js",
     "start": "sh scripts/start.sh"
   },
   "nyc": {
     "all": false,
+    "include": [
+      "lib/**/*.js",
+      "view/**/*.js"
+    ],
     "exclude": [
       "coverage",
       "locales",
