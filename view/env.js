@@ -32,6 +32,7 @@ module['exports'] = function view (opts, callback) {
         if (err) {
           return callback(null, err.message);
         }
+
         var _env = _user.env || {}; // default to empty object if no env exists
         if (params.update || req.method === "POST") {
           // update is destructive and complete
@@ -39,7 +40,8 @@ module['exports'] = function view (opts, callback) {
           // all old fields are deleted and replaced with new values
           // TODO: move to resource.before hooks
           checkRoleAccess({ req: req, res: res, role: "env::write" }, function (err, hasPermission) {
-            if (!hasPermission || req.resource.owner === "anonymous") { // don't allow anonymous hook update
+
+            if (!hasPermission) { // don't allow anonymous hook update
               if (req.jsonResponse !== true && typeof params.hook_private_key === "undefined") {
                 req.session.redirectTo = "/env";
                 return res.redirect('/login');
@@ -159,7 +161,7 @@ module['exports'] = function view (opts, callback) {
             url: req.url
           });
           if (req.jsonResponse) {
-            return res.json(_user.env);
+            return res.json(_user.env || {});
           }
           callback(null, $.html());
         }
