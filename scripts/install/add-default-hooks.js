@@ -1,4 +1,4 @@
-var hooks = require('microservice-examples');
+var hooks = require('microcule-examples');
 
 var config = require('../../config');
 
@@ -75,7 +75,12 @@ function addHook () {
         _h.mschemaStatus = "enabled";
       }
 
+      // console.log('OWNER'.blue, _h.owner)
       _h.pkg = newHook.pkg;
+      _h.pkg = _h.pkg || {
+        scripts: {}
+      };
+
       _h.pkg.scripts.start = "microcule .";
       _h.themeStatus = newHook.themeStatus;
 
