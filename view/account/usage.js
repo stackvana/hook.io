@@ -16,23 +16,22 @@ module['exports'] = function view (opts, callback) {
   var totals = {};
 
   var userName = req.session.user.toLowerCase();
-  
+
   // admin override allows checking usage stats of all users
   if (params.user && userName.toLowerCase() === "marak") {
     userName = params.user.toLowerCase();
   }
   console.log('getting metrics for'.yellow, userName)
 
-  metric.get("/" + userName + "/hits", function (err, accountHits) {
+  metric.zscore("hits", userName, function (err, accountHits) {
     if (err) {
       return res.end(err.message);
     }
     // TODO: check total hits against plan limits,
     // if total hits for user account is exceeded, rate-limit
     // TODO: set json boolean that account is currently over
-    
     // console.log('metric.' +  userName + '.hits'.green, err, accountHits);
-    
+
     totals.hits = accountHits;
     /*
     // TODO: set json boolean that account is currently over
@@ -46,7 +45,7 @@ module['exports'] = function view (opts, callback) {
     // TODO: get req.user.plan to determine actual limits ( versus paid / non-paid limits )
     // TODO: reset limits on the start of every month, or at the start of the billing cycle?
     // Get total amount of running hooks for current user
-    metric.get("/" +  userName + "/running", function (err, runningServices) {
+    metric.zscore("running", userName, function (err, runningServices) {
       if (err) {
         return res.end(err.message);
       }
@@ -57,8 +56,7 @@ module['exports'] = function view (opts, callback) {
         $('.usage').html(JSON.stringify(totals, true, 2));
         callback(null, $.html());
       }
-      
     });
-  
+
   });
 };
