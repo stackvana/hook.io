@@ -4,7 +4,21 @@ var config = require('../config');
 var baseURL = config.baseUrl;
 var wsUrl = config.wsUrl;
 
-return;
+var startDevCluster = require('../lib/helpers/startDevCluster');
+// TODO: add back server
+
+tap.test('start the dev cluster', function (t) {
+  startDevCluster({}, function (err, _apps) {
+    apps = _apps;
+    t.ok('cluster started');
+    // should not require a timeout, probably issue with one of the services starting
+    // this isn't a problem in production since these services are intended to start independant of each other
+    setTimeout(function(){
+      t.end('dev cluster started');
+    }, 2000);
+  });
+});
+
 /*
 
     HOOK WEBSOCKET TESTS
@@ -93,3 +107,11 @@ tap.test('close all connections', function (t) {
   rootWs.close();
   t.end();
 });
+
+tap.test('perform hard shutdown of cluster', function (t) {
+  setTimeout(function(){
+    process.exit();
+  }, 10);
+  t.end('shut down');
+});
+

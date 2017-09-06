@@ -77,7 +77,9 @@ tap.test('attempt to run the test hook', function (t) {
 
 // update the hook
 tap.test('attempt to update the test hook', function (t) {
-  client.hook.update({ owner: 'david', name: 'test-hook', source: 'echo "updated";' }, function (err, res){
+  client.hook.update({ owner: 'david', name: 'test-hook', source: 'echo "updated";' }, function (err, res) {
+    t.equal(res.status, 'updated', 'returned correct name');
+    t.equal(typeof res.hook, 'object', 'returned hook object');
     t.error(err, 'request did not error');
     t.end();
   });
@@ -87,8 +89,8 @@ tap.test('attempt to update the test hook', function (t) {
 tap.test('attempt to get the test hook', function (t) {
   client.hook.get({ owner: 'david', name: 'test-hook' }, function (err, res){
     t.error(err, 'request did not error');
-    t.equal(res.name, "test-hook");
-    t.equal(res.source, 'echo "updated";');
+    t.equal(res.name, "test-hook", "name matches");
+    t.equal(res.source, 'echo "updated";', "code matches");
     t.end();
   });
 });
