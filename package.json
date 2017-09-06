@@ -82,7 +82,8 @@
   },
   "devDependencies": {
     "gulp-mustache": "*",
-    "gulp-rename": "*"
+    "gulp-rename": "*",
+    "nyc": "11.1.x"
   },
   "scripts": {
     "test": "tap tests/**/*-test.js",
