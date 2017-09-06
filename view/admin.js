@@ -169,6 +169,12 @@ module['exports'] = function view (opts, callback) {
         data.presenterSource = params.presenterSource;
       }
 
+      if (typeof params.view === "string" && params.view.length > 1) {
+        data.themeSource = params.view;
+        data.view = params.view;
+        // params.themeActive = true;
+      }
+
       data.themeName = params.themeSelect;
       data.theme = params.theme;
       data.presenter = params.presenter;
@@ -499,11 +505,12 @@ module['exports'] = function view (opts, callback) {
         h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
         out = out.replace("{{hook.cron}}", h.cron);
+
         var boot = {
           baseUrl: config.app.url,
           owner: req.session.user,
           source: _source,
-          presenter: new Buffer(h.presenterSource || "").toString('base64'),
+          // presenter: new Buffer(h.presenterSource || "").toString('base64'),
           view: new Buffer(h.themeSource || "").toString('base64'),
           themes: themes,
           cron: h.cron

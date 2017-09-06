@@ -30,7 +30,7 @@
    <!-- ><option value="form">form</option> -->
    <option value="simple">simple web page</option>
    <option value="minimal">minimal API endpoint</option>
-   <option value="form">basic input form</option>
+   <!-- <option value="form">basic input form</option> -->
  </select>
 </div>
 
@@ -64,12 +64,13 @@
 </div>
 -->
 
-<div class="form-group presenterSource">
+<!--
+<div class="form-group presenterSourceHolder">
  <label for="presenter">Presenter</label>
  <p>The Theme Source is a single JavaScript function used to present the Service's View</p>
- <input class="form-control" type="text" id="presenterSource" name="presenterSource" class="presenterSource" value="" size="40"/>
+  <textarea id="presenterSource" name="presenterSource" class="presenterSource"></textarea>
 </div>
-
+-->
 <script>
 
   themeSource = CodeMirror.fromTextArea($('#themeSource').get(0), {
@@ -99,10 +100,12 @@
   }
   // setTimeout(updatePreview, 300);
 
+  /*
   presenterSource = CodeMirror.fromTextArea($('#presenterSource').get(0), {
     lineNumbers: true
   });
   presenterSource.refresh();
+  */
 
   $('.themeSelect').change(function(e){
     var val = themes[$(this).val()];
@@ -116,10 +119,13 @@
       themeSource.setValue(data);
       themeSource.refresh();
     }, 'text');
+    
+    /*
     $.get(val.presenter, function (data, res) {
       presenterSource.setValue(data);
       presenterSource.refresh();
     }, 'text');
+    */
   });
 
 </script>

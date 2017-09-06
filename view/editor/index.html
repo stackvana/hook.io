@@ -136,10 +136,12 @@
       });
       viewEditor.refresh();
 
+      /*
       presenterEditor = CodeMirror.fromTextArea($('#presenter').get(0), {
         lineNumbers: true
       });
       presenterEditor.refresh();
+      */
 
       schemaEditor = CodeMirror.fromTextArea($('#schema').get(0), {
         lineNumbers: true
@@ -160,11 +162,13 @@
         viewEditor.refresh();
       });
 
+      /*
       $('.presenterButton').on('click', function(){
         $('.editorHolder').hide();
         $('.presenterHolder').show();
         presenterEditor.refresh();
       });
+      */
 
       $('.schemaButton').on('click', function(){
         $('.editorHolder').hide();
@@ -224,7 +228,7 @@
         $('#code').val(editor.getValue());
         $('#gatewaySchema').attr('value', schemaEditor.getValue());
         $('#gatewayView').attr('value', viewEditor.getValue());
-        $('#gatewayPresenter').attr('value', presenterEditor.getValue());
+        // $('#gatewayPresenter').attr('value', presenterEditor.getValue());
         $('.gatewayForm').submit();
         return false;
       };
@@ -406,7 +410,7 @@
             <a name="tuts"></a>
 
             <div>
-              <button class="codeButton">Code</button> | <button class="viewButton">View</button> | <button class="presenterButton">Presenter</button> | <button class="schemaButton">Schema</button>
+              <button class="codeButton">Code</button> | <button class="viewButton">View</button> | <!-- <button class="presenterButton">Presenter</button> | --> <button class="schemaButton">Schema</button>
             </div>
 
             <!-- http://gateway.hook.io endpoint is used for deploying arbitrary untrusted code ( as strings ) from anonymous sources -->
@@ -427,7 +431,7 @@ module['exports'] = function helloWorld (hook) {
           <!-- <input type="hidden" name="language" id="gatewayLang"/> -->
           <input type="hidden" name="schema" id="gatewaySchema"/>
           <input type="hidden" name="view" id="gatewayView"/>
-          <input type="hidden" name="presenter" id="gatewayPresenter"/>
+          <!-- <input type="hidden" name="presenter" id="gatewayPresenter"/> -->
           </form>
           </div>
 
@@ -438,12 +442,13 @@ module['exports'] = function helloWorld (hook) {
             </div>
           </div>
 
+          <!--=
           <div class="presenterHolder editorHolder">
             <div class="form-group">
-             <!-- <label for="view">Theme Source</label> -->
              <textarea class="form-control" id="presenter" name="presenter" class="presenter"></textarea>
             </div>
           </div>
+          -->
 
           <div class="schemaHolder editorHolder">
             <div class="form-group">
