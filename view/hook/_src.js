@@ -80,7 +80,11 @@ module['exports'] = function view (opts, callback) {
         $('.schema').html();
         */
 
-
+        if (typeof h.inputs === "undefined" || h.inputs.length < 0) {
+          $('.hooks').remove();
+        } else {
+          $('.inputs').html(JSON.stringify(h.inputs || []));
+        }
         req.hook = h;
 
         //$('.hookName').html(h.owner + "/" + h.name);
