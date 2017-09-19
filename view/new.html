@@ -393,6 +393,7 @@ body legend {
       if (name.length === 0) {
         $('#name').addClass('error');
         $('#name').attr('placeholder', 'name is required...')
+        $('#name').focus();
         //alert('name required');
         return false;
       }
@@ -473,12 +474,9 @@ body legend {
 
     //$('.services').html(JSON.stringify(boot.examples));
 
-
   });
 
-
 </script>
-
 
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 <div style="text-align:left;" class="container">
@@ -491,14 +489,17 @@ body legend {
     </div>
 
     <div class="hookHolder">
-      <h2 class="i18n">Basic Information</h2>
+      <h2 class="i18n">Name of Service</h2>
+      <p>We are going to register a new service in the api-gateway.</p>
       <div class="form-group">
         <label for="name" class="i18n">Name</label>
         <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of microservice..." size="40"/>
         <div class="tiny">
           <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
         </div>
-        <br/>
+        <p>
+          http://localhost:9999/marak/new-service
+        </p>
       </div>
       <div class="form-group private">
         <label for="hookPublic">Public Service</label>
@@ -512,7 +513,139 @@ body legend {
         <span class="paidAccount warning tiny">Notice: In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing" class="warning">paid account</a>.</span>
         </div>
     </div>
+    
+    
+    <div class="hookHolder typeOfService">
+      <h2 class="i18n">Type of Service</h2>
+      <p>Which of these best describes the kind of service you'd like to create? Don't worry, we can always change this later</p>
+      
+      <p>Respond to HTTP requests using custom functions. Works with many programming languages</p>
 
+      <p>Perform a redirect from this url to another url. Allows for custom <code>host</code>, <code>uris</code>, <code>upstream_url</code>, </p>
+
+      <p>Execution a task on a scheduled timer.</p>
+
+      
+      
+      <select>
+        <option>Webhook</option>
+        <option>HTTP Redirect</option>
+        <!-- <option>Store a File</option> -->
+        <!-- <option>Basic Auth</option> -->
+        <option>Scheduled Task ( Cron )</option>
+        <option>Simple Bot</option>
+        <option>Bot Agent</option>
+        <!-- <option>Always On Bot</option> -->
+      </select>
+      <br/>
+      <br/>
+      <input name="submit" type="submit" value="Skip this step. Create service and go straight to service admin panel."/>
+      
+    </div>
+
+    <div class="hookHolder cronSettings">
+      <h2 class="i18n">Cron Settings</h2>
+      
+      <br/>
+      CRON GOES HERE
+      
+      
+    </div>
+
+    <div class="hookHolder redirectOptions">
+      <h2 class="i18n">Redirect Options</h2>
+      <br/>
+      <label for="upstream_url">upstream_url</label>
+      <input type="text" name="upstream_url" id="upstream_url">
+      <br/>
+      <label for="hosts">hosts</label>
+      <input type="text" name="hosts" id="hosts">
+
+      <br/>
+      <label for="uris">uris</label>
+      <input type="text" name="uris" id="uris">
+    </div>
+    
+    <div class="hookHolder webhookPlugins">
+      <h2 class="i18n">Webhook Plugins</h2>
+      <h3>Request</h3>
+      <p>Which of these best describes the kind of service you'd like to create? Don't worry, we can always change this later</p>
+
+      <!--
+      <br/>
+      <input type="checkbox" name="requestTransformer" id="requestTransformer">
+      <label for="requestTransformer">request transformer</label>
+      -->
+      <br/>
+      
+      <input type="checkbox" name="basicAuth" id="basicAuth">
+      <label for="basicAuth">basic-auth</label>
+
+      <!--
+      
+      <br/>
+
+      <input type="checkbox" name="oauth2" id="oauth2">
+      <label for="oauth2">oauth2</label>
+      -->
+      <br/>
+      <input type="checkbox" name="schemaValidator" id="schemaValidator">
+      <label for="schemaValidator">schema validator</label>
+      <!--
+      <br/>
+      <input type="checkbox" name="gistSource" id="gistSource">
+      <label for="gistSource">github gist source</label>
+
+      <br/>
+      <input type="checkbox" name="gitSource" id="gistSource">
+      <label for="gitSource">github repo source</label>
+      -->
+      <br/>
+      <input type="checkbox" name="customPlugin" id="customPlugin">
+      <label for="customPlugin">custom plugin ( can be any hook.io service )</label>
+      <input type="text" name="customPluginName" placeholder="examples/basic-auth"/>
+      
+      <h3>Response</h3>
+      
+      <br/>
+      <input type="checkbox" name="responseTransformer" id="responseTransformer">
+      <label for="responseTransformer">response transformer</label>
+
+      <br/>
+
+      <select>
+        <option>Webhook</option>
+        <option>HTTP Redirect</option>
+        <!-- <option>Store a File</option> -->
+        <!-- <option>Basic Auth</option> -->
+        <option>Scheduled Task ( Cron )</option>
+        <option>Simple Bot</option>
+        <option>Bot Agent</option>
+        <!-- <option>Always On Bot</option> -->
+      </select>
+      
+    </div>
+    
+    <div class="hookHolder simpleBot">
+       <h2 class="i18n">Simple Bot</h2>
+
+       <br/>
+       Simple Bot Man
+
+       <p>Simple bots response to commands and invoke services. Works well as stand-alone with services like Slack, Twilio, Discord, or simple announcement style bots.</p>
+
+
+     </div>
+
+     <div class="hookHolder botAgent">
+        <h2 class="i18n">Bot Agent</h2>
+
+        <br/>
+        <p>Bot Agents are persistent bot processes that run continually and expect to maintain outgoing connections. Works well with services like IRC or Twitter Firehouse</p>
+
+
+      </div>
+    
     <input tabindex="12" id="create" name="create" type="submit" value="Save and Continue"/ class="btn btn-primary i18n">
   </form>
 

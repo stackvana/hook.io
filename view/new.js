@@ -206,6 +206,13 @@ module['exports'] = function view (opts, callback) {
       }
 
 
+      $('.typeOfService').remove();
+      $('.cronSettings').remove();
+      $('.redirectOptions').remove();
+      $('.simpleBot').remove();
+      $('.webhookPlugins').remove();
+      $('.botAgent').remove();
+
       var services = hooks.services;
       var examples = {};
       boot.examples = examples;
