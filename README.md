@@ -5,19 +5,26 @@
 
 #### Supported Service Programming Languages
 
-  - JavaScript
-  - ES7
-  - CoffeeScript
-  - Bash
-  - Lua
-  - Perl
-  - PHP
-  - Python2
-  - Python3
-  - Ruby
-  - Scheme
-  - SmallTalk
-  - TCL
+  - c ( with `gcc` )
+  - java
+  - javascript ( first-class support )
+  - babel ( ES6 / ES7 / etc ... )
+  - coffee-script
+  - common lisp
+  - bash
+  - lua
+  - golang
+  - ocaml
+  - perl
+  - php
+  - python
+  - python3
+  - ruby
+  - rust
+  - r
+  - scheme
+  - smalltalk
+  - tcl
 
 To start using hook.io visit the website at [https://hook.io](https://hook.io). Here you will find many examples and documentation on how to use hook.io
 
@@ -49,29 +56,17 @@ hook.io is an open-source hosting platform for webhooks and microservices. The m
 
 You should want to use hook.io if it can make your life as a developer easier.
 
-The most *basic use-case* for hook.io is quick and free webhook hosting. You can instantly create a [simple hook](https://hook.io/Marak/echo) which parses the incoming parameters of an HTTP request and performs arbitrary actions on it. For instance: Send an SMS message every-time the Hook is requested as a webpage. Since NPM is supported, you can re-use any existing library from the extensive [NPM module repository](http://npmjs.org). You can also configure Hooks to be executed on a schedule using a [Cron pattern](https://hook.io/cron).
+The most *basic use-case* for hook.io is quick and free webhook hosting. You can instantly create a [simple hook](https://hook.io/examples/echo) which parses the incoming parameters of an HTTP request and performs arbitrary actions on it. For instance: Send an SMS message every-time the Hook is requested as a webpage. Since NPM is supported, you can re-use any existing library from the extensive [NPM module repository](http://npmjs.org). You can also configure Hooks to be executed on a schedule using a [Cron pattern](https://hook.io/cron).
 
 At this point, we will take note that Hooks are [fully streaming](https://github.com/substack/stream-handbook). Inside your Hook source code you have direct access to Node's [http.IncomingMessage](http://nodejs.org/api/http.html#http_http_incomingmessage) and [httpServer.ServerResponse](http://nodejs.org/api/http.html#http_class_http_serverresponse) request and response streams. This means you can treat the inside of a Hook the exact same way as if it were inside a streaming middleware in a regular node http server. Having direct access to these streams is extremely useful and I am unsure if any other microservice hosting providers currently offer this feature.
 
 More *advanced use-cases* for hook.io would be replacing individual parts of your application with microservices. Instead of adding a new route or module to your application , you could instead create a Hook responsible for only one unit of functionality and call it using a regular HTTP request from inside your existing application. One specific example could be building a Hook with a [custom theme](https://hook.io/themes) which acts perfectly as a stand-alone sign-up form. This sign-up form can then be loaded server-side in your application using one HTTP get request. It might sound complicated at first, but integrating microservices with your existing application is actually very easy. In the upcoming weeks we'll work on releasing specific guides for separating application functionalities into microservices.
 
-An *even more advanced usage* would be building a suite of Hooks and composing them to create new and unique applications! Since every Hook understands Standard In and Standard Out and Hooks can [easily call other Hooks](https://hook.io/Marak/merge) from inside each other, there are an endless amount of combinations to be made. This composability enables the foundation for [Flow-based Programming](http://en.wikipedia.org/wiki/Flow-based_programming) without imposing any specific rules for composition. A specific example could be building a Hook ( called "tar" ) responsible for taking in STDIN and streaming out a compressed tar file. Once this Hook is created, you could easily pipe the results of another Hook ( such as an image downloader ) into the "tar" Hook. These Hooks don't exist yet, but I am certain someone will build them in the near future.
+An *even more advanced usage* would be building a suite of Hooks and composing them to create new and unique applications! Since every Hook understands Standard In and Standard Out and Hooks can [easily call other Hooks](https://hook.io/examples/javascript-stream-merge) from inside each other, there are an endless amount of combinations to be made. This composability enables the foundation for [Flow-based Programming](http://en.wikipedia.org/wiki/Flow-based_programming) without imposing any specific rules for composition. A specific example could be building a Hook ( called "tar" ) responsible for taking in STDIN and streaming out a compressed tar file. Once this Hook is created, you could easily pipe the results of another Hook ( such as an image downloader ) into the "tar" Hook. These Hooks don't exist yet, but I am certain someone will build them in the near future.
 
 ## Unix Pipes!
 
 hook.io is very friendly with Unix Pipes. Using STDOUT and STDIN you can connect hook.io to your existing Unix Tool chain. The best way to explain this concept is to review the [Curl examples](https://hook.io/curl).
-
-
-
-Here is one specific example of using hook.io to flip a cat upside-down with `cat` and `curl`. You will need to provide your own cat.png
-
-
-
-```
-cat cat.png | curl -F 'degrees=180' -F 'image=@-;type=image/png' https://hook.io/Marak/image/rotate > upsidedown-cat.png
-```
-
-
 
 ## The Data!
 
