@@ -13,6 +13,10 @@ module['exports'] = function view (opts, callback) {
     return res.redirect('/login');
   }
 
+  if (params.reset === "true") {
+    return res.end('resetting limit');
+  }
+
   var totals = {};
 
   var userName = req.session.user.toLowerCase();
@@ -21,6 +25,7 @@ module['exports'] = function view (opts, callback) {
   if (params.user && userName.toLowerCase() === "marak") {
     userName = params.user.toLowerCase();
   }
+
   console.log('getting metrics for'.yellow, userName)
 
   metric.zscore("hits", userName, function (err, accountHits) {

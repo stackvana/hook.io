@@ -225,6 +225,7 @@ module['exports'] = function view (opts, callback) {
         } else {
           // TODO: add copy on billing page for pricing options
           // $('.billingForm').html('<h3>No Billing Options Found!</h3>' + checkOut);
+          $('.cancelPlan').remove();
           callback(null, $.html());
         }
       });

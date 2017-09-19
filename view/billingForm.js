@@ -52,7 +52,6 @@ module['exports'] = function billingForm (data, cb) {
     disabled: true
    };
  */
-  console.log('using billingSchema', data, billingSchema);
 
   billingSchema.run = {
     "type": "string",
