@@ -32,6 +32,7 @@ module['exports'] = {
     port: 11000,
     host: "0.0.0.0",
     https: false,
+    registerWithLoadBalancer: true,
     roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io"],
     secret: "change secret",
     redis: {
@@ -58,7 +59,7 @@ module['exports'] = {
   baseUrl: "http://localhost:9999",
   couch: {
     "database": "hook",
-    "type": "couchdb",
+    "type": "couch2",
     "username": "admin",
     "password": "password",
     "port": 5984,
@@ -101,18 +102,23 @@ module['exports'] = {
   sslKeyDirectory: '/src/ssl/',
   chrootDirectory: '/var/chroot',
   //sslKeyDirectory: __dirname + '/../ssl/',
-  //chrootDirectory: '/Users/chroot',
+  //chrootDirectory: '/Users/worker',
+  chrootUser: 'worker',
+  useNSJAIL: false,
   useChroot: false,
   locales: {
     locales: ['en', 'de']
   },
   worker: {
     startingPort: 10000,
+    registerWithLoadBalancer: true,
     nproc: {
       soft: 15000,
       hard: 20000
     },
-    npmPath: "/Users/chroot/"
+    //npmPath: __dirname + '/../../../../stackvana/microcule/' || "/Users/chroot/",
+    npmPath: "/var/chroot/root/microcule/",
+    publicIP: 'localhost'
   },
   customDomains: false,
   MAX_SERVICE_EXECUTIONS_PER_CYCLE: Infinity,
