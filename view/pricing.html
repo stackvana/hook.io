@@ -73,6 +73,12 @@
  }
  */
 
+ .pricingPlan {
+   font-size: 16px;
+ }
+ .pricingPlan td  {
+   text-align: left;
+ }
  .hostingPlan:hover {
    cursor: pointer;
    color: black;
@@ -150,7 +156,7 @@
 <form action="/billing" method="POST" align="center">
 
 <div class="blog-area">
-  <div class="container content" align="center">
+  <div class="container content" align="center">  
 
     <div class="row freePlan">
       <h1>Hosting Plans</h1>
@@ -268,6 +274,8 @@
         </div>
       </div>
     </div>
+    
+    
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-4"></div>
 
@@ -300,6 +308,170 @@
 
     </div>
 
+    <!--
+    <div class="col-lg-12 col-md-12 col-sm-12" align="left">
+     <table border="1" class="table pricingPlan" align="left">
+        <tr>
+          <td>&nbsp;</td>
+          <td>Free</td>
+          <td>Premium</td>
+          <td>Pro</td>
+          <td>Business</td>
+        </tr>
+
+        <tr>
+          <td>Monthly Requests</td>
+          <td>1,000</td>
+          <td>10,000</td>
+          <td>100,000</td>
+          <td>1,000,000+</td>
+        </tr>
+        <tr>
+          <td>Concurrent Requests</td>
+          <td>2</td>
+          <td>5</td>
+          <td>20</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>Services</td>
+          <td>20</td>
+          <td>50</td>
+          <td>200</td>
+          <td>1,000</td>
+        </tr>
+        <tr>
+          <td>API Access Keys ( seats )</td>
+          <td>1</td>
+          <td>5</td>
+          <td>20</td>
+          <td>50</td>
+        </tr>
+
+        <tr>
+          <td>Logs</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+        </tr>
+
+        <tr>
+          <td>Events API</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Custom Domains</td>
+          <td></td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Role Based Access Control</td>
+          <td></td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Configurable Service Time-outs</td>
+          <td></td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Cron Jobs</td>
+          <td></td>
+          <td>☑</td>
+          <td>☑</td>
+          <td>☑</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>24 Hour Email Support</td>
+          <td></td>
+          <td></td>
+          <td>☑</td>
+          <td>☑</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Cloud Datastore Documents</td>
+          <td>100</td>
+          <td>1,000</td>
+          <td>5,000</td>
+          <td>100,000</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Cloud File-System Storage</td>
+          <td>100MB</td>
+          <td>1GB</td>
+          <td>10GB</td>
+          <td>50GB</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Cost</td>
+          <td>Free</td>
+          <td>$10.00</td>
+          <td>$50.00</td>
+          <td>$200.00</td>
+        </tr>
+        
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div class="newsl_button">
+              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
+            </div>
+          </td>
+          <td>
+            <div class="newsl_button">
+              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
+            </div>
+          </td>
+          <td>
+            <div class="newsl_button">
+              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
+            </div>
+          </td>
+          <td>
+            <div class="newsl_button">
+              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+    -->
+    
     <div class="col-lg-12 col-md-12 col-sm-12" align="left">
       <hr/>
       <br/>
@@ -386,8 +558,12 @@
 
     </script>
 
+ 
+
   </div>
-</div>
+  
+  
+
   <a href="{{appUrl}}/privacy">Privacy Policy</a> |
   <a href="{{appUrl}}/tos">Terms of Service</a>
 </form>
