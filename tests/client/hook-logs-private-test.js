@@ -3,15 +3,17 @@ var r = require('../lib/helpers/_request');
 var config = require('../config');
 var baseURL = config.baseUrl;
 var startDevCluster = require('../lib/helpers/startDevCluster');
+var sdk = require('hook.io-sdk');
 
 tap.test('empty suite', function (t) {
   t.ok('no tests');
   t.end('pass');
 })
-return;
 
 // david is a pre-generated user 
-var testUser = config.testUsers.bobby;
+var testUser = config.testUsers.david;
+
+var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
   startDevCluster({}, function (err) {
@@ -25,24 +27,21 @@ tap.test('start the dev cluster', function (t) {
 });
 
 // private hooks / secure logs
-
 tap.test('attempt to create a new private hook - authorized api key', function (t) {
-  r({ uri: baseURL + "/new", method: "POST", json: { 
-      name: "test-private-hook", 
-      hook_private_key: testUser.admin_key,
-      language: "javascript",
-      source: 'module["exports"] = function (h) {console.log("logging");h.res.end("ended");}',
-      hookSource: "code",
-      isPrivate: true
-    }}, function (err, res) {
-    console.log(err, res)
-    t.error(err);
-    res = res || {};
-    t.equal(res.error, undefined, "no errors");
-    t.equal(res.type, undefined, "no error type");
-    t.equal(res.message, undefined, "no error message");
+  
+  client.hook.create({ 
+    "name": "test-private-hook",
+    "language": "javascript",
+    "source": 'module["exports"] = function (h) {console.log("logging");h.res.end("ended");}',
+    "isPrivate": true
+  }, function (err, res){
+    t.error(err, 'request did not error');
+    t.equal(res.status, 'created', 'returned correct name');
+    t.equal(typeof res.hook, 'object', 'returned hook object');
+    // t.equal(res.hook.name, 'test-hook-view', 'returned correct name');
     t.end();
   });
+
 });
 
 // TODO: generate more test keys
@@ -59,7 +58,6 @@ tap.test('attempt to view logs for newly created hook - read only access', funct
 
 */
 
-
 tap.test('attempt to view logs for newly created hook - anonymous access', function (t) {
   r({ uri: baseURL + "/" + testUser.name + "/" + "test-private-hook/logs", method: "GET", json: true }, function (err, res) {
     t.error(err, 'did not error');
@@ -70,7 +68,7 @@ tap.test('attempt to view logs for newly created hook - anonymous access', funct
 });
 
 tap.test('attempt to run the private hook - run access', function (t) {
-  r({ uri: baseURL + "/" + testUser.name + "/" + "test-private-hook", method: "POST", json: { hook_private_key: testUser.admin_key } }, function (err, res) {
+  client.hook.run({ owner: testUser.name, name: 'test-private-hook'}, function (err, res){
     t.error(err);
     t.equal(res, 'ended\n', 'returned correct result');
     t.end();
