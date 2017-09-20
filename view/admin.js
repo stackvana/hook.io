@@ -73,9 +73,9 @@ module['exports'] = function view (opts, callback) {
 
       var name;
       if (typeof params.previousName !== 'undefined') {
-        name = params.previousName;
+        name = params.previousName.toLowerCase();
       } else {
-        name = params.name;
+        name = params.name.toLowerCase();
       }
 
       if (typeof name === 'undefined' || name.length === 0) {
