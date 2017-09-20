@@ -9,6 +9,7 @@ module['exports'] = function (opts, callback) {
       return res.end(err.message);
     }
     var grouped = {};
+
     results.forEach(function(h) {
       h.language = h.language || "javascript";
       grouped[h.language] = grouped[h.language] || [];
@@ -40,6 +41,11 @@ module['exports'] = function (opts, callback) {
         // $('.examples').append('<a href="{{appUrl}}/examples/' + h.name + '">' + h.name + '</a><br/>')
       // }
     });
+
+
+    if (req.jsonResponse) {
+      return res.json(results);
+    }
 
     $ = req.white($);
     return callback(null, $.html());

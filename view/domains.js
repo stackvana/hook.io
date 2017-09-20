@@ -105,8 +105,8 @@ module['exports'] = function view (opts, callback) {
           forwardUrl: {
             type: 'string',
             label: "hook",
-            placeholder: "/marak/echo",
-            description: 'The Service to point your domain to. Example: /marak/echo',
+            placeholder: "/examples/echo",
+            description: 'The Service to point your domain to. Example: /examples/echo',
             required: true,
             minLength: 1,
             maxLength: 50,

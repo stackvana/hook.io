@@ -4,13 +4,13 @@
   <p>All services on {{appName}} have the ability to receive JSON data over a Websocket connection. {{appName}} will hold the Websocket connection, attempting to parse any incoming messages as JSON and forward them to the hook microservice. If a string or non-JSON message is received, {{appName}} will simply pass the data to the service as <code>hook.params.body</code> Any Websocket client will work, including the browser.</p>
   <p>Below is an example of using the <a href="https://github.com/websockets/wscat">wscat</a> tool to connect to a {{appName}} service over a Websocket connection to send and receive data.</p>
   <h3>Example</h3>
-  <p><code>wscat -c {{appWs}}/marak/echo</code></p>
+  <p><code>wscat -c {{appWs}}/examples/echo</code></p>
   <img src="/img/wscat.png"></img>
   <br/>
   <br/>
   <p>
     Currently, {{appName}} Websockets can only receive data as text or JSON messages. In the near future, we will most likely add support for streaming binary data over Websocket with the ability to perform transforms on the data stream. Remember, you can still perform streaming transformations of binary data using the regular HTTP API:</p>
-  <code>echo "foo" | curl --header "content-type: application/octet-stream"  --data-binary @- http://{{appName}}/marak/transform</code><br/>
+  <code>echo "foo" | curl --header "content-type: application/octet-stream"  --data-binary @- http://{{appName}}/examples/javascript-stream-transform</code><br/>
   </p>
   <br/>
   <br/>

@@ -66,7 +66,7 @@
                 -->
                 <li><a href="#themes" class="i18n">Themes</a></li>
                 <li><a href="{{appUrl}}/cron" class="i18n">Schedule Cronjob</a></li>
-                <li><a href="#cache" class="i18n">Cache Controls</a></li>
+                <!-- <li><a href="#cache" class="i18n">Cache Controls</a></li> -->
               </ul>
             </aside>
             <!--
@@ -195,18 +195,7 @@
                   <a name="language"></a>
                   <h2 class="i18n">Choosing a Programming Language</h2>
                   <p class="i18n">{{appName}} supports writing services in other programming languages besides JavaScript. </p>
-                  <ul style="font-size:18px;">
-                    <li>Bash</li>
-                    <li>Coffee-Script</li>
-                    <li>JavaScript</li>
-                    <li>Lua</li>
-                    <li>PHP</li>
-                    <li>Python</li>
-                    <li>Perl</li>
-                    <li>Ruby</li>
-                    <li>Scheme</li>
-                    <li>SmallTalk</li>
-                    <li>Tcl</li>
+                  <ul style="font-size:18px;" class="programmingLanguages">
                   </ul>
                   <p class="i18n">You may select new languages while creating or editing a service.</p>
                   <p><a  class="i18n" href="{{appUrl}}/editor">Click here for an Interactive Microservice Tutorial</a></p>
@@ -253,11 +242,11 @@
                   <p class="i18n">To view the source code of any Hook simply attach <code>/_src</code> to the Hook service url.</p>
                   <p class="i18n">This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
 
-                  <p><strong class="i18n">Source Code:</strong> <a href="{{appUrl}}/marak/echo/_src">{{appUrl}}/marak/echo/_src</a></p>
-                  <p><strong class="i18n">Logs:</strong> <a href="{{appUrl}}/marak/echo/logs">{{appUrl}}/marak/echo/logs</a></p>
-                  <p><strong class="i18n">Resource:</strong> <a href="{{appUrl}}/marak/echo/resource">{{appUrl}}/marak/echo/resource</a></p>
-                  <p><strong class="i18n">View:</strong> <a href="{{appUrl}}/marak/echo/view">{{appUrl}}/marak/echo/view</a></p>
-                  <p><strong class="i18n">Presenter:</strong> <a href="{{appUrl}}/marak/echo/presenter">{{appUrl}}/marak/echo/presenter</a></p>
+                  <p><strong class="i18n">Source Code:</strong> <a href="{{appUrl}}/examples/echo/_src">{{appUrl}}/examples/echo/_src</a></p>
+                  <p><strong class="i18n">Logs:</strong> <a href="{{appUrl}}/examples/echo/logs">{{appUrl}}/examples/echo/logs</a></p>
+                  <p><strong class="i18n">Resource:</strong> <a href="{{appUrl}}/examples/echo/resource">{{appUrl}}/examples/echo/resource</a></p>
+                  <p><strong class="i18n">View:</strong> <a href="{{appUrl}}/examples/echo/view">{{appUrl}}/examples/echo/view</a></p>
+                  <p><strong class="i18n">Presenter:</strong> <a href="{{appUrl}}/examples/echo/presenter">{{appUrl}}/examples/echo/presenter</a></p>
 
                   <p class="i18n">If you require the source code of a Hook to remain private, upgrade to a <a href="{{appUrl}}/pricing">paid account</a> and set the Hook to <code>Private</code>
 
@@ -271,7 +260,7 @@
                   <h2 class="i18n">Hook Debugging and Logs</h2>
                   <p class="i18n">{{appName}} provides a seamless streaming log service which Hooks can write to with <code>console.log</code>. Simply call <code>console.log</code> from inside the Hook source code and the logging statement will be saved.</p>
                   <p class="i18n">Streaming log endpoints are available for real-time consumption on all Hook service urls as <code>/logs</code>.</p>
-                  <p><strong>Example:</strong> <a href="{{appUrl}}/marak/echo/logs">{{appUrl}}/marak/echo/logs</a>
+                  <p><strong>Example:</strong> <a href="{{appUrl}}/examples/echo/logs">{{appUrl}}/examples/echo/logs</a>
                   <p>Complete logging documentation can be found at <a href="{{appUrl}}/logs">{{appUrl}}/logs</a>
 
                   <a name="data"></a>
@@ -281,13 +270,13 @@
                   <p class="i18n">The most common way to send data to a Hook is through the URL query string or posted through forms or binary data transfers.</p>
                   <h3><strong class="i18n">Query String Data</strong></h3>
                   <p class="i18n">To add a parameter via query string simply append it to the url of the Hook</p>
-                  <p><strong class="i18n">Example:</strong> <a href="{{appUrl}}/marak/echo?foo=bar&hello=there&run=true">{{appUrl}}/marak/echo?foo=bar&hello=there&run=true</a></p>
+                  <p><strong class="i18n">Example:</strong> <a href="{{appUrl}}/examples/echo?foo=bar&hello=there&run=true">{{appUrl}}/examples/echo?foo=bar&hello=there&run=true</a></p>
                   <p class="i18n">Nested parameters are also supported.</p>
-                  <p><strong class="i18n">Example:</strong> <a href="{{appUrl}}/marak/echo?foo['bar']=one&foo['tar']=two&run=true">{{appUrl}}/marak/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
+                  <p><strong class="i18n">Example:</strong> <a href="{{appUrl}}/examples/echo?foo['bar']=one&foo['tar']=two&run=true">{{appUrl}}/examples/echo?foo['bar']=one&foo['tar']=two&run=true</a></p>
 
                   <h3><strong class="i18n">Form Data</strong></h3>
                   <p class="i18n">Data can also be sent via form POST</p>
-                  <p><strong class="i18n">Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' {{appUrl}}/marak/echo" size="60"/></p>
+                  <p><strong class="i18n">Curl Example:</strong> <input id="curl" type="text" value="curl --data 'foo=bar&hello=there' {{appUrl}}/examples/echo" size="60"/></p>
 
                   <h3><strong class="i18n">Streaming Data</strong></h3>
                   <p class="i18n">To send streaming data to the hook, simply open up a streaming http request.</p>
@@ -424,7 +413,7 @@
                   <br/>
                   -->
                 <hr/>
-
+                <!--
                 <a name="cache"></a>
                 <h2 class="i18n">Cache Controls</h2>
                 <p class="i18n">To ensure optimal execution speeds, {{appName}} can cache your Hook's source code and assets in memory.</p>
@@ -434,7 +423,7 @@
                 <p class="i18n">In <code>Production</code> mode, all Hook source code will be cached in memory. This ensures much faster execution speeds, but also means that any updates to the Hook's external sources will not be immediately loaded.</p>
                 <br/>
                 <hr/>
-
+                -->
                 <a name="rateLimits"></a>
 
                 <h2>Rate Limiting</h2>
@@ -558,7 +547,7 @@
                 <p>This is useful for giving an insight as to how the Hook is performing.</p>
                 <p>Currently the following metrics are available:</p>
                 <ul>
-                  <li>/metrics/hook/marak/echo/totalHits</li>
+                  <li>/metrics/hook/examples/echo/totalHits</li>
                 </ul>
                 -->
 
