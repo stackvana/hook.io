@@ -424,6 +424,7 @@ module['exports'] = function view (opts, callback) {
         $//('#cronString').attr('value', h.cron);
       }
 
+      /*
       if (h.inputs) {
         $('#inputs').val(h.inputs);
         if (h.inputs.length > 0) {
@@ -433,6 +434,7 @@ module['exports'] = function view (opts, callback) {
           $('.plugins').append('<li><i class="icon-move">' + input + '</i>&nbsp;&nbsp;&nbsp;<a href="" class="removeInput">X</a></li>');
         })
       }
+      */
 
       $('.isPublic').attr('checked', 'CHECKED');
       $('.isPublic').attr('DISABLED', 'DISABLED');
