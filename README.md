@@ -81,23 +81,6 @@ Resources are created using the npm [resource](http://npmjs.org/package/resource
 View-Presenters are created using the npm [view](http://npmjs.org/package/view) module with regular HTML, CSS, and JavaScript. The same View-Presenter pattern is also used to implement custom theming for Hooks see: [hook.io/themes](https://hook.io/themes)
 
 
-## Dependency Tree
-
-hook.io itself is not a very large application. The majority of what powers hook.io is already MIT open-sourced and available for immediate download.
-
-Learning about the following dependencies is a great way to start understanding how hook.io works.
-
-[mschema](http://github.com/mschema/mschema) - Provides validation through-out the entire stack.
-
-[big](http://npmjs.org/package/big) - Small application framework. Provides [website](https://github.com/bigcompany/big/blob/master/apps/website/index.js) app which hook.io extends.
-
-[resource-http](http://github.com/bigcompany/http) - Provides core HTTP server API. Helps in configuring [Express](http://expressjs.com) with middlewares like [Passport](http://passportjs.org/)
-
-[resource-mesh](http://github.com/bigcompany/mesh) - Provides a distributed event emitter mesh using a [star network topography](http://en.wikipedia.org/wiki/Network_topology#Star). hook.io primarily uses this module as a monitoring agent to report status back to our monitoring [sink](https://github.com/bigcompany/big/blob/master/apps/sink/index.js).
-
-[resource-user](http://github.com/bigcompany/user) - Provides basic user API ( signups / logins / encrypted passwords / password resets / etc )
-
-
 ## Server Architecture
 
 There is one front-facing HTTP server and any number of Hook Workers.
@@ -147,7 +130,9 @@ see: `./bin/worker` and `./bin/test-worker`
 
 ## Tests
 
-Integration tests for hook.io are available at [https://github.com/bigcompany/hook.io-test](https://github.com/bigcompany/hook.io-test)
+```bash
+npm test
+```
 
 ## Contributing
 
