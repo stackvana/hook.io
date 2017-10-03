@@ -105,6 +105,7 @@ module['exports'] = {
   //chrootDirectory: '/Users/worker',
   chrootUser: 'worker',
   useNSJAIL: false,
+  nsJailArgs: [ '-Mo', '--disable_clone_newnet', '--chroot', '/var/chroot/', '--user', '99999', '--group', '99999', '--rlimit_as', '9999', '--log', 'nsjail.log', '--rlimit_nproc', '1000' ,'--quiet', '--'],
   useChroot: false,
   locales: {
     locales: ['en', 'de']
