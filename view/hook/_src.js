@@ -56,7 +56,9 @@ module['exports'] = function view (opts, callback) {
           }
         });
 
+
         $('.service').html(file);
+        $('.service').attr('href', '?f=' + file);
 
         if (typeof h.themeSource === "undefined" || h.themeSource.length === 0) {
           $('.view').parent().remove();
@@ -91,6 +93,8 @@ module['exports'] = function view (opts, callback) {
         //$('.hookLink').attr('href', config.app.url + '/' + h.owner + '/' + h.name);
 
         $('.hookRun').attr('href', config.app.url + '/' + h.owner + '/' + h.name);
+        $('.hookRun').html(h.owner + '/' + h.name);
+
         $('.hookAdmin').attr('href', config.app.url + '/' + h.owner + '/' + h.name + '/admin');
         $('.hookAdmin').html(h.owner + '/' + h.name);
 
@@ -113,6 +117,8 @@ module['exports'] = function view (opts, callback) {
           break;
 
         }
+
+        $('.currentFile').html(params.f);
 
         var out = $.html();
         out = out.replace(/\{\{appName\}\}/g, appName);

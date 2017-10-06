@@ -7,9 +7,10 @@
 
 <div class="container content">
   <h1>Service Source Code</h1>
-  <h2><a class="hookAdmin" href="">the microservice</a></h2>
-  <a href="" class="hookRun">Run Service</a>
+  <h2>Admin Page: <a class="hookAdmin" href="">microservice name</a></h2>
+  <h2>Service Home: <a href="" class="hookRun">Run Service</a></h2>
   <div>
+    <h2>Source Files</h2>
     <ul>
       <li><a class="service" href="?f=index.sh">index.sh</a></li>
       <li><a class="schema" href="?f=schema.js">schema.js</a></li>
@@ -17,14 +18,16 @@
       <li><a class="presenter" href="?f=presenter.js">presenter.js</a></li>
     </ul>
   </div>
+  <!--
   <div class="hooks">
     <h2>Before Middlewares</h2>
     <div class="inputs">
     </div>
     <br/>
   </div>
+  -->
   <div>
-    <h2>Source Code</h2>
+    <h2>Showing Source Code: <span class="currentFile"></span></h2>
     <textarea id="code"></textarea>
   </div>
 </div>
