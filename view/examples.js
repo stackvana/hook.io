@@ -10,6 +10,15 @@ module['exports'] = function (opts, callback) {
     }
     var grouped = {};
 
+    var alpha = ['gcc', 'go', 'ocaml', 'rust', 'r', 'java'];
+
+    results = results.filter(function(h){
+      if (alpha.indexOf(h.language) !== -1) {
+        return false;
+      }
+      return true;
+    });
+
     results.forEach(function(h) {
       h.language = h.language || "javascript";
       grouped[h.language] = grouped[h.language] || [];

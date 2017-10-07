@@ -522,10 +522,17 @@ module['exports'] = function view (opts, callback) {
         var examples = {};
 
         // pull out base examples for every langauge
+
+        // don't show alpha langs ( for now )
+        var alpha = ['gcc', 'go', 'ocaml', 'rust', 'r', 'java'];
         Object.keys(hook.languages).forEach(function(l){
-          examples[l] = services['' + l + ''];
+          // TODO: don't show alpha langs
+          if (alpha.indexOf(l) === -1) {
+            examples[l] = services['' + l + ''];
+          }
         });
 
+        /*
         for (var s in services) {
           var e = services[s];
           var type = s.split('-')[0],
@@ -534,6 +541,7 @@ module['exports'] = function view (opts, callback) {
             $('.selectSnippet').prepend('<option value="' + 'examples/' + s + '">' + e.description + '</option>')
           }
         }
+        */
 
         boot.examples = examples;
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
