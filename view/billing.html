@@ -23,6 +23,9 @@
   .error {
     color: red;
   }
+  .smaller {
+    font-size: 14px;
+  }
 
   #slider {
     cursor: pointer;
@@ -71,7 +74,7 @@
   }
  
  .noBilling {
-   font-size: 26px;
+   font-size: 22px;
  }
 /*
   #addPaymentMethod {
@@ -92,18 +95,41 @@
 
   <div class="container content">
     <div class="status"></div>
-    <div class="noBilling">No billing information available. <br/> Visit our <a href="{{appUrl}}/pricing">Pricing</a> section to purchase a hosting plan.</div>
-    
+    <div class="noBilling" align="left">
+      <p>
+        No billing information available.
+      </p>
+      <p>
+        Did you know that paid accounts have access to  <a href="{{appUrl}}/pricing">additional features</a>?
+      </p>
+      <p>
+        Visit our <a href="{{appUrl}}/pricing">Pricing</a> section to purchase a hosting plan today.
+      </p>
+    </div>
+
     <div class="billingForm">
     </div>
 
+
+    <form action="" method="POST">
+      <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="{{stripePK}}"
+      data-image="https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png"
+      data-name="hook.io"
+      data-panel-label="Update Card Details"
+      data-label="Update Card Details"
+      data-allow-remember-me=false
+      data-locale="auto">
+      </script>
+    </form>
+    <br/>
     <div class="cancelPlan">
-      <a href="/account/cancel">Cancel Paid Subscription</a>
+      <h3><a href="/account/cancel" class="smaller">Cancel Paid Subscription</a></h3>
     </div>
 
   </div>
-  <br/>
-  <br/>
+
   <br/>
   <br/>
 </div>

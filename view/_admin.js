@@ -2,7 +2,7 @@ var big = require('big');
 var view = require('view');
 
 var config = require('../config');
-
+var forms = require('mschema-forms');
 var user = require('../lib/resources/user');
 var cache = require('../lib/resources/cache');
 var bodyParser = require('body-parser');
@@ -25,7 +25,6 @@ module['exports'] = function view (opts, callback) {
 
   $ = req.white($);
 
-
   var views = big.server.app.view;
 
   // TODO: create special hard-coded admin key for super-admin privledges
@@ -37,6 +36,28 @@ module['exports'] = function view (opts, callback) {
       return res.redirect('/login');
     }
   */
+
+  /*
+
+    Render Views Table representing all views on site
+
+  */
+  /* */
+  var link = function (v) {
+    return '<a href="' + v + '">' + v + '</a>';
+  };
+  Object.keys(views).forEach(function(k){
+    if (typeof views[k] !== "object") {
+      return;
+    }
+    $('.table').append('<tr><td>' + link('/' + k) + '</td></tr>');
+    var sub = views[k].views;
+    if (typeof sub === "object") {
+      Object.keys(sub).forEach(function(s){
+        $('.table').append('<tr><td>' + link('/' + k + "/" + s) + '</td></tr>');
+      });
+    }
+  });
 
    psr(req, res, function(req, res) {
      var params = req.resource.params;
@@ -125,10 +146,23 @@ module['exports'] = function view (opts, callback) {
             if (err) {
               return res.end(err.message);
             }
-            $('.user .json').html(JSON.stringify(_user, true, 2));
+            
+            // $('.user .json').html(JSON.stringify(_user, true, 2));
             $('.loginAs').attr('href', '?loginAs=' + params.name );
             $('.setPaid').attr('href', '?name=' + params.name + '&paid=true');
-            return callback(null, $.html());
+            $('.setUnpaid').attr('href', '?name=' + params.name + '&unpaid=true');
+
+            forms.generate({
+              type: "read-only",
+              form: {
+                legend: "User Form"
+              },
+              data: _user,
+              }, function (err, result){
+                $('.userFormHolder').html(result);
+                return callback(null, $.html());
+            });
+
           })
         });
       } else {
@@ -173,79 +207,8 @@ module['exports'] = function view (opts, callback) {
         });
       }
 
-      /*
-
-      // This reload in-process code seems a bit buggy. Better to not use / put logic directly into View library with tests
-      if (params.refreshView) {
-
-        // TODO: nested / multilevel views
-        var fs = require('fs');
-        var v, t, p;
-
-        return fs.readFile(__dirname + "/" + params.refreshView + ".html", function (err, _t) {
-
-          if (err) {
-            return res.end(err.message);
-          }
-
-          t = _t.toString();
-          fs.readFile(__dirname + "/" + params.refreshView + ".js", function (err, _p) {
-
-            if (err) {
-              // dont do anything, just ignore presenter because it doesnt exist
-              //return res.end(err.message);
-            } else {
-              p = _p.toString();
-            }
-
-            var paths = params.refreshView.split('/');
-
-            // TODO: multiple nested levels
-            var _p;
-            if (paths.length === 1) {
-              _p = paths[0];
-              v = views[paths[0]];
-            } else {
-              _p = paths[0] + "-" + paths[1];
-              v = views[paths[0]].views[paths[1]];
-            }
-            v.template = _t;
-            if (p) {
-              v.presenter = loadPresenter({ 'owner': 'hookio', 'name': _p }, p);
-            }
-
-            return res.end('attempting to refresh ' + params.refreshView);
-
-          })
-
-        })
-      }
-      */
-
-      /*
-
-        Render Views Table representing all views on site
-
-      */
-      /*
-      var link = function (v) {
-        return '<a href="' + v + '">' + v + '</a>';
-      };
-      Object.keys(views).forEach(function(k){
-        if (typeof views[k] !== "object") {
-          return;
-        }
-        $('.table').append('<tr><td><a href="{{appUrl}}/_admin?refreshView=' + k + '">Reload</a></td><td>' + link('/' + k) + '</td></tr>');
-        var sub = views[k].views;
-        if (typeof sub === "object") {
-          Object.keys(sub).forEach(function(s){
-            $('.table').append('<tr><td><a href="{{appUrl}}/_admin?refreshView=' + k + "/" + s + '">Reload</a></td><td>' + link('/' + k + "/" + s) + '</td></tr>');
-          });
-        }
-      });
-      */
-
       return callback(null, $.html());
+
    });
 
 };

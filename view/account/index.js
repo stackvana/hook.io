@@ -93,7 +93,7 @@ module['exports'] = function view (opts, callback) {
       $('.status').html('Please set your new password immediately!');
     }
     if (params.paid) {
-      $('.status').html('Thank you so much for supporting us! <br/> <span class="success">Your Account has been Upgraded!</span> <br/> We will periodically email you with updates.');
+      $('.status').html('Thank you so much for supporting us! <br/> <span>Your Account has been Upgraded.</span> <br/> You now have access to additional features and higher usage limits.');
     }
 
     //$('.addPaymentOption').html(addPaymentOption());

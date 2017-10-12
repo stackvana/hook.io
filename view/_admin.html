@@ -9,33 +9,32 @@
 <h1>hook.io admin interface</h1>
   <div class="container content">
     <h2>Find User By Name or Email</h2>
-    <form name="userSearch" class="userSearchForm" action="/_admin" method="GET">
-      <div>
+    <form name="userSearch" class="userSearchForm form" action="/_admin" method="GET">
+      <div class="form-group">
         <label for="name">Name</label>
-        <input id="name" name="name" type="text" placeholder="marak">
+        <input id="name" name="name" type="text" placeholder="marak" class="form-control">
       </div>
-      <div>
+      <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" name="email" type="text" placeholder="marak@hook.io">
+        <input id="email" name="email" type="text" placeholder="marak@hook.io" class="form-control">
       </div>
-      <input type="submit" value="Search">
+      <input type="submit" value="Search" class="btn btn-primary">
     </form>
     <div class="user">
-      <a class="loginAs" href="{{appUrl}}/_admin">Login as this user</a><br/>
-      <div class="paidPlan">
-        <a class="setPaid" href="{{appUrl}}/_admin?paid=true">Set account to paid status</a><br/>
-        <div class="paidStatus">
-        </div>
-      </div>
-      <textarea class="json"></textarea>
+      <br/>
+      <h3><a class="loginAs" href="{{appUrl}}/_admin">Login as this user</a></h3>
+      <h3><a class="setPaid" href="{{appUrl}}/_admin?paid=true">Set account to paid status</a></h3>
+      <h3><a class="setUnpaid" href="{{appUrl}}/_admin?unpaid=true">Set account to unpaid status</a></h3>
+      
+      <!-- <textarea class="json"></textarea> -->
+      <div class="userFormHolder"></div>
     </div>
     <div class="account"></div>
-    <!--
+    <br/>
     <a name="admin"></a>
-    <div align="left">
+    <div align="left" class="views">
       <h2>Views</h2>
       <table class="table"></table>
     </div>
-    -->
   </div>
 </div>

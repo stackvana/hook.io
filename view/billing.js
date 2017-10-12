@@ -18,6 +18,7 @@ module['exports'] = function view (opts, callback) {
 
   $('#addPaymentMethod').attr('data-key', config.stripe.publicKey);
 
+
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     var params = req.resource.params;
@@ -220,7 +221,10 @@ module['exports'] = function view (opts, callback) {
           $('.noBilling').remove();
           var _billing = results[0];
           showBillings(results, function(){
-            callback(null, $.html());
+            var out = $.html();
+            console.log('ooo', out)
+            out = out.replace('{{stripePK}}', config.stripe.publicKey);
+            callback(null, out);
           });
         } else {
           // TODO: add copy on billing page for pricing options
@@ -229,7 +233,6 @@ module['exports'] = function view (opts, callback) {
           callback(null, $.html());
         }
       });
-      // callback(null, $.html());
      }
   });
 };
