@@ -1,8 +1,6 @@
 var tap = require("tape");
 var r = require('../lib/helpers/_request');
 var config = require('../config');
-//config.MAX_SERVICE_EXECUTIONS_PER_CYCLE = 
-config.MAX_SERVICE_CONCURRENCY = 1;
 var baseURL = config.baseUrl;
 var sdk = require('hook.io-sdk');
 var startDevCluster = require('../lib/helpers/startDevCluster');
