@@ -9,6 +9,8 @@ var metric = require('../../lib/resources/metric');
 
 var testUser = config.testUsers.david;
 
+config.MAX_SERVICE_CONCURRENCY = 3;
+
 var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
