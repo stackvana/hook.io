@@ -1,32 +1,37 @@
 var tap = require("tape");
 var r = require('../lib/helpers/_request');
 var config = require('../config');
+
 var baseURL = config.baseUrl;
 var sdk = require('hook.io-sdk');
 var startDevCluster = require('../lib/helpers/startDevCluster');
-
-var startDevCluster = require('../lib/helpers/startDevCluster');
+var metric = require('../../lib/resources/metric');
 
 var testUser = config.testUsers.david;
-
-/*
-var _config = {};
-_config.host = "localhost";
-_config.port = 9999;
-_config.protocol = 'http';
-_config.accessKey = testUser.admin_key;
-*/
 
 var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
+  startDevCluster(config, function (err) {
     t.ok('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
       t.end('dev cluster started');
     }, 2000);
+  });
+});
+
+// clear the usage limits for test user
+tap.test('reset test user metrics', function (t) {
+  t.ok('metrics reset');
+  metric.zrem('running', 'david', function (err){
+    t.error(err);
+    metric.zrem('hits', 'david', function (err){
+      t.error(err);
+      t.ok(true, 'reset metrics for david')
+      t.end();
+    });
   });
 });
 
@@ -50,7 +55,7 @@ tap.test('attempt to create a new hook with delay - authorized api key', functio
 });
 
 tap.test('attempt to run 4 hooks at once', function (t) {
-  t.plan(4);
+  t.plan(6);
   // TODO: actually parse every response and ensure at least one contains concurrency error
   client.hook.run({ owner: "david", name: "test-hook-concurrency", data: { "foo": "bar" } }, function (err, res) {
     t.error(err);
@@ -64,6 +69,8 @@ tap.test('attempt to run 4 hooks at once', function (t) {
   setTimeout(function(){
     client.hook.run({ owner: "david", name: "test-hook-concurrency", data: { "foo": "bar" } }, function (err, res) {
       t.error(err);
+      t.equal(res.error, true)
+      t.equal(res.message, 'Rate limited: Max concurrency limit hit: 3')
     });
   }, 2000);
 });
