@@ -29,7 +29,7 @@ var WebSocket = require('ws');
 var echoWs, missingWs, rootWs;
 
 tap.test('create a ws connection to echo', function (t) {
-  echoWs = new WebSocket('ws://' + wsUrl + '/marak/echo');
+  echoWs = new WebSocket('ws://' + wsUrl + '/examples/echo');
   echoWs.on('open', function open () {
     t.ok(true, 'opened websocket connection');
     t.end()

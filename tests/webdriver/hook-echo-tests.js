@@ -38,7 +38,7 @@ tap.test('get the home page, check the title', function (t) {
 
 tap.test("get the echo hook, check the response", function (t) {
   client
-    .url(baseURL + "/marak/echo")
+    .url(baseURL + "/examples/echo")
     .getText('pre').then(function(source){
       var echo = parseJSON(source);
       // TODO: schema default values as separate test
@@ -51,7 +51,7 @@ tap.test("get the echo hook, check the response", function (t) {
 
 tap.test("get the echo hook with query string, check the response", function (t) {
   client
-    .url(baseURL + "/marak/echo?test=hello&baz=boz")
+    .url(baseURL + "/examples/echo?test=hello&baz=boz")
     .getText('pre').then(function(source){
       var echo = parseJSON(source);
       t.equal(echo.owner, "marak");
@@ -64,7 +64,7 @@ tap.test("get the echo hook with query string, check the response", function (t)
 tap.test("get the echo hook with form theme, check the response", function (t) {
   // TODO: check that theme loaded as separate tests
   client
-    .url(baseURL + "/marak/echo?theme=form")
+    .url(baseURL + "/examples/echo?theme=form")
     .setValue("input[name='param1']", 'hello')
     .submitForm('.form')
     .getText('.hookOutput').then(function(source){
