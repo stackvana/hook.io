@@ -8,7 +8,7 @@ module['exports'] = function _nodesPresenter (opts, callback) {
 
   // TODO: add roles and groups
   if (typeof req.session.user === "undefined" || req.session.user.toLowerCase() !== "marak") {
-    return res.redirect('/services');
+    return res.redirect('/login');
   }
 
   psr(req, res, function(){
