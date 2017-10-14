@@ -96,8 +96,6 @@ module['exports'] = function view (opts, callback) {
       $('.status').html('Thank you so much for supporting us! <br/> <span>Your Account has been Upgraded.</span> <br/> You now have access to additional features and higher usage limits.');
     }
 
-    //$('.addPaymentOption').html(addPaymentOption());
-
     user.find({ name: req.session.user }, function(err, results) {
 
       if (err) {
