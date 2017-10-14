@@ -20,6 +20,6 @@ module['exports'] = function _request (opts, cb) {
     } else {
       json = parseJSON(res.body);
     }
-    return cb(null, json);
+    return cb(null, json, res);
   });
 };
