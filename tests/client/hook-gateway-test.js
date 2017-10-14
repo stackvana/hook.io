@@ -47,7 +47,6 @@ tap.test('attempt to exec a simple bash service as registered user', function (t
   });
 });
 
-
 // exec a bash service with a simple type of error
 tap.test('attempt to exec a bash service with a simple type of error', function (t) {
   client.hook.exec({ "code": 'asd', "language": "bash", "data":  { "foo": "bar" } }, function (err, res) {
@@ -57,10 +56,8 @@ tap.test('attempt to exec a bash service with a simple type of error', function 
   });
 });
 
-
 // exec a js service which echos some important info
 tap.test('attempt to exec a js service which echos some important info', function (t) {
-  
   var echoService = function (h) {
     var rsp = {};
     //rsp.owner = h.resource.owner;
@@ -69,7 +66,6 @@ tap.test('attempt to exec a js service which echos some important info', functio
     rsp.env = h.env;
     h.res.json(rsp);
   };
-  
   client.hook.exec({
     "code": 'module.exports = ' + echoService.toString(),
     "language": "javascript",
