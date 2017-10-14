@@ -43,6 +43,15 @@ module['exports'] = function _nodesPresenter (opts, callback) {
           }
           // console.log('got pools.worker', workers);
 
+          // sort by host and port
+          workers.sort(function(a, b){
+            return a.port > b.port;
+          });
+
+          webs.sort(function(a, b){
+            return a.port > b.port;
+          });
+
           workers.forEach(function(w){
             w.pool = "worker";
             $('.table').append('<tr><td>' + 'worker'+ '</td><td>' + w.host + '</td><td>' + w.port + '</td><td>' + df(w.spawned) + '</td><td>' + w.status + '</td><td><button data-node=\'' + (JSON.stringify(w)) + '\'">Remove</button></td></tr>')
