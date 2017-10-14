@@ -33,11 +33,11 @@ module['exports'] = function topPresenter (opts, callback) {
       var hits = members.shift();
       _sorted.push({ user: user, hits: hits});
     }
-    
+
     forms.generate({
       type: "grid",
       form: {
-        legend: 'top form',
+        legend: 'Top Usage',
         submit: "Submit",
         action: ""
       },
