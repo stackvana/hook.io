@@ -1,5 +1,5 @@
 var gist = require('../lib/resources/gist');
-var mergeParams = require('./mergeParams');
+var mergeParams = require('merge-params');
 var bodyParser = require('body-parser');
 
 module['exports'] = function view (opts, callback) {

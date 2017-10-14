@@ -8,7 +8,7 @@ var role = require('../../lib/resources/role');
 var checkRoleAccess = require('../../lib/server/routeHandlers/checkRoleAccess');
 var mschema = require('mschema');
 
-var mergeParams = require('../mergeParams');
+var mergeParams = require('merge-params');
 var bodyParser = require('body-parser');
 var config = require('../../config');
 

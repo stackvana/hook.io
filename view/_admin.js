@@ -6,7 +6,7 @@ var forms = require('mschema-forms');
 var user = require('../lib/resources/user');
 var cache = require('../lib/resources/cache');
 var bodyParser = require('body-parser');
-var mergeParams = require('./mergeParams');
+var mergeParams = require('merge-params');
 var psr = require('parse-service-request');
 var colors = require('colors');
 
@@ -17,12 +17,10 @@ var userSchema = {
 };
 
 module['exports'] = function view (opts, callback) {
-
   var $ = this.$;
 
   var req = opts.request,
       res = opts.response;
-
   $ = req.white($);
 
   var views = big.server.app.view;

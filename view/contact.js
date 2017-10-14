@@ -10,7 +10,6 @@ module['exports'] = function view (opts, callback) {
 
   psr(req, res, function(){
     var params = req.resource.params;
-    console.log(params)
 
     if ((typeof params.subject === "string" && typeof params.comment === "string") && (params.subject.length > 0 || params.comment.length > 0)) {
       var _config = {

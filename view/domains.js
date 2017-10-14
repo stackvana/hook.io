@@ -1,7 +1,7 @@
 var forms = require('resource-forms'),
 mschemaForms = require('mschema-forms');
 
-var mergeParams = require('./mergeParams');
+var mergeParams = require('merge-params');
 var config = require('../config');
 var bodyParser = require('body-parser');
 var domain = require('../lib/resources/domain');
