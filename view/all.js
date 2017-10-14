@@ -24,10 +24,10 @@ module['exports'] = function view (opts, callback) {
 
 
   hook.all(function(err, hooks){
-    console.log(err, hooks)
+    // console.log(err, hooks)
     opts.hooks = hooks;
     opts.hooks = opts.hooks.sort(function(a, b){
-      console.log(a, b)
+      // console.log(a, b)
       if (a.owner.toLowerCase() > b.owner.toLowerCase()) {
         return 1;
       }
