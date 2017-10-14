@@ -22,6 +22,13 @@ function addHook () {
 
   var h = services.pop();
   var hook = hooks.services[h];
+  
+  var alpha = ['gcc', 'go', 'ocaml', 'rust', 'r', 'java'];
+  
+  if (alpha.indexOf(hook.language) !== -1) {
+    return addHook();
+  }
+  
   // add a new hook to the database
   // console.log(hook.schema);
 
