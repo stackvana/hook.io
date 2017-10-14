@@ -2,6 +2,9 @@ var metric = require('../../lib/resources/metric');
 
 module['exports'] = function view (opts, callback) {
   var req = opts.req, res = opts.res, $ = this.$, params = req.resource.params;
+
+  $ = req.white($);
+
   var out = $.html();
 
   // TODO: replace with API access key code
@@ -20,7 +23,7 @@ module['exports'] = function view (opts, callback) {
   var totals = {};
 
   var userName = req.session.user.toLowerCase();
-
+  $('.userName').html(userName);
   // admin override allows checking usage stats of all users
   if (params.user && userName.toLowerCase() === "marak") {
     userName = params.user.toLowerCase();
@@ -36,7 +39,9 @@ module['exports'] = function view (opts, callback) {
     // if total hits for user account is exceeded, rate-limit
     // TODO: set json boolean that account is currently over
     // console.log('metric.' +  userName + '.hits'.green, err, accountHits);
-
+    if (accountHits === null) {
+      accountHits = 0;
+    }
     totals.hits = accountHits;
     /*
     // TODO: set json boolean that account is currently over
@@ -54,11 +59,19 @@ module['exports'] = function view (opts, callback) {
       if (err) {
         return res.end(err.message);
       }
+
+      if (runningServices === null) {
+        runningServices = 0;
+      }
+
       totals.running = runningServices;
       if (req.jsonResponse) {
         return res.json(totals);
       } else {
-        $('.usage').html(JSON.stringify(totals, true, 2));
+
+        for (var t in totals) {
+          $('.usage').append('<tr><td><strong>' + t + '</strong></td><td>' + totals[t] +'</td></tr>');
+        }
         callback(null, $.html());
       }
     });

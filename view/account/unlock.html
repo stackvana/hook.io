@@ -1,3 +1,47 @@
-<h2>Unlock User</h2>
+<style>
+  .comments {
+    height: 200px !important;
+  }
+  .unlock label {
+    font-size: 1.0em;
+  }
+  .form {
+    width: 600px;
+  }
+  .message {
+    font-size: 22px;
+  }
+</style>
 
-<div class="usage"></div>
+<h1>Request Usage Reset</h1>
+
+<div class="container content">
+  <div class="message"></div>
+  <div class="unlockForm">
+  <h2>Submit this form to reset usage limits and unlock your account.</h2>
+    <form class="form" role="form" method="POST" enctype="application/x-www-form-urlencoded">
+      <legend><h3>Reasons for going over limits:</h3></legend>
+      <div class="form-group-lg unlock">
+        <div class="form-control">
+          <input type="checkbox" name="reasons" id="legit" value="legit">
+          <label for="legit" class="checkbox-inline">Legitimate Usage. I probably should upgrade my account.</label>
+        </div>
+        <div class="form-control">
+          <input type="checkbox" name="reasons" id="unexpected" value="unexpected"/>
+          <label for="unexpected" class="checkbox-inline">Unexpected Usage. I am not sure why I hit my limit.</label>
+        </div>
+        <div class="form-control">
+          <input type="checkbox" name="reasons" id="bug"/ value="bug">
+          <label for="bug" class="checkbox-inline">I think I have found a bug.</label>
+        </div>
+      </div>
+      <br/>
+      <div class="form-group">
+        <label for="comments">Additional Comments</label>
+        <textarea name="comments" class="form-control comments" id="comments" placeholder="Add additional comments about this request."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Unlock Account</button>
+      <input type="hidden" name="confirm" value="confirm"/>
+    </form>
+  </div>
+</div>
