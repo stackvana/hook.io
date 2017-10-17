@@ -3,15 +3,14 @@ var lb = require('../../lib/load-balancer');
 var cluster = require('cluster');
 var config = require('../../config');
 
-lb.start({}, function(err, app){
-  if (err) {
-    throw err;
-  }
-  console.log('lb started', app.server.address())
-});
-
 if (config.env === 'dev') {
   console.log('using dev mode, no cluster')
+  lb.start({}, function(err, app){
+    if (err) {
+      throw err;
+    }
+    console.log('lb started', app.server.address())
+  });
 } else {
   if (cluster.isMaster) {
       var numWorkers = require('os').cpus().length;
