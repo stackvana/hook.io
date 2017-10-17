@@ -68,7 +68,6 @@ module['exports'] = function billingForm (data, cb) {
     },
     schema: billingSchema,
     }, function (err, result){
-      console.log('generated', err, result)
       cb(null, result);
   });
 

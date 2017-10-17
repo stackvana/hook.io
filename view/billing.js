@@ -222,7 +222,6 @@ module['exports'] = function view (opts, callback) {
           var _billing = results[0];
           showBillings(results, function(){
             var out = $.html();
-            console.log('ooo', out)
             out = out.replace('{{stripePK}}', config.stripe.publicKey);
             callback(null, out);
           });
@@ -230,6 +229,7 @@ module['exports'] = function view (opts, callback) {
           // TODO: add copy on billing page for pricing options
           // $('.billingForm').html('<h3>No Billing Options Found!</h3>' + checkOut);
           $('.cancelPlan').remove();
+          $('#stripeForm').remove();
           callback(null, $.html());
         }
       });
