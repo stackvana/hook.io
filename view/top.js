@@ -1,5 +1,5 @@
 var forms = require('mschema-forms');
-
+var config = require('../config');
 
 var metric = require('../lib/resources/metric');
 // TODO: add top running services / top hits report using sets and http://redis.io/commands/zrevrangebyscore methods
@@ -34,6 +34,9 @@ module['exports'] = function topPresenter (opts, callback) {
       _sorted.push({ user: user, hits: hits});
     }
 
+    formSchema.user.formatter = function (val) {
+      return '<a href="' + config.app.url + '/' + val + '">' + val + '</a>';
+    }
     forms.generate({
       type: "grid",
       form: {
@@ -45,7 +48,6 @@ module['exports'] = function topPresenter (opts, callback) {
       schema: formSchema,
       }, function (err, result){
         $('.running').html(result);
-        
         metric.top('hits', function(err, members){
            if (err) {
              return res.end(err.message);
@@ -57,7 +59,9 @@ module['exports'] = function topPresenter (opts, callback) {
                var hits = members.shift();
                _sorted.push({ user: user, hits: hits});
              }
-
+             formSchema.user.formatter = function (val) {
+               return '<a target="_blank" href="' + config.app.url + '/' + val + '">' + val + '</a>';
+             }
              forms.generate({
                type: "grid",
                name: 'hits-forms',
@@ -70,14 +74,11 @@ module['exports'] = function topPresenter (opts, callback) {
                schema: formSchema,
                }, function (err, result){
                  $('.hits').html(result);
-                 
                  callback(null, $.html());
-
              });
          });
-        
+
     });
-    
  
   });
 };

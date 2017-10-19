@@ -91,7 +91,8 @@ module['exports'] = function view (opts, callback) {
           },
           grid: {
             legend: 'Your Domains'
-          }
+          },
+          showDestroyButton: true
         },
         schema: {
           name: {
