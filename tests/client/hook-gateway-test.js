@@ -27,16 +27,6 @@ var client = sdk.createClient(testUser.hookSdk);
 // gateway tests for executing hot code against the /gateway API endpoint
 // the gateway is used for running code without having to create a hook service
 
-// exec a simple bash service as anonymous user
-tap.test('attempt to exec a simple bash service as anonymous user', function (t) {
-  anonClient.hook.exec({ "code": 'echo "hello"', "language": "bash", "data":  { "foo": "bar" } }, function (err, res) {
-    console.log(err, res);
-    t.error(err, 'request did not error');
-    t.equal(res, "hello\n");
-    t.end();
-  });
-});
-
 // exec bash service as logged in user
 tap.test('attempt to exec a simple bash service as registered user', function (t) {
   client.hook.exec({ "code": 'echo "hello"', "language": "bash", "data":  { "foo": "bar" } }, function (err, res) {
@@ -77,6 +67,16 @@ tap.test('attempt to exec a js service which echos some important info', functio
     t.equal(typeof res.params, "object");
     t.equal(res.params.foo, "bar");
     t.equal(typeof res.env, "object");
+    t.end();
+  });
+});
+
+// exec a simple bash service as anonymous user
+tap.test('attempt to exec a simple bash service as anonymous user', function (t) {
+  anonClient.hook.exec({ "code": 'echo "hello";', "language": "bash", "data":  { "foo": "bar" } }, function (err, res) {
+    console.log(err, res);
+    t.error(err, 'request did not error');
+    t.equal(res, "hello\n");
     t.end();
   });
 });

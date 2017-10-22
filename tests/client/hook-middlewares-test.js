@@ -29,6 +29,7 @@ tap.test('start the dev cluster', function (t) {
 tap.test('attempt to destroy the test hook', function (t) {
   client.hook.destroy({ owner: 'david', name: 'test-hook' }, function (err, res){
     t.error(err, 'request did not error');
+    console.log(res)
     t.end();
   });
 });
@@ -61,9 +62,9 @@ tap.test('attempt to get the test hook', function (t) {
 
 // run the hook without required middleware authorization
 tap.test('attempt to run the test hook without middleware authorization', function (t) {
-  client.hook.run({ owner: 'david', name: 'test-hook' }, function (err, res){
+  client.hook.run({ owner: 'david', name: 'test-hook' }, function (err, res) {
     t.error(err, 'request did not error');
-    t.equal(res, "Access denied\n");
+    t.equal(res, "Access denied\n", 'got access denied response');
     t.end();
   });
 });
@@ -73,8 +74,8 @@ tap.test('attempt to run the test hook', function (t) {
   var headers = {};
   headers['Authorization'] = "Basic " + new Buffer('admin' + ":" + 'password', "utf8").toString("base64");
   client.hook.run({ owner: 'david', name: 'test-hook', headers: headers }, function (err, res){
-    t.error(err, 'request did not error');
-    t.equal(res, "hello\n");
+    t.error(err, 'request did not error', 'request with basic auth did not error');
+    t.equal(res, "hello\n", 'got back basic auth protected response');
     t.end();
   });
 });

@@ -36,7 +36,7 @@ var client = sdk.createClient(testUser.hookSdk);
 tap.test('attempt to create a new public hook', function (t) {
   client.hook.create({
     "name": "test-public-hook",
-    "source": 'module["exports"] = function (h) {console.log("logging");h.res.end("ended");}',
+    "source": 'module["exports"] = function (h) {console.log("logging");console.log(h.params);h.res.end("ended");}',
     "language": "javascript"
   }, function (err, res) {
     t.error(err, 'request did not error');
@@ -56,7 +56,7 @@ tap.test('attempt to view logs for newly created hook - anonymous access', funct
 });
 
 tap.test('attempt to run the public hook - anonymous access', function (t) {
-  r({ uri: baseURL + "/" + testUser.name + "/" + "test-public-hook", method: "GET" }, function (err, res) {
+  r({ uri: baseURL + "/" + testUser.name + "/" + "test-public-hook?foo=bar", method: "GET" }, function (err, res) {
     t.error(err);
     t.equal(res, 'ended\n', 'returned correct result');
     t.end();
@@ -67,7 +67,10 @@ tap.test('attempt to view logs for newly created hook - anonymous access', funct
   r({ uri: baseURL + "/" + testUser.name + "/" + "test-public-hook/logs", method: "GET", json: true }, function (err, res) {
     t.error(err);
     t.equal(typeof res, "object", "returned json object");
-    t.equal(res.length, 1, "found one log entry");
+    t.equal(res.length, 2, "found two log entries");
+    t.equal(typeof res[0].data, 'object', 'found log entry as object');
+    t.equal(res[0].data.foo, 'bar', 'found correct param');
+    t.equal(res[1].data, 'logging', 'found exact match of log entry as string');
     t.end();
   });
 });
