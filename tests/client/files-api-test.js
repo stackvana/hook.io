@@ -13,7 +13,6 @@ var testFile = {
   contents: "hello world"
 };
 
-
 function testAdapter (adapter) {
 
   tap.test(adapter + ' - attempt to writeFile a file without any auth ( anonymous root )', function (t) {
@@ -100,6 +99,22 @@ function testAdapter (adapter) {
           hook_private_key: testUser.admin_key,
           path: testFile.path,
           adapter: adapter
+        }
+      }, function (err, file) {
+      t.error(err, 'request did not error');
+      t.equal(typeof file, "string", "returned file as string");
+      t.equal(file, "hello world", "returned correct value");
+      t.end();
+    });
+  });
+
+  tap.test(adapter + ' - attempt to readFile a file - as vinyl - for david with "admin-access-key" role - correct key', function (t) {
+    r({ uri: baseURL + "/files/readFile", method: "POST",
+        json: {
+          hook_private_key: testUser.admin_key,
+          path: testFile.path,
+          adapter: adapter,
+          vinyl: true
         }
       }, function (err, file) {
       t.error(err, 'request did not error');
