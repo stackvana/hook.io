@@ -140,7 +140,11 @@ module['exports'] = function view (opts, callback) {
       data.sourceType = params.hookSource;
       data.source = params.source;
       data.name = params.name;
-      data.path = params.path;
+
+      // path is an optional argument. do not allow undefined or empty values to overwrite path
+      if (typeof params.path === "string" && params.path.length > 0) {
+        data.path = params.path;
+      }
 
       if (params.isPrivate === true || params.isPrivate === "true") {
         data.isPrivate = true;
