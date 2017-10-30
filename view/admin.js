@@ -8,7 +8,7 @@ var cache = require('../lib/resources/cache');
 var billing = require('../lib/resources/billing');
 var metric = require('../lib/resources/metric');
 var request = require('hyperquest');
-var dateFormat = require('dateformat');
+var df = require('dateformat');
 var forms = require('mschema-forms');
 var mustache = require('mustache');
 var themes = require('../lib/resources/themes');
@@ -266,31 +266,49 @@ module['exports'] = function view (opts, callback) {
 
       var owner = req.hook.owner,
           service = req.hook.name;
-      var getMetrics = [
-        '/' + owner + "/hits",
-        '/' + owner + "/totalHits",
-        '/' + owner + "/gateway/hits",
-        '/' + owner + "/running",
-        '/' + owner + "/" + service + "/hits",
-        '/' + owner + "/" + service + "/running"
-      ];
       // get latest metrics
-      metric.all(req.hook.owner, req.hook.name, function (err, _metrics) {
-        req.hook.metrics = _metrics;
+      var reportKey = '/' + req.hook.owner + '/' + req.hook.name + '/report';
+      metric.hgetall(reportKey, function (err, report) {
 
-        // filter out some metrics we don't want to show
-        // TODO: metric.mget method
-        Object.keys(_metrics).forEach(function(k){
-          var str = '<tr class="metricRow">\
-            <td class="metric"><a href="' + config.app.url + '/metrics' + k + '">/metrics' + k + '</a></td>\
-            <td class="count">' +  numberWithCommas(_metrics[k] || 0) + '</td>\
-          </tr>';
-          $('.hookMetrics table').append(str);
-        });
-        metric.get('/' + req.hook.owner + "/" + req.hook.name + "/hits", function (err, count){
-          req.hook.ran = count || 0;
-          finish(req.hook);
-        });
+        if (report === null) {
+          $('.hookMetrics').remove();
+          return finish(req.hook);
+        }
+        $('.noMetrics').remove();
+        $('.hookMetricReport').html(config.app.url + '/metrics' + reportKey);
+        $('.hookMetricReport').attr("href", config.app.url + '/metrics' + reportKey);
+
+        var now = new Date();
+        var monthlyHitsKey = 'monthlyHits - ' + now.getMonth() + '/' + now.getFullYear();
+
+        // List each metric we want to show
+
+        $('.hookMetrics table').append('<tr class="metricRow">\
+          <td class="metric">' + 'running' + '</a></td>\
+          <td class="count">' +  (report['running'] || 0) + '</td>\
+        </tr>');
+
+        $('.hookMetrics table').append('<tr class="metricRow">\
+          <td class="metric">' + monthlyHitsKey + '</a></td>\
+          <td class="count">' +  (report[monthlyHitsKey] || 0) + '</td>\
+        </tr>');
+
+        $('.hookMetrics table').append('<tr class="metricRow">\
+          <td class="metric">' + 'total hits' + '</a></td>\
+          <td class="count">' +  (report['totalHits'] || 0) + '</td>\
+        </tr>');
+
+        $('.hookMetrics table').append('<tr class="metricRow">\
+          <td class="metric">' + 'last started' + '</a></td>\
+          <td class="count">' +  (df(Number(report['lastStart']))) + '</td>\
+        </tr>');
+
+        $('.hookMetrics table').append('<tr class="metricRow">\
+          <td class="metric">' + 'last status code' + '</a></td>\
+          <td class="count">' +  (report['statusCode']) + '</td>\
+        </tr>');
+
+        finish(req.hook);
       });
     }
 

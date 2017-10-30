@@ -1,4 +1,8 @@
+var config = require('../../config');
 var metric = require('../../lib/resources/metric');
+var user = require('../../lib/resources/user');
+var servicePlan = require('../../lib/resources/servicePlan');
+var numberWithCommas = require('../../lib/helpers/numberWithCommas');
 
 module['exports'] = function view (opts, callback) {
   var req = opts.req, res = opts.res, $ = this.$, params = req.resource.params;
@@ -29,52 +33,34 @@ module['exports'] = function view (opts, callback) {
     userName = params.user.toLowerCase();
   }
 
-  console.log('getting metrics for'.yellow, userName)
-
-  metric.zscore("hits", userName, function (err, accountHits) {
+  return user.findOne({ name: userName }, function (err, _user) {
     if (err) {
       return res.end(err.message);
     }
-    // TODO: check total hits against plan limits,
-    // if total hits for user account is exceeded, rate-limit
-    // TODO: set json boolean that account is currently over
-    // console.log('metric.' +  userName + '.hits'.green, err, accountHits);
-    if (accountHits === null) {
-      accountHits = 0;
-    }
-    totals.hits = accountHits;
-    /*
-    // TODO: set json boolean that account is currently over
-    
-    if (Number(total) >= MAX_SERVICE_CONCURRENCY) {
-      // TODO: better error message
-      return res.end('max executions per cycle hit, upgrade plan, wait, or request more');
-    }
-    */
-
-    // TODO: get req.user.plan to determine actual limits ( versus paid / non-paid limits )
-    // TODO: reset limits on the start of every month, or at the start of the billing cycle?
-    // Get total amount of running hooks for current user
-    metric.zscore("running", userName, function (err, runningServices) {
+    // console.log('getting metrics for'.yellow, userName)
+    _user.servicePlan = _user.servicePlan || 'free';
+    return metric.hgetall('/' + userName + '/report', function (err, report) {
       if (err) {
         return res.end(err.message);
       }
-
-      if (runningServices === null) {
-        runningServices = 0;
-      }
-
-      totals.running = runningServices;
       if (req.jsonResponse) {
-        return res.json(totals);
+        return res.json(report);
       } else {
-
-        for (var t in totals) {
-          $('.usage').append('<tr><td><strong>' + t + '</strong></td><td>' + totals[t] +'</td></tr>');
+        if (report === null) {
+          $('.usageContainer').html('No metrics recorded yet. <a href="' + config.app.url + '/services' + '">Try running a service?</a>');
+          return callback(null, $.html());
         }
+        var now = new Date();
+        var month = 'monthlyHits - ' + now.getMonth() + '/' + now.getFullYear();
+
+        $('.usage').append('<tr><td><strong>' + 'Service Plan' + '</strong></td><td>' + (_user.servicePlan || 'free') +'</td></tr>');
+        $('.usage').append('<tr><td><strong>' + 'Currently Running' + '</strong></td><td>' + report['running'] +' / ' + servicePlan[_user.servicePlan].concurrency +'</td></tr>');
+        $('.usage').append('<tr><td><strong>' + 'Monthly Hits' + '</strong></td><td>' + report[month] +' / ' + numberWithCommas(servicePlan[_user.servicePlan].hits) +'</td></tr>');
+        $('.usage').append('<tr><td><strong>' + 'Total Hits' + '</strong></td><td>' + numberWithCommas(report['totalHits']) + '</td></tr>');
+
         callback(null, $.html());
       }
     });
-
   });
+
 };

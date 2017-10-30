@@ -8,11 +8,17 @@
   <h2>Usage Stats</h2>
   <div><strong>Account Name:</strong> <span class="userName"></span></div>
   <br/>
-  <table class="usage table">
-  </table>
-  <h4><a href="{{appUrl}}/account/unlock">Request reset on usage limitations</a></h4>
-  <!--
-  <h3>Account Limits</h3>
-  <p>You have exceeded your total amount of requests.</p>
-  -->
+  <div class="usageContainer">
+    <table class="usage table">
+    </table>
+    <!--
+    <h3>Account Limits</h3>
+    <p>You have exceeded your total amount of requests.</p>
+    -->
+    <p class="small">
+      Monthly limits will automatically reset on the 1st of the month at midnight.<br/>
+      Concurrency limits should reset to 0 if no services are currently running.
+    </p>
+    <h4><a href="{{appUrl}}/account/unlock">Request reset on usage limitations</a></h4>
+  </div>
 </div>

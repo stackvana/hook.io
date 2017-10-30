@@ -24,13 +24,10 @@ tap.test('start the dev cluster', function (t) {
 // clear the usage limits for test user
 tap.test('reset test user metrics', function (t) {
   t.ok('metrics reset');
-  metric.zrem('running', 'david', function (err){
+  metric.client.del('/metric/david/report', function (err){
     t.error(err);
-    metric.zrem('hits', 'david', function (err){
-      t.error(err);
-      t.ok(true, 'reset metrics for david')
-      t.end();
-    });
+    t.ok(true, 'deleted metrics report for david')
+    t.end();
   });
 });
 
@@ -74,42 +71,40 @@ tap.test('attempt to run delay hook once', function (t) {
 
 tap.test('check metrics for test user', function (t) {
   // TODO: use client.metrics, need to add to hook.io-sdk
-  metric.zscore('running', 'david', function (err, result) {
+  metric.hgetall('/david/report', function (err, report){
     t.error(err);
-    t.equal(result, "0");
-    metric.zscore('hits', 'david', function (err, result) {
-      t.equal(result, "1");
-      t.error(err);
-      t.end();
-    });
-  });
+    t.equal(typeof report, 'object', 'found reporting object');
+    t.equal(report.running, "0");
+    t.equal(report.totalHits, "1");
+    t.end();
+  })
 });
 
 tap.test('attempt to run hook that never responds hook once', function (t) {
-  t.plan(4);
+  t.plan(5);
   client.hook.run({ owner: "david", name: "test-hook-never-responds", data: { "foo": "bar" } }, function (err, body, res) {
     t.error(err);
     t.equal(res.statusCode, 500)
-    t.end();
+    //t.end();
   });
   setTimeout(function(){
-    metric.zscore('running', 'david', function (err, result) {
+    metric.hgetall('/david/report', function (err, report){
       t.error(err);
-      t.equal(result, "1");
+      t.equal(typeof report, 'object', 'found reporting object');
+      t.equal(report.running, "1");
+      //t.end();
     });
   }, 500)
 });
 
 tap.test('check metrics for test user', function (t) {
   // TODO: use client.metrics, need to add to hook.io-sdk
-  metric.zscore('running', 'david', function (err, result) {
+  metric.hgetall('/david/report', function (err, report){
     t.error(err);
-    t.equal(result, "0");
-    metric.zscore('hits', 'david', function (err, result) {
-      t.equal(result, "2");
-      t.error(err);
-      t.end();
-    });
+    t.equal(typeof report, 'object', 'found reporting object');
+    t.equal(report.running, "0", "found no running hooks");
+    t.equal(report.totalHits, "2", "found two total hits");
+    t.end();
   });
 });
 

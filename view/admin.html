@@ -1363,8 +1363,6 @@ body legend {
 
           </div>
 
-          <a name="metrics"></a>
-
           <a name="security"></a>
           <div class="securityHolder well">
             <h2 class="i18n">Security</h2>
@@ -1417,9 +1415,12 @@ body legend {
             </div>
           </div>
 
+          <a name="metrics"></a>
+
           <div class="analyticsHolder well">
             <h2 class="i18n">Metrics </h2>
             <!-- private / tokens -->
+            <h3 class="noMetrics">No metrics are available yet. Try running or re-running the Hook.</h3>
             <div class="form-group">
               <div class="hookMetrics">
                 <table class="table">
@@ -1428,6 +1429,7 @@ body legend {
                     <th>Count</th>
                   </tr>
                 </table>
+                <p><a class="hookMetricReport" href="{{appUrl}}/metrics/marak/echo/report">{{appUrl}}/metrics/marak/echo/report</a></p>
               </div>
             </div>
           </div>

@@ -36,12 +36,26 @@
   .megaRow a {
     text-align: center;
   }
+  #myInput {
+      background-position: 10px 12px; /* Position the search icon */
+      background-repeat: no-repeat; /* Do not repeat the icon image */
+      width: 100%; /* Full-width */
+      font-size: 16px; /* Increase font-size */
+      padding: 12px 20px 12px 40px; /* Add some padding */
+      border: 1px solid #ddd; /* Add a grey border */
+      margin-bottom: 12px; /* Add some space below the input */
+  }
+
+  .hookReportHolder {
+    font-size: 12px;
+  }
 
 </style>
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $('.deleteLink').on('click', function(){
+    $('#myInput').focus();
+    $('.hookDelete').on('click', function(){
       var name = $(this).attr('data-name');
       var result = confirm('Are you certain you want to destroy:\n\n' + name);
       if (result) {
@@ -51,6 +65,29 @@
       }
     });
   });
+</script>
+
+<script>
+  function myFunction() {
+    // Declare variables 
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("hooksTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+  }
 </script>
 
 <br/>
@@ -74,10 +111,6 @@
 
           <a href="{{appUrl}}/keys" title="Keys"><span class="mega-octicon octicon-key"></span></a>
           <a href="{{appUrl}}/domains" title="Manage Domains and Subdomains"><span class="mega-octicon octicon-globe"></span></a>
-          <!--
-          &nbsp;&nbsp;&nbsp;
-          <a href="{{appUrl}}/referrals" title="Manage Affilates / Referrals"><span class="mega-octicon octicon-broadcast"></span></a>
-          -->
 
           <a href="{{appUrl}}/events" title="Events"><span class="mega-octicon octicon-pulse"></span></a>
 
@@ -86,11 +119,43 @@
       </table>
     </div>
   </div>
+
+  <div class="searchServices">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Filter by service name...">
+  </div>
+
   <div class="noHooks">
     <h2>It looks like you haven't created any Services yet!</h2>
     <p>You can Create a new Service by clicking <a href="{{appUrl}}/new" title="Create New Hook"><span class="mega-octicon octicon-plus"></span></a></p>
   </div>
-  <table class="hooks table">
+  <table class="hooks table" id="hooksTable">
+    <tr class="hookTemplate">
+      <td class="col-md-8">
+        <a class="hookName" title="Hook Admin" href="/marak/badhook/admin">badhook</a>
+        <div class="hookReportHolder">
+          <pre class="hookReport"></pre>
+          Running: <span class="hookRunning">0</span>
+          <!-- Total Hits: <span class="hookTotalHits">0</span> -->
+          Monthly Hits: <span class="hookMonthlyHits">0</span><br/>
+          Last Started: <span class="hookLastStart">n/a</span><br/>
+          Last Estimated Execution Time: <span class="hookLastTime">0ms</span><br/>
+          <span class="hookStatus">HTTP Status: <span class="hookStatusCode">n/a</span></span>
+          <div class="hookError error">Error: Hook last returned 500 status, which means it is erroring. <a class="hookLogs" href="">Click here to view error logs</a></div>
+        </div>
+      </td>
+      <td class="col-md-1" align="left">
+        <a class="runLink" title="Run Hook" href="/marak/badhook"><span class="mega-octicon octicon-triangle-right"></span></a>
+      </td>
+      <td class="col-md-1" align="left">
+        <a class="hookSource" title="View Source" href="/marak/badhook/source"><span class="mega-octicon octicon-file-code"></span></a>
+      </td>
+      <td class="col-md-1" align="left">
+        <a class="hookLogs" title="View Logs" href="/marak/badhook/logs"><span class="mega-octicon octicon-list-ordered"></span></a>
+      </td>
+      <td class="col-md-1" align="left">
+        <a class="hookDelete" title="Delete Hook" data-name="marak/badhook" href="/marak/badhook/delete"><span class="mega-octicon octicon-trashcan"></span></a>
+      </td>
+    </tr>
   </table>
 </div>
 </div>
