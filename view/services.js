@@ -112,53 +112,58 @@ module['exports'] = function view (opts, callback) {
 
         function renderTable (report) {
           var keys = {}
-
+          // only show search bar if more than 3 services
+          if (hooks.length <= 3) {
+            $('.searchServices').remove()
+          }
           hooks.forEach(function(h, i){
             var tpl = $('.hookTemplate').clone();
-
             var hookLink = "/" + h.owner + "/" + h.name;
             var lastRun = keys[hookLink + '/lastRun'];
             var lastComplete = keys[hookLink + '/lastComplete'];
             var hits = keys[hookLink + '/hits'];
             var running = keys[hookLink + '/running'];
             var priv = "";
-            if (h.isPrivate) {
-              priv = '<span title="Private Service / Restricted Access" class="octicon octicon-lock"></span> ';
-              if (req.params.owner === req.session.user || req.url === "/services") {
-                // TODO: update with clone and html template!
-                $('.hooks').append('<tr><td class="col-md-8">' + priv + '<a title="Hook Admin" href="' + hookLink + '/admin">' + h.name + '</a></td><td class="col-md-1" align="left"><a target="_blank" title="Run Hook" href="' + hookLink + '"><span class="mega-octicon octicon-triangle-right"></span></a></td><td class="col-md-1" align="left"><a title="View Source" href="' + hookLink + '/source"><span class="mega-octicon octicon-file-code"></span></a></td><td class="col-md-1" align="left"><a title="View Logs" href="' + hookLink + '/logs"><span class="mega-octicon octicon-list-ordered"></span></a></td><td class="col-md-1" align="left"><a title="Delete Hook" class="hookDelete" data-name="' + h.owner + "/" + h.name +'" href="' + hookLink + '/delete"><span class="mega-octicon octicon-trashcan"></span></a></td></tr>')
+            var hookUrl = config.app.url + '/' + h.owner + '/' + h.name;
+            $('.hookName', tpl).html(h.name);
+            $('.hookName', tpl).attr("href", hookUrl + '/admin');
+            $('.hookAdmin', tpl).attr("href", hookUrl + '/admin');
+            $('.runLink', tpl).attr('href', hookUrl);
+            $('.hookLogs', tpl).attr('href', hookUrl + '/logs');
+            $('.hookDelete', tpl).attr('href', hookUrl + '/delete');
+            $('.hookDelete', tpl).attr('data-name', hookLink);
+            $('.hookSource', tpl).attr('href', hookUrl + '/_src');
+            //$('.hooks').append('<tr><td class="col-md-8">' + priv + '<a title="Hook Admin" href="' + hookLink + '/admin">' + h.name + '</a>' + '<pre>' +  JSON.stringify(report[i], true, 2) + '</pre>' +'</td><td class="col-md-1" align="left"><a title="Run Hook" href="' + hookLink + '"><span class="mega-octicon octicon-triangle-right"></span></a></td><td class="col-md-1" align="left"><a title="View Source" href="' + hookLink + '/source"><span class="mega-octicon octicon-file-code"></span></a></td><td class="col-md-1" align="left"><a title="View Logs" href="' + hookLink + '/logs"><span class="mega-octicon octicon-list-ordered"></span></a></td><td class="col-md-1" align="left"><a title="Delete Hook" class="deleteLink" data-name="' + h.owner + "/" + h.name +'" href="' + hookLink + '/delete"><span class="mega-octicon octicon-trashcan"></span></a></td></tr>');
+            if (report[i] !== null) {
+              // $('.hookReport', tpl).html(JSON.stringify(report[i]));
+              var diff = Number(report[i].lastEnd) - Number(report[i].lastStart);
+              var lastStart = new Date(Number(report[i].lastStart)).toString();
+              lastStart = df(lastStart , "mm/dd/yyyy HH:mm:ss Z");
+              $('.hookLastTime', tpl).html(ms(diff).toString());
+              $('.hookLastStart', tpl).html(lastStart);
+              $('.hookStatusCode', tpl).html(report[i].statusCode);
+              $('.hookTotalHits', tpl).html(report[i].totalHits);
+              $('.hookRunning', tpl).html(report[i].running);
+              $('.hookMonthlyHits', tpl).html(report[i]['monthlyHits - 9/2017']); // TODO: date format uplook
+              if (report[i].statusCode === "500") {
+                // 500 status code means the last time the hook completed it ended with an error
+                // if this is the case, we should show user a warning and give information of viewing the logs
+                // $('.hookStatus', tpl).remove();
+              } else {
+                $('.hookError', tpl).remove();
               }
             } else {
-              var hookUrl = config.app.url + '/' + h.owner + '/' + h.name;
-              $('.hookName', tpl).html(h.name);
-              $('.hookName', tpl).attr("href", hookUrl + '/admin');
-              $('.runLink', tpl).attr('href', hookUrl);
-              $('.hookLogs', tpl).attr('href', hookUrl + '/logs');
-              $('.hookDelete', tpl).attr('href', hookUrl + '/delete');
-              $('.hookDelete', tpl).attr('data-name', hookLink);
-
-              $('.hookSource', tpl).attr('href', hookUrl + '/_src');
-              //$('.hooks').append('<tr><td class="col-md-8">' + priv + '<a title="Hook Admin" href="' + hookLink + '/admin">' + h.name + '</a>' + '<pre>' +  JSON.stringify(report[i], true, 2) + '</pre>' +'</td><td class="col-md-1" align="left"><a title="Run Hook" href="' + hookLink + '"><span class="mega-octicon octicon-triangle-right"></span></a></td><td class="col-md-1" align="left"><a title="View Source" href="' + hookLink + '/source"><span class="mega-octicon octicon-file-code"></span></a></td><td class="col-md-1" align="left"><a title="View Logs" href="' + hookLink + '/logs"><span class="mega-octicon octicon-list-ordered"></span></a></td><td class="col-md-1" align="left"><a title="Delete Hook" class="deleteLink" data-name="' + h.owner + "/" + h.name +'" href="' + hookLink + '/delete"><span class="mega-octicon octicon-trashcan"></span></a></td></tr>');
-              if (report[i] !== null) {
-                // $('.hookReport', tpl).html(JSON.stringify(report[i]));
-                var diff = Number(report[i].lastEnd) - Number(report[i].lastStart);
-                $('.hookLastTime', tpl).html(ms(diff).toString());
-                $('.hookLastStart', tpl).html(new Date(Number(report[i].lastStart)).toString());
-                $('.hookStatusCode', tpl).html(report[i].statusCode);
-                $('.hookTotalHits', tpl).html(report[i].totalHits);
-                $('.hookRunning', tpl).html(report[i].running);
-                $('.hookMonthlyHits', tpl).html(report[i]['monthlyHits - 9/2017']); // TODO: date format uplook
-                if (report[i].statusCode === "500") {
-                  // 500 status code means the last time the hook completed it ended with an error
-                  // if this is the case, we should show user a warning and give information of viewing the logs
-                  $('.hookStatus', tpl).remove();
-                } else {
-                  $('.hookError', tpl).remove();
-                }
-              } else {
-                $('.hookReportHolder', tpl).remove();
+              $('.hookReportHolder', tpl).remove();
+              $('.hookError', tpl).remove();
+            }
+            $(tpl).removeClass('hookTemplate');
+            if (h.isPrivate) {
+              if (req.params.owner === req.session.user || req.url === "/services") {
+                // TODO: update with clone and html template!
+                $('.hooks').append('<tr>' + tpl + '</tr>');
               }
-              $(tpl).removeClass('hookTemplate');
+            } else {
+              $('.privateHook', tpl).remove();
               $('.hooks').append('<tr>' + tpl + '</tr>');
             }
           });

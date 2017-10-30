@@ -50,7 +50,31 @@
     font-size: 12px;
   }
 
+  .subLink {
+    font-size: 12px;
+  }
+  .tiny {
+    font-size: 12px;
+  }
+  .medium {
+    font-size: 18px;
+  }
+  
+  th {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  td {
+    vertical-align: top;
+    
+  }
+  .hookError {
+    font-size: 14px;
+  }
 </style>
+
+
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -64,7 +88,9 @@
         return false;
       }
     });
+    
   });
+  
 </script>
 
 <script>
@@ -121,6 +147,7 @@
   </div>
 
   <div class="searchServices">
+    <label for="myInput" class="mega-octicon octicon-search" style="float:left;position:relative;top:40px;left:5px;"></label>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Filter by service name...">
   </div>
 
@@ -129,33 +156,49 @@
     <p>You can Create a new Service by clicking <a href="{{appUrl}}/new" title="Create New Hook"><span class="mega-octicon octicon-plus"></span></a></p>
   </div>
   <table class="hooks table" id="hooksTable">
+    <tr>
+      <th class="col-md-5 tiny" style="text-align:left;">Name</th>
+      <th class="col-md-1 tiny">Monthly</th>
+      <th class="col-md-1 tiny">Time</th>
+      <th class="col-md-1 tiny">Running</th>
+      <th class="col-md-1">&nbsp;</th>
+      <th class="col-md-1">&nbsp;</th>
+      <th class="col-md-1">&nbsp;</th>
+      <th class="col-md-1">&nbsp;</th>
+    </tr>
     <tr class="hookTemplate">
-      <td class="col-md-8">
-        <a class="hookName" title="Hook Admin" href="/marak/badhook/admin">badhook</a>
-        <div class="hookReportHolder">
-          <pre class="hookReport"></pre>
-          Running: <span class="hookRunning">0</span>
-          <!-- Total Hits: <span class="hookTotalHits">0</span> -->
-          Monthly Hits: <span class="hookMonthlyHits">0</span><br/>
-          Last Started: <span class="hookLastStart">n/a</span><br/>
-          Last Estimated Execution Time: <span class="hookLastTime">0ms</span><br/>
-          <span class="hookStatus">HTTP Status: <span class="hookStatusCode">n/a</span></span>
-          <div class="hookError error">Error: Hook last returned 500 status, which means it is erroring. <a class="hookLogs" href="">Click here to view error logs</a></div>
+      <td class="col-md-5">
+        <span title="Private Service / Restricted Access" class="privateHook octicon octicon-lock"></span> <a class="hookName" title="Hook Admin" href="/examples/echo/admin">echo</a>
+        <!-- Total Hits: <span class="hookTotalHits">0</span> -->
+        <div class="tiny">
+          <strong>Last Run:</strong> <span class="hookLastStart">n/a</span> &nbsp;
+          <strong>Status Code</strong> <span class="hookStatus tiny"><span class="hookStatusCode">n/a</span></span>
         </div>
+        <div class="hookError error"><strong>Error:</strong> Hook last returned 500 status, which means it is erroring. <br/><a class="hookLogs" href="">Click here to view error logs</a></div>
       </td>
-      <td class="col-md-1" align="left">
-        <a class="runLink" title="Run Hook" href="/marak/badhook"><span class="mega-octicon octicon-triangle-right"></span></a>
+      <td class="col-md-1 medium" align="center">
+       <span class="hookMonthlyHits">0</span>
       </td>
-      <td class="col-md-1" align="left">
-        <a class="hookSource" title="View Source" href="/marak/badhook/source"><span class="mega-octicon octicon-file-code"></span></a>
+      <td class="col-md-1 medium" align="center">
+        <span class="hookLastTime">n/a</span>
       </td>
-      <td class="col-md-1" align="left">
-        <a class="hookLogs" title="View Logs" href="/marak/badhook/logs"><span class="mega-octicon octicon-list-ordered"></span></a>
+      <td class="col-md-1 medium" align="center">
+        <span class="hookRunning">0</span>
       </td>
-      <td class="col-md-1" align="left">
-        <a class="hookDelete" title="Delete Hook" data-name="marak/badhook" href="/marak/badhook/delete"><span class="mega-octicon octicon-trashcan"></span></a>
+      <td class="col-md-1" align="center">
+        <a target="_blank" class="hookAdmin" title="Run Hook" href="/examples/echo"><span class="mega-octicon octicon-gear"></span><div class="subLink">admin</div></a>
+      </td>
+      <td class="col-md-1" align="center">
+        <a target="_blank"  class="runLink" title="Run Hook" href="/examples/echo"><span class="mega-octicon octicon-triangle-right"></span><div class="subLink">run</div></a>
+      </td>
+      <td class="col-md-1" align="center">
+        <a target="_blank"  class="hookLogs" title="View Logs" href="/examples/echo/logs"><span class="mega-octicon octicon-list-ordered"></span><div class="subLink">logs</div></a>
+      </td>
+      <td class="col-md-1" align="center">
+        <a class="hookDelete" title="Delete Hook" data-name="marak/echo" href="/examples/echo/delete"><span class="mega-octicon octicon-trashcan"></span><div class="subLink">delete</div></a>
       </td>
     </tr>
+
   </table>
 </div>
 </div>
