@@ -5,6 +5,7 @@ var config = require('../config');
 var forms = require('mschema-forms');
 var user = require('../lib/resources/user');
 var cache = require('../lib/resources/cache');
+var servicePlan = require('../lib/resources/servicePlan');
 var bodyParser = require('body-parser');
 var mergeParams = require('merge-params');
 var psr = require('parse-service-request');
@@ -134,34 +135,44 @@ module['exports'] = function view (opts, callback) {
           if (err) {
             return res.end(err.message);
           }
-          if (params.paid) {
-            _user.paidStatus = "paid";
-          }
-          if (params.unpaid) {
-            _user.paidStatus = "unpaid";
-          }
-          _user.save(function(err){
-            if (err) {
-              return res.end(err.message);
-            }
-            
-            // $('.user .json').html(JSON.stringify(_user, true, 2));
-            $('.loginAs').attr('href', '?loginAs=' + params.name );
-            $('.setPaid').attr('href', '?name=' + params.name + '&paid=true');
-            $('.setUnpaid').attr('href', '?name=' + params.name + '&unpaid=true');
 
+          // $('.user .json').html(JSON.stringify(_user, true, 2));
+          $('.loginAs').attr('href', '?loginAs=' + _user.name );
+
+          if (req.method === "POST") {
+            if (params.paidStatus) {
+              _user.paidStatus = params.paidStatus;
+            }
+            if (params.servicePlan) {
+              _user.servicePlan = params.servicePlan;
+            }
+            _user.save(function(err){
+              if (err) {
+                return res.end(err.message);
+              }
+              generateForms(callback);
+            })
+          } else {
+            generateForms(callback)
+          }
+
+          function generateForms (callback) {
             forms.generate({
               type: "read-only",
               form: {
-                legend: "User Form"
+                legend: "User Report"
               },
               data: _user,
               }, function (err, result){
                 $('.userFormHolder').html(result);
-                return callback(null, $.html());
+                // generate small form with some essential properties for updating user
+                generateUpdateForm(_user, function(err, html){
+                  $('.userUpdateFormHolder').html(html);
+                  return callback(null, $.html());
+                })
             });
+          }
 
-          })
         });
       } else {
         $('.user').remove();
@@ -210,3 +221,75 @@ module['exports'] = function view (opts, callback) {
    });
 
 };
+
+function generateUpdateForm (user, cb) {
+  
+  var formSchema = userSchema || {};
+
+   formSchema.name = {
+     default: user.name,
+   };
+
+   formSchema.previousName = {
+     default: user.name
+   };
+
+   formSchema.email.default = user.email || "";
+   // formSchema.email.disabled = true;
+
+   /*
+   formSchema.run = {
+     "type": "string",
+     "default": "true",
+     "format": "hidden"
+   };
+   */
+   formSchema.paidStatus = {
+     "type": "string",
+     "label": "account paid status",
+     "enum": ['paid', 'unpaid'],
+     "default": user.paidStatus
+   };
+
+   formSchema.servicePlan = {
+     "type": "string",
+     "label": "account service plan",
+     "enum": Object.keys(servicePlan),
+     "default": user.servicePlan
+   };
+
+   /*
+   formSchema.githubOAuth = {
+     "type": "string",
+     "disabled": true,
+     "enum": ["true", "false"],
+     "default": "false",
+     "label": "Account Linked To Github"
+   };
+   */
+   if (typeof user.hostingCredits !== "number") {
+     user.hostingCredits = 0;
+   }
+
+   if (user.hostingCredits > 0) {
+     formSchema.hostingCredits = {
+       "type": "number",
+       "label": "hosting credits",
+       "disabled": true,
+       "default": user.hostingCredits
+     }
+   }
+
+   forms.generate({
+     type: "generic",
+     form: {
+       legend: "Account Information",
+       submit: "Save",
+       action: ""
+     },
+     schema: formSchema,
+     }, function (err, result){
+       cb(null, result);
+   });
+  
+}
