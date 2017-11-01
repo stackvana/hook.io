@@ -128,6 +128,11 @@ module['exports'] = function view (opts, callback) {
     out = out.replace(/\{\{appAdminEmail\}\}/g, white.email || appAdminEmail);
     out = out.replace(/\{\{appPhonePrimary\}\}/g, appPhonePrimary);
 
+    if (typeof req.session !== 'undefined') {
+      out = out.replace(/\{\{userName\}\}/g, req.session.user || 'anonymous');
+      out = out.replace(/\{\{userEmail\}\}/g, req.session.email);
+    }
+
     return $.load(out);
   };
 
