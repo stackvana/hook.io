@@ -174,6 +174,7 @@ module['exports'] = function view (opts, callback) {
       } else {
         //$('.navBar').remove();
         $('.hooks').remove();
+        $('.searchServices').remove()
         callback(null, $.html());
       }
     });
