@@ -346,6 +346,10 @@ body legend {
     color: white;
 }
 
+label {
+  font-weight: bold;
+}
+
 </style>
 <link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet">
 
@@ -422,6 +426,7 @@ body legend {
       if (e.keyCode === 13) {
         // $('#hookForm').submit();
       }
+      $('.serviceUrlPreview').html('{{appUrl}}' + '/{{userName}}/' + v)
     });
 
     var options = {
@@ -490,15 +495,16 @@ body legend {
 
     <div class="hookHolder">
       <h2 class="i18n">Name of Service</h2>
-      <p>We are going to register a new service in the api-gateway.</p>
+      <p>We are going to register a new service in the api gateway.</p>
       <div class="form-group">
         <label for="name" class="i18n">Name</label>
         <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of microservice..." size="40"/>
         <div class="tiny">
-          <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
+          <em class="i18n">Will be part of the following url to run the Service. Cannot contain non-url safe characters.</em>
         </div>
-        <p>
-          http://localhost:9999/marak/new-service
+        <p class="">
+          <strong>Url:</strong> <span class="serviceUrlPreview">...</span>
+          <!-- {{appUrl}}/examples/hello-world -->
         </p>
       </div>
       <div class="form-group private">
@@ -525,8 +531,6 @@ body legend {
 
       <p>Execution a task on a scheduled timer.</p>
 
-      
-      
       <select>
         <option>Webhook</option>
         <option>HTTP Redirect</option>
