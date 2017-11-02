@@ -46,6 +46,7 @@ module['exports'] = {
     port: 9999,
     host: "0.0.0.0",
     https: false,
+    publicIP: "127.0.0.1",
     roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io", "couch"],
     secret: "change secret",
     redis: {

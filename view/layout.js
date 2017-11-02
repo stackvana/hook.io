@@ -127,7 +127,7 @@ module['exports'] = function view (opts, callback) {
     out = out.replace(/\{\{appPort\}\}/g, white.port || config.app.port);
     out = out.replace(/\{\{appAdminEmail\}\}/g, white.email || appAdminEmail);
     out = out.replace(/\{\{appPhonePrimary\}\}/g, appPhonePrimary);
-
+    out = out.replace(/\{\{balancerIP\}\}/g, config.balancer.publicIP);
     if (typeof req.session !== 'undefined') {
       out = out.replace(/\{\{userName\}\}/g, req.session.user || 'anonymous');
       out = out.replace(/\{\{userEmail\}\}/g, req.session.email);
