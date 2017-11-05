@@ -5,7 +5,6 @@ var parser = require('cron-parser');
 module['exports'] = function view (opts, callback) {
   var $ = this.$,
   req = opts.req;
-
   hook.find({ owner: req.session.user || "anonymous", cronActive: true }, function (err, result) {
     if (err) {
       return res.end(err.message);

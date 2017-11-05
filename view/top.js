@@ -20,6 +20,7 @@ module['exports'] = function topPresenter (opts, callback) {
   if (req.session.user !== "marak") {
     return res.end('unauthorized');
   }
+
   metric.top('running', function(err, members){
     if (err) {
       return res.end(err.message);
@@ -37,6 +38,7 @@ module['exports'] = function topPresenter (opts, callback) {
     formSchema.user.formatter = function (val) {
       return '<a href="' + config.app.url + '/' + val + '">' + val + '</a>';
     }
+
     forms.generate({
       type: "grid",
       form: {
@@ -48,7 +50,7 @@ module['exports'] = function topPresenter (opts, callback) {
       schema: formSchema,
       }, function (err, result){
         $('.running').html(result);
-        metric.top('hits', function(err, members){
+        metric.top('hits', function (err, members) {
            if (err) {
              return res.end(err.message);
            }

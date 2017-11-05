@@ -1,3 +1,5 @@
+// TODO: if there is copied code in session ( from save to url or fork ), post message that content being created will be preopulated. have clear button as well [X]
+// TODO: make `gateway` a reserved hook name since it might be confusing for users with /gateway logs
 var hook = require("../lib/resources/hook");
 var hooks = require("microcule-examples");
 var psr = require('parse-service-request');
@@ -125,7 +127,9 @@ module['exports'] = function view (opts, callback) {
             // updated 9/2/16 to allow .code parameter ( instead of source )
             params.source = params.source || params.code || params.codeEditor;
             if (typeof params.source === "undefined") {
-              params.source = "module['exports'] = function myService (req, res, next) {  \n  res.json(req.params); \n};";
+              // Remark: It might be better to return an error here instead of assigning a default value...
+              //         It can be a bit surprising if user intended to supply source code but ended up with this default value due to bad parameters to Hook.create
+              params.source = "module['exports'] = function myService (req, res, next) {  \n  res.end('source not provided'); \n};";
             }
           }
           // TODO: remove this line
@@ -165,6 +169,12 @@ module['exports'] = function view (opts, callback) {
               opts.gist = gist;
               opts.req = opts.request;
               opts.res = opts.response;
+              if (req.jsonResponse) {
+                return res.json({ result: 'created' })
+              } else {
+                return res.redirect('/' + h.owner + "/" + h.name + "");
+              }
+
               // fetch the hook from github and check if it has a schema / theme
               // if so, attach it to the hook document
               // TODO: can we remove this? it seems like this logic should be in the Hook.runHook execution chain...
@@ -198,6 +208,7 @@ module['exports'] = function view (opts, callback) {
         $('.gistStatus').remove();
       }
 
+      // TODO: update to use req.session.servicePlan instead?
       if (req.session.paidStatus === "paid") {
         $('.paidAccount').remove();
       } else {

@@ -68,7 +68,7 @@ module['exports'] = function view (opts, callback) {
 
     function next () {
       if (typeof params.owner === 'undefined' || params.owner.length === 0) {
-        return res.redirect(301, '/' + req.session.user);
+        return res.redirect('/' + req.session.user);
       }
 
       var name;
@@ -79,7 +79,7 @@ module['exports'] = function view (opts, callback) {
       }
 
       if (typeof name === 'undefined' || name.length === 0) {
-        return res.redirect(301, '/' + req.session.user);
+        return res.redirect('/' + req.session.user);
       }
 
       /*
