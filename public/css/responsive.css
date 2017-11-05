@@ -189,7 +189,7 @@ margin-top:0px;
  
 /* small mobile :320px. */
 @media (max-width: 767px) {
-.container {width:300px}
+.container {width:100%}
 .header_nav{
 	display:none;
 }

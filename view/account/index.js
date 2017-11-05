@@ -93,7 +93,7 @@ module['exports'] = function view (opts, callback) {
       $('.status').html('Please set your new password immediately!');
     }
     if (params.paid) {
-      $('.status').html('Thank you so much for supporting us! <br/> <span>Your Account has been Upgraded.</span> <br/> You now have access to additional features and higher usage limits.');
+      $('.status').html(' <span>Your Account has been Upgraded!</span> <br/>Thank you for your purchase. <br/> You now have access to additional features and higher usage limits.');
     }
 
     user.find({ name: req.session.user }, function(err, results) {
@@ -108,7 +108,7 @@ module['exports'] = function view (opts, callback) {
       var _user = {}, r = results[0];
       _user.name = r.name;
       _user.id = r.id;
-      r.paidStatus = r.paidStatus || req.session.paidStatus;
+
       $('.myHooks').attr('href', '/' + _user.name);
 
       if (req.method === "POST") {
@@ -126,37 +126,61 @@ module['exports'] = function view (opts, callback) {
               _user.password = params.password;
             }
           }
-
-          // allow for account renames
-          if (typeof params.name === "undefined" || params.name.length < 3) {
-            params.name = req.session.user;
-            // return res.end('name is a required parameter!');
-          }
-
-          if (params.name && params.previousName && params.name !== params.previousName) {
-            renameAccount(_user, params, function (err, result){
-              // display user info in account form
-              // TODO: if form post data, attempt to update user account information
-              req.session.destroy();
-              req.logout();
-              res.redirect("/");
-              return;
-            })
-          } else {
-            return user.update(_user, function(err, result){
-              if (err) {
-                return res.end(err.message);
-              }
-              req.session.email = result.email;
-              // display user info in account form
-              // TODO: if form post data, attempt to update user account information
-              showUserForm(_user, function(err, result){
-                $('.userForm').html(result);
-                $('.status').html('Account Information Updated!');
-                callback(null, $.html());
+          
+          // TODO: perform lookup of existing accounts by email
+          // do not allow users to override email address already in use
+          user.find({ email: params.email }, function (err, _users){
+            if (err) {
+              return res.end(err.message);
+            }
+            if (_users.length > 0) {
+              var ok = false;
+              _users.forEach(function(_u){
+                if (_u.name === req.session.user) {
+                  ok = true;
+                }
               });
-            });
-          }
+              if (ok) {
+                // email matches current account session, allow update ( not really updating the email value though )
+              } else {
+                // we found other accounts with the same email address, cannot save current email address
+                res.status(500);
+                return res.json({ error: true, message: 'An account is already registed to: ' + params.email });
+              }
+            }
+            // allow for account renames
+            if (typeof params.name === "undefined" || params.name.length < 3) {
+              params.name = req.session.user;
+              // return res.end('name is a required parameter!');
+            }
+
+            if (params.name && params.previousName && params.name !== params.previousName) {
+              renameAccount(_user, params, function (err, result){
+                // display user info in account form
+                // TODO: if form post data, attempt to update user account information
+                req.session.destroy();
+                req.logout();
+                res.redirect("/");
+                return;
+              })
+            } else {
+              return user.update(_user, function(err, result){
+                if (err) {
+                  return res.end(err.message);
+                }
+                req.session.email = result.email;
+                // display user info in account form
+                // TODO: if form post data, attempt to update user account information
+                showUserForm(result, function(err, result){
+                  $('.userForm').html(result);
+                  $('.status').html('Account Information Updated!');
+                  $('.status').addClass('success');
+                  callback(null, $.html());
+                });
+              });
+            }
+          });
+                
         } else {
           return res.end('email parameter cannot be empty');
         }
@@ -181,6 +205,7 @@ var mustache = require('mustache');
 
 
 function showUserForm (user, cb) {
+
   var formSchema = userSchema || {};
 
   formSchema.name = {
@@ -189,20 +214,12 @@ function showUserForm (user, cb) {
   };
 
   formSchema.email.default = user.email || "";
-  // formSchema.email.disabled = true;
 
-  /*
-  formSchema.run = {
+  formSchema.servicePlan = {
     "type": "string",
-    "default": "true",
-    "format": "hidden"
-  };
-  */
-  formSchema.paidStatus = {
-    "type": "string",
-    "label": "account paid status",
+    "label": "service plan",
     "disabled": true,
-    "default": user.paidStatus
+    "default": user.servicePlan
   };
 
   formSchema.password = {
@@ -211,7 +228,8 @@ function showUserForm (user, cb) {
   };
   formSchema.confirmPassword = {
     "type": "string",
-    "format": "password"
+    "format": "password",
+    "label": "confirm password"
   };
 
   formSchema.previousName = {

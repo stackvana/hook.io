@@ -11,6 +11,7 @@ module['exports'] = {
   testUsers: {
     "bobby": {
       name: "bobby",
+      email: "bobby@marak.com",
       admin_key: "ad255b3e-833e-41e6-bc68-23439ff27f65", // admin-access-key
       run_key: "e27b1183-9375-4b64-ad2f-76a2c8ebd064", // only has hook::run
       read_only: "57a45b7c-7bcd-4c66-a7d4-c847e86764c7", // has only hook::logs::read, events::read,
@@ -25,6 +26,7 @@ module['exports'] = {
     },
     "david": {
       name: "david",
+      email: "david@marak.com",
       admin_key: "f34a3112-fb82-4092-8ea7-912fa11ba6dd",
       run_key: "f34a3112-fb82-4092-8ea7-912fa11ba6dd",
       hook_private_key: "f34a3112-fb82-4092-8ea7-912fa11ba6dd",

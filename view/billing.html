@@ -1,5 +1,9 @@
 <style>
 
+  legend {
+    font-size: 22px;
+  }
+
   .hooks {
     font-size: 28px;
     text-align:center;
@@ -110,13 +114,13 @@
     <div class="billingForm">
     </div>
 
-
     <form action="" method="POST" id="stripeForm">
       <script
       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
       data-key="{{stripePK}}"
       data-image="https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png"
       data-name="hook.io"
+      data-email="{{userEmail}}"
       data-panel-label="Update Card Details"
       data-label="Update Card Details"
       data-allow-remember-me=false

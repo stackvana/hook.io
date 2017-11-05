@@ -119,9 +119,8 @@ label {
   margin-bottom: 30px;
 }
 
-/* hide for now, too frequently popping up */
 .emailReminder {
-  display: none;
+  display: block;
 }
 
 .emailReminder .content {

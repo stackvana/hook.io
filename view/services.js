@@ -87,7 +87,9 @@ module['exports'] = function view (opts, callback) {
         //$('.navBar').remove();
         $('.servicesHeader').html(req.params.owner);
       }
-
+      if (params.registered) {
+        $('.message').html(req.session.email + ' is now registered.');
+      }
       if (hooks.length > 0) {
         // sort hooks alphabetically by name
         hooks = hooks.sort(function(a,b){

@@ -2700,8 +2700,13 @@ span.member-role {
 
 .button_set_plain {
     text-align: right;
+    /*
     margin: 20px 0px 0px;
     padding: 8px 0px;
+    */
+    padding: 0px;
+    margin: 0px;
+    width: 75px;
     border-top: none;
 }
 .button_set_plain p {
@@ -2711,16 +2716,18 @@ span.member-role {
     background: transparent;
     border: 1px solid #d7d7d7;
     color: #868686;
-    padding: 7px 18px 5px;
+    font-size: 16px;
+    /*padding: 7px 18px 5px;*/
 }
 .button_set_plain .newsl_button button span {
-    background: transparent;
+    /*background: transparent;*/
+    background-color: #0F99DE;
     border: 1px solid #d7d7d7;
-    color: #868686;
+    color: #FFF;
 }
 .button_set_plain .newsl_button button:hover  span {
     border-color: #0F99DE;
-    background-color: #0F99DE;
+    background-color: #000;
     color: #fff;
 }
 .button_set_plain .newsl_button {

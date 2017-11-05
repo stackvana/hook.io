@@ -9,6 +9,10 @@
         $('.abuse').hide();
       }
     });
+    $('.freePlan').on('click', function(){
+      document.location = "/login";
+      return false;
+    });
   });
 </script>
 <style>
@@ -76,9 +80,31 @@
  .pricingPlan {
    font-size: 16px;
  }
- .pricingPlan td  {
+
+ .boxShadow {
+   border: solid;
+   border-width: 1px;
+   box-shadow: 10px 10px 5px #888888;
+   padding-top: 10px;
+   padding-bottom: 5px;
+   padding-right: 20px;
+   margin-bottom: 30px;
+   z-index: 99;
+   position: relative;
+ }
+
+ .pricingPlan th  {
+   font-weight: bold;
+ }
+
+ .pricingPlan .cost {
+   font-weight: bold;
+ }
+
+ .pricingPlan tr td  {
    text-align: left;
  }
+
  .hostingPlan:hover {
    cursor: pointer;
    color: black;
@@ -158,413 +184,292 @@
 <div class="blog-area">
   <div class="container content" align="center">  
 
-    <div class="row freePlan">
-      <h1>Hosting Plans</h1>
-
-      <div class="col-lg-3 col-md-3 col-sm-3">
-        <div class="hostingPlan">
-          <h2>Free</h2>
-          <p class="planHint">Ideal for development and low traffic Microservices.</p>
-          <!--
-          <p class="hint">Get all the core features for free. Ideal for development and low traffic Microservices.</p>
-          -->
-          <ul>
-            <li>1k Monthly Requests</li>
-            <!--
-              <li><a href="{{appUrl}}/datastore">Cloud Datastore</a> documents</li>
-              <li><a href="{{appUrl}}/files">Cloud File Storage</a> </li>
-              <li><a href="{{appUrl}}/logs">Logs</a> and <a href="{{appUrl}}/events">Events</a></li>
-            -->
-            <li>1 <a href="{{appUrl}}/keys">API access key</a></li>
-            <li>10 second request <a href="{{appUrl}}/docs#timeouts">time-outs</a></li>
-          </ul>
-          <p class="hint planTag">Unlimited Public Services, <a href="{{appUrl}}/datastore">Cloud Datastore Documents</a>, <a href="{{appUrl}}/files">Cloud File Storage</a>, <a href="{{appUrl}}/logs">Logs</a> and <a href="{{appUrl}}/events">Events</a></p>
-          <div class="left button_set_plain button_margin">
-            <div class="newsl_button" align="center">
-              <button><span class="clear"><a href="{{appUrl}}/login">Signup For Free</a></span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- blog-left-sidebar start -->
-      <div class="col-lg-3 col-md-3 col-sm-3">
-        <div class="hostingPlan">
-          <h2>Small</h2>
-          <p class="planHint">Great for hobbies and MVPs.</p>
-          
-          <!--
-          <p class="hint">Get all the core features for free. Ideal for development and low traffic Microservices.</p>
-          -->
-          <ul>
-            <li>10k Monthly Requests</li>
-            <!-- <li><a href="{{appUrl}}/faq#private">Private</a> Microservices</li> -->
-            <!--
-            <li><a href="{{appUrl}}/datastore">Cloud Datastore</a> documents</li>
-            <li><a href="{{appUrl}}/files">Cloud File Storage</a> </li>
-            <li><a href="{{appUrl}}/logs">Logs</a> and <a href="{{appUrl}}/events">Events</a></li>
-            <li>10 second request <a href="{{appUrl}}/docs#timeouts">time-outs</a></li>
-            -->
-            <li>10 <a href="{{appUrl}}/keys">API access key</a></li>
-          </ul>
-          <p class="hint planTag">All the benefits of the Free! plan, plus <a href="{{appUrl}}/faq#private">Private Microservices</a>, <a href="{{appUrl}}/docs#timeouts">Configurable time-outs</a> on Hooks, <a href="{{appUrl}}/keys">Custom Role Checks</a></p>
-          <div class="left button_set_plain button_margin">
-            <div class="newsl_button" align="center">
-              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup for $20</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-3">
-        <div class="hostingPlan">
-          <h2>Medium</h2>
-          <p class="planHint">The plan for small businesses.</p>
-          <ul>
-            <li>50k Monthly Requests</li>
-            <!--
-              <li><a href="{{appUrl}}/faq#private">Private</a> Microservices</li>
-            -->
-            <!--
-            <li><a href="{{appUrl}}/datastore">Cloud Datastore</a> documents</li>
-            <li><a href="{{appUrl}}/files">Cloud File Storage</a> </li>
-            <li><a href="{{appUrl}}/logs">Logs</a> and <a href="{{appUrl}}/events">Events</a></li>
-            -->
-            <!--
-              <li>Configurable <a href="{{appUrl}}/docs#timeouts">time-outs</a> on Hooks</li>
-              <li>Multiple <a href="{{appUrl}}/keys">API access keys</a></li>
-              <li>Custom Role Checks</li>
-            -->
-            <li>Up to 50 <a href="{{appUrl}}/keys">API access keys</a></li>
-          </ul>
-          <p class="hint planTag">All the benefits of the Small plan, plus Priority Support</p>
-          <div class="left button_set_plain button_margin">
-            <div class="newsl_button" align="center">
-              <button class="buy" data-amount="5000" data-label="Medium Plan" data-description="1 Month Hosting ($50.00)" data-name="{{appName}} hosting"><span>Signup for $50</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-3">
-        <div class="hostingPlan">
-          <h2>Large</h2>
-          <p class="planHint">Businesses-strength microservices.</p>
-          <ul>
-            <li>Unlimited Monthly Requests<a href="#restrictions">*</a></li>
-            <li>Unlimited <a href="{{appUrl}}/keys">API access keys</a></li>
-            <!--
-            <li>10,000 <a href="{{appUrl}}/datastore">Cloud Datastore</a> documents</li>
-            <li>10 GB <a href="{{appUrl}}/files">Cloud File Storage</a> </li>
-            <li><a href="{{appUrl}}/datastore">Cloud Datastore</a> documents</li>
-            <li><a href="{{appUrl}}/files">Cloud File Storage</a> </li>
-            <li><a href="{{appUrl}}/logs">Logs</a> and <a href="{{appUrl}}/events">Events</a></li>
-            -->
-            
-            <!-- <li>No Specific Restrictions<a href="#restrictions">*</a></li> -->
-            <!--
-              <li>Configurable <a href="{{appUrl}}/docs#timeouts">time-outs</a> on Hooks</li>
-              <li>Custom Role Checks</li>
-            -->
-          </ul>
-          <p class="hint planTag">No Specific Restrictions. If you need something, we'll work with you to make it happen.</p>
-          <div class="left button_set_plain button_margin">
-            <div class="newsl_button" align="center">
-              <button class="buy" data-amount="10000" data-label="Large Plan" data-description="1 Month Hosting ($100.00)" data-name="{{appName}} hosting"><span>Signup for $100</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-4"></div>
-
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="hostingPlan" style="height:460px">
-          <h2>Enterprise</h2>
-          <p class="planHint">Business-strength microservices.</p>
-          <p>
-            <ul style="height:160px;">
-              <li>No Setup Fee<a href="#dedicated-setup">**</a></li>
-              <li>~5,000 Requests Per Second</li>
-              <li>Dedicated Servers</li>
-              <li>Branded White-Label Site</li>
-              <li>Custom Domains</li>
-              <li>Priority Support</li>
-              <!-- <li>All Platform Features Enabled</li> -->
-              <li>No Specific Restrictions<a href="#restrictions">*</a></li>
-            </ul>
-          </p>
-          <p class="hint">If your enterprise need something, we'll work with you to make it happen.</p>
-          <!-- <h2>$500</h2> -->
-          <div class="left button_set_plain button_margin">
-            <div class="newsl_button" align="center">
-              <button><span class="clear"><a href="{{appUrl}}/contact?t=Enterprise Hosting">Get a Quote</a></span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-4"></div>
-
-    </div>
-
-    <!--
-    <div class="col-lg-12 col-md-12 col-sm-12" align="left">
-     <table border="1" class="table pricingPlan" align="left">
-        <tr>
-          <td>&nbsp;</td>
-          <td>Free</td>
-          <td>Premium</td>
-          <td>Pro</td>
-          <td>Business</td>
-        </tr>
-
-        <tr>
-          <td>Monthly Requests</td>
-          <td>1,000</td>
-          <td>10,000</td>
-          <td>100,000</td>
-          <td>1,000,000+</td>
-        </tr>
-        <tr>
-          <td>Concurrent Requests</td>
-          <td>2</td>
-          <td>5</td>
-          <td>20</td>
-          <td>50</td>
-        </tr>
-        <tr>
-          <td>Services</td>
-          <td>20</td>
-          <td>50</td>
-          <td>200</td>
-          <td>1,000</td>
-        </tr>
-        <tr>
-          <td>API Access Keys ( seats )</td>
-          <td>1</td>
-          <td>5</td>
-          <td>20</td>
-          <td>50</td>
-        </tr>
-
-        <tr>
-          <td>Logs</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-        </tr>
-
-        <tr>
-          <td>Events API</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>Custom Domains</td>
-          <td></td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Role Based Access Control</td>
-          <td></td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>Configurable Service Time-outs</td>
-          <td></td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>Cron Jobs</td>
-          <td></td>
-          <td>☑</td>
-          <td>☑</td>
-          <td>☑</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>24 Hour Email Support</td>
-          <td></td>
-          <td></td>
-          <td>☑</td>
-          <td>☑</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>Cloud Datastore Documents</td>
-          <td>100</td>
-          <td>1,000</td>
-          <td>5,000</td>
-          <td>100,000</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>Cloud File-System Storage</td>
-          <td>100MB</td>
-          <td>1GB</td>
-          <td>10GB</td>
-          <td>50GB</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td>Cost</td>
-          <td>Free</td>
-          <td>$10.00</td>
-          <td>$50.00</td>
-          <td>$200.00</td>
-        </tr>
-        
-        <tr>
-          <td>
-          </td>
-          <td>
-            <div class="newsl_button">
-              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
-            </div>
-          </td>
-          <td>
-            <div class="newsl_button">
-              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
-            </div>
-          </td>
-          <td>
-            <div class="newsl_button">
-              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
-            </div>
-          </td>
-          <td>
-            <div class="newsl_button">
-              <button class="buy" data-amount="2000" data-label="Small Plan" data-description="1 Month Hosting ($20.00)" data-name="{{appName}} hosting"><span>Signup</span></button>
-            </div>
-          </td>
-        </tr>
-      </table>
-
-    </div>
-    -->
-    
-    <div class="col-lg-12 col-md-12 col-sm-12" align="left">
-      <hr/>
-      <br/>
-      <p><strong>Note:</strong> Most stated limits for are "soft-limits", and not "hard-limits". This means {{appName}} will not immediately de-activate your services in the event that your monthly account limit is hit.</p>
-      <p>Our goal is to keep your services online and running. In the event your monthly account limits are hit, we'll attempt to contact you to find a solution.</p>
-      <a name="restrictions"></a>
-      <p class="hint"><em>*Any of these plans may change in the future with no notice. Our goal is to maintain a fair pricing model. New features will be added and service classes may be adjusted.</em></p>
-      <a name="dedicated-setup"></a>
-      <p class="hint"><em>**Dedicated Servers or White Label sites may take up to two weeks to setup. Any White Label site designs must be provided by you. {{appName}} is fully theme-able and it is very easy to create a new custom branded White-Label View of the site ( without needing to modify any back-end code ). Please <a href="{{appUrl}}/contact?t=Dedicated Hosting Inquiry">reach out</a> if you have any questions about Dedicated Hosting.</em></p>
-    </div>
-    
-    <script type="text/javascript">
-      var amount, credits;
-      $(document).ready(function(){
-        var handler = StripeCheckout.configure({
-          key: '{{stripePK}}',
-          image: 'https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png',
-          locale: 'auto',
-          token: function(token) {
-            $.ajax({
-              type: "POST",
-              url: '/billing',
-              data: {
-                "email": token.email,
-                "ajax": true,
-                "stripeToken": token.id,
-                "addCustomer": true,
-                "amount": amount // NOTE: All hosting credit amounts are manually reconciled against the monthly payment processor reports...please don't try to hack this open-source project... 
-              },
-              success: function(res){
-
-                if (res === "paid") {
-                  document.location = "/account?paid=true&plan=" + amount;
-                  return;
-                }
-                alert(res);
-                // $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
-              },
-              error: function (err) {
-                alert('error' + err);
-              }
-            })
-
-            return false;
-
-          }
-        });
-
-        $('.buy').on('click', function(e) {
-          // Open Checkout with further options
-          //credits = Number($(this).attr('data-credits'));
-          //var discount = Number($(this).attr('data-discount'));
-          //amount = (credits - (credits * discount)) * 100;
-
-          amount = $(this).attr('data-amount'),
-              desc = $(this).attr('data-description'),
-              label = $(this).attr('data-label');
-          handler.open({
-            name: '{{appName}}',
-            description: desc,
-            currency: "usd",
-            amount: amount,
-            panelLabel: label
-          });
-          e.preventDefault();
-        });
-
-        // Close Checkout on page navigation
-        $(window).on('popstate', function() {
-          handler.close();
-        });
-
-        $('.signupButton').on('click', function(){
-          document.location = "/login";
-          return false;
-        });
-        
-        $('.hostingPlan').on('click', function () {
-          $('.hostingPlan').removeClass('hostingPlan-hover');
-          $(this).addClass('hostingPlan-hover');
-        });
-
-      });
-
-    </script>
-
+      <h1>Hosting Plans</h1>
  
+      <div class="col-lg-12 col-md-12 col-sm-12" align="left">
+         <table border="1" class="table pricingPlan" align="left">
+           <colgroup id="colgroup">
+             <col class=""></col>
+             <col class=""></col>
+             <col class=""></col>
+             <col class=""></col>
+             <col class=""></col>
+             <col class=""></col>
+           </colgroup>
+           <thead>
+             <tr>
+               <th>&nbsp;</th>
+               <th>Free</th>
+               <th>Premium</th>
+               <th>Advanced</th>
+               <th>Pro</th>
+               <th>Business</th>
+             </tr>
+           </thead>
+           <tbody>
+            <tr>
+              <td>Monthly Requests<a href="#soft-limits">*</a></td>
+              <td>1,000</td>
+              <td>10,000</td>
+              <td>50,000</td>
+              <td>100,000</td>
+              <td>1,000,000+</td>
+            </tr>
+            <tr>
+              <td>Concurrent Requests<a href="#soft-limits">*</a></td>
+              <td>2</td>
+              <td>4</td>
+              <td>8</td>
+              <td>16</td>
+              <td>32</td>
+            </tr>
+            <tr>
+              <td>Services</td>
+              <td>20</td>
+              <td>50</td>
+              <td>100</td>
+              <td>200</td>
+              <td>1,000</td>
+            </tr>
+            <tr>
+              <td>API Access Keys ( Seats )</td>
+              <td>1</td>
+              <td>5</td>
+              <td>10</td>
+              <td>20</td>
+              <td>50+</td>
+            </tr>
 
+            <tr>
+              <td>Max Service Time-out</td>
+              <td>10s</td>
+              <td>10s</td>
+              <td>60s</td>
+              <td>60s</td>
+              <td>Unlimited</td>
+            </tr>
+
+            <tr>
+              <td>Logs</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+            </tr>
+
+            <tr>
+              <td>Events API</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+            </tr>
+            <tr>
+              <td>Cron Jobs</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+            </tr>
+        
+            <tr>
+              <td>Private Services</td>
+              <td></td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+            </tr>
+
+            <tr>
+              <td>Custom Domains</td>
+              <td></td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+            </tr>
+
+            <tr>
+              <td>Role Based Access Control</td>
+              <td></td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+            </tr>
+
+            <tr>
+              <td>24 Hour Email Support</td>
+              <td></td>
+              <td></td>
+              <td>☑</td>
+              <td>☑</td>
+              <td>☑</td>
+            </tr>
+
+            <tr>
+              <td>Cloud Datastore Documents</td>
+              <td>100</td>
+              <td>1,000</td>
+              <td>5,000</td>
+              <td>20,000</td>
+              <td>100,000+</td>
+            </tr>
+
+            <tr>
+              <td>Cloud File-System Storage</td>
+              <td>100MB</td>
+              <td>1GB</td>
+              <td>5GB</td>
+              <td>10GB</td>
+              <td>50GB</td>
+            </tr>
+
+            <tr class="cost">
+              <td>Cost Per Month</td>
+              <td>
+                <div class="button_set_plain">
+                  <div class="newsl_button">
+                    <button class="freePlan"><span>Free</span></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="button_set_plain">
+                  <div class="newsl_button">
+                    <button class="buy" data-amount="1000" data-label="Premium Plan" data-description="$10.00 Per Month" data-name="{{appName}} hosting"><span>$10.00</span></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="button_set_plain">
+                  <div class="newsl_button">
+                    <button class="buy" data-amount="2500" data-label="Advanced Plan" data-description="$25.00 Per Month" data-name="{{appName}} hosting"><span>$25.00</span></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="button_set_plain">
+                  <div class="newsl_button">
+                    <button class="buy" data-amount="5000" data-label="Pro Plan" data-description="$50.00 Per Month" data-name="{{appName}} hosting"><span>$50.00</span></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="button_set_plain">
+                  <div class="newsl_button">
+                    <button class="buy" data-amount="20000" data-label="Business Plan" data-description="$200.00 Per Month" data-name="{{appName}} hosting"><span>$200.00</span></button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+            <tr class="currentPlan">
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+   </div>
+    
+      <script type="text/javascript">
+        var amount, credits;
+        $(document).ready(function(){
+          var handler = StripeCheckout.configure({
+            key: '{{stripePK}}',
+            image: 'https://pbs.twimg.com/profile_images/633487866677428224/FKvNUwv9.png',
+            locale: 'auto',
+            token: function(token) {
+              $.ajax({
+                type: "POST",
+                url: '/billing',
+                data: {
+                  "email": token.email,
+                  "ajax": true,
+                  "stripeToken": token.id,
+                  "addCustomer": true,
+                  "amount": amount // NOTE: All hosting credit amounts are manually reconciled against the monthly payment processor reports...please don't try to hack this open-source project... 
+                },
+                success: function(res){
+
+                  if (res === "paid") {
+                    document.location = "/account?paid=true&plan=" + amount;
+                    return;
+                  }
+                  alert(res);
+                  // $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
+                },
+                error: function (err) {
+                  alert('error' + err);
+                }
+              })
+
+              return false;
+
+            }
+          });
+
+          $('.buy').on('click', function(e) {
+            // Open Checkout with further options
+            //credits = Number($(this).attr('data-credits'));
+            //var discount = Number($(this).attr('data-discount'));
+            //amount = (credits - (credits * discount)) * 100;
+
+                amount = $(this).attr('data-amount'),
+                desc = $(this).attr('data-description'),
+                label = $(this).attr('data-label');
+            handler.open({
+              name: '{{appName}}',
+              description: desc,
+              currency: "usd",
+              amount: amount,
+              email: "{{userEmail}}",
+              panelLabel: label
+            });
+            e.preventDefault();
+          });
+
+          // Close Checkout on page navigation
+          $(window).on('popstate', function() {
+            handler.close();
+          });
+
+          $('.signupButton').on('click', function(){
+            document.location = "/login";
+            return false;
+          });
+        
+          $('.hostingPlan').on('click', function () {
+            $('.hostingPlan').removeClass('hostingPlan-hover');
+            $(this).addClass('hostingPlan-hover');
+          });
+
+        });
+
+      </script>
+      <div align="left">
+        <br/>
+        <a name="soft-limits"></a>
+        <p><strong>*</strong> Most stated limits for are "soft-limits", and not "hard-limits". This means {{appName}} will not immediately de-activate your services in the event that your account usage exceeds it's rate limits.</p>
+        <p>Our goal is to keep your services online and running. In the event your account usage is exceeding it's service plan limits, we'll attempt to contact you to find a solution.</p>
+        <hr/>
+        <a name="restrictions"></a>
+        <p class="hint"><em>Any of these plans may change in the future with no notice. Our goal is to maintain a fair pricing model. New features will be added and service classes may be adjusted.</em><br/>
+        <a name="dedicated-setup"></a>
+        <em>Dedicated Servers and White Label solutions are available on request. Please <a href="{{appUrl}}/contact?t=Dedicated Hosting Inquiry">reach out</a> if you have any questions about Dedicated Hosting.</em></p>
+      </div>
   </div>
-  
-  
+</div>
 
-  <a href="{{appUrl}}/privacy">Privacy Policy</a> |
-  <a href="{{appUrl}}/tos">Terms of Service</a>
 </form>
   

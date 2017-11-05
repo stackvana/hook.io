@@ -2,7 +2,7 @@ var config = require('../config');
 var i18n = require('i18n-2')
 
 module['exports'] = function view (opts, callback) {
-  var req = opts.req,
+  var req = opts.req, res = opts.res,
       params = req.resource.params,
       $ = this.$;
 
@@ -81,14 +81,38 @@ module['exports'] = function view (opts, callback) {
   });
   */
 
+  // TODO: make this a redirect page instead of inserting into layout now that emails are required
   if (typeof req.session === "undefined" || typeof req.session.user === "undefined" || req.session.user === "anonymous") {
     $('.emailReminder').remove();
   }
 
+  // if no email found on account, we need to update the account!
   if (typeof req.session.email === "undefined" || req.session.email.length === 0) {
-    // no email found on account, we need to update the account!
+    // do not perform redirect if user is already on redirected page
+    // do not perform redirect if request has indicated a json response ( most likely an API call )
+    // TODO: only if logged in and not anonymous
+    if (req.isAuthenticated()) {
+      if (req.url !== '/email-required' && !req.jsonResponse) {
+        return res.redirect(config.app.url + '/email-required');
+      }
+    }
   } else {
     $('.emailReminder').remove();
+  }
+
+  // if we have a valid session but there is no valid session user name...
+  // assume we have created a new account with no registered account name
+  if (req.isAuthenticated()) {
+    if (typeof req.session.user === 'undefined' || req.session.user === 'anonymous') {
+      // redirect to the register account page
+      if (req.url !== '/register' && !req.jsonResponse) {
+        return res.redirect(307, config.app.url + '/register');
+      }
+    }
+  }
+
+  if (req.session && req.session.user === 'marak') {
+    $('.logo a').attr('href', config.app.url + '/_admin')
   }
 
   // generic white-label function for performing {{mustache}} style replacements of site data
@@ -132,12 +156,10 @@ module['exports'] = function view (opts, callback) {
       out = out.replace(/\{\{userName\}\}/g, req.session.user || 'anonymous');
       out = out.replace(/\{\{userEmail\}\}/g, req.session.email);
     }
-
     return $.load(out);
   };
 
   $ = req.white($);
-
   callback(null, $.html());
 
 };

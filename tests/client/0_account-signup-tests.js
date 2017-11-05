@@ -37,26 +37,130 @@ tap.test('attempt to signup with no account name or email', function (t) {
   });
 });
 
-tap.test('attempt to signup by account name with no password', function (t) {
+tap.test('attempt to signup by just account name', function (t) {
   r({ 
       uri: baseURL + "/signup", 
       method: "POST",
       form: {
-        "email": testUser.name
+        "name": testUser.name
       },
     }, function (err, res) {
       t.error(err, 'request did not error');
-      console.log(err, res);
       t.equal(typeof res, 'object', "response contains object");
-      t.equal(res.result, 'available', "name is available");
+      t.equal(res.result, 'invalid', "unable to signup with just account name");
       t.end();
+  });
+});
+
+var request = require('request');
+var cookieRequest = request.defaults({jar: true})
+
+tap.test('attempt to signup by email with no password', function (t) {
+  
+  var opts = { 
+    uri: baseURL + '/signup',
+    form: {
+    "email": testUser.email
+    },
+    method: 'POST',
+    json: true,
+    jar: true
+  };
+
+  r(opts, function (err, body) {
+    // now have cookies
+    // cookieRequest('http://images.google.com')
+    t.equal(body.result, 'valid', "registered valid account by email");
+    var opts = { 
+      uri: baseURL + '/session',
+      method: 'GET',
+      json: true,
+      jar: true
+    };
+    r(opts, function (err, body) {
+      t.equal(body.email, testUser.email, 'has correct req.session.email')
+      t.end();
+    });
+  })
+
+});
+
+
+tap.test('attempt to get session - with cookies', function (t) {
+
+  var opts = { 
+    uri: baseURL + '/session',
+    method: 'GET',
+    json: true,
+    jar: true
+  };
+  r(opts, function (err, body) {
+    t.equal(body.email, testUser.email)
+    t.end();
+  });
+
+});
+
+tap.test('attempt to register account name - with cookies - missing password', function (t) {
+
+  var opts = { 
+    uri: baseURL + '/register',
+    form: {
+      account_name: 'bobby'
+    },
+    method: 'POST',
+    json: true,
+    jar: true
+  };
+  r(opts, function (err, body, res) {
+    t.error(err, 'did not return error');
+    t.equal(res.statusCode, 400);
+    t.equal(body.message, 'Password field is required.');
+    t.end();
+  });
+
+});
+
+tap.test('attempt to register account name - with cookies - has password', function (t) {
+  var opts = { 
+    uri: baseURL + '/register',
+    form: {
+      account_name: 'bobby',
+      password: 'asd',
+      confirmPassword: 'asd'
+    },
+    method: 'POST',
+    json: true,
+    jar: true
+  };
+  r(opts, function (err, body, res) {
+    t.equal(res.statusCode, 200);
+    t.equal(body.result, 'success');
+    t.end();
+  });
+});
+
+tap.test('attempt to register same account name - with cookies - has confirmed password', function (t) {
+  var opts = { 
+    uri: baseURL + '/register',
+    form: {
+      account_name: 'bobby',
+      password: 'asd',
+      confirmPassword: 'asd'
+    },
+    method: 'POST',
+    json: true,
+    jar: true
+  };
+  r(opts, function (err, body, res) {
+    t.error(err, 'did not return error');
+    t.equal(body.result, 'already-registered', 'returns already-registered message');
+    t.end();
   });
 });
 
 
 /*
-
-Note: Removed from API
 
 tap.test('attempt to signup by account name mismtached passwords', function (t) {
   r({ 
@@ -76,12 +180,14 @@ tap.test('attempt to signup by account name mismtached passwords', function (t) 
 });
 */
 
-tap.test('attempt to signup by account name with valid password', function (t) {
+/*
+
+tap.test('attempt to signup by email name with valid password', function (t) {
   r({ 
       uri: baseURL + "/signup", 
       method: "POST",
       form: {
-        "email": testUser.name,
+        "email": testUser.email,
         "password": "foo",
         "confirmPassword": "foo"
       },
@@ -93,12 +199,71 @@ tap.test('attempt to signup by account name with valid password', function (t) {
       t.end();
   });
 });
+*/
+
+tap.test('attempt to logout out of session', function (t) {
+  r({ 
+      uri: baseURL + "/logout", 
+      method: "GET",
+      jar: true
+    }, function (err, body, res) {
+      t.error(err, 'request did not error');
+      t.equal(typeof res, 'object', "response contains object");
+      console.log('bbbb', body)
+      t.equal(res.statusCode, 200, "logged out and redirected");
+      var opts = { 
+        uri: baseURL + '/session',
+        method: 'GET',
+        json: true,
+        jar: true
+      };
+      r(opts, function (err, body) {
+        // console.log("BBBB", body)
+        t.equal(typeof body.email, "undefined", "did not find req.session.email")
+        t.equal(typeof body.user, "undefined", "did not find req.session.user")
+        t.end();
+      });
+  });
+});
+
+tap.test('attempt to signup with same email address', function (t) {
+  r({ 
+      uri: baseURL + "/signup", 
+      method: "POST",
+      form: {
+        "email": testUser.email
+      },
+    }, function (err, res) {
+      t.error(err, 'request did not error');
+      t.equal(typeof res, 'object', "response contains object");
+      t.equal(res.result, 'exists', "email is already registered");
+      t.end();
+  });
+});
+
+tap.test('attempt to login with with new account', function (t) {
+  r({ 
+      uri: baseURL + "/login", 
+      method: "POST",
+      json: true,
+      jar: true,
+      form: {
+        "email": testUser.email,
+        "password": "asd"
+      },
+    }, function (err, res) {
+      t.error(err, 'request did not error');
+      t.equal(typeof res, 'object', "response contains object");
+      t.equal(res.result, 'valid', "valid login");
+      t.end();
+  });
+});
 
 tap.test('attempt to clear test user - as superadmin', function (t) {
   r({ uri: baseURL + "/_admin", method: "POST", json: {
     method: "user.destroy",
     super_private_key: config.superadmin.super_private_key,
-    name: testUser.name
+    email: testUser.email
   }}, function (err, res, body) {
     t.error(err);
     t.error(err, 'request did not error');
@@ -110,5 +275,7 @@ tap.test('attempt to clear test user - as superadmin', function (t) {
 
 tap.test('perform hard shutdown of cluster', function (t) {
   t.end('shut down');
-  process.exit(0);
+  setTimeout(function(){
+    process.exit();
+  }, 10);
 });

@@ -1,3 +1,8 @@
+<style>
+  .signupMessage {
+    font-size: 1.2em;
+  }
+</style>
 <div class="container">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -11,19 +16,25 @@
         <form name="signupForm" class="signupForm discount" action="/signup" method="POST">
           <h2>New Developers</h2>
           <div class="submit_review">
-            <p class="signupMessage">By creating an account with our platform, you will be able to deploy your first microservice or webhook in seconds. It's free and very easy!</p>
+            <span class="signupMessage">By creating an account with our platform, you will be able to deploy your first microservice or webhook in seconds.</span>
             <div class="i_box">
-              <p class="fnone"><label class="label" for="signup_email">Username or Email Address <em>*</em></label></p>
-              <input type="text" id="signup_email" name="email">
+              <p class="fnone"><label class="label" for="signup_email">Email Address <em>*</em></label></p>
+              <input type="text" role="email" id="signup_email" name="email">
             </div>
+            <!--
             <div class="i_box">
               <p class="fnone"><label class="label" for="signup_password">Password <em>*</em></label></p>
               <input type="password" name="password" id="signup_password">
             </div>
+            <div class="i_box">
+              <p class="fnone"><label class="label" for="confirm_password">Confirm Password <em>*</em></label></p>
+              <input type="password" name="password" id="confirm_password">
+            </div>
+            -->
             <div class="button_set button_margin">
-              <div style='float:left;max-width:220px;text-align:left;'><a href="{{appUrl}}/tos">By creating an account you agree to our Terms of Service</a></div>
+              <div style='float:left;max-width:220px;text-align:left;'><a href="{{appUrl}}/tos" class="link">By creating an account you agree to our Terms of Service.</a></div>
               <div class="newsl_button">
-                <button type="submit"><span>Create an Account</span></button>
+                <button type="submit"><span>Create new Account</span></button>
               </div>
             </div>
           </div>
@@ -60,6 +71,7 @@
 <script>
   $(document).ready(function(){
 
+    $('#signup_email').focus();
     // add ajax handlers for login form
     $('.loginForm').on('submit', function () {
 
@@ -98,6 +110,18 @@
           $('.loginMessage').addClass('error');
         }
 
+        if (json.result === "not-set") {
+          // account name is available, update the signup form and suggest a signup
+          $('#signup_email').val(data.name);
+          $('#signup_password').val(data.password);
+          $('.loginMessage').html('No password has been set for this account. Try resetting account by email or contacting support.');
+          $('.loginMessage').addClass('error');
+          $('.loginMessage').addClass('shake shake-constant');
+          setTimeout(function(){
+            $('.loginMessage').removeClass('shake shake-constant');
+          }, 400);
+        }
+
       };
 
       var data = {
@@ -115,7 +139,7 @@
 
       var error = function error (err) {
         if (err) {
-          $('.signupMessage').html('Error: ' + err.message);
+          $('.signupMessage').html('Error: ' + err.responseJSON.message);
           $('.signupMessage').addClass('error');
         }
       };
@@ -143,8 +167,17 @@
 
         if (json.result === "exists") {
           // account name exists
-          $('.signupMessage').html('Account name is not available. Login with this account or try a new name.');
+          $('.signupMessage').html('Email is already registered. You may login on the right.');
           $('.signupMessage').addClass('error');
+
+          $('#login_name').val($('#signup_email').val());
+          $('#login_name').focus();
+
+          $('.signupMessage').addClass('shake shake-constant');
+          setTimeout(function(){
+            $('.signupMessage').removeClass('shake shake-constant');
+          }, 600);
+
         }
 
       };
@@ -153,8 +186,23 @@
         "email": $('#signup_email').val(),
         "password": $('#signup_password').val()
       };
+      
+      // validate email
+      var email = $('#signup_email').val();
+      if (email.search('@') === -1) {
+        
+        $('.signupMessage').html('Invalid email address!');
+        $('.signupMessage').addClass('error');
 
-      $.ajax({ url: '/signup', dataType: "json", data: data, error: error, success: success });
+        $('.signupMessage').addClass('shake shake-constant');
+        setTimeout(function(){
+          $('.signupMessage').removeClass('shake shake-constant');
+        }, 600);
+        
+        
+      } else {
+        $.ajax({ url: '/signup', dataType: "json", data: data, error: error, success: success });
+      }
 
       return false;
     });

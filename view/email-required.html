@@ -1,0 +1,72 @@
+<style>
+  .registerMessage {
+    font-size: 1.2em;
+  }
+</style>
+
+<div class="container content">
+  <h1>Update Account with Email Address</h1>
+  <div class="row emailReminder">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="blog-area">
+        <div class="container content" style="position:relative;text-align:left;">
+          <!--
+            <p style="position:absolute;right:5px;top:5px;"><a href="#" class="closeWarning">Close [X]</a></p>
+          -->
+          <p><span class="error"><strong class="i18n">Attention:</strong></span> <span class="i18n">A valid email address is now required for all accounts. Please add an email address to this account to continue.</span><br/>
+              Without having an email address on record it's possible you may get locked out of your account.</p>
+              
+          <span class="registerMessage"></span>
+
+          <form name="updateEmail" id="updateEmail" class="form">
+            <div class="form-group">
+              <label for="email i18n">Account Email:</label>
+              <input tabindex="1" class="form-control" type="text" name="email" id="email" placeholder="youremail@example.com..."/>
+            </div>
+            <button class="btn btn-primary saveEmail i18n">Add Email Address</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+    $('#email').focus();
+
+    // updates email address for account
+    $('#updateEmail .saveEmail').on('click', function(){
+      $.ajax({
+        type: "POST",
+        url: '/email-required',
+        data: {
+          "email": $('#email').val()
+        },
+        success: function (res) {
+          // if success, redirect to /services page with message
+          document.location = '/services?registered=true';
+          return;
+          $('.emailReminder .content').html('<h2>Email set to: ' + $('#email').val() + "</h2>");
+        },
+        error: function (err) {
+          $('.registerMessage').html(err.responseJSON.message)
+          $('.registerMessage').addClass('error');
+          $('.registerMessage').addClass('shake shake-constant');
+          setTimeout(function(){
+            $('.registerMessage').removeClass('shake shake-constant');
+          }, 400);
+          
+        }
+      })
+      return false;
+    });
+
+    $('.closeWarning').on('click', function(){
+      $('.emailReminder').remove();
+      return false;
+    });    
+  });
+
+</script>

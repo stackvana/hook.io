@@ -1,0 +1,164 @@
+<style>
+  .githubButton {
+    float: right;
+  }
+  .signupMessage {
+    font-size: 1.2em;
+  }
+</style>
+
+<script type="text/javascript">
+
+  function slugify(text) {
+    return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/\//g, '-')         // Replace / with -
+    .replace(/[^\w\-]+/g, '');       // Remove all non-word chars
+    //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+  }
+
+
+  $(document).ready(function(){
+    
+    $('#account_name').focus();
+
+    $('#account_name').on('keyup', function(e){
+      var v = $(this).val();
+      $('.accountHomePage').html('{{appUrl}}/' + v);
+      
+      var str = '{{appUrl}}'.replace(/{{appDomain}}/, v + '.{{appDomain}}');
+      
+      $('.accountSubdomain').html(str);
+    });
+    
+    $('#account_name').on('keyup', function(e){
+      var v = $(this).val();
+      var s = slugify($(this).val());
+      if (v !== s) {
+        $(this).addClass('error');
+        $(this).val(s);
+      } else {
+        if(v.length !== 0) {
+          $(this).removeClass('error');
+        }
+      }
+      if (e.keyCode === 13) {
+        // $('#hookForm').submit();
+      }
+    });
+
+    $('.signupForm').on('submit', function () {
+
+      var error = function error (err) {
+        if (err) {
+          console.log(err)
+          $('.signupMessage').html('Error: ' + err.responseJSON.message);
+          $('.signupMessage').addClass('error');
+
+          $('.signupMessage').addClass('shake shake-constant');
+          setTimeout(function(){
+            $('.signupMessage').removeClass('shake shake-constant');
+          }, 600);
+
+        }
+      };
+
+      var success = function success (json, status) {
+
+        if (json.result === "success") {
+          document.location = '/services';
+          return;
+        }
+
+        if (json.result === "invalid") {
+          // login is invalid, update the user-interface
+          $('.signupMessage').html('Invalid! Try again.');
+          //$('.loginMessage').addClass('error');
+          //$('#login_password').addClass('errorInput');
+          //alert('Invalid password!');
+        }
+
+        if (json.result === "valid") {
+          // login is valid, redirect to wherever the session tells us to
+          window.location = json.redirect;
+          //console.log('ddd', data);
+        }
+
+        if (json.result === "available") {
+          $('.signupMessage').html('Account name available. Password is required.');
+          $('.signupMessage').addClass('error');
+        }
+
+        if (json.result === "exists") {
+          // account name exists
+          $('.signupMessage').html('Account name is already taken. Try again with new name.');
+          $('.signupMessage').addClass('error');
+
+          $('.signupMessage').addClass('shake shake-constant');
+          setTimeout(function(){
+            $('.signupMessage').removeClass('shake shake-constant');
+          }, 600);
+
+        }
+
+      };
+
+      var data = {
+        "account_name": $('#account_name').val(),
+        "email": $('#signup_email').val(),
+        "password": $('#signup_password').val(),
+        "confirmPassword": $('#confirm_password').val()
+      };
+
+      $.ajax({ url: '/register', method: 'POST', dataType: "json", data: data, error: error, success: success });
+      return false;
+    });
+
+
+  });
+</script>
+
+<div class="content container">
+  <h1>Register Account</h1>
+  <form name="signupForm" class="signupForm discount" action="/register" method="POST">
+    <h2>To continue, we require you set an account name and password</h2>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <span class="signupMessage"></span>
+        
+        <div class="submit_review">
+          <div class="i_box">
+            <p class="fnone"><label class="label" for="account_name">Account Name<em>*</em></label></p>
+            <input type="text" id="account_name" name="account_name" placeholder="enter desired account name...">
+          </div>
+          <div class="i_box">
+            <p class="fnone"><label class="label" for="signup_password">Password <em>*</em></label></p>
+            <input type="password" name="password" id="signup_password">
+          </div>
+          <div class="i_box">
+            <p class="fnone"><label class="label" for="confirm_password">Confirm Password <em>*</em></label></p>
+            <input type="password" name="password" id="confirm_password">
+          </div>
+          <br/>
+          <div class="i_box">
+            <button class="btn btn-primary">Register Account Name</button>
+            <br/>
+            <a href="{{appUrl}}/login/github" style="float:right;">I'd rather Sign-in with Github</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <br/>
+        <h2>Your Home</h2>
+        <div class="i_box">
+          <p class="">Your account name is the home for your services on hook.io</p>
+          <p class="accountHomePage">{{appUrl}}<strong class="accountName">account-name</strong></p>
+          <!-- <p class="accountSubdomain">http://<strong>account-name</strong>.localhook:9999</p> -->
+          <p class="">You will be able to manage your services from this locations.</p>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- TODO: add ajaxy validation for username availability and then login -->
+  <h3></h3>
+</div>

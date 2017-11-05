@@ -10,6 +10,11 @@ module['exports'] = function _request (opts, cb) {
     //data.body = opts.json;
     //data.json = true;
   }
+  if (opts.jar) {
+    request = request.defaults({jar: true})
+  } else {
+    request = request.defaults({jar: false})
+  }
   request(data, function (err, res) {
     if (err) {
       return cb(err);

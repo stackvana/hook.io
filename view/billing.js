@@ -6,6 +6,7 @@ var mergeParams = require('merge-params');
 var request = require('request');
 var billing = require('../lib/resources/billing')
 var stripe = require('stripe')(config.stripe.secretKey);
+var servicePlan = require('../lib/resources/servicePlan');
 
 var billingForm = require('./billingForm');
 
@@ -23,11 +24,27 @@ module['exports'] = function view (opts, callback) {
     mergeParams(req, res, function(){});
     var params = req.resource.params;
 
+    var planName = "free";
+
+    params.amount = Number(params.amount);
+    var _plan = "BASIC_HOSTING_PLAN";
+
+    if (params.amount > 500) {
+      _plan = _plan + "_" + (params.amount / 100);
+    }
+
+    Object.keys(servicePlan).forEach(function(item){
+      if (servicePlan[item].stripe_label === _plan) {
+        planName = item;
+      } 
+    });
+
     function createStripeSubscription (id, opts, cb) {
       stripe.customers.createSubscription(id, opts, cb);
     }
     
     function createLocalBillings (opts, cb) {
+      // TODO: separate rules if the user is already logged in, but with no purchase? that way, no create will happen
       if (typeof opts.owner === "undefined" || opts.owner === "anonymous") {
         var slug = require('slug');
         // quick hack fix for creating a unique user name based on email
@@ -37,12 +54,14 @@ module['exports'] = function view (opts, callback) {
           if (err) {
             return res.end(err.message);
           }
+
           if(results.length === 0) {
-            user.create({ name: name, email: opts.email, paidStatus: "paid" }, function (err, result) {
+            user.create({ name: name, email: opts.email, paidStatus: "paid", servicePlan: planName }, function (err, result) {
               if (err) {
                 return res.end(err.message);
               }
               req.session.paidStatus = "paid";
+              req.session.servicePlan = planName;
               req.user = req.user || {};
               req.user.paidStatus = "paid";
               user.emit('login', result);
@@ -51,9 +70,19 @@ module['exports'] = function view (opts, callback) {
           } else {
             var u = results[0];
             u.paidStatus = "paid";
+            u.email = opts.email;
+
+            // TODO: add service plan
+            // update service plan name based on purchase
+            u.servicePlan = planName;
+            req.session.servicePlan = planName;
+
+            // TODO: update account with stripe email?
+            // it's probably best to update the account to use the email registered with stripe
             req.user = req.user || {};
             req.user.paidStatus = "paid";
             req.session.paidStatus = "paid";
+
             user.emit('login', u);
             u.save(function(err, r){
               if (err) {
@@ -90,6 +119,7 @@ module['exports'] = function view (opts, callback) {
             } else {
               var u = results[0];
               u.paidStatus = "paid";
+              u.servicePlan = planName;
               req.user = req.user || {};
               req.user.paidStatus = "paid";
               req.session.paidStatus = "paid";
@@ -137,7 +167,6 @@ module['exports'] = function view (opts, callback) {
     // console.log('getting params', params);
     // if new billing information was posted ( from  account page ), add it
     if (params.addCustomer) {
-      params.amount = Number(params.amount);
       // console.log('adding new customer');
       // create a new customer based on email address
       stripe.customers.create(
@@ -154,12 +183,8 @@ module['exports'] = function view (opts, callback) {
           $('.status').html('New billing informationed added!');
 
           // select plan based on user-selected value
-          var _plan = "BASIC_HOSTING_PLAN";
 
-          if (params.amount > 500) {
-            _plan = _plan + "_" + (params.amount / 100);
-          }
-
+          // the stripe customer has been created, now enroll them into a subscription
           createStripeSubscription(customer.id, {
              plan: _plan,
              source: params.stripeToken // source is the token created from checkout.js
@@ -173,6 +198,7 @@ module['exports'] = function view (opts, callback) {
                return callback(err, $.html());
              }
 
+            // the stripe subscription was successful, now create a local billings entry to correspond with stripe
             createLocalBillings({
               owner: req.session.user, // TODO: better check here
               stripeID: customer.id,
@@ -185,9 +211,20 @@ module['exports'] = function view (opts, callback) {
                 $('.status').html(err.message);
                 return callback(null, err.message);
               }
+              // the local billing entry was successful, fetch that billing and render page
+              // TODO: remove session and user scope code here? or remove it from createBillings
               req.user = req.user || {};
               req.user.paidStatus = "paid";
               req.session.paidStatus = "paid";
+
+              // update service plan name based on purchase
+              var planName = "free";
+              Object.keys(servicePlan).forEach(function(item){
+                if (servicePlan[item].stripe_label === _plan) {
+                  planName = item;
+                }
+              });
+              req.session.servicePlan = planName;
 
                // console.log('added to plan', err, charge);
                $('.status').html('Billing Information Added! Thank you!');

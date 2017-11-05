@@ -26,60 +26,53 @@ module['exports'] = function signup (opts, cb) {
   psr(req, res, function (req, res) {
     var params = req.resource.params;
     var email = params.email;
+
+    // if email is invalid
     if(typeof email === "undefined" || email.length < 3) {
       var r = {
         result: 'invalid'
       };
       return res.json(r);
     }
-    var type = "name";
-    // determine if username or email
-    if (email.search('@') !== -1) {
-      type = "email";
-    }
-    var query = {};
+
+    // TODO: validate email?
+
+    // if an valid email has been provided
     email = email.toLowerCase();
-    query[type] = email;
-    return user.find(query, function(err, results){
+
+    // attempt to find if email conflicts with existing user
+    return user.find({ email: email }, function (err, results) {
       if (err) {
         return res.end(err.stack);
       }
+      // if user exists, abort
       if (results.length > 0) {
         var r = {
           result: "exists"
         };
         return res.json(r);
       }
-      
+      // TODO: remove legacy code for auto username
       var data = {};
-      if (type === "email") {
-        data.email = email;
-        data.name = slug(email);
-      } else {
-        data.name = email;
-      }
-      if (data.type === "name" && typeof params.password === "undefined" /*|| typeof params.email === "undefined"*/) {
-        var r = {
-          result: "available"
-        };
-        return res.json(r);
-      } else {
+      data.type = "email"
+      data.email = email;
 
-        data.password = params.password;
-        // todo: use user.signup
-        if (results.length === 0 && typeof params.password !== "undefined" && params.password.length !== 0 /*&& (params.password === params.confirmPassword) */) {
-          // ready to signup new user...
-          // do nothing, user.create will fire below
-        } else {
-          // can't signup user, something wrong with first password
-          // somewhat non-descriptive error here
-          // client mostly handles this first
+      // create the new hook.io user with email address
+      return user.create(data, function (err, result) {
+        if (err) {
+          err.message = JSON.parse(err.message)
           var r = {
-            result: "available",
+            result: "error",
+            error: true,
+            message: err.message.errors[0].message
           };
+          res.status(500);
           return res.json(r);
         }
-        return user.create(data, function (err, result) {
+
+        // todo: set token here??? which token?
+        // once the user is created, login the current request session
+        req.login(result, function(err){
           if (err) {
             var r = {
               result: "error",
@@ -87,33 +80,33 @@ module['exports'] = function signup (opts, cb) {
             };
             return res.json(r);
           }
-          // todo: set token here
-          req.login(result, function(err){
-            if (err) {
-              var r = {
-                result: "error",
-                error: err.stack
-              };
-              return res.json(r);
-            }
+
+          // once session login is completed, assign some user session variables for later use
+          if (typeof result.name !== 'undefined') {
             req.session.user = result.name.toLowerCase();
-            req.session.email = result.email;
-            req.session.hookAccessKey = result.hookAccessKey;
-            var r = {
-              result: "valid",
-            };
-            // r.res = "redirect";
-            r.redirect = req.session.redirectTo || "/services";
-            //console.log('doing the redirect', r)
-            user.emit('login', result);
-            if (req.jsonResponse) {
-              return res.json(r);
-            } else {
-              return res.redirect(r.redirect);
-            }
-          });
+          }
+          // TODO: universal login
+          req.session.email = result.email;
+          req.session.hookAccessKey = result.hookAccessKey;
+          var r = {
+            result: "valid",
+          };
+          // r.res = "redirect";
+          r.redirect = req.session.redirectTo || "/services";
+
+          // TODO: emit the user login event
+          // user.emit('login', result);
+
+          // if json response, send back json message
+          if (req.jsonResponse) {
+            return res.json(r);
+          } else {
+          // if not json response, assume browser and redirect to logged in `/services` page
+            return res.redirect(r.redirect);
+          }
         });
-      }
+      });
+
     });
   });
 };
