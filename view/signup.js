@@ -95,7 +95,7 @@ module['exports'] = function signup (opts, cb) {
           r.redirect = req.session.redirectTo || "/services";
 
           // TODO: emit the user login event
-          // user.emit('login', result);
+          user.emit('login', result);
 
           // if json response, send back json message
           if (req.jsonResponse) {

@@ -11,8 +11,11 @@ module['exports'] = function view (opts, callback) {
 
   $ = req.white($);
 
+
   psr(req, res, function(req, res) {
     var params = req.resource.params;
+
+    params.name = params.name || params.email;
 
     // if a name and password have been supplied
     if (params.name && params.password) {
@@ -99,7 +102,11 @@ module['exports'] = function view (opts, callback) {
       });
     } else {
       if (req.jsonResponse) {
-        return res.json({ status: 'invalid', message: 'name and email required'});
+        if (typeof params.name === 'undefined') {
+          return res.json({ status: 'invalid', message: 'name or email required'});
+        } else {
+          return res.json({ status: 'invalid', message: 'password required'});
+        }
       } else {
         return callback(null, $.html());
       }

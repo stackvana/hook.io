@@ -15,6 +15,7 @@ module.exports = function (opts, cb) {
       res.status(401);
       return res.json({ error: true, message: 'session-required' });
     }
+    return res.redirect(config.app.url + '/login');
   }
   if (req.session.user && req.session.user !== 'anonymous') {
     if (req.jsonResponse) {
@@ -103,6 +104,7 @@ module.exports = function (opts, cb) {
               result: 'success'
             }
             req.session.user = params.account_name;
+            user.emit('login', re);
             return res.json(r);
             return res.redirect(config.app.url + '/services');
           });
