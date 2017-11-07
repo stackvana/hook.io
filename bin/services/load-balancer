@@ -2,7 +2,7 @@
 var lb = require('../../lib/load-balancer');
 var cluster = require('cluster');
 var config = require('../../config');
-
+config.env = "prod";
 if (config.env === 'dev') {
   console.log('using dev mode, no cluster')
   lb.start({}, function(err, app){
@@ -12,29 +12,129 @@ if (config.env === 'dev') {
     console.log('lb started', app.server.address())
   });
 } else {
+
+  // the master node is responsible for performing clustering logic
   if (cluster.isMaster) {
-      var numWorkers = require('os').cpus().length;
 
-      console.log('Master cluster setting up ' + numWorkers + ' workers...');
+    // create a new worker for every available CPU
+    var numWorkers = require('os').cpus().length;
 
-      for(var i = 0; i < numWorkers; i++) {
+    console.log('Master cluster setting up ' + numWorkers + ' workers...');
+
+    for(var i = 0; i < numWorkers; i++) {
+        cluster.fork();
+    }
+
+    var restarting = false;
+    var stale = [];
+
+    // basic clustering strategy:
+
+      // there is exposed route in application for initializing restart sequence
+      // there is mutex on restart sequence to now allow for starting restarting during an existing restart
+      // worker that recieves the exit process signal will call disconnect() on single stale worker
+      // stale workers are stored in array and pop() is used to find which worker to disconnect
+      // when all items in stale arary are removed, assume restart has completed
+
+    // worker events
+      // when the cluster detects a disconnect, do nothing
+      // when the cluster detects an exit without disonnect, fork a new process ( its an error crash )
+      // when the cluster detects an exit on disconnect, assume its a rolling update and call disconnect() on the next worker in the sequence
+
+    //
+    // Cluster.exit
+    //
+    cluster.on('exit', function(worker, code, signal) {
+        console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
+        console.log('Starting a new worker');
+        
+        // If the worker exited after disconnect, don't do anything. It should have already forked.
+        if (worker.exitedAfterDisconnect === true) {
+          console.log('exited after disconnect. probably performing rolling update');
+        } else {
+        // Else if the worker did not have disconnect event, assume it was a crash and fork() immediately 
+          console.log('got exit event without disconnect, refork immediately')
           cluster.fork();
-      }
+        }
+    });
 
-      cluster.on('online', function(worker) {
-          console.log('Worker ' + worker.process.pid + ' is online');
+    //
+    // Cluster.online
+    //
+    cluster.on('online', function(worker) {
+      console.log('Worker ' + worker.process.pid + ' is online');
+      worker.on("disconnect", function () {
+         var id = worker.id;
+         console.log("node got disconnect event", id);
+         if (stale.length === 0) {
+           // create a new fork
+           cluster.fork();
+           console.log('restart completed'.green);
+           // give the mutex a few seconds to allow for workers to start up without error
+           setTimeout(function(){
+             restarting = false;
+           }, 5000);
+           return;
+         }
+         var workerId = stale.pop();
+         console.log('attempting to disconnect worker: ', workerId)
+         // Remark: Should we add a setTimeout with .exit() to ensure disconnect event happened for worker id after set amount of time?
+         //         Is there an issue here with never ending connections or leaked handles? I think currently, no.
+         cluster.workers[workerId].disconnect();
+         // create a new fork
+         cluster.fork();
+         console.log('current workers'.green, cluster.workers);
       });
 
-      cluster.on('exit', function(worker, code, signal) {
-          console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
-          console.log('Starting a new worker');
-          cluster.fork();
+      worker.on('message', function (message) {
+        // console.log("got message from worker", worker.id, message)
+        // got restart event, create mutex on restarting and begin rolling restart
+        if (message.event === "restart") {
+          // only allow one restart at a time
+          if (restarting === false) {
+            restarting = true;
+            // begin restart logic
+            // get all current workers and put them into `stale` array by worker id
+            var workers = Object.keys(cluster.workers);
+            workers.forEach(function(w){
+              stale.push(w);
+            });
+            console.log('starting restart on stale workers'.yellow, stale)
+            // remove a worker from the array and disconnect it
+            var workerId = stale.pop();
+            cluster.workers[workerId].disconnect();
+          } else {
+            // will not allow for restart if already restarting
+            console.log('warning: will not restart while process is already restarting'.yellow)
+          }
+          return;
+        }
+
+        if (message.event === 'query') {
+          // send back query message
+          var queryResponse = {};
+          for (var w in cluster.workers) {
+            queryResponse[w] = {
+              pid: cluster.workers[w].process.pid,
+              spawnfile: cluster.workers[w].process.spawnfile
+            }
+            // TODO: add uptime() or ctime
+          }
+          worker.send({ event: 'queryResponse', data: queryResponse })
+        }
+
       });
+
+    });
+    cluster.on('listening', function (worker) {
+        console.log('Worker ' + worker.process.pid + ' is listening');
+    });
   } else {
     lb.start({}, function(err, app){
       if (err) {
         throw err;
       }
+      // process.send({ event: 'load-balancer::listening' });
       console.log('lb started', app.server.address());
     });
   }
