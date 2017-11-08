@@ -5,6 +5,9 @@ var request = require('request');
 var colors = require('colors');
 module['exports'] = function _request (opts, cb) {
   opts.headers = opts.headers || {};
+  if (opts.html === true) {
+    opts.headers['Accept'] = 'text/html';
+  }
   var data = { uri: opts.uri, json: opts.json, qs: opts.qs, form: opts.form, method: opts.method, headers: opts.headers };
   if (opts.json) {
     //data.body = opts.json;

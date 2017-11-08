@@ -29,7 +29,6 @@ tap.test('start the dev cluster', function (t) {
 tap.test('attempt to destroy the test hook', function (t) {
   client.hook.destroy({ owner: 'david', name: 'test-hook' }, function (err, res){
     t.error(err, 'request did not error');
-    console.log(res)
     t.end();
   });
 });

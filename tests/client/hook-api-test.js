@@ -46,7 +46,8 @@ tap.test('attempt to create a new hook', function (t) {
   client.hook.create({ 
     "name": "test-hook",
     "source": 'echo "hello";',
-    "language": "bash"
+    "language": "bash",
+    "path": "/:id"
   }, function (err, res){
     t.error(err, 'request did not error');
     t.equal(res.status, 'created', 'returned correct name');
@@ -62,6 +63,7 @@ tap.test('attempt to get the test hook', function (t) {
     t.error(err, 'request did not error');
     t.equal(res.name, "test-hook");
     t.equal(res.source, 'echo "hello";');
+    t.equal(res.path, '/:id', 'path matches');
     t.end();
   });
 });
@@ -77,7 +79,7 @@ tap.test('attempt to run the test hook', function (t) {
 
 // update the hook
 tap.test('attempt to update the test hook', function (t) {
-  client.hook.update({ owner: 'david', name: 'test-hook', source: 'echo "updated";' }, function (err, res) {
+  client.hook.update({ owner: 'david', name: 'test-hook', source: 'echo "$Hook_params_id";' }, function (err, res) {
     t.equal(res.status, 'updated', 'returned correct name');
     t.equal(typeof res.hook, 'object', 'returned hook object');
     t.error(err, 'request did not error');
@@ -90,7 +92,8 @@ tap.test('attempt to get the test hook', function (t) {
   client.hook.get({ owner: 'david', name: 'test-hook' }, function (err, res){
     t.error(err, 'request did not error');
     t.equal(res.name, "test-hook", "name matches");
-    t.equal(res.source, 'echo "updated";', "code matches");
+    t.equal(res.source, 'echo "$Hook_params_id";', "code matches");
+    t.equal(res.path, '/:id', 'path matches');
     t.end();
   });
 });
@@ -99,9 +102,21 @@ tap.test('attempt to get the test hook', function (t) {
 tap.test('attempt to run the test hook', function (t) {
   client.hook.run({ owner: 'david', name: 'test-hook' }, function (err, res){
     t.error(err, 'request did not error');
-    t.equal(res, "updated\n");
+    t.equal(res, "\n");
     t.end();
   });
+});
+
+tap.test('attempt to run the test hook with route params', function (t) {
+  r({
+      uri: baseURL + "/david/test-hook/123",
+      method: "GET",
+      json: true
+    }, function (err, res) {
+        t.error(err, 'request did not error');
+        t.equal(res, 123);
+        t.end();
+    });
 });
 
 tap.test('perform hard shutdown of cluster', function (t) {

@@ -95,8 +95,9 @@ tap.test('attempt to flush logs for the hook we just created a new hook - correc
     t.end();
   });
 });
+
 tap.test('attempt to delete the hook we just created a new hook - correct access key', function (t) {
-  r({ uri: baseURL + "/" + testUser.name + "/" + "test-private-hook/delete", method: "POST", json: { hook_private_key: testUser.admin_key } }, function (err, res) {
+  client.hook.destroy({ owner: 'david', name: 'test-private-hook' }, function (err, res){
     t.error(err);
     t.equal(res.status, "deleted", "has correct status");
     t.equal(res.owner, testUser.name, "has correct owner");

@@ -68,7 +68,7 @@ tap.test('start the dev cluster', function (t) {
 // attempt to get all pages as JSON
 // TODO: smoke test with valid auth
 // TODO: check text/html response in additional to json response, make sure formats / headers are set
-tap.test('attempt to get /docs', function (t) {
+tap.test('attempt to get all pages - no session', function (t) {
   var callbacks = 0;
   // t.plan(allPageKeys.length * 2);
   allPageKeys = allPageKeys.filter(function(a){
@@ -76,11 +76,11 @@ tap.test('attempt to get /docs', function (t) {
       return a;
     }
   });
-  async.eachSeries(allPageKeys, function iter (item, next) {
+  async.eachLimit(allPageKeys, 50, function iter (item, next) {
     r({ uri: baseURL + item, method: "GET", json: true }, function (err, body, res) {
       t.error(err);
       // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
-      t.equal(res.statusCode, 200, 'got 200 response')
+      t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response')
       t.ok('did not error back', item)
       next();
     });
@@ -89,9 +89,99 @@ tap.test('attempt to get /docs', function (t) {
   })
 });
 
+// TODO: check text/html response in additional to json response, make sure formats / headers are set
+tap.test('attempt to get all pages - logged in test user - json responses', function (t) {
+
+  r({
+      uri: baseURL + "/login",
+      method: "POST",
+      json: true,
+      jar: true,
+      form: {
+        "email": testUser.email,
+        "password": "asd"
+      },
+    }, function (err, res) {
+      t.error(err, 'request did not error');
+      t.equal(typeof res, 'object', "response contains object");
+      t.equal(res.result, 'valid', "valid login");
+
+      allPageKeys.push('/admin?owner=david&name=test-hook');
+      allPageKeys.push('/david/test-hook/_rev');
+      allPageKeys.push('/david/test-hook/_src');
+      allPageKeys.push('/david/test-hook/source');
+      allPageKeys.push('/david/test-hook/package');
+      allPageKeys.push('/david/test-hook/presenter');
+
+      allPageKeys.push('/examples/bash-view/view');
+
+      allPageKeys.push('/marak/gist-test/source');
+
+
+      var callbacks = 0;
+      // t.plan(allPageKeys.length * 2);
+      allPageKeys = allPageKeys.filter(function(a){
+        if (['/helpers/i18n', '/hook/_rev', '/hook/_src'].indexOf(a) === -1) {
+          return a;
+        }
+      });
+      async.eachLimit(allPageKeys, 50, function iter (item, next) {
+        r({ uri: baseURL + item, method: "GET", json: true, jar: true }, function (err, body, res) {
+          t.error(err);
+          // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
+          t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response')
+          t.ok('did not error back', item)
+          next();
+        });
+      }, function end (){
+        t.end();
+      })
+
+  });
+
+});
+
+tap.test('attempt to get all pages - logged in test user - non json responses', function (t) {
+  r({
+      uri: baseURL + "/login",
+      method: "POST",
+      jar: true,
+      json: true,
+      form: {
+        "email": testUser.email,
+        "password": "asd"
+      },
+    }, function (err, res) {
+      t.error(err, 'request did not error');
+      t.equal(typeof res, 'object', "response contains object");
+      t.equal(res.result, 'valid', "valid login");
+
+      var callbacks = 0;
+      allPageKeys = allPageKeys.filter(function(a){
+        if (['/helpers/i18n', '/hook/_rev', '/hook/_src'].indexOf(a) === -1) {
+          return a;
+        }
+      });
+      async.eachLimit(allPageKeys, 50, function iter (item, next) {
+        r({ uri: baseURL + item, method: "GET", html: true, jar: true }, function (err, body, res) {
+          t.error(err);
+          // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
+          t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response')
+          t.ok('did not error back', item)
+          next();
+        });
+      }, function end (){
+        t.end();
+      })
+
+  });
+
+});
+
+
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('shut down');
+  t.end('cluster is shutting down');
   setTimeout(function(){
-    process.exit(0);
-  }, 1500)
+    process.exit();
+  }, 10);
 });
