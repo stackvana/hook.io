@@ -155,47 +155,11 @@ module['exports'] = function view (opts, callback) {
                name: params.name
              });
 
-            // the source of the hook is coming from the code editor
-            if (params.hookSource === "code") {
-               // if jsonResponse, return object
-               if (req.jsonResponse) {
-                 return res.json({ status: 'created', hook: result });
-               } else {
-                 // if not, redirect to admin page for newly created hook
-                 return res.redirect('/admin?owner=' + h.owner + "&name=" + h.name + "&status=created");
-               }
-            } else {
-              // the source of the hook is coming from a github gist
-              opts.gist = gist;
-              opts.req = opts.request;
-              opts.res = opts.response;
-              if (req.jsonResponse) {
-                return res.json({ result: 'created' })
-              } else {
-                return res.redirect('/' + h.owner + "/" + h.name + "");
-              }
-
-              // fetch the hook from github and check if it has a schema / theme
-              // if so, attach it to the hook document
-              // TODO: can we remove this? it seems like this logic should be in the Hook.runHook execution chain...
-              hook.fetchHookSourceCode(opts, function(err, code){
-                if (err) {
-                  return opts.res.end(err.message);
-                }
-                hook.attemptToRequireUntrustedHook(opts, function(err, _module){
-                  if (err) {
-                    return opts.res.end(err.message)
-                  }
-                  h.mschema = _module.schema;
-                  h.theme = _module.theme;
-                  h.presenter = _module.presenter;
-                  h.save(function(){
-                    // redirect to new hook friendly page
-                    return res.redirect('/' + h.owner + "/" + h.name + "");
-                    //return callback(null, JSON.stringify(result, true, 2));
-                  });
-                });
-              });
+             if (req.jsonResponse) {
+               return res.json({ status: 'created', hook: result });
+             } else {
+               // if not, redirect to admin page for newly created hook
+               return res.redirect('/admin?owner=' + h.owner + "&name=" + h.name + "&status=created");
             }
           });
         });
