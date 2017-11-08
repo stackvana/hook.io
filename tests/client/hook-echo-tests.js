@@ -26,7 +26,7 @@ tap.test('start the dev cluster', function (t) {
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
       t.end('dev cluster started');
-    }, 2000);
+    }, 3000);
   });
 });
 
@@ -55,10 +55,25 @@ tap.test('post to the echo hook', function (t) {
   });
 });
 
+tap.test('put to the echo hook', function (t) {
+  r({ uri: baseURL + "/examples/echo", method: "put" }, function (err, echo) {
+    t.error(err, 'did not error');
+    t.end();
+  });
+});
+
+tap.test('delete to the echo hook', function (t) {
+  r({ uri: baseURL + "/examples/echo", method: "delete" }, function (err, echo) {
+    t.error(err, 'did not error');
+    t.end();
+  });
+});
+
+
 /*
 
     JSON TESTS
-
+    TODO: all languages
 */
 
 tap.test('post to the echo hook with JSON data', function (t) {
@@ -78,6 +93,7 @@ tap.test('post to the echo hook with JSON data', function (t) {
 /*
 
     FORM SUBMIT TESTS
+    TODO: all languages
 
 */
 
@@ -229,6 +245,19 @@ tap.test('post the echo hook and check default schema data', function (t) {
   r({ uri: baseURL + "/examples/javascript-input-schema", method: "post" }, function (err, echo) {
     t.error(err);
     t.equal(echo.name, "Bob", "echo'd back default schema value for arbitrary parameter");
+    t.end();
+  });
+});
+
+tap.test('attempt to send large amount of JSON data to running microservice', function (t) {
+  var obj = {};
+  obj.props = {};
+  for (var i = 0; i < 100; i++) {
+    obj.props[i] = new Buffer(1000).toString()
+  }
+  obj.foo = "bar";
+  r({ uri: baseURL + "/marak/large-dump", method: "post", json: obj }, function (err, echo) {
+    t.error(err);
     t.end();
   });
 });
