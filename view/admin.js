@@ -358,7 +358,6 @@ module['exports'] = function view (opts, callback) {
       $('.hookResource').attr('href', '/' + h.owner + '/' + h.name + "/resource");
       $('.hookView').attr('href', '/' + h.owner + '/' + h.name + "/view");
       $('.hookPresenter').attr('href', '/' + h.owner + '/' + h.name + "/presenter");
-      $('.hookRefresh').attr('href', '/' + h.owner + '/' + h.name + '/refresh');
       $('.hookRevisions').attr('href', '/' + h.owner + '/' + h.name + '/_rev');
       $('.hookAdmin').attr('href', '/' + h.owner + '/' + h.name + '/_admin');
 

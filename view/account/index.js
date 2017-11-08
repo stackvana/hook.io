@@ -170,24 +170,35 @@ module['exports'] = function view (opts, callback) {
                 }
                 req.session.email = result.email;
                 // display user info in account form
-                // TODO: if form post data, attempt to update user account information
-                showUserForm(result, function(err, result){
-                  $('.userForm').html(result);
-                  $('.status').html('Account Information Updated!');
-                  $('.status').addClass('success');
-                  callback(null, $.html());
-                });
+                // TODO: if form post data, attempt to update user account information ??? done ???
+                if (req.jsonResponse) {
+                  var r = {
+                    status: 'updated',
+                    result: 'account information updated'
+                  }
+                  return res.json(r);
+                } else {
+                  showUserForm(result, function(err, result){
+                    $('.userForm').html(result);
+                    $('.status').html('Account Information Updated!');
+                    $('.status').addClass('success');
+                    callback(null, $.html());
+                  });
+                }
               });
             }
           });
-                
         } else {
-          return res.end('email parameter cannot be empty');
+          var r = {
+            error: true,
+            message: 'email parameter cannot be empty'
+          }
+          return res.json(r);
         }
       } else {
         // display user info in account form
         // TODO: if form post data, attempt to update user account information
-        showUserForm(r, function(err, result){
+        showUserForm(r, function (err, result) {
           $('.userForm').html(result);
           i18n(req.i18n, $);
           callback(null, $.html());
