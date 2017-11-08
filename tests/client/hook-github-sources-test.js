@@ -48,7 +48,7 @@ tap.test('attempt to create a new hook with github repo source', function (t) {
     "language": "javascript"
   }, function (err, body, res){
     t.error(err, 'request did not error');
-    t.equal(body.result, 'created', 'returned correct name');
+    t.equal(body.status, 'created', 'returned correct name');
     t.end();
   });
 });
@@ -62,7 +62,7 @@ tap.test('attempt to create a new hook with github gist source', function (t) {
     "language": "javascript"
   }, function (err, body, res){
     t.error(err, 'request did not error');
-    t.equal(body.result, 'created', 'returned correct name');
+    t.equal(body.status, 'created', 'returned correct name');
     t.end();
   });
 });

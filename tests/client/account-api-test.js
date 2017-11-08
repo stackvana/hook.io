@@ -33,7 +33,7 @@ tap.test('start the dev cluster', function (t) {
 // Basic account API tests
 //
 
-// TODO: replace with token instead?
+// TODO: replace with token and api client instead?
 tap.test('attempt to update account password - valid session', function (t) {
 
   r({ 
@@ -46,7 +46,6 @@ tap.test('attempt to update account password - valid session', function (t) {
         "password": "asd"
       },
     }, function (err, res) {
-
       r({ 
           uri: baseURL + "/account", 
           method: "POST",
@@ -57,20 +56,17 @@ tap.test('attempt to update account password - valid session', function (t) {
             "password": "asd"
           },
         }, function (err, res) {
-
           t.error(err, 'request did not error');
-          console.log(res)
           t.end();
       });
-
   })
 
 });
 
 tap.test('attempt to update account password - valid session', function (t) {
-  
+
   r({ 
-      uri: baseURL + "/login", 
+      uri: baseURL + "/login",
       method: "POST",
       json: true,
       jar: true,
@@ -79,7 +75,6 @@ tap.test('attempt to update account password - valid session', function (t) {
         "password": "asd"
       },
     }, function (err, res) {
-
       r({ 
           uri: baseURL + "/account", 
           method: "POST",
@@ -90,14 +85,11 @@ tap.test('attempt to update account password - valid session', function (t) {
             "password": "asd"
           },
         }, function (err, res) {
-
           t.error(err, 'request did not error');
-          console.log(res)
           t.end();
       });
-
   })
-  
+
 });
 
 tap.test('perform hard shutdown of cluster', function (t) {
