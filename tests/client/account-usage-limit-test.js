@@ -84,7 +84,8 @@ tap.test('attempt to run hook that never responds hook once', function (t) {
   t.plan(5);
   client.hook.run({ owner: "david", name: "test-hook-never-responds", data: { "foo": "bar" } }, function (err, body, res) {
     t.error(err);
-    t.equal(res.statusCode, 500)
+    // t.equal(res.statusCode, 500)
+    t.equal(res.statusCode, 200)
     //t.end();
   });
   setTimeout(function(){
