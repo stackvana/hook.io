@@ -35,7 +35,6 @@ tap.test('start the dev cluster', function (t) {
 
 // TODO: replace with token and api client instead?
 tap.test('attempt to update account password - valid session', function (t) {
-
   r({ 
       uri: baseURL + "/login", 
       method: "POST",
@@ -59,8 +58,7 @@ tap.test('attempt to update account password - valid session', function (t) {
           t.error(err, 'request did not error');
           t.end();
       });
-  })
-
+  });
 });
 
 tap.test('attempt to update account password - valid session', function (t) {

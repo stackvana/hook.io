@@ -71,7 +71,7 @@ module.exports = function (opts, cb) {
           }
           return res.json(r);
         }
-        user.findOne({ email: req.session.email}, function (err, _user) {
+        user.findOne({ email: req.session.email }, function (err, _user) {
           if (err) {
             res.status(500)
             return res.json({ error: true, message: err.message });
@@ -99,14 +99,18 @@ module.exports = function (opts, cb) {
               res.status(500)
               return res.json({ error: true, message: err.message });
             }
-            // TODO: perform redirect
-            var r = {
-              result: 'success'
-            }
             req.session.user = params.account_name;
-            user.emit('login', re);
-            return res.json(r);
-            return res.redirect(config.app.url + '/services');
+            user.login({ req: req, res: res, user: re }, function (err) {
+              if (err) {
+                return res.json(err.message);
+              }
+              var r = {
+                result: 'success'
+              }
+              return res.json(r);
+              // TODO: perform redirect ??
+              return res.redirect(config.app.url + '/services');
+            });
           });
         });
       });

@@ -406,11 +406,11 @@
                     document.location = "/account?paid=true&plan=" + amount;
                     return;
                   }
-                  alert(res);
+                  alert(JSON.stringify(res, true, 2));
                   // $('.emailReminder').html('<span class="tiny">Verification email sent to: ' + $('#email').val() + "</span>");
                 },
                 error: function (err) {
-                  alert('error' + err);
+                  alert('error' + JSON.stringify(err, true, 2));
                 }
               })
 

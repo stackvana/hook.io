@@ -21,7 +21,7 @@
   .billingForm {
     text-align: left;
   }
-  
+
   .container {
     text-align: left;
   }
@@ -50,6 +50,20 @@
   .warning {
     color: red;
   }
+  .status {
+    text-align: left;
+    font-size: 18px;
+    min-width: 180px;
+    background-color: #F5F5F5;
+    border: 1px solid #E1E1E1;
+    padding: 17px 17px 0px 17px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-right: 20px;
+    /*width: 100%;*/
+    margin-bottom: 30px;
+    display: none;
+  }
 </style>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -68,7 +82,7 @@
 <div id="main">
   <h1>Account</h1>
   <div class="container content">
-    <h2 class="status"></h2>
+    <div class="status"></div>
     <h3><a href="{{appUrl}}/billing" class="yourBilling i18n">View Billing Information</a></h3>
     <h3><a href="{{appUrl}}/account/usage" class="yourUsage i18n">View Current Usage</a></h3>
     <div class="userForm"></div>

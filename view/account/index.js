@@ -90,10 +90,12 @@ module['exports'] = function view (opts, callback) {
     var params = req.resource.params;
 
     if (params.reset) {
+      $('.status').addClass('visible');
       $('.status').html('Please set your new password immediately!');
     }
     if (params.paid) {
-      $('.status').html(' <span>Your Account has been Upgraded!</span> <br/>Thank you for your purchase. <br/> You now have access to additional features and higher usage limits.');
+      $('.status').addClass('visible');
+      $('.status').html(' <span>Your Account has been Upgraded!</span> Thank you for your purchase. <br/> You now have access to additional features and higher usage limits.');
     }
 
     user.find({ name: req.session.user }, function(err, results) {
@@ -180,6 +182,7 @@ module['exports'] = function view (opts, callback) {
                 } else {
                   showUserForm(result, function(err, result){
                     $('.userForm').html(result);
+                    $('.status').addClass('visible');
                     $('.status').html('Account Information Updated!');
                     $('.status').addClass('success');
                     callback(null, $.html());
@@ -196,8 +199,10 @@ module['exports'] = function view (opts, callback) {
           return res.json(r);
         }
       } else {
+        if (req.jsonResponse) {
+          return res.json(user.filter(r));
+        }
         // display user info in account form
-        // TODO: if form post data, attempt to update user account information
         showUserForm(r, function (err, result) {
           $('.userForm').html(result);
           i18n(req.i18n, $);
@@ -213,7 +218,6 @@ var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
 var mustache = require('mustache');
-
 
 function showUserForm (user, cb) {
 

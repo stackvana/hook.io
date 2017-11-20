@@ -77,20 +77,15 @@ module['exports'] = function view (opts, callback) {
           // TODO: if password supplied, attempt login
           return res.end(JSON.stringify(r));
         }
-        req.login(u, function(err){
+        // Valid password, performing login
+        return user.login({ req: req, res: res, user: u }, function (err){
           if (err) {
             return res.end(err.message);
           }
-          if (typeof u.name === 'string' && u.name.length > 0) {
-            req.session.user = u.name.toLowerCase();
-          }
-          req.session.paidStatus = u.paidStatus;
-          req.session.servicePlan = u.servicePlan || 'free';
-          req.session.email = u.email;
           var r = {
             result: "valid",
           };
-          user.emit('login', u);
+          // is hookAccessKey already set in user.login now?
           req.session.hookAccessKey = u.hookAccessKey;
           r.redirect = req.session.redirectTo || "/services";
           if (req.jsonResponse) {

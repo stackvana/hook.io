@@ -19,11 +19,10 @@ module['exports'] = function view (opts, callback) {
 
   $('#addPaymentMethod').attr('data-key', config.stripe.publicKey);
 
-
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     var params = req.resource.params;
-
+    var og = params.amount;
     var planName = "free";
 
     params.amount = Number(params.amount);
@@ -55,40 +54,31 @@ module['exports'] = function view (opts, callback) {
             return res.end(err.message);
           }
 
-          if(results.length === 0) {
-            user.create({ name: name, email: opts.email, paidStatus: "paid", servicePlan: planName }, function (err, result) {
+          if (results.length === 0) {
+            user.create({ name: name, email: opts.email, paidStatus: "paid", servicePlan: planName }, function (err, u) {
               if (err) {
                 return res.end(err.message);
               }
               req.session.paidStatus = "paid";
               req.session.servicePlan = planName;
-              req.user = req.user || {};
-              req.user.paidStatus = "paid";
-              user.emit('login', result);
-              complete(result)
+              return complete(u);
             });
           } else {
             var u = results[0];
             u.paidStatus = "paid";
             u.email = opts.email;
-
-            // TODO: add service plan
-            // update service plan name based on purchase
             u.servicePlan = planName;
+
+            req.session.paidStatus = "paid";
             req.session.servicePlan = planName;
 
             // TODO: update account with stripe email?
             // it's probably best to update the account to use the email registered with stripe
-            req.user = req.user || {};
-            req.user.paidStatus = "paid";
-            req.session.paidStatus = "paid";
-
-            user.emit('login', u);
             u.save(function(err, r){
               if (err) {
                 return res.end(err.message);
               }
-              complete(u);
+              return complete(r);
             });
           }
         });
@@ -98,17 +88,10 @@ module['exports'] = function view (opts, callback) {
       function complete (_user) {
         // console.log('creating billings', opts);
         if (typeof _user !== "undefined") {
-          opts.owner = _user.name;
-          req.login(_user, function (err){
-            if (err) {
-              return res.end(err.message);
-            }
-            req.session.user = _user.name.toLowerCase();
-            req.user = req.user || {};
-            req.user.paidStatus = "paid";
-            req.session.paidStatus = "paid";
+          user.login({ req: req, res: res, user: _user }, function (err) {
+            opts.owner = _user.name;
             billing.create(opts, cb);
-          })
+          });
         } else {
           user.find({ name: opts.owner }, function (err, results) {
             if (err) {
@@ -120,28 +103,29 @@ module['exports'] = function view (opts, callback) {
               var u = results[0];
               u.paidStatus = "paid";
               u.servicePlan = planName;
-              req.user = req.user || {};
-              req.user.paidStatus = "paid";
               req.session.paidStatus = "paid";
+              req.session.servicePlan = planName;
               u.save(function(err, r){
                 if (err) {
                   return res.end(err.message);
                 }
-                billing.create(opts, cb);
+                user.login({ req: req, res: res, user: r }, function (err) {
+                  if (err) {
+                    return res.end(err.message);
+                  }
+                  billing.create(opts, cb);
+                });
               });
             }
           });
         }
       };
-      // if new billing creation was succesful, but no user was found with that email
-      // *AND* there is no current session,
-      // then we need to sign up a new user, and redirect to /account?paid
-
     }
 
     function showBillings (results, callback) {
-      if(params.ajax === true) {
-        return res.end('paid');
+
+      if (params.ajax === true || req.jsonResponse) {
+        return res.json(results);
       }
 
       var count = results.length;
@@ -173,7 +157,7 @@ module['exports'] = function view (opts, callback) {
         { email: params.email },
         function (err, customer) {
           if (err) {
-            if (params.ajax) {
+            if (params.ajax || req.jsonResponse) {
               return res.end(err.message);
             }
             // possible issue here with existing customers attempting to add new plans
@@ -190,7 +174,7 @@ module['exports'] = function view (opts, callback) {
              source: params.stripeToken // source is the token created from checkout.js
            }, function(err, charge){
              if (err) {
-               if (params.ajax) {
+               if (params.ajax || req.jsonResponse) {
                  return res.end(err.message);
                }
                $('.status').addClass('error');
@@ -202,11 +186,10 @@ module['exports'] = function view (opts, callback) {
             createLocalBillings({
               owner: req.session.user, // TODO: better check here
               stripeID: customer.id,
-              email: params.email,
+              email: params.email || req.session.email,
               amount: params.amount,
               plan: _plan
             }, function (err, _billing) {
-              // console.log('new billing created', err, _billing);
               if (err) {
                 $('.status').html(err.message);
                 return callback(null, err.message);
@@ -228,7 +211,7 @@ module['exports'] = function view (opts, callback) {
 
                // console.log('added to plan', err, charge);
                $('.status').html('Billing Information Added! Thank you!');
-               if (params.ajax) {
+               if (params.ajax || req.jsonResponse) {
                  return res.end('paid');
                }
                billing.find({ owner: req.session.user }, function (err, results) {
@@ -248,6 +231,9 @@ module['exports'] = function view (opts, callback) {
       // not adding new billing data, just show existing
       if (!req.isAuthenticated()) {
         req.session.redirectTo = "/billing";
+        if (req.jsonResponse) {
+          return res.json({ error: true, message: 'valid login is required'})
+        }
         return res.redirect('/login');
       }
       billing.find({ owner: req.session.user }, function (err, results) {

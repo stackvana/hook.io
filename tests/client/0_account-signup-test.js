@@ -159,7 +159,6 @@ tap.test('attempt to register same account name - with cookies - has confirmed p
   });
 });
 
-
 /*
 
 tap.test('attempt to signup by account name mismtached passwords', function (t) {
@@ -257,6 +256,40 @@ tap.test('attempt to login with with new account', function (t) {
       t.equal(res.result, 'valid', "valid login");
       t.end();
   });
+});
+
+tap.test('attempt to get account page - valid session', function (t) {
+
+  r({
+      uri: baseURL + "/login",
+      method: "POST",
+      json: true,
+      jar: true,
+      form: {
+        "email": testUser.email,
+        "password": "asd"
+      },
+    }, function (err, res) {
+      r({
+          uri: baseURL + "/account",
+          method: "GET",
+          json: true,
+          jar: true
+        }, function (err, res) {
+          t.error(err, 'request did not error');
+          t.equal(res.name, 'bobby', 'has correct name');
+          t.equal(res.email, 'bobby@marak.com', 'has correct email');
+          t.equal(res.status,'new', 'has correct status');
+          t.equal(res.paidStatus,'unpaid', 'has correct paidStatus');
+          t.equal(res.servicePlan, 'free', 'has correct servicePlan');
+          t.equal(typeof res.hookAccessKey, 'string', 'has hook access key as string');
+          if (typeof res.hookAccessKey === 'string') {
+            t.equal(res.hookAccessKey.length, 36, 'is uuid');
+          }
+          t.end();
+      });
+  })
+
 });
 
 tap.test('attempt to clear test user - as superadmin', function (t) {

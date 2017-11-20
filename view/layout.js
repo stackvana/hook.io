@@ -51,6 +51,10 @@ module['exports'] = function view (opts, callback) {
     req.jsonResponse = true;
   }
 
+  if (req.resource.params._json) {
+    req.jsonResponse = true;
+  }
+
   // Express 3 ???
   /*
   if (res.locals) {

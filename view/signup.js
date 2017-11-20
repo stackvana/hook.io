@@ -58,7 +58,7 @@ module['exports'] = function signup (opts, cb) {
       data.email = email;
 
       // create the new hook.io user with email address
-      return user.create(data, function (err, result) {
+      return user.create(data, function (err, u) {
         if (err) {
           err.message = JSON.parse(err.message)
           var r = {
@@ -69,34 +69,12 @@ module['exports'] = function signup (opts, cb) {
           res.status(500);
           return res.json(r);
         }
-
-        // todo: set token here??? which token?
-        // once the user is created, login the current request session
-        req.login(result, function(err){
-          if (err) {
-            var r = {
-              result: "error",
-              error: err.stack
-            };
-            return res.json(r);
-          }
-
-          // once session login is completed, assign some user session variables for later use
-          if (typeof result.name !== 'undefined') {
-            req.session.user = result.name.toLowerCase();
-          }
-          // TODO: universal login
-          req.session.email = result.email;
-          req.session.hookAccessKey = result.hookAccessKey;
+        user.login({ req: req, res: res, user: u }, function (err) {
           var r = {
             result: "valid",
           };
           // r.res = "redirect";
           r.redirect = req.session.redirectTo || "/services";
-
-          // TODO: emit the user login event
-          user.emit('login', result);
-
           // if json response, send back json message
           if (req.jsonResponse) {
             return res.json(r);
@@ -106,7 +84,6 @@ module['exports'] = function signup (opts, cb) {
           }
         });
       });
-
     });
   });
 };
