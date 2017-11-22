@@ -38,7 +38,7 @@ module.exports = function (opts, cb) {
       if (typeof params.password !== 'undefined' && typeof params.confirmPassword !== 'undefined') {
         if (params.password.length > 0) {
           if (params.password !== params.confirmPassword) {
-            res.status(500);
+            res.status(400);
             var r = {
               error: true,
               message: 'Passwords do not match.'
@@ -53,7 +53,7 @@ module.exports = function (opts, cb) {
       }
 
       if (typeof params.account_name !== 'string' || params.account_name.length === 0) {
-        res.status(500);
+        res.status(400);
         return r.json({ error: true, message: 'account_name parameter is required'});
       }
       // TODO: slug check for account name? i hope its already there in resource-user
@@ -67,13 +67,16 @@ module.exports = function (opts, cb) {
         } else {
           // account name is take
           var r = {
+            error: true,
+            message: 'Account name is already taken. Try again with new name.',
             result: 'exists'
           }
+          res.status(400);
           return res.json(r);
         }
         user.findOne({ email: req.session.email }, function (err, _user) {
           if (err) {
-            res.status(500)
+            res.status(400);
             return res.json({ error: true, message: err.message });
           }
           
@@ -96,7 +99,7 @@ module.exports = function (opts, cb) {
           //         Would be nice if resource had .save() hooks working
           user.update(_update, function(err, re){
             if (err) {
-              res.status(500)
+              res.status(400)
               return res.json({ error: true, message: err.message });
             }
             req.session.user = params.account_name;

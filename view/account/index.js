@@ -31,6 +31,9 @@ module['exports'] = function view (opts, callback) {
   // TODO: refactor out most of this block using Resource.User.before() hooks
   function renameAccount (_user, params, cb) {
 
+    // TODO: re-key all datastore entries
+    // TODO: clear out all previous logs
+
     // first check if new account name is available ( this should probably be a .before() hook on User.update )
     user.find({ name: params.name }, function (err, results) {
 
@@ -78,8 +81,6 @@ module['exports'] = function view (opts, callback) {
 
       });
 
-      // TODO: re-key all datastore entries
-      // TODO: clear out all previous logs
     });
 
   };
@@ -170,24 +171,29 @@ module['exports'] = function view (opts, callback) {
                 if (err) {
                   return res.end(err.message);
                 }
-                req.session.email = result.email;
-                // display user info in account form
-                // TODO: if form post data, attempt to update user account information ??? done ???
-                if (req.jsonResponse) {
-                  var r = {
-                    status: 'updated',
-                    result: 'account information updated'
+                cache.set('/user/' + result.name, result, function (err, re){
+                  if (err) {
+                    return res.end(err.message);
                   }
-                  return res.json(r);
-                } else {
-                  showUserForm(result, function(err, result){
-                    $('.userForm').html(result);
-                    $('.status').addClass('visible');
-                    $('.status').html('Account Information Updated!');
-                    $('.status').addClass('success');
-                    callback(null, $.html());
-                  });
-                }
+                  req.session.email = result.email;
+                  // display user info in account form
+                  // TODO: if form post data, attempt to update user account information ??? done ???
+                  if (req.jsonResponse) {
+                    var r = {
+                      status: 'updated',
+                      result: 'account information updated'
+                    }
+                    return res.json(r);
+                  } else {
+                    showUserForm(result, function(err, result){
+                      $('.userForm').html(result);
+                      $('.status').addClass('visible');
+                      $('.status').html('Account Information Updated!');
+                      $('.status').addClass('success');
+                      callback(null, $.html());
+                    });
+                  }
+                });
               });
             }
           });
