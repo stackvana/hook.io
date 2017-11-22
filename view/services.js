@@ -88,7 +88,7 @@ module['exports'] = function view (opts, callback) {
         $('.servicesHeader').html(req.params.owner);
       }
       if (params.registered) {
-        $('.message').html(req.session.email + ' is now registered.');
+        $('.message').html(req.session.email + ' is now registered. <br/>');
       }
       if (hooks.length > 0) {
         // sort hooks alphabetically by name
@@ -138,24 +138,47 @@ module['exports'] = function view (opts, callback) {
             //$('.hooks').append('<tr><td class="col-md-8">' + priv + '<a title="Hook Admin" href="' + hookLink + '/admin">' + h.name + '</a>' + '<pre>' +  JSON.stringify(report[i], true, 2) + '</pre>' +'</td><td class="col-md-1" align="left"><a title="Run Hook" href="' + hookLink + '"><span class="mega-octicon octicon-triangle-right"></span></a></td><td class="col-md-1" align="left"><a title="View Source" href="' + hookLink + '/source"><span class="mega-octicon octicon-file-code"></span></a></td><td class="col-md-1" align="left"><a title="View Logs" href="' + hookLink + '/logs"><span class="mega-octicon octicon-list-ordered"></span></a></td><td class="col-md-1" align="left"><a title="Delete Hook" class="deleteLink" data-name="' + h.owner + "/" + h.name +'" href="' + hookLink + '/delete"><span class="mega-octicon octicon-trashcan"></span></a></td></tr>');
             if (report[i] !== null) {
               // $('.hookReport', tpl).html(JSON.stringify(report[i]));
-              var diff = Number(report[i].lastEnd) - Number(report[i].lastStart);
+              // var diff = Number(report[i].lastEnd) - Number(report[i].lastStart);
               var lastStart = new Date(Number(report[i].lastStart)).toString();
-              lastStart = df(lastStart , "mm/dd/yyyy HH:mm:ss Z");
-              $('.hookLastTime', tpl).html(ms(diff).toString());
+              lastStart = df(lastStart , "mm/dd/yyyy HH:MM:ss Z");
+
+              var lastTime = Number(report[i].lastTime);
+
+              try  {
+                // $('.hookLastTime', tpl).html(ms(diff).toString());
+                $('.hookLastTime', tpl).html(ms(lastTime).toString());
+              } catch (err) {
+                // do nothing. this error means that ms library had invalid parse value ( perhaps null or undefined )
+              }
+              if (lastTime > 0 && h.customTimeout <= lastTime) {
+                $('.hookLastTime', tpl).addClass('error');
+                if (h.language === "javascript") {
+                  $('.timeoutMessage', tpl).html('Please ensure that <code>res.end();</code> or <code>hook.res.end();</code> are called in the script.');
+                }
+              } else {
+                $('.hookTimeoutError', tpl).remove();
+              }
+
               $('.hookLastStart', tpl).html(lastStart);
               $('.hookStatusCode', tpl).html(report[i].statusCode);
               $('.hookTotalHits', tpl).html(report[i].totalHits);
               $('.hookRunning', tpl).html(report[i].running);
-              $('.hookMonthlyHits', tpl).html(report[i]['monthlyHits - 9/2017']); // TODO: date format uplook
+
+              var now = new Date();
+              var monthlyHitsKey = 'monthlyHits - ' + now.getMonth() + '/' + now.getFullYear();
+
+              $('.hookMonthlyHits', tpl).html(report[i][monthlyHitsKey]); // TODO: date format uplook
               if (report[i].statusCode === "500") {
                 // 500 status code means the last time the hook completed it ended with an error
                 // if this is the case, we should show user a warning and give information of viewing the logs
                 // $('.hookStatus', tpl).remove();
+                // $('.hookStatus', tpl).addClass('error');
               } else {
                 $('.hookError', tpl).remove();
               }
             } else {
               $('.hookReportHolder', tpl).remove();
+              $('.hookTimeoutError', tpl).remove();
               $('.hookError', tpl).remove();
             }
             $(tpl).removeClass('hookTemplate');

@@ -25,6 +25,9 @@
   .noHooks {
     font-size:22px;
   }
+  .noResults {
+    display: none;
+  }
   .navBar {
     margin-bottom:0px;
   }
@@ -72,17 +75,18 @@
   .hookError {
     font-size: 14px;
   }
+  .hookTimeoutError {
+    font-size: 14px;
+  }
   .message {
     font-size: 24px;
   }
 </style>
 
-
-
 <script type="text/javascript">
   $(document).ready(function(){
     $('#myInput').focus();
-    $('.hookDelete').on('click', function(){
+    $('.hookDelete').on('click', function () {
       var name = $(this).attr('data-name');
       var result = confirm('Are you certain you want to destroy:\n\n' + name);
       if (result) {
@@ -91,13 +95,17 @@
         return false;
       }
     });
-    
   });
-  
 </script>
 
 <script>
-  function myFunction() {
+  function searchServices(ev) {
+
+    // if esc key, return false and empty the box
+    if (this.event.keyCode === 27) {
+      $('#myInput').val('');
+    }
+
     // Declare variables 
     var input, filter, table, tr, td, i;
     input = document.getElementById("myInput");
@@ -105,16 +113,26 @@
     table = document.getElementById("hooksTable");
     tr = table.getElementsByTagName("tr");
 
+    var found = 0;
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[0];
       if (td) {
         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
+          found++;
         } else {
           tr[i].style.display = "none";
         }
       } 
+    }
+    if (found === 0) {
+      // $('.searchKeyword').html(input);
+      //$('.noResults').show();
+      //$('#hooksTable').hide();
+    } else {
+      //$('.noResults').hide();
+      //$('#hooksTable').show();
     }
   }
 </script>
@@ -148,16 +166,18 @@
     </div>
   </div>
 
-  <span class="message"></span>
+  <div class="message"></div>
 
   <div class="searchServices">
     <label for="myInput" class="mega-octicon octicon-search" style="float:left;position:relative;top:40px;left:5px;"></label>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Filter by service name...">
+    <input type="text" id="myInput" onkeyup="searchServices()" placeholder="Filter by service name...">
   </div>
-
   <div class="noHooks">
     <h2>It looks like you haven't created any Services yet!</h2>
     <p>You can Create a new Service by clicking <a href="{{appUrl}}/new" title="Create New Hook"><span class="mega-octicon octicon-plus"></span></a></p>
+  </div>
+  <div class="noResults">
+    <h2>No results found for: <span class="searchKeyword"></span></h2>
   </div>
   <table class="hooks table" id="hooksTable">
     <tr>
@@ -170,6 +190,7 @@
       <th class="col-md-1">&nbsp;</th>
       <th class="col-md-1">&nbsp;</th>
     </tr>
+
     <tr class="hookTemplate">
       <td class="col-md-5">
         <span title="Private Service / Restricted Access" class="privateHook octicon octicon-lock"></span> <a class="hookName" title="Hook Admin" href="/examples/echo/admin">echo</a>
@@ -178,7 +199,9 @@
           <strong>Last Run:</strong> <span class="hookLastStart">n/a</span> &nbsp;
           <strong>Status Code</strong> <span class="hookStatus tiny"><span class="hookStatusCode">n/a</span></span>
         </div>
-        <div class="hookError error"><strong>Error:</strong> Hook last returned 500 status, which means it is erroring. <br/><a class="hookLogs" href="">Click here to view error logs</a></div>
+        <div class="hookError error"><strong>Error:</strong> Hook last returned 500 error code status. <br/><a class="hookLogs" href="">Click here to view error logs</a></div>
+        <div class="hookTimeoutError error"><strong>Error:</strong> Hook is exceeding maximum timeout limitations, this is bad.<br/> <span class="timeoutMessage">Please check service to ensure it is ending the response in time.</span> <br/></div>
+
       </td>
       <td class="col-md-1 medium" align="center">
        <span class="hookMonthlyHits">0</span>
