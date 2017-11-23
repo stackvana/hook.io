@@ -1,6 +1,7 @@
 module['exports'] = {
   baseUrl: "http://localhost:9999",
   wsUrl: "localhost:9999",
+  wssUrl: "localhost",
   host: 'ondemand.saucelabs.com',
   port: 8081,
   user: "Marak",
