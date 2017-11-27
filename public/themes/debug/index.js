@@ -1,7 +1,6 @@
 var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
-var mustache = require('mustache');
 
 // load docs html as file
 // TODO: load docs as http request

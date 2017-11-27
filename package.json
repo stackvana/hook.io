@@ -48,7 +48,6 @@
     "mschema-forms": "https://github.com/mschema/mschema-forms/tarball/master",
     "mschema-rpc": "https://github.com/mschema/mschema-rpc/tarball/master",
     "ms": "2.0.0",
-    "mustache": "^0.8.2",
     "nano": "^6.2.0",
     "node-slug": "0.0.2",
     "node-uuid": "^1.4.3",

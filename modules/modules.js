@@ -33,7 +33,7 @@ module['exports'] = {
   "moment": "2.8.4",
   "mschema": "0.5.5",
   "mschema-forms": "0.5.0",
-  "mustache": "0.8.2",
+  "mustache": "2.3.0",
   "object-path": "0.6.0",
   "npm": "2.1.8",
   "once": "1.3.1",

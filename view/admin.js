@@ -10,7 +10,6 @@ var metric = require('../lib/resources/metric');
 var request = require('hyperquest');
 var df = require('dateformat');
 var forms = require('mschema-forms');
-var mustache = require('mustache');
 var themes = require('../lib/resources/themes');
 var web = require('../lib/web');
 var languages = require('../lib/resources/programmingLanguage').languages;
