@@ -129,7 +129,7 @@ module['exports'] = function view (opts, callback) {
             if (typeof params.source === "undefined") {
               // Remark: It might be better to return an error here instead of assigning a default value...
               //         It can be a bit surprising if user intended to supply source code but ended up with this default value due to bad parameters to Hook.create
-              params.source = "module['exports'] = function myService (req, res, next) {  \n  res.end('source not provided'); \n};";
+              // params.source = "module['exports'] = function myService (req, res, next) {  \n  res.end('source not provided'); \n};";
             }
           }
           // TODO: remove this line
