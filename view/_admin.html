@@ -5,9 +5,18 @@
   }
 </style>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#name').focus();
+  });
+</script>
+
 <div>
 <h1>hook.io admin interface</h1>
+
   <div class="container content">
+    <h2><a href="{{appUrl}}/top">Top</a></h2>
+    <h2><a href="{{appUrl}}/_nodes">Nodes</a></h2>
     <h2>Find User By Name or Email</h2>
     <form name="userSearch" class="userSearchForm form" action="/_admin" method="GET">
       <div class="form-group">
@@ -23,7 +32,6 @@
     <div class="user">
       <br/>
       <h3><a class="loginAs" href="{{appUrl}}/_admin">Login as this user</a></h3>
-
       <!--
       <h3><a class="setPaid" href="{{appUrl}}/_admin?paid=true">Set account to paid status</a></h3>
       <h3><a class="setUnpaid" href="{{appUrl}}/_admin?unpaid=true">Set account to unpaid status</a></h3>
@@ -35,6 +43,7 @@
     </div>
     <div class="account"></div>
     <br/>
+    <h3><a class="destroyUser" href="{{appUrl}}/_admin">Delete  this user</a></h3>
     <a name="admin"></a>
     <div align="left" class="views">
       <h2>Views</h2>

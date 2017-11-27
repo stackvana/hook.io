@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var mergeParams = require('merge-params');
 var psr = require('parse-service-request');
 var colors = require('colors');
+var df = require('dateformat');
 
 // user schema used for form
 var userSchema = {
@@ -25,6 +26,7 @@ module['exports'] = function view (opts, callback) {
   $ = req.white($);
 
   var views = big.server.app.view;
+
 
   // TODO: create special hard-coded admin key for super-admin privledges
   // This key works outside of the role system ( is a super admin, only one per system defined in config )
@@ -61,22 +63,25 @@ module['exports'] = function view (opts, callback) {
    psr(req, res, function(req, res) {
      var params = req.resource.params;
 
-     if (params.super_private_key === config.superadmin.super_private_key) {
+     if (params.super_private_key === config.superadmin.super_private_key || req.session.user === "marak") {
        switch (params.method) {
          case 'user.destroy':
            return destroyUser();
          break;
+         /*
          default:
           return res.json({
             status: 'error',
             message: "unknown method " + params.method
           });
          break;
+         */
        }
      }
 
       // TODO: add roles and groups
       if (typeof req.session.user === "undefined" || req.session.user.toLowerCase() !== "marak") {
+        req.session.redirectTo = "/new";
         return res.redirect('/services');
       }
 
@@ -112,6 +117,8 @@ module['exports'] = function view (opts, callback) {
         // Is this enough to trigger new session?
         // I think instead we should actually clear session / relogin using a token?
         req.session.user = params.loginAs;
+        // TODO: we do need to get users email here too?
+        delete req.session.email;
         return res.redirect('/services');
       }
 
@@ -136,6 +143,8 @@ module['exports'] = function view (opts, callback) {
             return res.end(err.message);
           }
 
+
+          $('.destroyUser').attr('href', '?method=user.destroy&name=' + _user.name + '&email=' + _user.email);
           // $('.user .json').html(JSON.stringify(_user, true, 2));
           $('.loginAs').attr('href', '?loginAs=' + _user.name );
 
@@ -157,8 +166,17 @@ module['exports'] = function view (opts, callback) {
           }
 
           function generateForms (callback) {
+            var schema = forms.jsonToSchema(_user);
+            // schema.ctime.type = "date";
+            schema.ctime.formatter = function (str) {
+              return df(str);
+            }
+            schema.mtime.formatter = function (str) {
+              return df(str);
+            }
             forms.generate({
               type: "read-only",
+              schema: schema,
               form: {
                 legend: "User Report"
               },
@@ -180,15 +198,27 @@ module['exports'] = function view (opts, callback) {
 
       function destroyUser () {
 
-        if (typeof params.name === "undefined" || params.name.length === 0) {
+        if ((typeof params.name === "undefined" || params.name.length === 0) && (typeof params.email === "undefined" || params.email.length === 0)) {
           return res.json({
             result: "invalid",
             user: params.user
           });
         }
 
+        // odd behavior here on undefined, it is a string
+        if (params.name === 'undefined') {
+          params.name = undefined;
+        }
+
+        if (params.email === 'undefined') {
+          params.email = undefined;
+        }
+
+        // Remark: Not going to delete anything but the user document
+        // Hooks / logs / etc all will be kept ( for now )
+        // console.log('searching'.green, params)
         // Remark: not using findOne in-case we make duplicate user, can run multiple times and will delete duplicate each time
-        return user.find({ name: params.name }, function (err, results) {
+        return user.find({ name: params.name, email: params.email }, function (err, results) {
 
           if (err) {
             return res.end(err.message);
@@ -196,7 +226,7 @@ module['exports'] = function view (opts, callback) {
 
           if (results.length === 0) {
             return res.json({
-              result: "invalid",
+              result: "missing-account",
               user: params.user
             });
           }
