@@ -1187,9 +1187,15 @@ body legend {
                     <button type="button" class="helpButton btn">Help</button> <br/>
                   -->
 
-                  <textarea tabindex="8" name="codeEditor" class="codeEditor">module['exports'] = function echoHttp (hook) {
-      hook.res.end('put your code here');
-      };</textarea>
+                  <textarea tabindex="8" name="codeEditor" class="codeEditor">// A simple hello world microservice 
+// Service will respond to HTTP requests with a string
+module['exports'] = function helloWorld (hook) {
+  // hook.req is a Node.js http.IncomingMessage
+  var host = hook.req.host;
+  // hook.res is a Node.js httpServer.ServerResponse
+  // Respond to the request with a simple string
+  hook.res.json(hook.params);
+};</textarea>
                   <script type="text/javascript">
 
                   var editor, schema, themeSource, presenterSource;
