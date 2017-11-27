@@ -237,6 +237,10 @@ module['exports'] = function view (opts, callback) {
         delete data.language;
       }
 
+      if (data.language === "bash") {
+        data.source = data.source.replace(/\r/g, '')
+      }
+
       return hook.update(data, function(err, result){
         if (err) {
           // TODO: generic error handler
