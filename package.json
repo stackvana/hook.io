@@ -87,7 +87,7 @@
     "nyc": "11.1.x"
   },
   "scripts": {
-    "test": "tap tests/**/*-test.js",
+    "test": "tap --no-timeout tests/**/*-test.js",
     "start": "sh scripts/start.sh"
   },
   "nyc": {
