@@ -208,7 +208,6 @@ tap.test('attempt to logout out of session', function (t) {
     }, function (err, body, res) {
       t.error(err, 'request did not error');
       t.equal(typeof res, 'object', "response contains object");
-      console.log('bbbb', body)
       t.equal(res.statusCode, 200, "logged out and redirected");
       var opts = { 
         uri: baseURL + '/session',
