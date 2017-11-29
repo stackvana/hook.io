@@ -223,7 +223,6 @@ module['exports'] = function view (opts, callback) {
 var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
-var mustache = require('mustache');
 
 function showUserForm (user, cb) {
 
