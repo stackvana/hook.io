@@ -1,3 +1,9 @@
+<style>
+  .sent {
+    font-size:32px;
+  }
+</style>
+
 <div>
   <h1>Contact Us</h1>
   <div class="contact_area container">
@@ -10,11 +16,12 @@
             <ul>
               <li>
                 <div class="field">
-                  <label class="label" for="Name">Name <em>*</em></label>
+                  <label class="label" for="accountName">Account Name<em>*</em></label>
                   <div class="input-box">
-                     <input type="text" class="form-control border_color" id="Name" name="name">
+                     <input type="text" class="form-control border_color" id="accountName" name="accountName" readonly="readonly">
                   </div>
                 </div>
+
                 <div class="field email">
                   <label class="label" for="email">Email <em>*</em></label>
                   <div class="input-box einput">
@@ -64,9 +71,9 @@
         </div>
       </div>
     </form>
-    <div class="sent">
-      <h1>We have received your message. Thank you!</h1>
-      <h1>Someone will get back to you soon.</h1>
+    <div class="sent" align="center">
+      We have received your message. Thank you!<br/>
+      Someone will get back to you soon.
     </div>
   </div>
 </div>

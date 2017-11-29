@@ -7,6 +7,12 @@ module['exports'] = function view (opts, callback) {
       res = opts.res,
       $ = this.$;
 
+  // Only allow logged in users to send contact emails
+  // It could be better to have the contact form not require a login, but this is necessary to help prevent email spam from bots which auto submit the contact forms
+  if (!req.isAuthenticated()) {
+    req.session.redirectTo = req.url;
+    return res.redirect(302, '/login?restricted=true');
+  }
 
   psr(req, res, function(){
     var params = req.resource.params;
@@ -19,29 +25,21 @@ module['exports'] = function view (opts, callback) {
         api_key: config.email.api_key,
         to: "marak.squires@gmail.com",
         from: params.email,
-        subject: 'hook.io - contact - ' + params.subject,
+        subject: 'hook.io - contact - ' + params.accountName + '  ' + params.subject,
         html: params.comment
       };
-
-/*
-// REMOVE THIS MOCK      
-console.log("SENDING", _config);
-$('#contactForm').remove();
-return callback(null, $.html());
-*/
-
       email.send(_config, function (err, result) {
         if (err) {
           return res.end(err.message);
         }
-        // if email is found, send reset password email
-        // TODO: send partial email string back to user with ****** to show where email was sent
-        // TODO: obfuscate email to client with **** interpolation.
-        // console.log('ccc', _config);
         $('#contactForm').remove();
         return callback(null, $.html());
       });
     } else {
+
+      $('#email').attr('value', req.session.email);
+      $('#accountName').attr('value', req.session.user);
+
       if (typeof params.t === "string") {
         $('#Subject').attr('value', params.t);
       }
@@ -49,36 +47,6 @@ return callback(null, $.html());
       return callback(null, $.html());
     }
 
-    /*
-    var out = $.html();
-    var appName = req.hostname;
-    out = out.replace(/\{\{appName\}\}/g, appName);
-    */
-    
-
   });
 
-  /*
-  email.send({
-    //provider: 'sendgrid',
-    provider: config.email.provider,
-    api_user: config.email.api_user,
-    api_key: config.email.api_key,
-    to: u.email,
-    from: config.app.adminEmail,
-    subject: appName + " password reset request",
-    html: tmpl
-  }, function (err, result) {
-    if (err) {
-      return res.end(err.message);
-    }
-    // if email is found, send reset password email
-    // TODO: send partial email string back to user with ****** to show where email was sent
-    // TODO: obfuscate email to client with **** interpolation.
-    res.end('{ "res": "email-sent", "email": "' +  u.email + '"}');
-  });
-  */
-  
-  
-  //req.i18n.setLocale('de');
 };

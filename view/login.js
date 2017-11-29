@@ -11,11 +11,19 @@ module['exports'] = function view (opts, callback) {
 
   $ = req.white($);
 
-
   psr(req, res, function(req, res) {
     var params = req.resource.params;
 
     params.name = params.name || params.email;
+    if (params.restricted !== 'true') {
+      $('.restricted').remove();
+    }
+
+    /* we could display the intended redirect page to the user
+    if (req.session.redirectTo) {
+      $('.redirectPage').html(req.session.redirectTo)
+    }
+    */
 
     // if a name and password have been supplied
     if (params.name && params.password) {
