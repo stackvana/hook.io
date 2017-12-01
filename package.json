@@ -41,6 +41,7 @@
     "merge-stream": "^0.1.8",
     "microcule": "https://github.com/stackvana/microcule/tarball/master",
     "microcule-examples": "https://github.com/stackvana/microcule-examples/tarball/master",
+    "microtail": "https://github.com/marak/microtail/tarball/master",
     "mime": "^1.2.11",
     "minimist": "^1.1.1",
     "mkdirp": "^0.5.0",

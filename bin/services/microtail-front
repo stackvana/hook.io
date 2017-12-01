@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+var colors = require('colors');
+var microtail = require('microtail');
+var path = require('path');
+var config = require('../../config');
+
+microtail.start({
+  http: {
+    port: 9980,
+    auth: {
+      basicAuth: config.tailAdmin
+    }
+  },
+  tails: [{
+    name: 'webserver logs',
+    path: path.resolve(__dirname + "/../../logs/web-logs.txt"),
+    lines: 10
+  },{
+    name: 'cron logs',
+    path: path.resolve(__dirname + "/../../logs/cron-logs.txt"),
+    lines: 10
+  },{
+    name: 'balancer logs',
+    path: path.resolve(__dirname + "/../../logs/balancer-logs.txt"),
+    lines: 10
+  }]
+}, function (err, app) {
+  if (err) {
+    console.log('microtail start error'.red);
+    throw err;
+  }
+  console.log('microtail server started'.blue, app.server());
+});

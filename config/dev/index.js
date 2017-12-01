@@ -5,6 +5,10 @@ module['exports'] = {
     "password": "footy",
     "super_private_key": "1234"
   },
+  tailAdmin: {
+    "username": "tails",
+    "password": "password"
+  },
   oys_private_key: 'e31b6a83-a92f-48b4-830a-7d384b52c3c6', //hard-coded to "hookio" user on oys
   site: {
     port: 9999,
@@ -135,7 +139,7 @@ module['exports'] = {
     name: "hook.io",
     // host: "https://hook.io",
     url: "http://localhost:9999",
-    ws: "ws://localhost:9999/",
+    ws: "ws://localhost:9999",
     //url: "https://hook.io",
     domain: "localhost",
     port: "9999",

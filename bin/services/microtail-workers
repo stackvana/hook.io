@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+var colors = require('colors');
+var microtail = require('microtail');
+var path = require('path');
+
+microtail.start({
+  http: {
+    port: 9980,
+    auth: {
+      basicAuth: config.tailAdmin
+    }
+  },
+  tails: [{
+    name: 'worker logs',
+    path: path.resolve(__dirname + "/../../logs/worker-logs.txt"),
+    lines: 10
+  }]
+}, function (err, app) {
+  if (err) {
+    console.log('microtail start error'.red);
+    throw err;
+  }
+  console.log('microtail server started'.blue, app.server());
+});
