@@ -8,14 +8,12 @@
     padding-bottom: 40px;
     text-align: left;
   }
-  
   .userBar table {
     width: 100%;
     text-align: center;
     font-size: 22px;
     border: none;
   }
-
   .manageEnv {
     font-size: 28px;
   }
@@ -118,7 +116,8 @@
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[0];
       if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        var hookName = $('.hookName', td).html();
+        if (hookName && hookName.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
           found++;
         } else {
@@ -127,12 +126,12 @@
       } 
     }
     if (found === 0) {
-      // $('.searchKeyword').html(input);
-      //$('.noResults').show();
-      //$('#hooksTable').hide();
+      $('.hooksHeaderRow').hide();
+      $('.noResults').show();
+      $('.searchKeyword').html(filter);
     } else {
-      //$('.noResults').hide();
-      //$('#hooksTable').show();
+      $('.hooksHeaderRow').show();
+      $('.noResults').hide();
     }
   }
 </script>
@@ -176,11 +175,9 @@
     <h2>It looks like you haven't created any Services yet!</h2>
     <p>You can Create a new Service by clicking <a href="{{appUrl}}/new" title="Create New Hook"><span class="mega-octicon octicon-plus"></span></a></p>
   </div>
-  <div class="noResults">
-    <h2>No results found for: <span class="searchKeyword"></span></h2>
-  </div>
+
   <table class="hooks table" id="hooksTable">
-    <tr>
+    <tr class="hooksHeaderRow">
       <th class="col-md-5 tiny" style="text-align:left;">Name</th>
       <th class="col-md-1 tiny">Monthly</th>
       <th class="col-md-1 tiny">Time</th>
@@ -189,6 +186,12 @@
       <th class="col-md-1">&nbsp;</th>
       <th class="col-md-1">&nbsp;</th>
       <th class="col-md-1">&nbsp;</th>
+    </tr>
+
+    <tr class="noResults">
+      <td colspan="8">
+        No results found for: <span class="searchKeyword"></span>
+      </td>
     </tr>
 
     <tr class="hookTemplate">
