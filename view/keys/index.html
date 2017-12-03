@@ -4,18 +4,61 @@
   }
   label {
     cursor: pointer;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: normal;
   }
   input {
   }
   form legend {
     font-size: 32px;
+    padding-bottom: 10px;
   }
   .loginLink a {
     font-size: 32px;
     font-weight: bold;
   }
+  .keysMenu {
+    font-size: 24px;
+    height: 100%;
+    margin-bottom:0px !important;
+    
+  }
+  .tiny {
+    font-size: 14px;
+    padding-left: 5px;
+  }
+  .keysStatus {
+    font-size: 24px;
+    height: 100%;
+    padding: 5px;
+  }
+  .keysMenu li {
+    border: solid;
+    vertical-align: middle;
+    margin-bottom:10px !important;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    min-height: 50px;
+  }
+  .roleItem {
+    min-width: 200px;
+  }
+  .status {
+    font-size: 32px;
+    color: #337ab7;
+    padding-bottom: 10px;
+  }
+  
+  h2 {
+    font-size: 32px;
+  }
+  em {
+    font-weight: bold;
+  }
+
 </style>
 
 <script type="text/javascript">
@@ -45,57 +88,48 @@
   <h1>API Access Keys</h1>
     <div class="container">
       <div class="row">
-        <!-- blog-left-sidebar start -->
         <div class="col-lg-3 col-md-3 col-sm-3">
           <div class="widget_area fix">
-            <!-- widget-categories start -->
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Manage API Access Keys</h3>
+              <ul class="sidebar_menu">
+                <li><a href="#what-are-keys">What are keys? </a></li>
+                <li><a href="#generate-keys">Create New Access Key</a></li>
+                <li><a href="#generate-keys">View Existing Access Keys</a></li>
+              </ul>
+            </aside>
             <aside class="left_widget blog_border0">
               <h3 class="sidebar_middle_title">Role Based Access Control</h3>
               <ul class="sidebar_menu">
-                <li><a href="#what-are-keys">What are keys? </a></li>
+                <li><a href="#using-api-access-keys">Using API Access Keys</a> </li>
                 <li><a href="#what-are-roles">What are roles? </a></li>
-                <li><a href="#generate-keys">Generate Access Keys </a></li>
               </ul>
             </aside>
-            <!-- widget-categories end -->
-            <!-- widget-categories start -->
-            <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Role Checks</h3>
-              <ul class="sidebar_menu">
-                <li><a href="{{appUrl}}/datastore">What are Role Checks?</a> </li>
-                <li><a href="#">Automated Role Checks</a> </li>
-                <li><a href="#">Custom Role Checks</a> </li>
-              </ul>
-            </aside>
-
-            <!-- end widget-tag  -->            
           </div>
+          <br/>
+          
         </div>        
-        <!--end  blog-left-sidebar start -->
         <!-- shop-content start -->
         <div class="col-lg-9 col-md-9 col-sm-9">
-          <!-- end single  blog item-->         
+          <div class="col-lg-6 col-md-6 col-sm-6 item">
+            <ul class="list-group keysMenu">
+              <a href="#what-are-keys"><li class="list-group-item">Learn About Keys</li></a>
+              <a href="#generate-keys"><li class="list-group-item keysStatus">Create New Key</li></a>
+              <a href="#my-keys"><li class="list-group-item keysStatus">View Existing Keys</li></a>
+            </ul>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 item">
+            <ul class="list-group keysStatus">
+              <li class="list-group-item">Using &nbsp;<span class="keyUsage">0/1</span>&nbsp;Available Keys</li>
+            </ul>
+          </div>
+          
           <div class="col-lg-12 col-md-12 col-sm-12 item">
+            <h2 class="myKeys"></h2>
             <div class="content">
-
-                <div class="status"></div>
-
-                <a name="what-are-keys"></a>
-                <h2 class="myKeys"><a href="#my-keys">View Your Keys</a></h2>
-                <h2>What are Keys?</h2>
-                <p>Keys are used for managing security role access to services on {{appName}}</p>
-                <p>You can create new keys to allow third-party services or users to access restricted {{appName}} services like <a href="{{appUrl}}/docs#keys">private hooks</a>, the <a href="{{appUrl}}/datastore">datastore</a>, or <a href="{{appUrl}}/logs">logs</a>.</p>
-                <p>A common use-case would be creating a private hook service which is only accessible to clients who can provide a generated access key which has the role <code>hook::run</code></p>
-                <p><em>A full listing of security access roles is available at <a href="{{appUrl}}/roles">/roles</a></em></p>
-
-                <a name="what-are-roles"></a>
-                <h2>What are Roles?</h2>
-                <p>When creating a new access key, you <em>must</em> specify a set of roles associated with that key.</p>
-                <p>These roles determine what the new access key has permission to do.</p>
-
-                <a name="generate-keys"></a>
-                <h2>Generating New Keys</h2>
-                <p>To create new security access keys, simply login and use the form at the bottom of this page.</p>
+                <div class="status">
+                  <div class="loginLink"><a href="{{appUrl}}/login">Log in to Create a Key</a></div>
+                </div>
 
                 <!--
                 <div class="row loginBar">
@@ -106,40 +140,44 @@
                 </div>
                 -->
 
-                <h2>Role Checks</h2>
-
-                <a name="what-are-role-checks"></a>
-                <h3>What are role Checks?</h3>
-                <p>Role checks are used to determine if an incoming HTTP request has authorization to access the requested resource.</p>
-                <p>{{appName}} offers several integrated roles and custom roles that may be associated with a generated Access Key.</p>
-
-                <a name="private-services"></a>
-                <h3>Private Services</h3>
-
-                <p>Accessing a role restricted service with a key is easy!</p>
-                <!-- ><h2>TODO: create example private hook with role restrictions / add to docs </h2> -->
-                <p>All you have to do is supply the generated <code>hook_private_key</code> <!-- and <code>hook_private_key</code > --> variable as a HTTP request parameter ( URL GET Query Data / POST Form Data / JSON RPC / etc ) and that HTTP client request will be granted the roles associated with that private key.</p>
-                <p>For convenience, we've pre-generated an <code>admin-access</code> key for every account. You can use the generated <code>hook_private_key</code> for <code>admin-access</code> to access any of your private services from a third-party source. You can also simply delete your <code>admin-access</code> key and create a new key with custom roles.</a></p>
-                <p><em>Remember: All <a href="{{appUrl}}/events">service level events</a> on {{appName}} are available as <a href="{{appUrl}}/roles">roles</a>, allowing granular access control.</em></p>
-
-                <a name="custom-role-checks"></a>
-                <h3>Custom Role Checks</h3>
-                <p>It'a also possible to add a custom role value when creating an Access Key. You may perform a custom role checks using any string value one of two ways.</p>
-                <p>Using the <a href="/keys/checkAccess">keys.checkAccess HTTP API method</a> ( available in <a href="/sdk">SDK</a>)</p>
-                <p>
-                  Inside a Hook service as:
-                  <code><pre>
-module['exports'] = function checkAccess (hook) {
-  hook.req.checkAccess('hook::run', function(err, h){
-    hook.res.json(h);
-  });
-};</pre></code>
-                </p>
-                <p class="hint">This will be scoped to the current user session or <code>hook_private_key</code> HTTP parameter</p>
-                <p class="loginLink"><a href="{{appUrl}}/login">Login to Create Your First Key</a></p>
                 <a name="generate-keys"></a>
+                <div class="keysForm"></div>
+
                 <a name="my-keys"></a>
-                <div class="keys"></div>
+                <div class="keys">
+                  <form>
+                    <legend>Your API Keys</legend>
+                    <p><em>Note:</em> Keys cannot be updated. They can only be created or destroyed.</p>
+                    <div class="keyHolder">
+                    </div>
+                  </form>
+                </div>
+
+                <a name="what-are-keys"></a>
+
+                <h2>What are API Access Keys?</h2>
+                <p>API Access Keys are used for managing security role access to services on {{appName}}.</p>
+                <p>You can create new keys to allow third-party services or users to securely access restricted {{appName}} API endpoints like <a href="{{appUrl}}/docs#keys">private hooks</a>, the <a href="{{appUrl}}/datastore">datastore</a>, or <a href="{{appUrl}}/logs">logs</a>.</p>
+                <p>A common use-case would be creating an API Access Key with the role <code>hook::logs::read</code> to securely read the logs of your Private Services.</p>
+                
+                <p>Another use-case would be creating an API Access Key with the role of <code>hook::run</code> to allow a third-party client to run a private hook service hosted on {{appName}}. This private service would only accessible to clients who can provide a the generated access key which has the role <code>hook::run</code></p>
+                <hr/>
+
+                <a name="using-api-access-keys"></a>
+                <h2>Using API Access Keys</h2>
+
+                <p>Using an API Access Key with {{appName}} is easy!</p>
+                <!-- ><h2>TODO: create example private hook with role restrictions / add to docs </h2> -->
+                <p>All you have to do is supply the generated <code>hook_private_key</code> <!-- and <code>hook_private_key</code > --> variable as a HTTP request parameter ( GET Query Parameter / POST Form Data / JSON RPC / HTTP Request Header / etc ) and that HTTP client request will be granted the roles associated with that <code>hook_private_key</code>.</p>
+                <p><em>Remember: All <a href="{{appUrl}}/events">service level events</a> on {{appName}} are available as <a href="{{appUrl}}/roles">roles</a>, allowing granular access control.</em></p>
+                <hr/>
+
+                <a name="what-are-roles"></a>
+                <h2>What are Roles?</h2>
+                <p>Roles are unique identifiers representing granular access to the {{appName}} API. Every API method on {{appName}} has a unique Role name.</p>
+                <p>When creating a new access key, you <em>must</em> specify a set of roles associated with that key. These roles determine what the new access key has permission to do.</p>
+                <p>Role checks are used to determine if an incoming HTTP request has authorization to access the requested resource. This is useful when using Private Services or when accessing the {{appName}} API from a third-party client.</p>
+                <p><em>A full listing of security access roles is available at <a href="{{appUrl}}/roles">/roles</a></em></p>
 
             </div>
           </div>
