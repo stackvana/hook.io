@@ -141,8 +141,15 @@ module['exports'] = function view (opts, callback) {
             params.isPrivate = false;
           }
 
-          // TODO: filter params for only specified resource fields?
-          return hook.create.call({ req: req, res: res }, params, function (err, result) {
+          // Only allow fields which exist on the Hook resource
+          var safeParams = {};
+          Object.keys(hook.schema.properties).forEach(function (p) {
+            if (params[p] !== 'undefined') {
+              safeParams[p] = params[p];
+            }
+          });
+
+          return hook.create.call({ req: req, res: res }, safeParams, function (err, result) {
             if (err) {
               return callback(null, err.message);
             }

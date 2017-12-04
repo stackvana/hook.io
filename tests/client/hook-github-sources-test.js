@@ -70,7 +70,7 @@ tap.test('attempt to create a new hook with github gist source', function (t) {
 tap.test('get the resource for the github repo hook', function (t) {
   r({ uri: baseURL + "/david/test-github-repo-hook/resource", method: "get", json: true }, function (err, res) {
     t.error(err, 'did not error');
-    t.equal(res.hookSource, 'githubRepo', 'echo back correct properties');  
+    t.equal(res.sourceType, 'githubRepo', 'echo back correct properties');
     t.end();
   });
 });
@@ -78,7 +78,7 @@ tap.test('get the resource for the github repo hook', function (t) {
 tap.test('get the resource for the github gist hook', function (t) {
   r({ uri: baseURL + "/david/test-github-gist-hook/resource", method: "get", json: true }, function (err, res) {
     t.error(err, 'did not error');
-    t.equal(res.hookSource, 'gist', 'echo back correct properties');  
+    t.equal(res.sourceType, 'gist', 'echo back correct properties');
     t.end();
   });
 });
