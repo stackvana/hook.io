@@ -122,7 +122,6 @@ module['exports'] = function view (opts, callback) {
   // generic white-label function for performing {{mustache}} style replacements of site data
   // Note: Site requires absolute links ( no relative links! )
   req.white = function whiteLabel ($, options) {
-
     $('.i18n').each(function(index, item){
       var v = $(item).html();
       // console.log(v, i.__(v))
@@ -160,6 +159,7 @@ module['exports'] = function view (opts, callback) {
       out = out.replace(/\{\{userName\}\}/g, req.session.user || 'anonymous');
       out = out.replace(/\{\{userEmail\}\}/g, req.session.email);
     }
+    out = out.replace(/\{\{username\}\}/g, req.session.user || 'anonymous');
     return $.load(out);
   };
 

@@ -50,6 +50,22 @@ function enumerateView (v) {
   return arr;
 };
 
+//
+// Helper assert for checking if a page response has unmatched {{fooBar}} style replacements
+// This is useful for catching missing data-binds in the view causing mustaches to render to client
+//
+function checkMissingMustacheReplacement (t, text, item) {
+  if (typeof text === "string") {
+    // check that the returned HTML response does not contain any unmatched mustache replacements
+    // such as: {{appUrl}} or {{appName}}
+    var search = text.search("{{") || text.search("}}");
+    // exclude certain pages which actually presenter {{fooBar}} style strings to user ( such as documentation or source code )
+    if (['/themes', '/examples/bash-view/view'].indexOf(item) === -1) {
+      t.equal(search, -1, 'did not found any unmatched mustache replacements')
+    }
+  }
+}
+
 tap.test('start the dev cluster', function (t) {
   startDevCluster({}, function (err, servers) {
     t.error(err)
@@ -80,8 +96,9 @@ tap.test('attempt to get all pages - no session', function (t) {
     r({ uri: baseURL + item, method: "GET", json: true }, function (err, body, res) {
       t.error(err);
       // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
-      t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response')
-      t.ok('did not error back', item)
+      t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response');
+      checkMissingMustacheReplacement(t, body, item);
+      t.ok('did not error back', item);
       next();
     });
   }, function end (){
@@ -130,6 +147,9 @@ tap.test('attempt to get all pages - logged in test user - json responses', func
           t.error(err);
           // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
           t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response')
+          // check that the returned HTML response does not contain any unmatched mustache replacements
+          // such as: {{appUrl}} or {{appName}}
+          checkMissingMustacheReplacement(t, body, item);
           t.ok('did not error back', item)
           next();
         });
@@ -167,6 +187,7 @@ tap.test('attempt to get all pages - logged in test user - non json responses', 
           t.error(err);
           // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
           t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response')
+          checkMissingMustacheReplacement(t, body, item);
           t.ok('did not error back', item)
           next();
         });
