@@ -27,7 +27,7 @@ module.exports = function (opts, cb) {
           });
         })
       } else {
-        res.status(500)
+        res.status(400)
         return res.json({ error: true, message: 'Invalid email address'});
       }
       //return cb(null, $.html());
