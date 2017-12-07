@@ -505,16 +505,16 @@ label {
           <label for="hookPrivate" class="hookPrivateLabel">Private Service</label>
           <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
         </div>
-        <div class="tiny">
+        <div class="form-group tiny">
           Public services and their source codes will be accessible to anyone. Private services are protected through <a href="{{appUrl}}/keys" target="_blank">API Access Keys</a>.
           <span class="paidAccount warning tiny">Notice: In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing" class="warning">paid account</a>.</span>
-          </div>
+        </div>
       </div>
 
       <div class="hookHolder typeOfService">
         <h2 class="i18n">Type of Service</h2>
         <p>Which of these best describes the kind of service you'd like to create? Don't worry, we can always change this later</p>
-      
+
         <p>Respond to HTTP requests using custom functions. Works with many programming languages</p>
 
         <p>Perform a redirect from this url to another url. Allows for custom <code>host</code>, <code>uris</code>, <code>upstream_url</code>, </p>

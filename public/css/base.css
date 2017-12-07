@@ -1,5 +1,6 @@
 form legend {
   font-size: 1.8em;
+  padding-bottom: 10px;
 }
 
 label {
@@ -108,19 +109,17 @@ label {
   cursor: pointer;
 }
 
-/*
 .well {
   background-color: #F5F5F5;
   border: 1px solid #E1E1E1;
   padding: 17px 17px 0px 17px;
-  padding-top: 10px;
-  padding-bottom: 5px;
+  padding-top: 15px;
+  /* padding-bottom: 15px; */
   padding-left: 20px;
   padding-right: 20px;
   width: 100%;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
-*/
 
 .emailReminder {
   display: block;

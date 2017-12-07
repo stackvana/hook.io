@@ -274,6 +274,8 @@ module['exports'] = function view (opts, callback) {
               $('.keyHolder').append(table);
             });
 
+            return callback(null, $.html());
+            /*
             forms.generate({
                 type: 'grid',
                 data: _keys,
@@ -290,8 +292,8 @@ module['exports'] = function view (opts, callback) {
                 },
                 schema: keySchema
             }, function (err, _h) {
-              return callback(null, $.html());
             });
+            */
           });
         });
      }
