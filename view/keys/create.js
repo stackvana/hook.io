@@ -37,7 +37,8 @@ module['exports'] = function createKeysPresenter (opts, callback) {
             delete req.resource.params.hook_private_key;
             return keys.create(req.resource.params, function(err, result){
               if (err) {
-                return res.end(err.message)
+                res.status(400);
+                return res.json({ error: true, message: err.message });
               }
               return res.json(result);
             });

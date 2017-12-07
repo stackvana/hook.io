@@ -36,7 +36,7 @@ tap.test('attempt to get keys - invalid access key', function (t) {
       //t.equal(res.error, true, "unauthorized role access caused error");
       //t.equal(res.type, "unauthorized-role-access", "has correct error type");
       //t.equal(res.role, "hook::create", "has correct role type");
-      t.equal(res.hasAccess, false, "has correct role type");
+      t.equal(res.hasAccess, false, "returns false");
       t.end();
   });
 });

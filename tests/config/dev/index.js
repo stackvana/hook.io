@@ -28,14 +28,14 @@ module['exports'] = {
     "david": {
       name: "david",
       email: "david@marak.com",
-      admin_key: "f34a3112-fb82-4092-8ea7-912fa11ba6dd",
-      run_key: "f34a3112-fb82-4092-8ea7-912fa11ba6dd",
-      hook_private_key: "f34a3112-fb82-4092-8ea7-912fa11ba6dd",
+      admin_key: "f1c1b3d7-609e-4031-8a63-1658fb136946",
+      run_key: "f1c1b3d7-609e-4031-8a63-1658fb136946",
+      hook_private_key: "f1c1b3d7-609e-4031-8a63-1658fb136946",
       hookSdk: {
         host: "localhost",
         port: 9999,
         protocol: 'http://',
-        hook_private_key: 'f34a3112-fb82-4092-8ea7-912fa11ba6dd' // testUser.admin_key
+        hook_private_key: 'f1c1b3d7-609e-4031-8a63-1658fb136946' // testUser.admin_key
       }
     }
   }

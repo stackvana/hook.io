@@ -1,5 +1,6 @@
 var hook = require('../lib/resources/hook');
 var user = require('../lib/resources/user');
+var servicePlan = require('../lib/resources/servicePlan');
 var config = require('../config');
 var bodyParser = require('body-parser');
 var mergeParams = require('merge-params');
@@ -61,6 +62,7 @@ module['exports'] = function view (opts, callback) {
               }
               req.session.paidStatus = "paid";
               req.session.servicePlan = planName;
+              req.session.serviceLimits = servicePlan[planName];
               return complete(u);
             });
           } else {
@@ -71,6 +73,7 @@ module['exports'] = function view (opts, callback) {
 
             req.session.paidStatus = "paid";
             req.session.servicePlan = planName;
+            req.session.serviceLimits = servicePlan[planName];
 
             // TODO: update account with stripe email?
             // it's probably best to update the account to use the email registered with stripe
@@ -105,6 +108,8 @@ module['exports'] = function view (opts, callback) {
               u.servicePlan = planName;
               req.session.paidStatus = "paid";
               req.session.servicePlan = planName;
+              req.session.serviceLimits = servicePlan[planName];
+
               u.save(function(err, r){
                 if (err) {
                   return res.end(err.message);
@@ -208,21 +213,22 @@ module['exports'] = function view (opts, callback) {
                 }
               });
               req.session.servicePlan = planName;
+              req.session.serviceLimits = servicePlan[planName];
 
-               // console.log('added to plan', err, charge);
-               $('.status').html('Billing Information Added! Thank you!');
-               if (params.ajax || req.jsonResponse) {
-                 return res.end('paid');
-               }
-               billing.find({ owner: req.session.user }, function (err, results) {
-                 if (err) {
-                   $('.status').html(err.message);
-                   return callback(err, $.html());
-                 }
-                 showBillings(results, function(){
-                   callback(err, $.html());
-                 });
-               });
+              // console.log('added to plan', err, charge);
+              $('.status').html('Billing Information Added! Thank you!');
+              if (params.ajax || req.jsonResponse) {
+                return res.end('paid');
+              }
+              billing.find({ owner: req.session.user }, function (err, results) {
+                if (err) {
+                  $('.status').html(err.message);
+                  return callback(err, $.html());
+                }
+                showBillings(results, function(){
+                  callback(err, $.html());
+                });
+              });
             });
           });
         }

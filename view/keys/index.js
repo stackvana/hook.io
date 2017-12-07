@@ -11,7 +11,6 @@ var mergeParams = require('merge-params');
 var bodyParser = require('body-parser');
 var config = require('../../config');
 
-
 module['exports'] = function view (opts, callback) {
 
    var req = opts.request,
@@ -231,7 +230,6 @@ module['exports'] = function view (opts, callback) {
           $('.keysForm').html(result);
 
           keys.find({ owner: req.session.user }, function (err, _keys) {
-
             if (err) {
               return res.end(err.message);
             }
@@ -246,7 +244,6 @@ module['exports'] = function view (opts, callback) {
               $('.keyHolder').append('<h3>No API Keys Have Been Created</h3>')
               return callback(null, $.html());
             }
-            
             if (req.session.serviceLimits) {
               $('.keyUsage').html(_keys.length + '/' + req.session.serviceLimits.apiKeys);
             }
