@@ -72,7 +72,7 @@
 <script>
   $(document).ready(function(){
 
-    $('#signup_email').focus();
+    $('#login_name').focus();
     // add ajax handlers for login form
     $('.loginForm').on('submit', function () {
 
@@ -81,7 +81,12 @@
       $('.loginMessage').html('Authenticating...');
       var error = function error (err) {
         if (err) {
-          $('.loginMessage').html('Error: ' + err.message);
+          if (typeof err.message === 'string') {
+            $('.loginMessage').html('Error: ' + err.message);
+          }
+          if (typeof err.responseText === 'string') {
+            $('.loginMessage').html('Error: ' + err.responseText);
+          }
           $('.loginMessage').addClass('error');
         }
       };
