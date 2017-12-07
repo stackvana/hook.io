@@ -1,8 +1,6 @@
-/*
 form legend {
-  font-size: 2em;
+  font-size: 1.8em;
 }
-*/
 
 label {
   cursor: pointer;
@@ -110,6 +108,7 @@ label {
   cursor: pointer;
 }
 
+/*
 .well {
   background-color: #F5F5F5;
   border: 1px solid #E1E1E1;
@@ -121,6 +120,7 @@ label {
   width: 100%;
   margin-bottom: 30px;
 }
+*/
 
 .emailReminder {
   display: block;

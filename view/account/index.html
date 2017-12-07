@@ -44,7 +44,6 @@
   }
 
   .renameAccount {
-    margin-left: 20px;
     font-size: 12px;
   }
   .warning {
@@ -64,6 +63,10 @@
     margin-bottom: 30px;
     display: none;
   }
+  form legend {
+    font-size: 24px;
+    padding-bottom: 10px;
+  }
 </style>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -73,7 +76,7 @@
       $('#name').attr('disabled', null).focus();
       if (!showing) {
         showing = true;
-        $('.renameAccount').after('<br/><span class="warning">Warning: Changing account name will change the URLs of all existing services. It will also log you out of your current session.</span>')
+        $('.renameAccount').after('<br/><span class="warning">Warning: </span><span>Changing account name will change the URLs of all existing services. It will also log you out of your current session.</span>')
       }
       return false;
     });
@@ -83,8 +86,7 @@
   <h1>Account</h1>
   <div class="container content">
     <div class="status"></div>
-    <h3><a href="{{appUrl}}/billing" class="yourBilling i18n">View Billing Information</a></h3>
-    <h3><a href="{{appUrl}}/account/usage" class="yourUsage i18n">View Current Usage</a></h3>
+    <h3><a href="{{appUrl}}/billing" class="yourBilling i18n btn btn-default">View Billing Information</a> <a href="{{appUrl}}/account/usage" class="yourUsage i18n btn btn-default">View Current Usage</a></h3>
     <div class="userForm"></div>
     <!-- <div class="billingForm"></div> -->
     <!-- <div class="hooks"><a href="{{appUrl}}/hooks" class="myHooks">My Hooks</a></div> -->

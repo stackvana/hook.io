@@ -64,7 +64,7 @@
                 <!--
                   <li><a href="#forms" class="i18n">Schema Form Generator</a></li>
                 -->
-                <li><a href="#themes" class="i18n">Themes</a></li>
+                <!-- <li><a href="#themes" class="i18n">Themes</a></li> -->
                 <li><a href="{{appUrl}}/cron" class="i18n">Schedule Cronjob</a></li>
                 <!-- <li><a href="#cache" class="i18n">Cache Controls</a></li> -->
               </ul>
@@ -240,13 +240,13 @@
                   <a name="viewsource"></a>
                   <h2 class="i18n">View Hook Source</h2>
                   <p class="i18n">To view the source code of any Hook simply attach <code>/_src</code> to the Hook service url.</p>
-                  <p class="i18n">This will also work for the Hook's <code>View</code> and <code>Presenter</code>.</p>
+                  <!-- <p class="i18n">This will also work for the Hook's <code>View</code>and <code>Presenter</code>.</p> -->
 
                   <p><strong class="i18n">Source Code:</strong> <a href="{{appUrl}}/examples/echo/_src">{{appUrl}}/examples/echo/_src</a></p>
                   <p><strong class="i18n">Logs:</strong> <a href="{{appUrl}}/examples/echo/logs">{{appUrl}}/examples/echo/logs</a></p>
                   <p><strong class="i18n">Resource:</strong> <a href="{{appUrl}}/examples/echo/resource">{{appUrl}}/examples/echo/resource</a></p>
                   <p><strong class="i18n">View:</strong> <a href="{{appUrl}}/examples/echo/view">{{appUrl}}/examples/echo/view</a></p>
-                  <p><strong class="i18n">Presenter:</strong> <a href="{{appUrl}}/examples/echo/presenter">{{appUrl}}/examples/echo/presenter</a></p>
+                  <!-- <p><strong class="i18n">Presenter:</strong> <a href="{{appUrl}}/examples/echo/presenter">{{appUrl}}/examples/echo/presenter</a></p> -->
 
                   <p class="i18n">If you require the source code of a Hook to remain private, upgrade to a <a href="{{appUrl}}/pricing">paid account</a> and set the Hook to <code>Private</code>
 
@@ -541,6 +541,11 @@
                 <p>All API endpoints are backed by <a href="#roles">Role Based Access Control</a>, so if you provide a <code>hook_private_key</code> parameter in your request which matches a known API key containing the required role that request will be granted access to the resource. <a href="{{appUrl}}/keys">Read More about Keys and Roles</a></p>
 
                 <!--
+
+                <a name="generate-keys"></a>
+                <h2>Generating New Keys</h2>
+                <p>To create new security access keys, simply login and use the form at the bottom of this page.</p>
+
                 <a name="metrics"></a>
                 <h2>Hook Metrics</h2>
                 <p>{{appName}} provides a basic API endpoint for accessing historical information on Hook metrics.</p>

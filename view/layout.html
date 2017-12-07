@@ -225,7 +225,9 @@
                       <a href="{{appUrl}}/domains">Domains</a>
                       <a href="{{appUrl}}/cron">Cron Jobs</a>
                       <a href="{{appUrl}}/docs#schema">Schema</a>
+                      <!--
                       <a href="{{appUrl}}/themes">Theming</a>
+                      -->
                       <a href="{{appUrl}}/curl">Unix Pipe Integration</a>
                     </div>
                     <div class="mega">
@@ -721,13 +723,14 @@
           { value: 'SSL / HTTPS', data: '/ssl' },
           { value: 'Streams', data: '/docs#streams' },
           { value: 'Terms of Service', data: '/tos' },
-          { value: 'Themes', data: '/themes' },
           { value: 'UNIX Pipes', data: '/curl' },
           { value: 'Websockets', data: '/websockets' },
           { value: 'Webhook', data: '/faq#what-is-a-webhook' },
           { value: 'Wishlist', data: '/wishlist' }
          ];
-        
+
+        //  { value: 'Themes', data: '/themes' },
+
         $(function(){
 
           // setup autocomplete function pulling from keywords[] array
