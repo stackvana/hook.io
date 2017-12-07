@@ -27,13 +27,21 @@
 <div>
   <h1>Roles</h1>
   <div class="container content">
-    <p>Roles provide an easy way to restrict access to your {{appName}} services based on access keys.</p>
-
+    <a name="what-are-role-checks"></a>
+    <h2>What are role Checks?</h2>
+    <p>Roles are unique identifiers representing granular access to the hook.io API. Every API method on hook.io has a unique Role name. Roles provide an easy way to grant access to your {{appName}} services based on access keys.</p>
     <!-- ><p>Every <a href="{{appUrl}}/events">event</a> on {{appName}} is tracked as a role.</p> -->
-    <p>Roles are assigned during <a href="{{appUrl}}/keys">API Access Key</a> creation, allowing granular role access checks per generated key.</p>
-    <p>All <a href="{{appUrl}}/events">System Events</a> on {{appName}} have a one-to-one mapping to <a href="{{appUrl}}/roles">Roles</a>.</p>
+    <p>Roles can be assigned during the creation of an <a href="{{appUrl}}/keys">API Access Key</a>, allowing granular role access checks per generated key. All <a href="{{appUrl}}/events">System Events</a> on {{appName}} have a one-to-one mapping to <a href="{{appUrl}}/roles">Roles</a>.</p>
+    <p>Role checks are used to determine if an incoming HTTP request has authorization to access the requested resource. {{appName}} offers several integrated roles and custom roles that may be associated with a generated Access Key.</p>
+    <h2>
+      <form method="GET" action="{{appUrl}}/keys">
+        <button class="btn btn-primary">
+          Create a new API Access Key
+        </button>
+      </form>
+    </h2>
 
-    <h2><a href="{{appUrl}}/keys">Create a new API Access Key using these roles</a></h2>
+    <br/>
     <h2>Available Roles</h2>
     <table class="roles table">
       <tr>
@@ -45,6 +53,21 @@
         </th>
       </tr>
     </table>
+
+    <hr/>
+    <a name="custom-role-checks"></a>
+    <h2>Custom Role Checks</h2>
+    <p>Aside from the built-in roles {{appName}} provides, it's also possible to specify a custom role value when creating an API Access Key which can used later to check access using the <a href="/keys/checkAccess">keys.checkAccess HTTP API method</a> ( available in <a href="/sdk">SDK</a>)</p>
+    <p>
+      For Example, inside a Hook service as <code>req.checkAccess(role, cb)</code>:
+      <code><pre>
+module['exports'] = function checkAccess (req, res) {
+  req.checkAccess('custom::role', function(err, hasAccess){
+    res.json(hasAccess);
+  });
+};</pre></code>
+    </p>
+    <p class="hint">This will be scoped to the <code>hook_private_key</code> HTTP parameter or to the current user session.</p>
   </div>
 </div>
 

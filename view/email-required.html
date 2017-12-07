@@ -15,9 +15,7 @@
           -->
           <p><span class="error"><strong class="i18n">Attention:</strong></span> <span class="i18n">A valid email address is now required for all accounts. Please add an email address to this account to continue.</span><br/>
               Without a valid email address it's possible you may get locked out of your account.</p>
-              
           <span class="registerMessage"></span>
-
           <form name="updateEmail" id="updateEmail" class="form" role="form">
             <div class="form-group">
               <label for="email i18n">Account Email:</label>
@@ -32,12 +30,12 @@
 </div>
 
 <script type="text/javascript">
-  
+
   $(document).ready(function(){
     $('#email').focus();
 
     // updates email address for account
-    $('#updateEmail .saveEmail').on('click', function(){
+    $('#updateEmail .saveEmail').on('click', function () {
       $.ajax({
         type: "POST",
         url: '/email-required',
@@ -57,7 +55,6 @@
           setTimeout(function(){
             $('.registerMessage').removeClass('shake shake-constant');
           }, 400);
-          
         }
       })
       return false;
