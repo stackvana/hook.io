@@ -43,7 +43,8 @@ module['exports'] = function view (opts, callback) {
           return res.end(err.message);
         }
         if (results.length === 0) {
-          req.session.user = params.name;
+          // removed this, since it seems to auto-set the user name in an unexpected / legacy way
+          // req.session.user = params.name;
           var r = {
             result: "available",
           };
