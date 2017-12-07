@@ -90,13 +90,15 @@ module['exports'] = function view (opts, callback) {
             submit: "Add Entry"
           },
           grid: {
-            legend: 'Your Domains'
+            legend: 'Your Domains',
+            keys: ['name', 'forwardUrl']
           },
           showDestroyButton: true
         },
         schema: {
           name: {
             type: 'string',
+            label: 'name',
             description: 'Your custom domain name. Example: marak.com',
             placeholder: 'marak.com',
             required: true,
