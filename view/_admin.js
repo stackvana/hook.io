@@ -114,12 +114,16 @@ module['exports'] = function view (opts, callback) {
       };
 
       if (typeof params.loginAs !== "undefined" && params.loginAs.length > 0) {
-        // Is this enough to trigger new session?
-        // I think instead we should actually clear session / relogin using a token?
-        req.session.user = params.loginAs;
-        // TODO: we do need to get users email here too?
-        delete req.session.email;
-        return res.redirect('/services');
+        // get requested user document
+        return user.findOne({ name: params.loginAs }, function (err, u) {
+          if (err) {
+            return res.end(err.message);
+          }
+          // login with found user
+          return user.login({ req: req, res: res, user: u }, function () {
+            return res.redirect('/services');
+          });
+        });
       }
 
       var type = "unknown", val;
