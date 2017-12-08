@@ -67,12 +67,11 @@ tap.test('attempt to manually create test user in stripe', function (t) {
     });
     */
   // });
-  
 });
 
 tap.test('attempt to subscribe to stripe subscription with brand new account - pro plan', function (t) {
   r({ 
-      uri: baseURL + "/billing", 
+      uri: baseURL + "/billing",
       method: "POST",
       json: true,
       jar: true,
@@ -97,9 +96,12 @@ tap.test('get the customer id from newly created hook.io user', function (t) {
       json: true,
       jar: true,
     }, function (err, res) {
+      if (err) {
+        throw err;
+      }
       billingEntry = res[0];
       t.error(err, 'request did not error');
-      t.equal(billingEntry.plan, 'BASIC_HOSTING_PLAN_25');
+      t.equal(billingEntry.plan, 'BASIC_HOSTING_PLAN_25', 'hosting plan matches');
       r({ 
           uri: baseURL + "/account", 
           method: "GET",
@@ -136,7 +138,7 @@ tap.test('attempt to subscribe to stripe subscription with existing user - no se
       "exp_year": 2021,
       "cvc": '123'
     }
-  }, function(err, token) {
+  }, function (err, token) {
     testUserDavid.stripeToken = token;
     r({ 
         uri: baseURL + "/billing", 
@@ -146,7 +148,8 @@ tap.test('attempt to subscribe to stripe subscription with existing user - no se
         form: {
           "addCustomer": true,
           "stripeToken": testUserDavid.stripeToken.id,
-          "email": testUserDavid.email
+          "email": testUserDavid.email,
+          "amount": 2500
         },
       }, function (err, res) {
         t.error(err, 'request did not error');
@@ -156,14 +159,20 @@ tap.test('attempt to subscribe to stripe subscription with existing user - no se
 });
 
 tap.test('attempt to manually clear test data from stripe', function (t) {
-  billing.find({ email: testUserDavid.email }, function(err, results){
-    async.each(results, function(b, cb){
+  billing.find({ email: testUserDavid.email }, function (err, results) {
+    console.log('found the results', results);
+    async.each(results, function (b, cb) {
       stripe.customers.del(b.stripeID, function (err, customer) {
-        b.destroy(function(){
+        // skip deleting david's $50 plan ( needed for testing )
+        if (b.plan === "BASIC_HOSTING_PLAN_50") {
           cb();
-        });
+        } else {
+          b.destroy(function(){
+            cb();
+          });
+        }
       });
-    }, function(){
+    }, function () {
       t.end();
     });
   });
@@ -179,7 +188,7 @@ tap.test('attempt to subscribe to stripe subscription with existing user - valid
     }
   }, function(err, token) {
     testUserDavid.stripeToken = token;
-    r({ 
+    r({
         uri: baseURL + "/login", 
         method: "POST",
         json: true,
@@ -190,7 +199,7 @@ tap.test('attempt to subscribe to stripe subscription with existing user - valid
         },
       }, function (err, res) {
 
-      r({ 
+      r({
           uri: baseURL + "/billing", 
           method: "POST",
           json: true,
@@ -199,6 +208,7 @@ tap.test('attempt to subscribe to stripe subscription with existing user - valid
             "addCustomer": true,
             "stripeToken": testUserDavid.stripeToken.id,
             "email": testUserDavid.email,
+            "amount": 2500
           },
         }, function (err, res) {
           t.error(err, 'request did not error');
@@ -210,14 +220,18 @@ tap.test('attempt to subscribe to stripe subscription with existing user - valid
 });
 
 tap.test('attempt to manually clear test data from stripe', function (t) {
-  billing.find({ email: testUserDavid.email }, function(err, results){
-    async.each(results, function(b, cb){
+  billing.find({ email: testUserDavid.email }, function (err, results) {
+    async.each(results, function (b, cb) {
       stripe.customers.del(b.stripeID, function (err, customer) {
-        b.destroy(function(){
+        if (b.plan === "BASIC_HOSTING_PLAN_50") {
           cb();
-        });
+        } else {
+          b.destroy(function(){
+            cb();
+          });
+        }
       });
-    }, function(){
+    }, function () {
       t.end();
     });
   });
@@ -229,7 +243,6 @@ tap.test('attempt to clear test user - as superadmin', function (t) {
     super_private_key: config.superadmin.super_private_key,
     email: testUser.email
   }}, function (err, res, body) {
-    t.error(err);
     t.error(err, 'request did not error');
     t.equal(typeof res, 'object', "response contains object");
     t.equal(res.result, 'deleted', "deleted user");

@@ -26,6 +26,10 @@ module['exports'] = function view (opts, callback) {
     var og = params.amount;
     var planName = "free";
 
+    if (typeof params.amount === undefined) {
+      params.amount = 1000;
+    }
+
     params.amount = Number(params.amount);
     var _plan = "BASIC_HOSTING_PLAN";
 
@@ -36,7 +40,7 @@ module['exports'] = function view (opts, callback) {
     Object.keys(servicePlan).forEach(function(item){
       if (servicePlan[item].stripe_label === _plan) {
         planName = item;
-      } 
+      }
     });
 
     function createStripeSubscription (id, opts, cb) {
@@ -144,7 +148,7 @@ module['exports'] = function view (opts, callback) {
 
       results.forEach(function(item){
         // item.destroy();
-        billingForm(item, function (err, re){
+        billingForm(item, function (err, re) {
           $('.billingForm').append(re);
           count--;
           finish();
