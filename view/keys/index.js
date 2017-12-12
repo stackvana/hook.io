@@ -31,6 +31,7 @@ module['exports'] = function view (opts, callback) {
    // return callback(null, $.html());
  } else {
    $('.loginLink').remove();
+   $('.keysMenu').remove();
  }
 
  // TODO: move to resource.before hooks
