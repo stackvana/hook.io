@@ -7,8 +7,8 @@
 
   function checkStats () {
     // TODO: add real-time info for other metrics
-    $.get('/metrics/hook/totalHits', function(res){
-      $('.totalRun').html(numberWithCommas(res.toString()));
+    $.get('/metrics/system/report', function(res){
+      $('.totalRun').html(numberWithCommas(res.totalHits.toString()));
       setTimeout(checkStats, 1000);
     });
   };
