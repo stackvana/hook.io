@@ -37,3 +37,4 @@ install_default_hooks:
   command: node /src/scripts/install/add-default-hooks.js
   links:
     - "couch:couch"
+    - "redis:redis"
