@@ -1,4 +1,4 @@
-FROM node:0.12.7-wheezy
+FROM node:8.2.1-wheezy
 
 # update apt-get
 RUN apt-get -y update && apt-get -y upgrade
