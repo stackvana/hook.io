@@ -8,7 +8,7 @@ couch:
 
 hookio:
   build: .
-  command: node /src/bin/server
+  command: node /src/bin/services/web
   ports:
     - "80:9999"
   links:
@@ -18,7 +18,7 @@ hookio:
 
 worker0:
   build: .
-  command: node /src/bin/worker
+  command: node /src/bin/services/worker
   privileged: true
   ports:
     - "49161:10000"
