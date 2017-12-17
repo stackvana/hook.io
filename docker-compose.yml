@@ -1,5 +1,5 @@
 redis:
-  image: redis
+  build: ./docker/redis
 
 couch:
   build: ./docker/couchdb
