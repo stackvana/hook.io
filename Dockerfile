@@ -4,7 +4,7 @@ FROM node:8.2.1-wheezy
 RUN apt-get -y update && apt-get -y upgrade
 
 # install build-essential
-RUN apt-get -y install build-essential binutils debootstrap
+RUN apt-get -y install build-essential binutils debootstrap netcat
 
 # install mon
 RUN cd /tmp; git clone https://github.com/tj/mon; cd mon; make install
