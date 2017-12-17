@@ -22,6 +22,10 @@ RUN adduser --gid 1000 --disabled-password --gecos '' worker
 RUN mkdir -p /var/chroot/bin
 COPY ./bin /var/chroot/bin
 
+# fake ssl certificates
+RUN mkdir -p /etc/letsencrypt/live/hook.io
+COPY ./ssl/*.pem /etc/letsencrypt/live/hook.io/
+
 # COPY /bin/bash /var/chroot/bin/bash
 
 # RUN debootstrap --arch i386 wheezy /var/chroot http://httpredir.debian.org/debian
