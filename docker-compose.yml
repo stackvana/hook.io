@@ -6,15 +6,23 @@ couch:
   ports:
     - "49162:5984"
 
-hookio:
+web:
   build: .
   command: /src/bin/docker-wait node /src/bin/services/web
-  ports:
-    - "80:9999"
   links:
     - "redis:redis"
     - "couch:couch"
     - "worker0:worker0"
+    - "balancer:balancer"
+
+balancer:
+  build: .
+  command: /src/bin/docker-wait node /src/bin/services/load-balancer
+  ports:
+    - "80:9999"
+  links:
+    - "worker0:worker0"
+    - "web:web"
 
 worker0:
   build: .
@@ -38,4 +46,4 @@ install_default_hooks:
   links:
     - "couch:couch"
     - "redis:redis"
-    - "hookio:hookio"
+    - "balancer:balancer"
