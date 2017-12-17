@@ -1,0 +1,45 @@
+#!/bin/sh
+
+wait_for() {
+  HOST=$1
+  PORT=$2
+  echo "Waiting for $HOST:$PORT..."
+  until $(nc -z $HOST $PORT)
+  do
+    sleep 1
+  done
+}
+
+REDIS=$(grep redis /etc/hosts | head -1)
+COUCH=$(grep couch /etc/hosts | head -1)
+WORKER0=$(grep worker0 /etc/hosts | head -1)
+WEB=$(grep web /etc/hosts | head -1)
+BALANCER=$(grep balancer /etc/hosts | head -1)
+
+if [ -n "$REDIS" ]
+then
+  wait_for redis 6379
+fi
+
+if [ -n "$COUCH" ]
+then
+  wait_for couch 5984
+fi
+
+if [ -n "$WORKER0" ]
+then
+  wait_for worker0 10000
+fi
+
+if [ -n "$WEB" ]
+then
+  wait_for web 11000
+fi
+
+if [ -n "$BALANCER" ]
+then
+  wait_for balancer 9999
+fi
+
+echo "Executing $@"
+exec $@

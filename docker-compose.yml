@@ -8,7 +8,7 @@ couch:
 
 hookio:
   build: .
-  command: node /src/bin/services/web
+  command: /src/bin/docker-wait node /src/bin/services/web
   ports:
     - "80:9999"
   links:
@@ -18,7 +18,7 @@ hookio:
 
 worker0:
   build: .
-  command: node /src/bin/services/worker
+  command: /src/bin/docker-wait node /src/bin/services/worker
   privileged: true
   ports:
     - "49161:10000"
@@ -28,13 +28,14 @@ worker0:
 
 setup:
   build: .
-  command: /src/config/couchdb/create_admin.sh
+  command: /src/bin/docker-wait /src/config/couchdb/create_admin.sh
   links:
     - "couch:couch"
 
 install_default_hooks:
   build: .
-  command: node /src/scripts/install/add-default-hooks.js
+  command: /src/bin/docker-wait node /src/scripts/install/add-default-hooks.js
   links:
     - "couch:couch"
     - "redis:redis"
+    - "hookio:hookio"
