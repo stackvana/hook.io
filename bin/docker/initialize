@@ -5,6 +5,6 @@ then
   echo "Creating admin..."
   sh /src/config/couchdb/create_admin.sh
   echo "Adding default hooks..."
-  /src/bin/docker/wait hookio -c node /src/scripts/install/add-default-hooks.js
+  /src/bin/docker/wait web -c node /src/scripts/install/add-default-hooks.js
   touch "/src/.setup_done"
 fi

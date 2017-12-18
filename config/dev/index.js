@@ -34,7 +34,7 @@ module['exports'] = {
   },
   web: {
     port: 11000,
-    host: "hookio",
+    host: "app",
     https: false,
     registerWithLoadBalancer: true,
     roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io"],

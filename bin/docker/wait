@@ -5,7 +5,7 @@ PORT[redis]=6379
 PORT[couch]=5984
 PORT[balancer]=9999
 PORT[worker0]=10000
-PORT[hookio]=11000
+PORT[web]=11000
 
 wait_for() {
   local host=$1
