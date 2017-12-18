@@ -7,4 +7,13 @@ then
   echo "Adding default hooks..."
   /src/bin/docker/wait web -c node /src/scripts/install/add-default-hooks.js
   touch "/src/.setup_done"
+
+  echo
+  echo "================================================================"
+  echo "REMINDER: you need to configure your local instance."
+  echo
+  echo "  e.g. curl http://{{your_docker_machine_ip}}/_admin?setBase=1"
+  echo
+  echo "See docs/Docker.md for more information."
+  echo "================================================================"
 fi
