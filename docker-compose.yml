@@ -11,6 +11,9 @@ services:
   hookio:
     build: .
     command: /src/bin/docker/wait redis couch worker0 balancer -c node /src/bin/services/web
+    depends_on:
+      - "redis"
+      - "couch"
     #ports:
     #  - "11000"
 
@@ -20,6 +23,8 @@ services:
     command: /src/bin/docker/wait redis -c node /src/bin/services/load-balancer
     ports:
       - "80:9999"
+    depends_on:
+      - "hookio"
 
   worker0:
     #build: .
@@ -28,8 +33,12 @@ services:
     privileged: true
     ports:
       - "49161:10000"
+    depends_on:
+      - "hookio"
 
   setup:
     #build: .
     image: "hookio_hookio"
     command: /src/bin/docker/wait couch -c /src/bin/docker/initialize
+    depends_on:
+      - "hookio"
