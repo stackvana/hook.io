@@ -1,49 +1,35 @@
-redis:
-  build: ./docker/redis
+version: '2'
+services:
+  redis:
+    build: ./docker/redis
 
-couch:
-  build: ./docker/couchdb
-  ports:
-    - "49162:5984"
+  couch:
+    build: ./docker/couchdb
+    ports:
+      - "49162:5984"
 
-web:
-  build: .
-  command: /src/bin/docker-wait node /src/bin/services/web
-  links:
-    - "redis:redis"
-    - "couch:couch"
-    - "worker0:worker0"
-    - "balancer:balancer"
+  hookio:
+    build: .
+    command: /src/bin/docker-wait redis couch worker0 balancer -c node /src/bin/services/web
+    #ports:
+    #  - "11000"
 
-balancer:
-  build: .
-  command: /src/bin/docker-wait node /src/bin/services/load-balancer
-  ports:
-    - "80:9999"
-  links:
-    - "worker0:worker0"
-    - "web:web"
+  balancer:
+    #build: .
+    image: "hookio_hookio"
+    command: /src/bin/docker-wait redis -c node /src/bin/services/load-balancer
+    ports:
+      - "80:9999"
 
-worker0:
-  build: .
-  command: /src/bin/docker-wait node /src/bin/services/worker
-  privileged: true
-  ports:
-    - "49161:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
+  worker0:
+    #build: .
+    image: "hookio_hookio"
+    command: /src/bin/docker-wait redis couch -c node /src/bin/services/worker
+    privileged: true
+    ports:
+      - "49161:10000"
 
-setup:
-  build: .
-  command: /src/bin/docker-wait /src/config/couchdb/create_admin.sh
-  links:
-    - "couch:couch"
-
-install_default_hooks:
-  build: .
-  command: /src/bin/docker-wait node /src/scripts/install/add-default-hooks.js
-  links:
-    - "couch:couch"
-    - "redis:redis"
-    - "balancer:balancer"
+  setup:
+    #build: .
+    image: "hookio_hookio"
+    command: /src/bin/docker-wait couch -c /src/bin/initialize
