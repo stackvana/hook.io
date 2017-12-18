@@ -10,7 +10,9 @@ RUN apt-get -y install build-essential binutils debootstrap netcat
 RUN cd /tmp; git clone https://github.com/tj/mon; cd mon; make install
 
 # copy basic files
-COPY . /src
+# Only copy package.json first to help with cache
+
+COPY package.json /src/
 RUN export USER=root && cd /src && rm -rf ./node_modules/ && npm install && npm link
 
 # disable install modules for now
@@ -34,4 +36,5 @@ COPY ./ssl/*.pem /etc/letsencrypt/live/hook.io/
 # RUN mkdir -p /var/chroot/etc/
 # RUN echo 'nameserver 8.8.4.4' | tee -a /var/chroot/etc/resolv.conf
 
+COPY . /src
 WORKDIR /src
