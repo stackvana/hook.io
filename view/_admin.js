@@ -79,12 +79,6 @@ module['exports'] = function view (opts, callback) {
        }
      }
 
-      // TODO: add roles and groups
-      if (typeof req.session.user === "undefined" || req.session.user.toLowerCase() !== "marak") {
-        req.session.redirectTo = "/new";
-        return res.redirect('/services');
-      }
-
       // Special line only used for local docker dev
       // Not used in production
       if (typeof params.setBase === "string" && params.setBase.length > 0) {
@@ -92,6 +86,12 @@ module['exports'] = function view (opts, callback) {
         var url = require('url');
         config.app.url = "http://" + req.host + ":" + (params.port || "80");
         return res.end('set baseUrl to: ' + config.app.url)
+      }
+
+      // TODO: add roles and groups
+      if (typeof req.session.user === "undefined" || req.session.user.toLowerCase() !== "marak") {
+        req.session.redirectTo = "/new";
+        return res.redirect('/services');
       }
 
      function loadPresenter (code, callback) {
