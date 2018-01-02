@@ -60,6 +60,20 @@ module['exports'] = {
       host: "redis"
     }
   },
+  broadcast: {
+    port: 9998,
+    host: "0.0.0.0",
+    https: false,
+    publicIP: "127.0.0.1",
+    roots: ["ws.hookio", "0.0.0.0", "localhost", "ws.hook.io"],
+    secret: "change secret",
+    redis: {
+      prefix: '/session/',
+      port: 6379,
+      password: "password",
+      host: "redis"
+    }
+  },
   //baseUrl: "http://localhost:9999",
   baseUrl: "http://localhost:9999",
   couch: {
