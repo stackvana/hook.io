@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var colors = require('colors');
-var worker = require('../../lib/worker');
+var worker = require('../../lib/worker/worker');
 
 worker.start({}, function (err, app) {
   if (err) {
