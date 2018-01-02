@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+var broadcast = require('../../lib/broadcast/broadcast');
+broadcast.start({}, function (err, app) {
+  if (err) {
+    throw err;
+  }
+  console.log('web server started', app.server.address())
+});
