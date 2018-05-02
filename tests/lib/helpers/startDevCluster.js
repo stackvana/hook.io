@@ -1,6 +1,6 @@
-var lb = require('../../../lib/load-balancer'),
-    web = require('../../../lib/web'),
-    worker = require('../../../lib/worker');
+var lb = require('../../../lib/load-balancer/load-balancer'),
+    web = require('../../../lib/web/web'),
+    worker = require('../../../lib/worker/worker');
 
 var config = require('../../../config');
 
