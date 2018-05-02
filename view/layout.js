@@ -131,7 +131,7 @@ module['exports'] = function view (opts, callback) {
     var out = $.html();
     var appName = "hook.io",
         appAdminEmail = "hookmaster@hook.io",
-        appPhonePrimary = "1-917-267-2516";
+        appPhonePrimary = "";
 
     // TODO: move configuration override to hook.io-white
     var white = {};

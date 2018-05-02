@@ -142,6 +142,7 @@ module['exports'] = function view (opts, callback) {
           }
 
           // Only allow fields which exist on the Hook resource
+          // Should this be an option in resource library itself?
           var safeParams = {};
           Object.keys(hook.schema.properties).forEach(function (p) {
             if (params[p] !== 'undefined') {

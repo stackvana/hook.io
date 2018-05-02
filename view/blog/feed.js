@@ -19,9 +19,13 @@ module['exports'] = function view (opts, callback) {
   var feed = new RSS(feedOptions);
 
   function addItem (post) {
-    var getData = new Function(post.$('.data').html() + ' return data;');
-    var data = getData();
-    feed.item(data);
+    try {
+      var getData = new Function(post.$('.data').html() + ' return data;');
+      var data = getData();
+      feed.item(data);
+    } catch (err) {
+      console.log('blog rendering error', err);
+    }
   };
 
   var posts = [

@@ -5,7 +5,6 @@ var baseURL = config.baseUrl;
 var wsUrl = config.wsUrl;
 
 var startDevCluster = require('../lib/helpers/startDevCluster');
-// TODO: add back server
 
 tap.test('start the dev cluster', function (t) {
   startDevCluster({}, function (err, _apps) {
@@ -81,6 +80,8 @@ tap.test('send some data to missing hook over websocket', function (t) {
   });  
 });
 */
+
+// TODO: add test for error conditions on websocket?
 
 tap.test('create a ws connection to ws root', function (t) {
   rootWs = new WebSocket('ws://' + wsUrl + '');
