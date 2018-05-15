@@ -1,4 +1,4 @@
-var big = require('big');
+// var big = require('big');
 var view = require('view');
 
 var config = require('../config');
@@ -25,7 +25,7 @@ module['exports'] = function view (opts, callback) {
       res = opts.response;
   $ = req.white($);
 
-  var views = big.server.app.view;
+  // var views = big.server.app.view;
 
 
   // TODO: create special hard-coded admin key for super-admin privledges
@@ -43,7 +43,7 @@ module['exports'] = function view (opts, callback) {
     Render Views Table representing all views on site
 
   */
-  /* */
+  /* 
   var link = function (v) {
     return '<a href="' + v + '">' + v + '</a>';
   };
@@ -59,7 +59,7 @@ module['exports'] = function view (opts, callback) {
       });
     }
   });
-
+  */
    psr(req, res, function(req, res) {
      var params = req.resource.params;
 
