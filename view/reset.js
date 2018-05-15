@@ -34,6 +34,7 @@ module['exports'] = function resetPassword (opts, cb) {
         req.login(u, function () {
           req.session.user = u.name;
           req.session.email = u.email;
+          req.session.user_ctime = u.ctime;
           req.session.hookAccessKey = u.hookAccessKey;
           // TODO: We could invalidate / regenerate user.token here to make login tokens one-time use only
           return res.redirect('/account?reset=true');

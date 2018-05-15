@@ -1,9 +1,7 @@
 <style>
-
   legend {
     font-size: 22px;
   }
-
   .hooks {
     font-size: 28px;
     text-align:center;
@@ -30,11 +28,9 @@
   .smaller {
     font-size: 14px;
   }
-
   #slider {
     cursor: pointer;
   }
-
   #addPaymentMethod {
     -moz-box-shadow: 0px 1px 38px 0px #ffffff;
     -webkit-box-shadow: 0px 1px 38px 0px #ffffff;
@@ -76,11 +72,10 @@
     position:relative;
     top:1px;
   }
- 
  .noBilling {
    font-size: 22px;
  }
-/*
+  /*
   #addPaymentMethod {
     font-size: 36px;
     height: 120px;
@@ -96,24 +91,37 @@
 
 <div>
   <h1>Billing</h1>
-
+  <div class="row noBilling">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="blog-area well boxAlert">
+        <div class="container content" style="position:relative;text-align:center;">
+          <div><span class=""><strong class="i18n large">Notice: </strong></span> <span class="i18n large"><span class="daysLeftInTrial">x</span> days remaining in 60 day Trial Period.</span><br/><span class="smaller"> If this account is not upgraded to a paid account within <span class="daysLeftInTrial">x</span> days it will become temporarily locked.</span></div>
+          <!--
+          <div>Creation Date: <span class="accountCreated"></span></div>
+          <div>Days left in Trial Account: <span class="daysLeftInTrial"></span></div>
+          <br/>
+          -->
+          <p>
+            <form name="upgradeForm" id="upgradeForm" class="form" role="form" method="POST" action="/pricing#plans">
+              <button class="btn btn-primary i18n">Upgrade Account</button><br/> <!-- <span class="medium ">Our cheapest plan is now only $2.00 a month.</span> -->
+            </form>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container content">
     <div class="status"></div>
-    <div class="noBilling" align="left">
+    <div class="noBilling" align="center">
       <p>
-        No billing information available.
-      </p>
-      <p>
-        Did you know that paid accounts have access to  <a href="{{appUrl}}/pricing">additional features</a>?
+        Paid accounts have access to <a href="{{appUrl}}/pricing">additional features</a>.
       </p>
       <p>
         Visit our <a href="{{appUrl}}/pricing">Pricing</a> section to purchase a hosting plan today.
       </p>
     </div>
-
     <div class="billingForm">
     </div>
-
     <form action="" method="POST" id="stripeForm">
       <script
       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -131,9 +139,7 @@
     <div class="cancelPlan">
       <h3><a href="/account/cancel" class="smaller">Cancel Paid Subscription</a></h3>
     </div>
-
   </div>
-
   <br/>
   <br/>
 </div>

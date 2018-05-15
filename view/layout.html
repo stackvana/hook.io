@@ -425,7 +425,7 @@
                       <h2><span class="no-p-laft">Microservice and Webhook Hosting</span></h2>
                     </div>
                     <div class="cap-title wow slideInRight" data-wow-duration="2s" data-wow-delay="0s">
-                      <h3><span class="no-p-laft">free for developers</span></h3>
+                      <h3><span class="no-p-laft">free to try</span></h3>
                     </div>                    
                     <div class="cap-dec wow slideInRight" data-wow-duration="3s" data-wow-delay="0s">
                       <p>{{appName}} is the leading open-source provider of microservice and webhook hosting.<br /> Our service is built with <span class="octicon octicon-heart" style="color:red;"></span> by Developers for Developers</p>
@@ -462,6 +462,55 @@
   <!-- strart model product area -->
   <section class="model_product_area">
     <div>
+      <div class="row trialPeriod notice">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="blog-area well boxAlert">
+            <div class="container content" style="position:relative;text-align:center;">
+              <p style="position:absolute;right:5px;top:0px;"><a href="#" class="closeWarning">Hide [X]</a></p>
+              <div><span class=""><strong class="i18n large">Notice: </strong></span> <span class="i18n large"><span class="daysLeftInTrial">x</span> days remaining in 60 day Trial Period.</span><br/><span class="smaller"> If this account is not upgraded to a paid account within <span class="daysLeftInTrial">x</span> days it will become temporarily locked.</span></div>
+              <!--
+              <div>Creation Date: <span class="accountCreated"></span></div>
+              <div>Days left in Trial Account: <span class="daysLeftInTrial"></span></div>
+              <br/>
+              -->
+              <p>
+                <form name="upgradeForm" id="upgradeForm" class="form" role="form" method="POST" action="{{appUrl}}/pricing#plans">
+                  <button class="btn btn-primary i18n">Upgrade Account</button><br/> <!-- <span class="medium ">Our cheapest plan is now only $2.00 a month.</span> -->
+                </form>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row upgradeAccount notice">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="blog-area well boxAlert">
+            <div class="container content" style="position:relative;text-align:center;">
+              <p style="position:absolute;right:5px;top:0px;"><a href="#" class="closeWarning">Hide [X]</a></p>
+              <div>
+                <p>
+                  <span class=""><strong class="i18n large">Notice: </strong></span><span class="medium">Due to high demand {{appName}} is no longer supporting indefinitely free accounts.</span>
+                </p>
+                <p>
+                  <span class="medium"> If this account is not upgraded within <span class="daysLeftInTrial">x</span> days it will become temporarily locked.</span></div>
+                </p>
+              <!--
+              <div>Creation Date: <span class="accountCreated"></span></div>
+              <div>Days left in Trial Account: <span class="daysLeftInTrial"></span></div>
+              <br/>
+              -->
+              <p>
+                <form name="upgradeForm" id="upgradeForm" class="form" role="form" method="POST" action="/pricing#plans">
+                  <button class="btn btn-primary i18n">Upgrade Account</button><br/> <!-- <span class="medium ">Our cheapest plan is now only $2.00 a month.</span> -->
+                </form>
+              </p>
+              <span class="smaller">Our cheapest plan costs $2.00 per month and provides all the features of the free account.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 yield">
           <!--
@@ -732,6 +781,14 @@
         //  { value: 'Themes', data: '/themes' },
 
         $(function(){
+
+          $('.closeWarning').on('click', function(){
+            $('.trialPeriod').remove();
+            $('.upgradeAccount').remove();
+            $.get('/account/hide-warnings', function (res) {
+            });
+            return false;
+          });
 
           // setup autocomplete function pulling from keywords[] array
           $('#autocomplete').autocomplete({

@@ -4,12 +4,13 @@ var servicePlan = require('../lib/resources/servicePlan');
 var config = require('../config');
 var bodyParser = require('body-parser');
 var mergeParams = require('merge-params');
+var moment = require('moment');
 var request = require('request');
 var billing = require('../lib/resources/billing')
 var stripe = require('stripe')(config.stripe.secretKey);
 var servicePlan = require('../lib/resources/servicePlan');
-
 var billingForm = require('./billingForm');
+var TRIAL_DAYS_LIMIT = 60;
 
 module['exports'] = function view (opts, callback) {
 
@@ -17,14 +18,23 @@ module['exports'] = function view (opts, callback) {
   var req = opts.request, res = opts.response;
 
   $ = req.white($);
+  var now = moment();
+  var created = moment(req.session.user_ctime);
 
+  if (req.session.servicePlan === 'free') {
+    created = moment('5/15/2018');
+  }
+
+  var daysSinceCreation = now.diff(created, 'days');
+
+  $('.daysLeftInTrial').html((TRIAL_DAYS_LIMIT - daysSinceCreation).toString());
   $('#addPaymentMethod').attr('data-key', config.stripe.publicKey);
 
   bodyParser()(req, res, function bodyParsed(){
     mergeParams(req, res, function(){});
     var params = req.resource.params;
     var og = params.amount;
-    var planName = "free";
+    var planName = "trial";
 
     if (typeof params.amount === undefined) {
       params.amount = 1000;
@@ -33,7 +43,7 @@ module['exports'] = function view (opts, callback) {
     params.amount = Number(params.amount);
     var _plan = "BASIC_HOSTING_PLAN";
 
-    if (params.amount > 500) {
+    if (params.amount > 100) {
       _plan = _plan + "_" + (params.amount / 100);
     }
 
@@ -210,7 +220,7 @@ module['exports'] = function view (opts, callback) {
               req.session.paidStatus = "paid";
 
               // update service plan name based on purchase
-              var planName = "free";
+              var planName = "trial";
               Object.keys(servicePlan).forEach(function(item){
                 if (servicePlan[item].stripe_label === _plan) {
                   planName = item;

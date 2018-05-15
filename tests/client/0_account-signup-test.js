@@ -280,7 +280,7 @@ tap.test('attempt to get account page - valid session', function (t) {
           t.equal(res.email, 'bobby@marak.com', 'has correct email');
           t.equal(res.status,'new', 'has correct status');
           t.equal(res.paidStatus,'unpaid', 'has correct paidStatus');
-          t.equal(res.servicePlan, 'free', 'has correct servicePlan');
+          t.equal(res.servicePlan, 'trial', 'has correct servicePlan');
           t.equal(typeof res.hookAccessKey, 'string', 'has hook access key as string');
           if (typeof res.hookAccessKey === 'string') {
             t.equal(res.hookAccessKey.length, 36, 'is uuid');

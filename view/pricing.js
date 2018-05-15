@@ -14,21 +14,31 @@ module['exports'] = function view (opts, callback) {
         return res.end(err.message);
       }
       var plan = null, pos = 0, cost;
-      _u.servicePlan = _u.servicePlan || 'free';
+
+      _u.servicePlan = _u.servicePlan || 'trial';
+
+      // free accounts no longer avaialble, free accounts are now trial accounts
+      if (_u.servicePlan === 'free') {
+        _u.servicePlan = 'trial';
+      }
+
       Object.keys(servicePlan).forEach(function(key, i){
         if (key === _u.servicePlan) {
           pos = i;
           cost = servicePlan[key].cost;
         }
       })
-      // highlight column of current plan
-      $($('#colgroup col').get(pos + 1)).addClass('bg-info');
-      $($('#colgroup col').get(pos + 1)).addClass('boxShadow');
+      pos = pos - 1;
+      if (pos !== 0) {
+        // highlight column of current plan
+        $($('#colgroup col').get(pos)).addClass('bg-info');
+        $($('#colgroup col').get(pos)).addClass('boxShadow');
 
-      // remove buy button from current plan
-      $('button', $('.cost td').get(pos + 1)).attr('disabled', 'DISABLED');
-      $('button span', $('.cost td').get(pos + 1)).css('background-color', '#000');
-      $($('.currentPlan td').get(pos + 1)).html('<strong>Subscribed</strong>');
+        // remove buy button from current plan
+        $('button', $('.cost td').get(pos)).attr('disabled', 'DISABLED');
+        $('button span', $('.cost td').get(pos)).css('background-color', '#000');
+        $($('.currentPlan td').get(pos)).html('<strong>Subscribed</strong>');
+      }
       finish();
     })
   } else {

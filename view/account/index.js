@@ -96,7 +96,8 @@ module['exports'] = function view (opts, callback) {
     }
     if (params.paid) {
       $('.status').addClass('visible');
-      $('.status').html(' <span>Your Account has been Upgraded!</span> Thank you for your purchase. <br/> You now have access to additional features and higher usage limits.');
+      $('.status').html(' <p><span>Your Account has been Upgraded!</span> Thank you for your purchase.</p>  ');
+      // You now have access to additional features and higher usage limits.
     }
 
     user.find({ name: req.session.user }, function(err, results) {
@@ -176,6 +177,8 @@ module['exports'] = function view (opts, callback) {
                     return res.end(err.message);
                   }
                   req.session.email = result.email;
+                  req.session.user_ctime = result.ctime;
+
                   // display user info in account form
                   // TODO: if form post data, attempt to update user account information ??? done ???
                   if (req.jsonResponse) {

@@ -38,7 +38,7 @@ module['exports'] = function view (opts, callback) {
       return res.end(err.message);
     }
     // console.log('getting metrics for'.yellow, userName)
-    _user.servicePlan = _user.servicePlan || 'free';
+    _user.servicePlan = _user.servicePlan || 'trial';
     return metric.hgetall('/' + userName + '/report', function (err, report) {
       if (err) {
         return res.end(err.message);
@@ -53,7 +53,7 @@ module['exports'] = function view (opts, callback) {
         var now = new Date();
         var month = 'monthlyHits - ' + now.getMonth() + '/' + now.getFullYear();
 
-        $('.usage').append('<tr><td><strong>' + 'Service Plan' + '</strong></td><td>' + (_user.servicePlan || 'free') +'</td></tr>');
+        $('.usage').append('<tr><td><strong>' + 'Service Plan' + '</strong></td><td>' + (_user.servicePlan || 'trial') +'</td></tr>');
         $('.usage').append('<tr><td><strong>' + 'Currently Running' + '</strong></td><td>' + report['running'] +' / ' + servicePlan[_user.servicePlan].concurrency +'</td></tr>');
         $('.usage').append('<tr><td><strong>' + 'Monthly Hits ' + now.getMonth() + '/' + now.getFullYear() + '</strong></td><td>' + report[month] +' / ' + numberWithCommas(servicePlan[_user.servicePlan].hits) +'</td></tr>');
         $('.usage').append('<tr><td><strong>' + 'Total Hits' + '</strong></td><td>' + numberWithCommas(report['totalHits']) + '</td></tr>');

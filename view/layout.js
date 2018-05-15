@@ -1,5 +1,7 @@
 var config = require('../config');
 var i18n = require('i18n-2')
+var moment = require('moment');
+var TRIAL_DAYS_LIMIT = 60;
 
 module['exports'] = function view (opts, callback) {
   var req = opts.req, res = opts.res,
@@ -88,6 +90,7 @@ module['exports'] = function view (opts, callback) {
   // TODO: make this a redirect page instead of inserting into layout now that emails are required
   if (typeof req.session === "undefined" || typeof req.session.user === "undefined" || req.session.user === "anonymous") {
     $('.emailReminder').remove();
+    $('.trialPeriod').remove();
   }
 
   // if no email found on account, we need to update the account!
@@ -113,11 +116,91 @@ module['exports'] = function view (opts, callback) {
         return res.redirect(307, config.app.url + '/register');
       }
     }
+  } else {
+    $('.trialPeriod').remove();
+    $('.upgradeAccount').remove();
   }
 
   if (req.session && req.session.user === 'marak') {
     $('.logo a').attr('href', config.app.url + '/_admin')
   }
+
+  //
+  // Check to see if logged in account has expired it's trial period
+  //
+
+  var now = moment();
+  var created = moment(req.session.user_ctime);
+  var daysSinceCreation = now.diff(created, 'days');
+
+  /*
+  console.log('now', now);
+  console.log('created', created);
+  console.log('days left', daysSinceCreation);
+  console.log('paidStatus', req.session.paidStatus, TRIAL_DAYS_LIMIT - daysSinceCreation)
+  */
+  var trialPages = ['/account', '/pricing', '/account/expired', '/account/usage', '/contact', '/docs', '/register'];
+
+  if ((req && req.session && req.session.paidStatus === "paid")) {
+    // do nothing
+    // paid users are not subject to 60 day trial
+    $('.trialPeriod').remove();
+    $('.upgradeAccount').remove();
+  } else {
+
+    if (req.session.servicePlan === 'free') {
+      // `free` is used for accounts created before 5/7/2018
+      $('.trialPeriod').remove();
+      var now = moment();
+      var created = moment('5/15/2018');
+      var daysSinceCreation = now.diff(created, 'days');
+      $('.daysLeftInTrial').html((TRIAL_DAYS_LIMIT - daysSinceCreation).toString());
+      if (trialPages.indexOf(_url) !== -1) {
+        $('.upgradeAccount').remove();
+      }
+    }
+
+    if (typeof req.session.hideWarning !== 'undefined') {
+      var warningHidden = moment(req.session.hideWarning);
+      var minutesSinceClosed = warningHidden.diff(new Date(), 'minutes');
+      // console.log('minutes since closed', minutesSinceClosed);
+      // re-show warning every 30 minutes ( after user clicks hide )
+      if (minutesSinceClosed >= -5) {
+        $('.notice').remove();
+        // req.hideWarnings = true; // not being used
+      }
+    }
+
+    if (req.session.servicePlan === 'trial') {
+      $('.upgradeAccount').remove();
+    }
+
+    if ((TRIAL_DAYS_LIMIT - daysSinceCreation) < 0) {
+      // trial has expired, redirect to expired page ( but still allow to view pricng page )
+      // todo: create array of allowed url values for expired accounts ( support / pricing / etc )
+      // $('.upgradeAccount').remove();
+      if (trialPages.indexOf(_url) === -1 && !req.jsonResponse) {
+        return res.redirect(307, config.app.url + '/account/expired');
+      }
+      if (req.url !== '/account/expired' && req.url !== '/pricing' && req.url !== '/contact' && !req.jsonResponse) {
+      }
+    } else {
+      if (trialPages.indexOf(req.url) !== -1) {
+        $('.trialPeriod').remove();
+        $('.upgradeAccount').remove();
+      } else {
+        // trial has not yet expired, but since account is not paid we should show a countdown on each page
+        $('.daysLeftInTrial').html((TRIAL_DAYS_LIMIT - daysSinceCreation).toString());
+        $('.accountCreated').html(created.toString());
+      }
+    }
+
+  }
+
+  /*
+  $('.daysLeftInTrial').html((TRIAL_DAYS_LIMIT - daysSinceCreation).toString());
+  $('.accountCreated').html(created.toString());
+  */
 
   // generic white-label function for performing {{mustache}} style replacements of site data
   // Note: Site requires absolute links ( no relative links! )

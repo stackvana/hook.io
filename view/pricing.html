@@ -188,6 +188,7 @@
   <div class="container content" align="center">  
 
     <div class="row">
+      <a name="plans"></a>
       <h1>Hosting Plans</h1>
  
       <div class="col-lg-12 col-md-12 col-sm-12" align="left">
@@ -203,7 +204,7 @@
            <thead>
              <tr>
                <th>&nbsp;</th>
-               <th>Free</th>
+               <th>Basic</th>
                <th>Premium</th>
                <th>Advanced</th>
                <th>Pro</th>
@@ -338,7 +339,7 @@
               <td>
                 <div class="button_set_plain">
                   <div class="newsl_button">
-                    <button class="freePlan"><span>Free</span></button>
+                    <button class="buy" data-amount="200" data-label="Basic Plan" data-description="$2.00 Per Month" data-name="{{appName}} hosting"><span>$2.00</span></button>
                   </div>
                 </div>
               </td>
@@ -406,7 +407,7 @@
                 success: function(res){
 
                   if (res === "paid") {
-                    document.location = "/account?paid=true&plan=" + amount;
+                    document.location = "/account?paid=true"; // &plan=" + amount
                     return;
                   }
                   alert(JSON.stringify(res, true, 2));

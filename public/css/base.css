@@ -22,6 +22,15 @@ label {
   font-size: 1.2em;
 }
 
+.large {
+  font-size: 32px;
+}
+
+.medium {
+  font-size: 24px !important;
+}
+
+
 .visible {
   display: block !important;
 }
@@ -142,4 +151,17 @@ label {
 
 .closeWarning {
   cursor: pointer;
+}
+
+.boxAlert {
+  border: solid;
+  border-width: 1px;
+  box-shadow: 0px 7px 10px 10px #888888;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  margin-bottom: 30px;
+  z-index: 99;
+  position: relative;
+  padding-left: 20px;
 }
