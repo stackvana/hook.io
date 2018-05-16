@@ -34,7 +34,7 @@ module['exports'] = {
   },
   web: {
     port: 11000,
-    host: "0.0.0.0",
+    host: "app",
     https: false,
     registerWithLoadBalancer: true,
     roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io"],
@@ -138,7 +138,7 @@ module['exports'] = {
     },
     //npmPath: __dirname + '/../../../../stackvana/microcule/' || "/Users/chroot/",
     npmPath: "/var/chroot/root/microcule/",
-    publicIP: 'localhost'
+    publicIP: 'worker0'
   },
   customDomains: false,
   MAX_SERVICE_EXECUTIONS_PER_CYCLE: Infinity,
