@@ -1,39 +1,50 @@
-redis:
-  image: redis
+version: '2'
+services:
+  redis:
+    build: ./docker/redis
 
-couch:
-  build: ./docker/couchdb
-  ports:
-    - "49162:5984"
+  couch:
+    build: ./docker/couchdb
+    #ports:
+    #  - "49162:5984"
 
-hookio:
-  build: .
-  command: node /src/bin/server
-  ports:
-    - "80:9999"
-  links:
-    - "redis:redis"
-    - "couch:couch"
-    - "worker0:worker0"
+  app:
+    build: .
+    command: /src/bin/docker/wait redis couch worker0 balancer -c node /src/bin/services/web
+    depends_on:
+      - "redis"
+      - "couch"
+    #ports:
+    #  - "11000"
 
-worker0:
-  build: .
-  command: node /src/bin/worker
-  privileged: true
-  ports:
-    - "49161:10000"
-  links:
-    - "redis:redis"
-    - "couch:couch"
+  balancer:
+    #build: .
+    image: "hookio_app"
+    command: /src/bin/docker/wait redis -c node /src/bin/services/load-balancer
+    ports:
+      - "80:9999"
+    depends_on:
+      - "app"
+    links:
+      - "app:web"
 
-setup:
-  build: .
-  command: /src/config/couchdb/create_admin.sh
-  links:
-    - "couch:couch"
+  worker0:
+    #build: .
+    image: "hookio_app"
+    command: /src/bin/docker/wait redis couch -c node /src/bin/services/worker
+    privileged: true
+    #ports:
+    #  - "49161:10000"
+    depends_on:
+      - "app"
+    links:
+      - "app:web"
 
-install_default_hooks:
-  build: .
-  command: node /src/scripts/install/add-default-hooks.js
-  links:
-    - "couch:couch"
+  setup:
+    image: "hookio_app"
+    command: /src/bin/docker/wait couch -c /src/bin/docker/initialize
+    depends_on:
+      - "app"
+    links:
+      - "app:web"
+

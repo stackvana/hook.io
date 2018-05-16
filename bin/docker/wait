@@ -1,0 +1,28 @@
+#!/bin/bash
+
+declare -A PORT
+PORT[redis]=6379
+PORT[couch]=5984
+PORT[balancer]=9999
+PORT[worker0]=10000
+PORT[web]=11000
+
+wait_for() {
+  local host=$1
+  local port=${PORT[$host]}
+
+  echo "Waiting for $host:$port..."
+  until $(nc -z $host $port); do
+    sleep 1
+  done
+}
+
+until [ "$1" == "-c" ]; do
+  wait_for $1
+  echo "$1 is up"
+  shift
+done
+
+shift
+echo "Executing $@"
+exec $@
