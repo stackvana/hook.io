@@ -7,10 +7,12 @@ var TRIAL_DAYS_LIMIT = 60;
 
 module.exports = function accountExpiredView (opts, cb) {
   var $ = this.$, res = opts.res, req = opts.req;
+  $ = req.white($);
   if (!req.isAuthenticated()) {
     return res.redirect(302, '/login');
   }
   psr(req, res, function () {
+    $('.boxAlert').remove();
     var params = req.resource.params;
     if (req.method === "POST") {
       // check to see if valid email was posted
@@ -44,8 +46,9 @@ module.exports = function accountExpiredView (opts, cb) {
         var created = moment(_user.ctime);
         var daysSinceCreation = now.diff(created, 'days');
 
-        $('.daysLeftInTrial').html((TRIAL_DAYS_LIMIT - daysSinceCreation).toString());
-        $('.accountCreated').html(created.toString());
+        // $('.daysLeftInTrial').html((TRIAL_DAYS_LIMIT - daysSinceCreation).toString());
+        $('.daysSinceCreation').html((daysSinceCreation).toString());
+        $('.accountCreated').html(created.format('MMMM Do, YYYY'));
 
         return cb(null, $.html());
       })

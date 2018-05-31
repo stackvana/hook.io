@@ -139,7 +139,7 @@ module['exports'] = function view (opts, callback) {
   console.log('days left', daysSinceCreation);
   console.log('paidStatus', req.session.paidStatus, TRIAL_DAYS_LIMIT - daysSinceCreation)
   */
-  var trialPages = ['/account', '/pricing', '/account/expired', '/account/usage', '/contact', '/docs', '/register'];
+  var trialPages = ['/account', '/pricing', '/account/expired', '/account/usage', '/account/delete', '/contact', '/docs', '/register'];
 
   if ((req && req.session && req.session.paidStatus === "paid")) {
     // do nothing
@@ -173,6 +173,10 @@ module['exports'] = function view (opts, callback) {
 
     if (req.session.servicePlan === 'trial') {
       $('.upgradeAccount').remove();
+    }
+
+    if (trialPages.indexOf(_url) !== -1) {
+      $('.boxAlert').remove();
     }
 
     if ((TRIAL_DAYS_LIMIT - daysSinceCreation) < 0) {

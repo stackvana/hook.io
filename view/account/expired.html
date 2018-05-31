@@ -10,18 +10,22 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="blog-area">
         <div class="container content" style="position:relative;text-align:left;">
-          <!--
-            <p style="position:absolute;right:5px;top:5px;"><a href="#" class="closeWarning">Close [X]</a></p>
-          -->
-          <p><span class="error"><strong class="i18n">Attention:</strong></span> <span class="i18n">This account has exceeded it's 60 day free trial limit. Your services have been temporarily disabled.</span></p>
-          <div>Creation Date: <span class="accountCreated"></span></div>
-          <div>Days left in Trial Account: <span class="daysLeftInTrial"></span></div>
+          <div align="left">
+            <p class="medium"><span class="error"><strong class="i18n">Attention:</strong></span> <span class="i18n">This account has exceeded it's 60 day free trial limit is now temporarily disabled.</span></p>
+          </div>
+          <div align="center">
+            <!--
+              <p style="position:absolute;right:5px;top:5px;"><a href="#" class="closeWarning">Close [X]</a></p>
+            -->
+            <form name="upgradeForm" id="upgradeForm" class="form" role="form" method="POST" action="{{appUrl}}/pricing#plans">
+              <button class="btn btn-primary i18n">Upgrade Account</button>
+            </form>
+          </div>
           <br/>
-          <form name="upgradeForm" id="upgradeForm" class="form" role="form" method="POST" action="/pricing">
-            <button class="btn btn-primary i18n">Upgrade Account</button>
-          </form>
-          <br/>
-          <p>In order to restore services, please upgrade to a <a href="/pricing">paid account</a>. Our cheapest plan is now only $2.00 a month. </br> If you are unable to afford a paid account please <a href="/contact">contact support</a> and we'll do our best to help keep your services online.</p>
+          <div align="left">
+            <p>In order to restore services, please upgrade to a <a href="{{appUrl}}/pricing#plans">paid account</a>. Our cheapest plan is now only $2.00 a month. </br> If you are unable to afford a paid account please <a href="{{appUrl}}/contact?t=Account Expired">contact support</a> and we'll do our best to help keep your services online.</p>
+          </div>
+          <div class="smaller"><strong>Account Creation Date:</strong> <span class="accountCreated"></span> &nbsp;<strong>Days since creation:</strong> <span class="daysSinceCreation"></span></div>
         </div>
       </div>
     </div>

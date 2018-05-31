@@ -7,7 +7,7 @@ module['exports'] = function view (opts, callback) {
   if (req.session.user !== "anonymous") {
     $('.freeAccount').remove();
   }
-
+  $('.boxAlert').remove();
   if (req.session && req.session.user && req.session.user !== 'anonymous') {
     user.findOne({ name: req.session.user }, function (err, _u){
       if (err) {

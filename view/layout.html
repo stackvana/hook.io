@@ -467,7 +467,10 @@
           <div class="blog-area well boxAlert">
             <div class="container content" style="position:relative;text-align:center;">
               <p style="position:absolute;right:5px;top:0px;"><a href="#" class="closeWarning">Hide [X]</a></p>
-              <div><span class=""><strong class="i18n large">Notice: </strong></span> <span class="i18n large"><span class="daysLeftInTrial">x</span> days remaining in 60 day Trial Period.</span><br/><span class="smaller"> If this account is not upgraded to a paid account within <span class="daysLeftInTrial">x</span> days it will become temporarily locked.</span></div>
+              <div>
+                <span class=""><strong class="i18n large">Notice: </strong></span> <span class="i18n large noticeMessage"><span class="daysLeftInTrial">x</span> days remaining in 60 day Trial Period.</span><br/>
+                <span class="smaller upgradeWarning"> If this account is not upgraded to a paid account within <span class="daysLeftInTrial">x</span> days it will become temporarily locked.</span>
+              </div>
               <!--
               <div>Creation Date: <span class="accountCreated"></span></div>
               <div>Days left in Trial Account: <span class="daysLeftInTrial"></span></div>
@@ -478,6 +481,7 @@
                   <button class="btn btn-primary i18n">Upgrade Account</button><br/> <!-- <span class="medium ">Our cheapest plan is now only $2.00 a month.</span> -->
                 </form>
               </p>
+              <span class="smaller planCall">Our cheapest plan costs $2.00 per month and provides all the features of the free account.</span>
             </div>
           </div>
         </div>

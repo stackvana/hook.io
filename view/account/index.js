@@ -89,14 +89,19 @@ module['exports'] = function view (opts, callback) {
     mergeParams(req, res, function(){});
 
     var params = req.resource.params;
-
+    $('.noticeMessage').html("This account has exceeded it's 60 day free trial limit.");
+    $('.upgradeWarning').remove();
+    if (req.session.paidStatus === 'paid') {
+      // do not show deletion url for paid accounts, they must cancel subscription first
+      $('.accountDelete').remove();
+    }
     if (params.reset) {
       $('.status').addClass('visible');
       $('.status').html('Please set your new password immediately!');
     }
     if (params.paid) {
       $('.status').addClass('visible');
-      $('.status').html(' <p><span>Your Account has been Upgraded!</span> Thank you for your purchase.</p>  ');
+      $('.status').html(' <p><span>Your Account has been upgraded.</span> Thank you for your purchase.</p>  ');
       // You now have access to additional features and higher usage limits.
     }
 
