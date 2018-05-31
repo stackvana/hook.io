@@ -1,4 +1,5 @@
 module['exports'] = {
+  usingDocker: false,
   dev: false,
   superadmin: {
     "name": "superadmin",
