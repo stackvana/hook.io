@@ -1,0 +1,45 @@
+<script>
+  $(document).ready(function(){
+    $('.cancelBtn').on('click', function(){
+      if ($('#confirmDelete').prop('checked') === false) {
+        $('#confirmDelete').parent().addClass('error');
+        return false;
+      }
+      var result = confirm('Are you sure you want to delete your account?');
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+  });
+</script>
+
+<style>
+  .reason {
+    height: 400px !important;
+    width: 600px;
+  }
+</style>
+<h1>Delete Account</h1>
+<div class="content container" align="">
+  <div class="message medium"></div>
+  <div class="deleteForm">
+    <form class="form" action="" method="POST">
+      <legend>Delete Account</legend>
+      <p>If you no longer wish for {{appName}} to maintain a copy of your account information or user data, you may delete using the form below.</p>
+      <p class="warning">Warning: Deleting your account will result in the permanent removal of any services or data you've created on hook.io</p>
+      <div class="form-group">
+        <label for="confirmDelete">
+           <input type="checkbox" name="confirmDelete" id="confirmDelete"/>
+           I want to delete my account and have my data removed.
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="reason">Reason for no longer using hook.io :</label><br/>
+        <textarea name="reason" class="form-control reason" id="reason">No reason for deletion specified.</textarea>
+      </div>
+      <button class="cancelBtn btn btn-primary">Delete Account</button>
+    </form>
+  </div>
+</div>
