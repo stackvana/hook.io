@@ -5,7 +5,7 @@ First, you'll need to install [Docker](https://docs.docker.com/engine/installati
 
 ### Docker???
 
-It's important to note that hook.io is only using Docker for helping developers get setup with a local development instance. We are not using Docker in production and do not recommend using our Docker image and default configurations in production ( as there will be almost no service isolation ).
+It's important to note that hook.io is only using Docker to help developers get setup with a local development instance. We are not using Docker in production and do not recommend using our Docker image and default configurations in production ( as there will be almost no service isolation ).
 
 ### Installing hook.io
 
