@@ -1,5 +1,5 @@
 module['exports'] = {
-  usingDocker: false,
+  usingDocker: true,
   dev: false,
   superadmin: {
     "name": "superadmin",
@@ -10,25 +10,10 @@ module['exports'] = {
     "username": "tails",
     "password": "password"
   },
-  oys_private_key: 'e31b6a83-a92f-48b4-830a-7d384b52c3c6', //hard-coded to "hookio" user on oys
-  site: {
-    port: 9999,
-    host: "0.0.0.0",
-    https: false,
-    roots: ["hookio", "0.0.0.0", "localhost", "hook.io", "www.hook.io"],
-    secret: "change secret",
-    redis: {
-      prefix: '/session/',
-      port: 6379,
-      password: "password",
-      host: "redis"
-    }
-  },
   // contains definitions for elastic server pools
   pools : {
     // Note: All services will auto-port up based on the first available port after the starting port
     // this allows us define ranges of ports of the elastic pool instead of pre-configuring the pool statically
-    // Note: All configuration values are capable of push / pull updates via integrated `OceanYetStorms.com` server
     web: [],
     worker: [],
     lb: []
@@ -131,6 +116,7 @@ module['exports'] = {
     locales: ['en', 'de']
   },
   worker: {
+    host: '0.0.0.0',
     startingPort: 10000,
     registerWithLoadBalancer: true,
     nproc: {

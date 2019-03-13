@@ -14,7 +14,6 @@ services = services.reverse();
 //services = [services[0]]
 
 function addHook () {
-
   if (services.length === 0) {
     console.log('done'.magenta);
     process.exit();
@@ -23,7 +22,7 @@ function addHook () {
   var h = services.pop();
   var hook = hooks.services[h];
   
-  var alpha = ['gcc', 'go', 'ocaml', 'rust', 'r', 'java'];
+  var alpha = ['gcc', 'go', 'ocaml', 'rust', 'r', 'java', undefined];
   
   if (alpha.indexOf(hook.language) !== -1) {
     return addHook();

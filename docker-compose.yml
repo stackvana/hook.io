@@ -5,8 +5,8 @@ services:
 
   couch:
     build: ./docker/couchdb
-    #ports:
-    #  - "49162:5984"
+    ports:
+      - "9998:5984"
 
   app:
     build: .
@@ -14,15 +14,15 @@ services:
     depends_on:
       - "redis"
       - "couch"
-    #ports:
-    #  - "11000"
+    ports:
+      - "11000:11000"
 
   balancer:
     #build: .
     image: "hookio_app"
     command: /src/bin/docker/wait redis -c node /src/bin/services/load-balancer
     ports:
-      - "80:9999"
+      - "9999:9999"
     depends_on:
       - "app"
     links:
@@ -33,8 +33,8 @@ services:
     image: "hookio_app"
     command: /src/bin/docker/wait redis couch -c node /src/bin/services/worker
     privileged: true
-    #ports:
-    #  - "49161:10000"
+    ports:
+      - "10000:10000"
     depends_on:
       - "app"
     links:

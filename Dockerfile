@@ -1,4 +1,4 @@
-FROM node:8.2.1-wheezy
+FROM node:10
 
 # update apt-get
 RUN apt-get -y update && apt-get -y upgrade

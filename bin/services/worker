@@ -7,5 +7,5 @@ worker.start({}, function (err, app) {
     console.log('worker error'.red);
     throw err;
   }
-  console.log('worker started'.blue + ' ' + app.server._connectionKey.grey);
+  console.log('worker started'.blue, app.server.address());
 });

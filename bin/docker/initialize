@@ -4,10 +4,12 @@ if [ ! -e "/src/.setup_done" ]
 then
   echo "Creating admin..."
   sh /src/config/couchdb/create_admin.sh
+  echo "Adding default users..."
+  /src/bin/docker/wait web -c node /src/scripts/install/add-default-users.js
   echo "Adding default hooks..."
   /src/bin/docker/wait web -c node /src/scripts/install/add-default-hooks.js
+  echo "Done adding default hooks..."
   touch "/src/.setup_done"
-
   echo
   echo "================================================================"
   echo "REMINDER: you need to configure your local instance."
