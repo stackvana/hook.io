@@ -5,11 +5,6 @@ var baseURL = config.baseUrl;
 var startDevCluster = require('../lib/helpers/startDevCluster');
 var sdk = require('hook.io-sdk');
 
-tap.test('empty suite', function (t) {
-  t.ok('no tests');
-  t.end('pass');
-})
-
 // david is a pre-generated user 
 var testUser = config.testUsers.david;
 
@@ -17,11 +12,11 @@ var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
   startDevCluster({}, function (err) {
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
   });
 });
@@ -107,7 +102,7 @@ tap.test('attempt to delete the hook we just created a new hook - correct access
 });
 
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('cluster is shutting down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);

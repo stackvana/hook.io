@@ -11,14 +11,29 @@ var testUser = config.testUsers.bobby;
 var apps;
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err, _apps) {
+  startDevCluster({
+    flushRedis: true
+  }, function (err, _apps) {
     apps = _apps;
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
+  });
+});
+
+tap.test('attempt to clear test user - as superadmin', function (t) {
+  r({ uri: baseURL + "/_admin", method: "POST", json: {
+    method: "user.destroy",
+    super_private_key: config.superadmin.super_private_key,
+    email: testUser.email
+  }}, function (err, body, res) {
+    t.error(err);
+    console.log('aaaa', body)
+    t.error(err, 'request did not error');
+    t.end();
   });
 });
 
@@ -158,7 +173,6 @@ tap.test('attempt to register same account name - with cookies - has confirmed p
     t.end();
   });
 });
-
 /*
 
 tap.test('attempt to signup by account name mismtached passwords', function (t) {
@@ -306,7 +320,7 @@ tap.test('attempt to clear test user - as superadmin', function (t) {
 });
 
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('shut down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);

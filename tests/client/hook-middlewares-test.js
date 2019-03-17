@@ -10,13 +10,23 @@ var sdk = require('hook.io-sdk');
 var testUser = config.testUsers.david;
 var client = sdk.createClient(testUser.hookSdk);
 
+
+/*
+
+  Requires:
+    examples/echo
+    examples/basic-auth
+
+*/
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
-    t.ok('cluster started');
+  startDevCluster({
+    flushRedis: true
+  }, function (err) {
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
   });
 });
@@ -45,6 +55,7 @@ tap.test('attempt to create a new hook with inputs', function (t) {
     t.equal(res.status, 'created', 'returned correct name');
     t.equal(typeof res.hook, 'object', 'returned hook object');
     t.equal(res.hook.name, 'test-hook', 'returned correct name');
+    console.log('did we create???', res)
     t.end();
   });
 });
@@ -112,7 +123,7 @@ tap.test('attempt to run the test hook', function (t) {
 */
 
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('cluster is shutting down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);

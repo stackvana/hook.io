@@ -4,7 +4,7 @@ var config = require('../config');
 var baseURL = config.baseUrl;
 var startDevCluster = require('../lib/helpers/startDevCluster');
 
-var testUser = config.testUsers.bobby;
+var testUser = config.testUsers.david;
 
 /*
 tap.test('attempt to set datastore document without any auth ( anonymous root )', function (t) {
@@ -25,12 +25,14 @@ tap.test('attempt to get datastore document we just created without any auth ( a
 */
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
-    t.ok('cluster started');
+  startDevCluster({
+    flushRedis: true
+  }, function (err) {
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 1500);
   });
 });
@@ -109,6 +111,6 @@ tap.test('perform hard shutdown of cluster', function (t) {
   setTimeout(function(){
     process.exit();
   }, 10);
-  t.end('shut down');
+  t.end();
 });
 // TODO: make test to ensure no cross-contamination of datastore access

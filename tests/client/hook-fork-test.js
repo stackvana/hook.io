@@ -1,4 +1,4 @@
-// hook-api-test.js
+// hook-fork-test.js
 var tap = require("tape");
 var r = require('../lib/helpers/_request');
 var config = require('../config');
@@ -19,18 +19,22 @@ _config.accessKey = testUser.admin_key;
 var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
+  /*
+     Requires:
+       - examples/bash
+  */
   startDevCluster({}, function (err) {
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
   });
 });
 
 tap.test('attempt to destroy the forked hook', function (t) {
-  client.hook.destroy({ owner: 'david', name: 'bash' }, function (err, res){
+  client.hook.destroy({ owner: 'david', name: 'echo' }, function (err, res){
     t.error(err, 'request did not error');
     t.end();
   });
@@ -45,11 +49,14 @@ tap.test('attempt to fork another user hook - valid session', function (t) {
       jar: true,
       form: {
         "email": testUser.email,
-        "password": "asd"
+        "password": testUser.password
       },
     }, function (err, res) {
+      if (err) {
+        throw err;
+      }
       r({ 
-          uri: baseURL + "/examples/bash/fork", 
+          uri: baseURL + "/examples/echo/fork",
           method: "GET",
           json: true,
           jar: true
@@ -62,7 +69,7 @@ tap.test('attempt to fork another user hook - valid session', function (t) {
 });
 
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('cluster is shutting down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);

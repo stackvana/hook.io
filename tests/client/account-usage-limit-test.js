@@ -12,21 +12,21 @@ var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
   startDevCluster({}, function (err) {
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
   });
 });
 
 // clear the usage limits for test user
 tap.test('reset test user metrics', function (t) {
-  t.ok('metrics reset');
+  t.pass('cluster started');('metrics reset');
   metric.client.del('/metric/david/report', function (err){
     t.error(err);
-    t.ok(true, 'deleted metrics report for david')
+    t.pass('cluster started');
     t.end();
   });
 });
@@ -120,7 +120,7 @@ tap.test('attempt to delete test hooks - correct access key', function (t) {
 });
 
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('cluster is shutting down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);

@@ -16,11 +16,11 @@ var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
   startDevCluster({}, function (err, servers) {
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
   });
 });
@@ -62,7 +62,7 @@ tap.test('attempt to create a new hook', function (t) {
 
 // TOOD: create echo hook, destroy and cleanup echo hook
 tap.test('get the test view hook', function (t) {
-  r({ uri: baseURL + "/david/test-hook-view", method: "get" }, function (err, res) {
+  r({ uri: baseURL + "/david/test-hook-view?foo=bar", method: "get" }, function (err, res) {
     console.log('fff', err, res)
     t.equal(res.substr(0, 9), '<h1>Hello', 'found view with bound output')
     t.error(err, 'did not error');
@@ -122,7 +122,7 @@ tap.test('get the test view hook', function (t) {
 */
 
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('cluster is shutting down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);

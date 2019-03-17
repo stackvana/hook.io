@@ -10,28 +10,29 @@ var metric = require('../../lib/resources/metric');
 var testUser = config.testUsers.david;
 
 config.MAX_SERVICE_CONCURRENCY = 3;
+config.flushRedis = true;
 
 var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
   startDevCluster(config, function (err) {
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
   });
 });
 
 // clear the usage limits for test user
 tap.test('reset test user metrics', function (t) {
-  t.ok('metrics reset');
+  t.pass('cluster started');
   metric.zrem('running', 'david', function (err){
     t.error(err);
     metric.zrem('hits', 'david', function (err){
       t.error(err);
-      t.ok(true, 'reset metrics for david')
+      t.pass('cluster started');
       t.end();
     });
   });
@@ -85,7 +86,7 @@ tap.test('attempt to delete the hook we just created - correct access key', func
 });
 
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('cluster is shutting down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);

@@ -13,11 +13,11 @@ config.balancer.https = true;
 tap.test('start the dev cluster', function (t) {
   startDevCluster({}, function (err, _apps) {
     apps = _apps;
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 2000);
   });
 });
@@ -34,7 +34,7 @@ var echoWs, missingWs, rootWs;
 tap.test('create a wss connection to echo', function (t) {
   echoWs = new WebSocket('wss://' + wssUrl + '/examples/echo');
   echoWs.on('open', function open () {
-    t.ok(true, 'opened websocket connection');
+    t.pass('cluster started');
     t.end()
   });
 });
@@ -64,7 +64,7 @@ tap.test('send some data to the echo hook over websocket', function (t) {
 tap.test('create a wss connection to missing hook', function (t) {
   missingWs = new WebSocket('wss://' + wssUrl + '/doesnt/exist');
   missingWs.on('open', function open () {
-    t.ok(true, 'opened websocket connection');
+    t.pass('cluster started');
     t.end()
   });
 });
@@ -88,7 +88,7 @@ tap.test('send some data to missing hook over websocket', function (t) {
 tap.test('create a wss connection to ws root', function (t) {
   rootWs = new WebSocket('wss://' + wssUrl + '');
   rootWs.on('open', function open () {
-    t.ok(true, 'opened websocket connection');
+    t.pass('cluster started');(true, 'opened websocket connection');
     t.end()
   });
 });
@@ -115,6 +115,6 @@ tap.test('perform hard shutdown of cluster', function (t) {
   setTimeout(function(){
     process.exit();
   }, 10);
-  t.end('shut down');
+  t.end();
 });
 
