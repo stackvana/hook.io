@@ -22,7 +22,7 @@ module['exports'] = function view (opts, callback) {
   var created = moment(req.session.user_ctime);
 
   if (req.session.servicePlan === 'free') {
-    created = moment('5/15/2018');
+    created = moment('3/17/2019');
   }
 
   var daysSinceCreation = now.diff(created, 'days');

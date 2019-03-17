@@ -151,6 +151,7 @@ label {
 
 .closeWarning {
   cursor: pointer;
+  font-size: 22px;
 }
 
 .boxAlert {
@@ -165,3 +166,11 @@ label {
   position: relative;
   padding-left: 20px;
 }
+
+.upgradeWarning {
+  font-size: 22px;
+}
+.planCall {
+  font-size: 22px;
+}
+
