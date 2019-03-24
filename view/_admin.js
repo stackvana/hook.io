@@ -5,6 +5,7 @@ var config = require('../config');
 var forms = require('mschema-forms');
 var user = require('../lib/resources/user');
 var cache = require('../lib/resources/cache');
+var metric = require('../lib/resources/metric');
 var servicePlan = require('../lib/resources/servicePlan');
 var bodyParser = require('body-parser');
 var mergeParams = require('merge-params');
@@ -67,6 +68,14 @@ module['exports'] = function view (opts, callback) {
        switch (params.method) {
          case 'user.destroy':
            return destroyUser();
+         break;
+         case 'user.resetRunningServicesCount':
+           return metric.resetRunningServicesCount(params.owner, function (err) {
+             if (err) {
+               return res.end(err.message);
+             }
+             return res.end('updated');
+           });
          break;
          /*
          default:
