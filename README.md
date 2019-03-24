@@ -8,9 +8,8 @@
   - c ( with `gcc` )
   - java
   - javascript ( first-class support )
-  - babel ( ES6 / ES7 / etc ... )
   - coffee-script
-  - common lisp
+  - common
   - bash
   - lua
   - golang
