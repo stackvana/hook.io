@@ -13,12 +13,12 @@
           <div class="widget_area fix">
             <!-- widget-categories start -->
             <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Getting Started</h3>
+              <h2 class="sidebar_middle_title">Getting Started</h2>
               <ul class="sidebar_menu">
                 <li><a href="#running">Running Examples </a></li>
                 <li><a href="#viewsource">Viewing Source Code </a></li>
                 <li><a href="#forking">Forking Examples </a></li>
-                <li><a href="#basic">Basic Examples </a></li>
+                <li><a href="#basic">Examples </a></li>
                 <li><a href="{{appUrl}}/new">Create new Service </a></li>
               </ul>
             </aside>
@@ -26,19 +26,19 @@
             <!-- widget-categories start -->
             <!-- TODO add datastore / database / files sections
             <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Multi-Cloud Files</h3>
+              <h2 class="sidebar_middle_title">Multi-Cloud Files</h2>
               <ul class="sidebar_menu langMenu">
                 <li><a href="#files">Built-in Files </a></li>
               </ul>
             </aside>
             -->
             <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Language Specific</h3>
+              <h2 class="sidebar_middle_title">Language Specific</h2>
               <ul class="sidebar_menu langMenu">
               </ul>
             </aside>
             <aside class="left_widget blog_border0">
-              <h3 class="sidebar_middle_title">Additional Resources</h3>
+              <h2 class="sidebar_middle_title">Additional Resources</h2>
               <ul class="sidebar_menu">
                 <li><a href="{{appUrl}}/faq">FAQ</a></li>
                 <li><a href="{{appUrl}}/docs">Documentation</a></li>
@@ -56,43 +56,16 @@
           <div class="col-lg-12 col-md-12 col-sm-12 item">
             <div class="content">
               <a name="running"></a>
-              <h2>Running Examples</h2>
-              <p>Just click on any example below to run it!</p>
-              <p>These examples can be run directly in the browser or from any client which speaks HTTP. Using the browser is a good start. You can also send data using tools like <a href="{{appUrl}}/curl">cURL</a>.</p>
-
-              <a name="forking"></a>
-              <h2>Forking an Example</h2>
-              <p>To make your own copy, or "Fork" any of these examples is easy!</p>
-              <p>Just click the <a href="#"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a> button next to the example you wish to copy. A copy of the service will then automatically be created in your account. You will need to register for a <a href="{{appUrl}}/login">Free Account</a>, but it's very quick and easy!</p>
-
-              <a name="viewsource"></a>
-              <h2>View Source Code</h2>
-              <p>To view the source code of any example, simply click the <a href="#"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a> button next to the example source you wish to view.</p>
-
+              <p>Click on any example below to view it's source and run it!</p>
               <a name="basic"></a>
-              <h2>Basic Examples</h2>
+              <h2>JavaScript</h2>
               <div class="example">
                 <!-- TODO: make buttons and table -->
-                <a href="{{appUrl}}/examples/echo/_src"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>
-                <a href="{{appUrl}}/examples/echo/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
-                <a href="{{appUrl}}/examples/echo">Echo incoming HTTP requests</a> <br/>
-
-                <a href="{{appUrl}}/examples/javascript-stream-transform/_src"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>
-                <a href="{{appUrl}}/examples/javascript-stream-transform/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
-                <a href="{{appUrl}}/examples/javascript-stream-transform">Transform streams of HTTP data</a> <br/>
-
-                <a href="{{appUrl}}/examples/javascript-pipe-hook/_src"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>
-                <a href="{{appUrl}}/examples/javascript-pipe-hook/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
-                <a href="{{appUrl}}/examples/javascript-pipe-hook">Pipe hooks into each together</a> <br/>
-
-                <a href="{{appUrl}}/examples/javascript-stream-merge/_src"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>
-                <a href="{{appUrl}}/examples/javascript-stream-merge/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
-                <a href="{{appUrl}}/examples/javascript-stream-merge">Merge multiple hooks into a single hook</a> <br/>
-
-                <a href="{{appUrl}}/examples/isthewebsitedown/_src"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>
-                <a href="{{appUrl}}/examples/isthewebsitedown/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
-                <a href="{{appUrl}}/examples/isthewebsitedown">Check if a website is down</a> <br/>
-
+                <a href="{{appUrl}}/examples/echo/_src">Echo incoming HTTP requests</a> <br/>
+                <a href="{{appUrl}}/examples/javascript-stream-transform/_src">Transform streams of HTTP data</a> <br/>
+                <a href="{{appUrl}}/examples/javascript-pipe-hook/_src">Pipe hooks into each together</a> <br/>
+                <a href="{{appUrl}}/examples/javascript-stream-merge/_src">Merge multiple hooks into a single hook</a> <br/>
+                <a href="{{appUrl}}/examples/isthewebsitedown/_src">Check if a website is down</a> <br/>
                 <!-- 
                 <a href="{{appUrl}}/examples/coin/_src"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>
                 <a href="{{appUrl}}/examples/coin/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
@@ -102,15 +75,58 @@
                 <a href="{{appUrl}}/examples/geoip/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
                 <a href="{{appUrl}}/examples/geoip">GeoIP lookup with Google Maps</a> <br/>
                 -->
-
-                <a href="{{appUrl}}/examples/markdown/_src"><span title="View Source" class="forkBtn octicon octicon-file-code"></span></a>
-                <a href="{{appUrl}}/examples/markdown/fork"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a>
-                <a href="{{appUrl}}/examples/markdown">Streaming Markdown Parser</a> <br/>
-
-
+                <a href="{{appUrl}}/examples/markdown/_src">Streaming Markdown Parser</a> <br/>
                 <br/>
               </div>
+              <h2>Python</h2>
+              <div class="example">
+                <a href="{{appUrl}}/examples/python-echo/_src">Echo incoming HTTP requests</a> <br/>
+                <a href="{{appUrl}}/examples/python-send-http-request/_src">Send HTTP Request</a> <br/>
+              </div>
 
+              <h2>Python 3</h2>
+              <div class="example">
+                <a href="{{appUrl}}/examples/python3-echo/_src">Echo incoming HTTP requests</a> <br/>
+                <a href="{{appUrl}}/examples/python3-send-http-request/_src">Send HTTP Request</a> <br/>
+              </div>
+
+              <h2>Lua</h2>
+              <div class="example">
+                <a href="{{appUrl}}/examples/lua-echo/_src">Echo incoming HTTP requests</a> <br/>
+                <a href="{{appUrl}}/examples/lua-send-http-request/_src">Send HTTP Request</a> <br/>
+              </div>
+
+              <h2>Ruby</h2>
+              <div class="example">
+                <a href="{{appUrl}}/examples/ruby-echo/_src">Echo incoming HTTP requests</a> <br/>
+                <a href="{{appUrl}}/examples/ruby-send-http-request/_src">Send HTTP Request</a> <br/>
+              </div>
+
+              <h2>PHP</h2>
+              <div class="example">
+                <a href="{{appUrl}}/examples/php-echo/_src">Echo incoming HTTP requests</a> <br/>
+                <a href="{{appUrl}}/examples/php-send-http-request/_src">Send HTTP Request</a> <br/>
+              </div>
+
+              <h2>Bash</h2>
+              <div class="example">
+                <a href="{{appUrl}}/examples/bash-echo/_src">Echo incoming HTTP requests</a> <br/>
+                <a href="{{appUrl}}/examples/bash-send-http-request/_src">Send HTTP Request</a> <br/>
+              </div>
+
+
+              <!--
+              <a name="basic"></a>
+              <h2>Cloud Datastore Examples</h2>
+              <div class="example">
+                <a href="{{appUrl}}/marak/examples-javascript-writeFile">Upload a File</a> <br/>
+                <a href="{{appUrl}}/marak/examples-javascript-readFile">Download a File</a> <br/>
+                <a href="{{appUrl}}/marak/examples-javascript-readdir">Read a Directory</a> <br/>
+                <a href="{{appUrl}}/marak/examples-javascript-removeFile">Remove a File</a> <br/>
+                <a href="{{appUrl}}/marak/examples-javascript-stat">Perform File Stat</a> <br/>
+                <br/>
+              </div>
+              -->
               <a name="files"></a>
               <h2>Cloud Files Examples</h2>
               <div class="example">
@@ -137,21 +153,6 @@
                 <br/>
               </div>
 
-              <!--
-              <a name="basic"></a>
-              <h2>Cloud Datastore Examples</h2>
-              <div class="example">
-                <a href="{{appUrl}}/marak/examples-javascript-writeFile">Upload a File</a> <br/>
-                <a href="{{appUrl}}/marak/examples-javascript-readFile">Download a File</a> <br/>
-                <a href="{{appUrl}}/marak/examples-javascript-readdir">Read a Directory</a> <br/>
-                <a href="{{appUrl}}/marak/examples-javascript-removeFile">Remove a File</a> <br/>
-                <a href="{{appUrl}}/marak/examples-javascript-stat">Perform File Stat</a> <br/>
-                <br/>
-              </div>
-              -->
-              <h2>Language Specific Examples</h2>
-              <div class="examples example"></div>
-              <p class="hint">Want to see more code examples? Simply open a Pull Request to <a href="https://github.com/bigcompany/hooks">this repository</a> and they will appear here.</p>
 
             </div>
           </div>
