@@ -4,7 +4,7 @@ module['exports'] = function (opts, callback) {
   var $ = this.$, req = opts.req, res = opts.res;
   var appName = req.hostname;
 
-  hook.find({ owner: 'examples' }, function (err, results) {
+  hook.find({ owner: 'examples', isPublic: true }, function (err, results) {
     if (err) {
       return res.end(err.message);
     }

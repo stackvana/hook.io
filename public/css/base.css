@@ -116,6 +116,12 @@ label {
 
 .forkBtn {
   cursor: pointer;
+  font-size: 34px;
+  padding: 5px;
+}
+
+.example {
+  font-size: 16px;
 }
 
 .well {
