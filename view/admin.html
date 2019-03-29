@@ -1,13 +1,15 @@
-<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet"/>
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet" />
 
 <style>
-  .hookTable .smaller  {
+  .hookTable .smaller {
     font-size: 16px;
-    padding-top:8px;
+    padding-top: 8px;
   }
+
   select {
     cursor: pointer;
   }
+
   /*
   .error {
     background-color: red;
@@ -17,54 +19,62 @@
     cursor: hand;
     padding-bottom: 5px;
   }
+
   .middlewares {
     display: none;
   }
+
   .customTheme {
     display: block;
   }
+
   .languages {
     display: block;
   }
-  #language {
-  }
+
+  #language {}
+
   .warnLanguages {
     display: none;
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
   .smaller {
     font-size: 18px;
   }
+
   .message {
     padding-bottom: 10px;
     font-size: 32px;
     color: rgb(68, 199, 68);
     text-align: left;
   }
+
   .hookSchema {
     width: 100%;
     height: 200px;
   }
 
   .sticky {
-     position: fixed;
-     top: 0;
+    position: fixed;
+    top: 0;
   }
 
   #sidebar.affix-top {
-      position: static;
-      margin-top:30px;
-      width:228px;
-    }
+    position: static;
+    margin-top: 30px;
+    width: 228px;
+  }
 
   #sidebar.affix {
     position: fixed;
-    top:70px;
-    width:228px;
+    top: 70px;
+    width: 228px;
   }
 
-  body.dragging, body.dragging * {
+  body.dragging,
+  body.dragging * {
     cursor: move !important;
   }
 
@@ -91,81 +101,91 @@
     /** More li styles **/
     cursor: pointer;
   }
+
   ol li:before {
     position: absolute;
     /** Define arrowhead **/
     cursor: pointer;
   }
+
   .telegramWarning {
     display: none;
   }
-
 </style>
 
 <script type="text/javascript">
+  /*global $, CodeMirror */
   // TODO: Create "themes" resource and persist this to database
   // lookup themes from curated theme list
   var themes = {{themes}};
 
-  $(document).ready(function(){
+  $(document).ready(function() {
 
-    $('.cronDiv').croneditor({ "value": "{{hook.cron}}"});
+    $('.cronDiv').croneditor({
+      "value": "{{hook.cron}}"
+    });
 
-    if($('input[name="cronActive"]').is(':checked')) {
+    if ($('input[name="cronActive"]').is(':checked')) {
       $('.cronRow').show();
     }
 
-    $('input[name="cronActive"]').click(function(){
-      if($(this).prop('checked')) {
+    $('input[name="cronActive"]').click(function() {
+      if ($(this).prop('checked')) {
         $('.cronRow').show();
       } else {
         $('.cronRow').hide();
       }
     });
 
-    $('.addInput').on('click', function () {
+    $('.addInput').on('click', function() {
       var input = $('#input').val();
       if (input.length === 0) {
         return false;
       }
       // TODO: check if hook exists
       $.ajax({
-           type        : 'GET', // define the type of HTTP verb we want to use (POST for our form)
-           url         : boot.baseUrl + '/' + input + '/resource', // the url where we want to POST
-           dataType    : 'json', // what type of data do we expect back from the server
-           encode          : true,
-           error: function (res) {
-             if (res.status === 404) {
-               $.growl.error({ message: 'Could not find service.' });
-               return;
-             }
-            $.growl.error({ message: 'Issue communicating with server. Please contact support or try again.' });
-           },
-           success: function(res){
-             // $('.inputsHolder').css('display', 'block');
-             // $('.hookSave').attr('disabled', null);
-             if (res.status === 'updated') {
-               $.growl.notice({ message: "Added plugin." });
-               return;
-             }
-             // alert('did not update ' + res.status);
-             $('.plugins').append('<li><i class="icon-move">' + input + '</i>&nbsp;&nbsp;&nbsp;<a href="" class="removeInput">X</a></li>');
-             $('#input').val('');
-             removeSortable();
-             bindSortable();
-             serializeInputs();
-             $('.removeInput:last').on('click', function(){
-               var index = $(this).parent().index();
-               $('.plugins li').get(index).remove();
-               serializeInputs();
-               return false;
-             });
-           }
+        type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
+        url: boot.baseUrl + '/' + input + '/resource', // the url where we want to POST
+        dataType: 'json', // what type of data do we expect back from the server
+        encode: true,
+        error: function(res) {
+          if (res.status === 404) {
+            $.growl.error({
+              message: 'Could not find service.'
+            });
+            return;
+          }
+          $.growl.error({
+            message: 'Issue communicating with server. Please contact support or try again.'
+          });
+        },
+        success: function(res) {
+          // $('.inputsHolder').css('display', 'block');
+          // $('.hookSave').attr('disabled', null);
+          if (res.status === 'updated') {
+            $.growl.notice({
+              message: "Added plugin."
+            });
+            return;
+          }
+          // alert('did not update ' + res.status);
+          $('.plugins').append('<li><i class="icon-move">' + input + '</i>&nbsp;&nbsp;&nbsp;<a href="" class="removeInput">X</a></li>');
+          $('#input').val('');
+          removeSortable();
+          bindSortable();
+          serializeInputs();
+          $('.removeInput:last').on('click', function() {
+            var index = $(this).parent().index();
+            $('.plugins li').get(index).remove();
+            serializeInputs();
+            return false;
+          });
+        }
       });
       return false;
     });
 
-    $('.deleteLink').on('click', function(){
+    $('.deleteLink').on('click', function() {
       var name = $(this).attr('data-name');
       var result = confirm('Are you certain you want to destroy:\n\n' + name);
       if (result) {
@@ -175,16 +195,16 @@
       }
     });
 
-    $('.removeInput').on('click', function(){
+    $('.removeInput').on('click', function() {
       var index = $(this).parent().index();
       $('.plugins li').get(index).remove();
       serializeInputs();
       return false;
     });
 
-    function serializeInputs () {
+    function serializeInputs() {
       $('#inputs').val('');
-      $('.plugins li i').each(function(i, item){
+      $('.plugins li i').each(function(i, item) {
         var val = $('#inputs').val();
         if (val.length > 0) {
           $('#inputs').val(val + ',' + $(item).html());
@@ -194,32 +214,32 @@
       });
     }
 
-    function removeSortable () {
+    function removeSortable() {
       sortable('ol.plugins')[0].removeEventListener('sortstop', function(e) {
-          /*
+        /*
 
-          This event is triggered when the user stops sorting. The DOM position may have changed.
+        This event is triggered when the user stops sorting. The DOM position may have changed.
 
-          e.detail.item contains the element that was dragged.
-          e.detail.startparent contains the element that the dragged item came from.
+        e.detail.item contains the element that was dragged.
+        e.detail.startparent contains the element that the dragged item came from.
 
-          */
-          serializeInputs();
+        */
+        serializeInputs();
       });
     }
 
-    function bindSortable () {
+    function bindSortable() {
       sortable('ol.plugins');
       sortable('ol.plugins')[0].addEventListener('sortstop', function(e) {
-          /*
+        /*
 
-          This event is triggered when the user stops sorting. The DOM position may have changed.
+        This event is triggered when the user stops sorting. The DOM position may have changed.
 
-          e.detail.item contains the element that was dragged.
-          e.detail.startparent contains the element that the dragged item came from.
+        e.detail.item contains the element that was dragged.
+        e.detail.startparent contains the element that the dragged item came from.
 
-          */
-          serializeInputs();
+        */
+        serializeInputs();
       });
     }
     bindSortable();
@@ -228,13 +248,13 @@
     // the server-side slugify code is much more robust covering much utf
     function slugify(text) {
       return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Replace spaces with -
-        .replace(/\//g, '-')         // Replace / with -
-        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(/\//g, '-') // Replace / with -
+        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+      //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
     }
 
-    $('#name').on('keyup', function(){
+    $('#name').on('keyup', function() {
       var v = $(this).val();
       var s = slugify($(this).val());
       if (v !== s) {
@@ -246,7 +266,7 @@
     });
 
   });
-  
+
   /*
   $('#cronString').keydown(function(){
     var job = new cron.CronTime($(this).val());
@@ -255,13 +275,13 @@
     $('#estimateRun').val(next);
   });
   */
-  
 </script>
 <style>
   .formStatus {
     font-size: 32px;
     font-weight: bold;
   }
+
   .success {
     color: rgb(68, 199, 68);
   }
@@ -269,287 +289,291 @@
 
 
 <style>
+  #hookForm h1 {
+    font-size: 42px;
+    font-weight: 700;
+  }
 
-#hookForm h1 {
-  font-size: 42px;
-  font-weight: 700;
-}
+  #hookForm h2 {
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 700;
+  }
 
-#hookForm h2 {
-  margin: 0px;
-  padding: 0px;
-  margin-bottom: 10px;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.cron-button {
+  .cron-button {
     height: 16px;
     padding-left: 20px;
     margin-left: 5px;
-    background-repeat: no-repeat; 
-    background-position: center center; 
+    background-repeat: no-repeat;
+    background-position: center center;
     cursor: pointer;
-}
-.cron-button-save {
+  }
+
+  .cron-button-save {
     background-image: url('img/disk.png');
-}
-.cron-changed {
+  }
+
+  .cron-changed {
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: #fdd;
-}
-.cron-controls {
+  }
+
+  .cron-controls {
     margin-left: 10px;
     color: #c77;
     font-size: 0.9em;
-}
-.cron-controls > span.cron-loading {
+  }
+
+  .cron-controls>span.cron-loading {
     background-image: url('img/loading.gif');
-}
+  }
 
-.routeHint {
-  display: none;
-}
+  .routeHint {
+    display: none;
+  }
 
-.schemaHelp {
-  display: none;
-}
+  .schemaHelp {
+    display: none;
+  }
 
-.hookLinks {
-  width: 100%;
-  margin-top: 20px;
-  background-color: white;
-}
-.hookLinks td {
-  padding: 10px;
-  margin: 10px;
-}
+  .hookLinks {
+    width: 100%;
+    margin-top: 20px;
+    background-color: white;
+  }
 
-.routeExamples {
-  background-color: white;
-  padding: 10px;
-  margin: 10px;
-  border: solid;
-  border-width: 1px;
-}
-.routeExamples td {
-  padding: 10px;
-  margin: 10px;
-}
-.left {
-  width: 220px;
-}
+  .hookLinks td {
+    padding: 10px;
+    margin: 10px;
+  }
 
-code {
-  padding: 0px;
-  margin: 0px;
-}
+  .routeExamples {
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    border: solid;
+    border-width: 1px;
+  }
 
-label {
-  cursor: hand;
-}
-.hookFrame {
-  display: none;
-}
-/* removed per breaking css
+  .routeExamples td {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .left {
+    width: 220px;
+  }
+
+  code {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  label {
+    cursor: hand;
+  }
+
+  .hookFrame {
+    display: none;
+  }
+
+  /* removed per breaking css
 .error {
   background-color: red;
 }
 */
 
-/* do not group these rules */
-.error::-webkit-input-placeholder {
+  /* do not group these rules */
+  .error::-webkit-input-placeholder {
     color: white;
-}
-.error*:-moz-placeholder {
+  }
+
+  .error*:-moz-placeholder {
     /* FF 4-18 */
     color: white;
-}
-.error*::-moz-placeholder {
+  }
+
+  .error*::-moz-placeholder {
     /* FF 19+ */
     color: white;
-}
-.error*:-ms-input-placeholder {
+  }
+
+  .error*:-ms-input-placeholder {
     /* IE 10+ */
     color: white;
-}
+  }
 
-.cronRow {
-  display: none;
-}
+  .cronRow {
+    display: none;
+  }
 
-.cronRow .tabs {
-  font-size:16px;
-}
-.cronRow #clear {
-  font-size:16px;
-}
+  .cronRow .tabs {
+    font-size: 16px;
+  }
 
-input[type="text"] {
-  width: 100%;
-  margin-right: 10px;
-  padding-right: 10px;
-}
+  .cronRow #clear {
+    font-size: 16px;
+  }
 
-input[type="checkbox"] {
-  cursor: pointer;
-}
+  input[type="text"] {
+    width: 100%;
+    margin-right: 10px;
+    padding-right: 10px;
+  }
 
-#create {
-  margin-top: 10px;
-}
+  input[type="checkbox"] {
+    cursor: pointer;
+  }
 
-.hookTable td {
-  font-size: 22px;
-  font-weight: bold;
-}
+  #create {
+    margin-top: 10px;
+  }
 
-.hookTable td input {
-  font-size: 22px;
-  font-weight: normal;
-}
+  .hookTable td {
+    font-size: 22px;
+    font-weight: bold;
+  }
 
-.hookTable td span {
-  margin-top: 10px;
-  font-size: 22px;
-  font-weight: normal;
-  margin-bottom: 10px;
-}
+  .hookTable td input {
+    font-size: 22px;
+    font-weight: normal;
+  }
 
-.tiny {
-  font-size: 16px;
-  padding-left: 0px;
-  padding-bottom: 10px;
-}
+  .hookTable td span {
+    margin-top: 10px;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
 
-.themeRow {
-  display: none;
-}
+  .tiny {
+    font-size: 16px;
+    padding-left: 0px;
+    padding-bottom: 10px;
+  }
 
-.schemaRow {
-  display: none;
-}
+  .themeRow {
+    display: none;
+  }
+
+  .schemaRow {
+    display: none;
+  }
 
 
-.hookHolder {
+  .hookHolder {}
 
-}
-
-.timeoutsHolder {
-
-}
+  .timeoutsHolder {}
 
 
 
-.form-control {
-  margin-bottom: 10px;
-}
+  .form-control {
+    margin-bottom: 10px;
+  }
 
-.hookHolder .form-group {
-}
-.gistUrlHolder {
-  padding-top: 10px;
-  width: 100%;
-}
+  .hookHolder .form-group {}
 
-.githubRepoHolder {
-  padding-top: 10px;
-  width: 100%;
-  display: none;
-}
+  .gistUrlHolder {
+    padding-top: 10px;
+    width: 100%;
+  }
 
-
-.missingFeature {
-  color: #CCCCCC;
-}
-
-.dangerZone {
-}
-
-.securityHolder {
- 
-}
-
-.sourcesHolder {
-}
-
-.analyticsHolder {
-
-}
+  .githubRepoHolder {
+    padding-top: 10px;
+    width: 100%;
+    display: none;
+  }
 
 
-.sources {
-  margin-bottom: 0px;
-}
+  .missingFeature {
+    color: #CCCCCC;
+  }
 
-.cronDiv {
-  width: 100%;
-}
+  .dangerZone {}
 
-.codeEditorHolder {
-  display: none;
-  margin-bottom: 20px;
-  background-color: #f5f5f5;
-}
-body .CodeMirror {
-  height: 280px;
-  box-shadow: none;
-  font-size: 14px;
-}
-.sourceHeader {
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: 700;
-}
+  .securityHolder {}
 
-body legend {
-  border: none;
-  padding: 0px;
-  margin: 0px;
-}
+  .sourcesHolder {}
 
-.tiny .small-btn {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.tiny .small-btn:hover {
-  /* font-weight: bold; */
-}
+  .analyticsHolder {}
 
-.codeEditorHolder .btn {
-  width: 120px;
-  
-}
 
-.btn {
-  margin-top: 10px;
-  width: 200px;
-}
+  .sources {
+    margin-bottom: 0px;
+  }
 
-.hookFrame {
-  background-color: white;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-family: monospace;
-  height: 210px;
-  color: black;
-  border: solid;
-  border-width: 1px;
-  box-shadow: 10px 10px 5px #888888;
-  display: none;
-  padding: 10px;
-  width: 100%;
-}
+  .cronDiv {
+    width: 100%;
+  }
 
-.cronClear {
-  margin-bottom: 10px;
-}
+  .codeEditorHolder {
+    display: none;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+  }
 
-.gistStatus {
-  display: none;
-}
+  body .CodeMirror {
+    height: 280px;
+    box-shadow: none;
+    font-size: 14px;
+  }
 
+  .sourceHeader {
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+
+  body legend {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .tiny .small-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .tiny .small-btn:hover {
+    /* font-weight: bold; */
+  }
+
+  .codeEditorHolder .btn {
+    width: 120px;
+
+  }
+
+  .btn {
+    margin-top: 10px;
+    width: 200px;
+  }
+
+  .hookFrame {
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: monospace;
+    height: 210px;
+    color: black;
+    border: solid;
+    border-width: 1px;
+    box-shadow: 10px 10px 5px #888888;
+    display: none;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .cronClear {
+    margin-bottom: 10px;
+  }
+
+  .gistStatus {
+    display: none;
+  }
 </style>
 <link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet">
 
@@ -557,23 +581,24 @@ body legend {
 <script src="/js/jquery.croneditor.js"></script>
 
 <script type="text/javascript">
-
+  /*global $, CodeMirror */
   var boot = {{hook}};
   var themes = boot.themes;
   // client-side slugify
   // the server-side slugify code is much more robust covering much utf
   function slugify(text) {
     return text.toString().toLowerCase()
-      .replace(/\s+/g, '-');           // Replace spaces with -
-//      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-//      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
+      .replace(/\s+/g, '-'); // Replace spaces with -
+    //      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    //      .replace(/\-\-+/g, '-');         // Replace multiple - with single -
   }
 
   var agreedToWarning = false;
 
-  $(document).ready(function () {
+  $(document).ready(function() {
 
-    var deployingCode = false, snippetLoading = false;
+    var deployingCode = false,
+      snippetLoading = false;
 
     $('.hookFrame').on("load", function() {
       if (deployingCode) {
@@ -583,48 +608,49 @@ body legend {
         deployingCode = false;
       }
     });
-    function showCode () {
+
+    function showCode() {
       $('.CodeMirror').show();
-      editor.setCursor(0,0);
+      editor.setCursor(0, 0);
       //editor.focus();
       editor.refresh();
       $('.hookFrame').hide();
     };
 
-    $('.codeButton').on('click', function(){
+    $('.codeButton').on('click', function() {
       showCode();
       return false;
     });
 
-    $('#editorSource').on('click', function(){
+    $('#editorSource').on('click', function() {
       $('.gistUrlHolder').hide();
       $('.githubRepoHolder').hide();
       $('.codeEditorHolder').show();
       editor.refresh();
     });
 
-    $('#gistSource').on('click', function(){
+    $('#gistSource').on('click', function() {
       $('.codeEditorHolder').hide();
       $('.githubRepoHolder').hide();
       $('.gistUrlHolder').show();
     });
 
-    $('#githubRepoSource').on('click', function(){
+    $('#githubRepoSource').on('click', function() {
       $('.codeEditorHolder').hide();
       $('.gistUrlHolder').hide();
       $('.githubRepoHolder').show();
     });
 
 
-    $('input[name="cronActive"]').click(function(){
-      if($(this).prop('checked')) {
+    $('input[name="cronActive"]').click(function() {
+      if ($(this).prop('checked')) {
         $('.cronRow').show();
       } else {
         $('.cronRow').hide();
       }
     });
 
-    function deployCode () {
+    function deployCode() {
       if (snippetLoading) {
         // do not attempt to deploy code if a new snippet is still loading...
         return false;
@@ -649,23 +675,22 @@ body legend {
       return false;
     };
 
-    $('.testButton').on('click', function(){
+    $('.testButton').on('click', function() {
       deployCode();
       return false;
     });
 
-    $('.saveButton').on('click', function () {
-    });
+    $('.saveButton').on('click', function() {});
 
-    $('#name').on('click', function () {
+    $('#name').on('click', function() {
       $('#name').removeClass('error');
     });
 
-    $('.hookSaveLink').click(function(){
+    $('.hookSaveLink').click(function() {
       $('#hookForm').submit();
     });
 
-    $('#hookForm').on('submit', function(){
+    $('#hookForm').on('submit', function() {
       var name = $('#name').val();
       $('.codeEditor').html(editor.getValue());
       if (name.length === 0) {
@@ -679,35 +704,41 @@ body legend {
       $('.hookSchema').val(schema.getValue(0))
 
       // $('#presenterSource').val(presenterSource.getValue(0))
-      var _data = $( this ).serialize();
+      var _data = $(this).serialize();
 
       $('.hookSave').attr('DISABLED', 'DISABLED');
-      $.growl.warning({ message: 'Attempting to save...' });
+      $.growl.warning({
+        message: 'Attempting to save...'
+      });
       $.ajax({
-           type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-           url         : boot.baseUrl + '/admin', // the url where we want to POST
-           data        : _data, // our data object
-           dataType    : 'json', // what type of data do we expect back from the server
-           encode          : true,
-           error: function (err) {
-            $('.hookSave').attr('disabled', null);
-            console.log(err)
-            $.growl.error({ message: 'Issue communicating with server. Please contact support or try again.' });
-           },
-           success: function(res){
-              $('.hookSave').attr('disabled', null);
-              if (res.status === 'updated') {
-                $.growl.notice({ message: "Service saved." });
-                return;
-              }
-              console.log(res);
-              alert('did not update ' + res.status);
-            }
-       });
+        type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+        url: boot.baseUrl + '/admin', // the url where we want to POST
+        data: _data, // our data object
+        dataType: 'json', // what type of data do we expect back from the server
+        encode: true,
+        error: function(err) {
+          $('.hookSave').attr('disabled', null);
+          console.log(err)
+          $.growl.error({
+            message: 'Issue communicating with server. Please contact support or try again.'
+          });
+        },
+        success: function(res) {
+          $('.hookSave').attr('disabled', null);
+          if (res.status === 'updated') {
+            $.growl.notice({
+              message: "Service saved."
+            });
+            return;
+          }
+          console.log(res);
+          alert('did not update ' + res.status);
+        }
+      });
       return false;
     });
 
-    $('.routeTipsButton').on('click', function(){
+    $('.routeTipsButton').on('click', function() {
       if ($('.routeHint').css('display') === "none") {
         $('.routeHint').show();
       } else {
@@ -717,7 +748,7 @@ body legend {
     });
 
 
-    $('.schemaHelpButton').on('click', function(){
+    $('.schemaHelpButton').on('click', function() {
       if ($('.schemaHelp').css('display') === "none") {
         $('.schemaHelp').show();
       } else {
@@ -726,30 +757,30 @@ body legend {
       return false;
     });
 
-    $('#name, #path').on('keyup', function(){
+    $('#name, #path').on('keyup', function() {
       var v = $(this).val();
       var s = slugify($(this).val());
       if (v !== s) {
         $(this).addClass('error');
         $(this).val(s);
       } else {
-        if(v.length !== 0) {
+        if (v.length !== 0) {
           $(this).removeClass('error');
         }
       }
       //drawHookLinks();
     });
 
-    $('input[name="themeActive"]').click(function(){
-      if($(this).prop('checked')) {
+    $('input[name="themeActive"]').click(function() {
+      if ($(this).prop('checked')) {
         $('.themeRow').show();
       } else {
         $('.themeRow').hide();
       }
     });
 
-    $('input[name="schemaActive"]').click(function(){
-      if($(this).prop('checked')) {
+    $('input[name="schemaActive"]').click(function() {
+      if ($(this).prop('checked')) {
         $('.schemaRow').show();
         schema.refresh();
       } else {
@@ -769,10 +800,10 @@ body legend {
         delay: 100
       }
     };
-    
+
     var p = $('#name').position();
     $('#name').focus();
-    $('.themeSelect').change(function(e){
+    $('.themeSelect').change(function(e) {
       var val = themes[$(this).val()];
       $('#theme').attr('value', val.theme);
       $('#presenter').attr('value', val.presenter);
@@ -793,7 +824,7 @@ body legend {
       // do nothing
     }
 
-    $('#language').change(function(e){
+    $('#language').change(function(e) {
 
       var l = $('#language').val();
       //$('.currentLanguage').html($( "#language option:selected" ).text());
@@ -819,11 +850,11 @@ body legend {
     });
   });
 
-  function drawHookLinks () {
+  function drawHookLinks() {
     var base = 'https://hook.io/' + boot.owner;
     var name = $('#name').val();
     var path = $('#path').val();
-    if(name.length === 0 && path.length === 0) {
+    if (name.length === 0 && path.length === 0) {
       //$('.hookLinks .admin').html('');
       //return;
     }
@@ -832,7 +863,7 @@ body legend {
       name = "hook-name";
     }
 
-    function absLink (base, name) {
+    function absLink(base, name) {
       return '<a href="' + base + '/' + name + '">' + base + '/' + name + '' + '</a>';
     };
 
@@ -841,7 +872,7 @@ body legend {
     $('.hookLinks .source').html(absLink(base, name + '/src'));
     $('.hookLinks .logs').html(absLink(base, name + '/logs'));
 
-    $('.hookSave').on('click', function(){
+    $('.hookSave').on('click', function() {
       $('#hookForm').submit();
       return false;
     })
@@ -859,21 +890,21 @@ body legend {
     $('#estimateRun').val(next);
   });
   */
-  
-  function sticky_relocate() {
-      var window_top = $(window).scrollTop();
-      var div_top = $('#sticky-anchor').offset().top;
-      if (window_top > div_top)
-          $('#sticky-element').addClass('sticky');
-      else
-          $('#sticky-element').removeClass('sticky');
-  }
 
+  function sticky_relocate() {
+    var window_top = $(window).scrollTop();
+    var div_top = $('#sticky-anchor').offset().top;
+    if (window_top > div_top)
+      $('#sticky-element').addClass('sticky');
+    else
+      $('#sticky-element').removeClass('sticky');
+  }
 </script>
 
 <!-- background-image: url('./img/node_turtle.png');background-repeat: none; -->
 
-<div style="text-align: left;" class="container content"> <!--  -->
+<div style="text-align: left;" class="container content">
+  <!--  -->
   <h1 class="i18n">Manage Microservice</h1>
 
   <div class="row" style="text-align: center;">
@@ -907,7 +938,7 @@ body legend {
           <li><a href="#timeouts">Timeouts</a></li>
           <li><a href="#metrics">Metrics</a></li>
         </ul>
-        
+
         <h2>Function</h2>
         <ul>
           <li><a href="#code">Code</a></li>
@@ -926,7 +957,7 @@ body legend {
           <li><a href="#view">Theme / View</a></li>
         </ul>
         -->
-        <br/>
+        <br />
         <ul>
           <!--
             <li><a href="#" class="hookRevisions">Fork Link</a></li>
@@ -936,11 +967,11 @@ body legend {
 
     </div>
     <div class="col-lg-10 col-md-10 col-sm-10 serviceCol">
-        <form id="hookForm" method="POST" action="/admin" role="form">
-          <!--
+      <form id="hookForm" method="POST" action="/admin" role="form">
+        <!--
           <h3><a href="" class="hookLink i18n" target="_blank">Run Service</a>&nbsp;|&nbsp;<a href="" class="hookLogs i18n">View Logs</a>&nbsp;|&nbsp;<a href="" class="clearLogs i18n">Clear Logs</a>&nbsp;|&nbsp;<a href="{{appUrl}}/keys" class="hookAccessKeys i18n">Access Keys</a>&nbsp;|&nbsp;<a href="" class="hookRefresh i18n">Refresh Cache</a></h3>
           -->
-          <!--
+        <!--
           <h3>
             <a href="" class="hookSource i18n">View Service Source</a>
               &nbsp;|&nbsp;
@@ -949,71 +980,71 @@ body legend {
               <a href="" class="hookPresenter i18n">Presenter</a></h3>
           <br/>
           -->
-          <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br/>
-            <br/>
-            The Gist will now be associated with the Service once you've completed this form.
+        <div class="gistStatus i18n">Hey there! We just created a new Gist on Github using your account: <a href="" class="i18n">here</a><br />
+          <br />
+          The Gist will now be associated with the Service once you've completed this form.
+        </div>
+
+
+        <a name="endpoint"></a>
+        <div class="hookHolder well">
+          <h2 class="i18n">Endpoint</h2>
+          <div class="form-group">
+            <label for="name" class="i18n">Name</label>
+            <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40" />
+            <input type="hidden" id="previousName" name="previousName" class="previousName" />
+            <input type="hidden" id="owner" name="owner" class="owner" />
+            <div class="tiny">
+              <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
+            </div>
           </div>
+          <div class="form-group">
+            <label for="path" class="i18n">Route</label>
+            <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40" />
+            <div class="tiny">
+              <p>
+                <em class="i18n">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope.</em>
+                <a href="{{appUrl}}/docs#hook" target="_blank">Read More</a>
+              </p>
+              <button tabindex="3" type="button" class="routeTipsButton btn btn-default i18n">Route Formatting Help</button>
+            </div>
 
+            <div class="tiny routeHint">
+              <h4 class="i18n"><strong>Route Formatting</strong></h4>
+              <table class="routeExamples" border="1">
+                <tr>
+                  <td><code>:id</code></td>
+                  <td class="i18n">a named parameter to capture from the route</td>
+                </tr>
+                <tr>
+                  <td><code>*splat</code></td>
+                  <td class="i18n">a wildcard splat to capture from the route</td>
+                </tr>
+                <tr>
+                  <td><code>()</code></td>
+                  <td class="i18n">Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
+                </tr>
+                <tr>
+                  <td><code>strings</code></td>
+                  <td class="i18n">Anything else. Interpolate static strings with params.</td>
+                </tr>
+              </table>
 
-          <a name="endpoint"></a>
-          <div class="hookHolder well">
-            <h2 class="i18n">Endpoint</h2>
-            <div class="form-group">
-              <label for="name" class="i18n">Name</label>
-              <input tabindex="1" class="form-control i18n" type="text" id="name" name="name" placeholder="name of hook..." size="40"/>
-              <input type="hidden" id="previousName" name="previousName" class="previousName"/>
-              <input type="hidden" id="owner" name="owner" class="owner"/>
-              <div class="tiny">
-                <em class="i18n">Will be part of the url to access the Service. Cannot contain non-url safe characters.</em>
+              <h4>Route Examples</h4>
+              <div class="routeExamples">
+                <code>
+                  /:id/create <br />
+                  /some/(optional/):thing <br />
+                  /users/:id/comments/:comment/rating/:rating <br />
+                  /*a/foo/*b <br />
+                  /books/*section/:title <br />
+                </code>
               </div>
             </div>
-            <div class="form-group">
-              <label for="path" class="i18n">Route</label>
-              <input tabindex="2" class="form-control i18n" type="text" id="path" name="path" placeholder="optional regex routing path..." size="40"/>
-              <div class="tiny">
-                <p>
-                  <em class="i18n">Optional Regular Expression route path for the service. Route parameters will merge with all query string and form parameters in the service handler's <code>Hook.params</code> scope.</em>
-                  <a href="{{appUrl}}/docs#hook" target="_blank">Read More</a>
-                </p>
-                <button tabindex="3" type="button" class="routeTipsButton btn btn-default i18n">Route Formatting Help</button>
-              </div>
 
-              <div class="tiny routeHint">
-                <h4 class="i18n"><strong>Route Formatting</strong></h4>
-                <table class="routeExamples" border="1">
-                  <tr>
-                    <td><code>:name</code></td>
-                    <td class="i18n">a named parameter to capture from the route</td>
-                  </tr>
-                  <tr>
-                    <td><code>*splat</code></td>
-                    <td class="i18n">a wildcard splat to capture from the route</td>
-                  </tr>
-                  <tr>
-                    <td><code>()</code></td>
-                    <td class="i18n">Optional group that doesn't have to be part of the query. Can contain nested optional groups, params, and splats</td>
-                  </tr>
-                  <tr>
-                    <td><code>strings</code></td>
-                    <td class="i18n">Anything else. Interpolate static strings with params.</td>
-                  </tr>
-                </table>
-
-                <h4>Route Examples</h4>
-                <div class="routeExamples">
-                  <code>
-                    /:id/create <br/>
-                    /some/(optional/):thing <br/>
-                    /users/:id/comments/:comment/rating/:rating <br/>
-                    /*a/foo/*b <br/>
-                    /books/*section/:title <br/>
-                  </code>
-                </div>
-              </div>
-
-            </div>
-            </div>
-            <!--
+          </div>
+        </div>
+        <!--
             <div class="form-group">
 
               <label for="path" class="i18n">Service URLs</label>
@@ -1049,82 +1080,82 @@ body legend {
           </div>
           -->
 
-          <a name="code"></a>
-          <div class="sourcesHolder well">
-            <h2 class="i18n">Source Code</h2>
-            <div class="services"></div>
-            <div class="form-group languages">
-              <label class="smaller" for="language">
-                Language
-                <select class="form-control" name="language" id="language">
-                  <option value="javascript">JavaScript ( Recommended )</option>
-                  <option value="coffee-script">CoffeeScript</option>
-                  <option value="clisp">Common Lisp ( using clisp )</option>
-                  <option value="bash">Bash</option>
-                  <!--
+        <a name="code"></a>
+        <div class="sourcesHolder well">
+          <h2 class="i18n">Source Code</h2>
+          <div class="services"></div>
+          <div class="form-group languages">
+            <label class="smaller" for="language">
+              Language
+              <select class="form-control" name="language" id="language">
+                <option value="javascript">JavaScript ( Recommended )</option>
+                <option value="coffee-script">CoffeeScript</option>
+                <option value="clisp">Common Lisp ( using clisp )</option>
+                <option value="bash">Bash</option>
+                <!--
                   <option value="gcc">C ( using gcc )</option>
                   <option value="go">Golang</option>
                   <option value="java">Java</option>
                   <option value="ocaml">OCaml</option>
                   <option value="rust">Rust</option>
                   <option value="r">R</option>
-                  --> 
-                  <option value="lua">Lua</option>
-                  <option value="perl">Perl</option>
-                  <option value="php">PHP</option>
-                  <option value="python">Python</option>
-                  <option value="python3">Python 3</option>
-                  <option value="ruby">Ruby</option>
-                  <option value="scheme">Scheme</option>
-                  <option value="smalltalk">SmallTalk</option>
-                  <option value="tcl">Tcl</option>
-                </select>
+                  -->
+                <option value="lua">Lua</option>
+                <option value="perl">Perl</option>
+                <option value="php">PHP</option>
+                <option value="python">Python</option>
+                <option value="python3">Python 3</option>
+                <option value="ruby">Ruby</option>
+                <option value="scheme">Scheme</option>
+                <option value="smalltalk">SmallTalk</option>
+                <option value="tcl">Tcl</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-group sources">
+
+            <div class="tiny">
+              <span class="i18n">Select where the service's source code will come from.</span>
+            </div>
+
+            <div class="form-control">
+              <label class="radio-inline" for="editorSource" title="Specify the source of the Service from text editor">
+                <input type="radio" value="code" class="editorSource" id="editorSource" name="hookSource">
+                Code Editor
+              </label>
+              <label class="radio-inline gistSourceLabel" for="gistSource" title="Specify the source of the Service as a Github Gist">
+                <input type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource">
+                Github Gist
+              </label>
+              <label class="radio-inline gistRepoLabel" for="githubRepoSource" title="Specify the source of the Service as a Github Repository">
+                <input type="radio" value="githubRepo" class="githubRepoSource" id="githubRepoSource" name="hookSource">
+                Github Repo
               </label>
             </div>
-            <div class="form-group sources">
+            <div class="githubRequired">
+              <span class="warning tiny">
+                Github sources are not available unless {{appName}} is authorized to read from your Github account.
+              </span>
+              <p>
+                <a href="{{appUrl}}/login/github" class="btn btn-social btn-github" style="height:60px;width:260px;"><i class="fa fa-github"></i> <span style="top: 14px;position:relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connect Github Account</span></a>
+              </p>
+            </div>
+          </div>
 
-              <div class="tiny">
-                <span class="i18n">Select where the service's source code will come from.</span>
-              </div>
-
-              <div class="form-control">
-                  <label class="radio-inline" for="editorSource" title="Specify the source of the Service from text editor">
-                    <input type="radio" value="code" class="editorSource" id="editorSource" name="hookSource">
-                    Code Editor
-                  </label>
-                  <label class="radio-inline gistSourceLabel" for="gistSource" title="Specify the source of the Service as a Github Gist">
-                    <input type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource">
-                    Github Gist
-                  </label>
-                  <label class="radio-inline gistRepoLabel" for="githubRepoSource" title="Specify the source of the Service as a Github Repository">
-                    <input type="radio" value="githubRepo" class="githubRepoSource" id="githubRepoSource" name="hookSource">
-                    Github Repo
-                  </label>
-              </div>
-              <div class="githubRequired">
-                <span class="warning tiny">
-                  Github sources are not available unless {{appName}} is authorized to read from your Github account.
-                </span>
-                <p>
-                  <a href="{{appUrl}}/login/github" class="btn btn-social btn-github" style="height:60px;width:260px;"><i class="fa fa-github"></i> <span style="top: 14px;position:relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connect Github Account</span></a>
-                </p>
-              </div>
+          <div class="form-group gistUrlHolder">
+            <p>Pull service source code from Github Gist</p>
+            <label for="gist">Gist Url</label>
+            <input type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80" />
+            <div class="tiny" style="padding-top:5px;">
+              <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
             </div>
 
-            <div class="form-group gistUrlHolder">
-              <p>Pull service source code from Github Gist</p>
-              <label for="gist">Gist Url</label>
-              <input type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80"/>
-              <div class="tiny" style="padding-top:5px;">
-                <a href="https://gist.github.com/new" target="_blank" id="fork" name="fork" type="submit">Click here to create new Github Gist</a>
-              </div>
+            <label for="gistMainEntry">Main Entry Point (optional, defaults to first file)</label>
+            <input type="text" class="form-control gistMainEntry" name="gistMainEntry" id="gistMainEntry" placeholder="index.js" value="" size="80" />
 
-              <label for="gistMainEntry">Main Entry Point (optional, defaults to first file)</label>
-              <input type="text" class="form-control gistMainEntry" name="gistMainEntry" id="gistMainEntry" placeholder="index.js" value="" size="80"/>
+            <input tabindex="1" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary hookSave"><br />
 
-              <input tabindex="1" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary hookSave"><br/>
-
-              <!-- 
+            <!-- 
               <label for="mode" class="i18n">Mode</label>
               <select class="form-control mode" name="mode">
                 <option value="Development" class="i18n">Development</option>
@@ -1133,20 +1164,20 @@ body legend {
               <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
               -->
 
-            </div>
+          </div>
 
-            <div class="form-group githubRepoHolder">
-              <p>Pull service source code from a Github Repository<br/>Note: Private Github Repos require you grant additional access: <a href="{{appUrl}}/login/github/private-repos">Here</a></p>
-              <label for="repo">Repo Name</label>
-              <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microcule-examples" value="" size="80"/>
+          <div class="form-group githubRepoHolder">
+            <p>Pull service source code from a Github Repository<br />Note: Private Github Repos require you grant additional access: <a href="{{appUrl}}/login/github/private-repos">Here</a></p>
+            <label for="repo">Repo Name</label>
+            <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microcule-examples" value="" size="80" />
 
-              <label for="repo">Repo Branch</label>
-              <input type="text" class="form-control repo" name="branch" id="branch" placeholder="master" value="" size="80"/>
+            <label for="repo">Repo Branch</label>
+            <input type="text" class="form-control repo" name="branch" id="branch" placeholder="master" value="" size="80" />
 
-              <label for="githubMainEntry">Main Entry Point</label>
-              <input type="text" class="form-control githubMainEntry" name="githubMainEntry" id="githubMainEntry" placeholder="javascript/index.js" value="" size="80"/>
+            <label for="githubMainEntry">Main Entry Point</label>
+            <input type="text" class="form-control githubMainEntry" name="githubMainEntry" id="githubMainEntry" placeholder="javascript/index.js" value="" size="80" />
 
-              <!-- 
+            <!-- 
               <label for="mode" class="i18n">Mode</label>
               <select class="form-control mode" name="mode">
                 <option value="Development" class="i18n">Development</option>
@@ -1154,42 +1185,40 @@ body legend {
               </select>
               <p class="smaller" class="i18n"><strong class="i18n">Important:</strong> Setting Mode to <code>Production</code> will greatly improve the performance of the Service by caching it's source files. Setting Mode to <code>Development</code> will ensure the latest source files are always pulled ( which will cause longer response times for your Hook )</p>
               -->
-              <input tabindex="1" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary hookSave"><br/>
-            </div>
+            <input tabindex="1" name="save" type="submit" value="Save Service"/ class="btn i18n btn-primary hookSave"><br />
+          </div>
 
-            <div class="form-group codeEditorHolder">
+          <div class="form-group codeEditorHolder">
 
-                <!-- Create a simple CodeMirror instance -->
-                <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
-                <script src="/js/codemirror.js"></script>
-                <script src="/js/javascript.js"></script>
-                <script type="text/javascript">
-                </script>
-                <style>
-                  .CodeMirror {
-                    /* Set height, width, borders, and global font properties here */
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                    font-family: monospace;
-                    height: 500px;
-                    color: black;
-                    border: solid;
-                    border-width: 1px;
-                    box-shadow: 10px 10px 5px #888888;
-                  }
-                </style>
+            <!-- Create a simple CodeMirror instance -->
+            <link rel="stylesheet" href="{{appUrl}}/js/codemirror.css">
+            <script src="/js/codemirror.js"></script>
+            <script src="/js/javascript.js"></script>
+            <style>
+              .CodeMirror {
+                /* Set height, width, borders, and global font properties here */
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-family: monospace;
+                height: 500px;
+                color: black;
+                border: solid;
+                border-width: 1px;
+                box-shadow: 10px 10px 5px #888888;
+              }
+            </style>
 
-                <p>Using the Code Editor, source is stored directly on hook.io</p>
+            <p>Using the Code Editor, source is stored directly on hook.io</p>
 
-                  <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
-                  <button type="button" class="codeButton btn">Edit Code</button>
-                  <input tabindex="1" name="save" type="submit" value="Save Code"/ class="btn i18n btn hookSave"><br/>
-                  <p class="telegramWarning warning medium"><strong>Warning:</strong> Telegram services are currently not supported. Due to large amounts of spam from the Telegram network we have temporaliry blocked all incoming Telegram traffic. If you wish to enable Telegram for this account please <a href="/support?t=Please Enable Telegram" target="_blank">Contact Support</a></p>
-                  <!-- TODO: add help button for service code 
+            <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
+            <button type="button" class="codeButton btn">Edit Code</button>
+            <input tabindex="1" name="save" type="submit" value="Save Code"/ class="btn i18n btn hookSave"><br />
+            <p class="telegramWarning warning medium"><strong>Warning:</strong> Telegram services are currently not supported. Due to large amounts of spam from the Telegram network we have temporaliry blocked all incoming Telegram traffic. If you wish to enable Telegram for this account please <a href="/support?t=Please Enable Telegram" target="_blank">Contact Support</a></p>
+            <!-- TODO: add help button for service code 
                     <button type="button" class="helpButton btn">Help</button> <br/>
                   -->
 
-                  <textarea tabindex="8" name="codeEditor" class="codeEditor">// A simple hello world microservice 
+            <textarea tabindex="8" name="codeEditor" class="codeEditor">// A simple hello world microservice 
 // Service will respond to HTTP requests with a string
 module['exports'] = function helloWorld (hook) {
   // hook.req is a Node.js http.IncomingMessage
@@ -1198,111 +1227,111 @@ module['exports'] = function helloWorld (hook) {
   // Respond to the request with a simple string
   hook.res.json(hook.params);
 };</textarea>
-                  <script type="text/javascript">
+            <script type="text/javascript">
+              /*global $, CodeMirror */
+              var editor, schema;
 
-                  var editor, schema, themeSource, presenterSource;
+              function checkForTelegramText(source) {
+                if (source.search('telegram') !== -1) {
+                  $('.telegramWarning').show();
+                } else {
+                  $('.telegramWarning').hide();
+                }
+              }
 
-                    function checkForTelegramText (source) {
-                      if (source.search('telegram') !== -1) {
-                        $('.telegramWarning').show();
-                      } else {
-                        $('.telegramWarning').hide();
-                      }
-                    }
-
-                    $(document).ready(function () {
-                      schema = CodeMirror.fromTextArea($('.hookSchema').get(0), {
-                        lineNumbers: true
-                      });
-                      schema.refresh();
-                      editor.on('change', function () {
-                         html = editor.getValue();
-                         checkForTelegramText(html);
-                      });
-                    });
-                    editor = CodeMirror.fromTextArea($('.codeEditor').get(0), {
-                      lineNumbers: true
-                    });
-                    editor.refresh();
-                  </script>
-                <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
-              </div>
+              $(document).ready(function() {
+                schema = CodeMirror.fromTextArea($('.hookSchema').get(0), {
+                  lineNumbers: true
+                });
+                schema.refresh();
+                editor.on('change', function() {
+                  var html = editor.getValue();
+                  checkForTelegramText(html);
+                });
+              });
+              editor = CodeMirror.fromTextArea($('.codeEditor').get(0), {
+                lineNumbers: true
+              });
+              editor.refresh();
+            </script>
+            <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
           </div>
+        </div>
 
-          <a name="middlewares"></a>
-          <div class="well middlewares">
-            <h2>Plugins and Service Middlewares</h2>
-            <p>Chain multiple services together as middlewares to create composite services. An example use-case would be adding the <a href="/examples/basic-auth/_src">examples/basic-auth</a> service (<a href="/examples/basic-auth/_src" target="_blank">view source)</a> as the first middleware step in the chain, adding a Basic Authentication layer.</p>
-            <p>Any existing hook.io service can be used as a middleware or you can create new custom services to be used as middlewares. Circular chains will halt during execution. This service will be the last executed service in the chain.</p>
-            <h3><strong>Inputs ( executed in-order, before the service )</strong></h3>
-            <h3>Request Plugins</h3>
+        <a name="middlewares"></a>
+        <div class="well middlewares">
+          <h2>Plugins and Service Middlewares</h2>
+          <p>Chain multiple services together as middlewares to create composite services. An example use-case would be adding the <a href="/examples/basic-auth/_src">examples/basic-auth</a> service (<a href="/examples/basic-auth/_src" target="_blank">view source)</a> as the first middleware step in the chain, adding a Basic Authentication layer.</p>
+          <p>Any existing hook.io service can be used as a middleware or you can create new custom services to be used as middlewares. Circular chains will halt during execution. This service will be the last executed service in the chain.</p>
+          <h3><strong>Inputs ( executed in-order, before the service )</strong></h3>
+          <h3>Request Plugins</h3>
 
-            <ol class="plugins">
-            </ol>
+          <ol class="plugins">
+          </ol>
 
-            <br/>
-            <input type="checkbox" name="requestTransformer" id="requestTransformer">
-            <label for="requestTransformer">request transformer</label>
-            <br/>
+          <br />
+          <input type="checkbox" name="requestTransformer" id="requestTransformer">
+          <label for="requestTransformer">request transformer</label>
+          <br />
 
-            <input type="checkbox" name="basicAuth" id="basicAuth">
-            <label for="basicAuth">basic-auth</label>
+          <input type="checkbox" name="basicAuth" id="basicAuth">
+          <label for="basicAuth">basic-auth</label>
 
-            <br/>
+          <br />
 
-            <input type="checkbox" name="oauth2" id="oauth2">
-            <label for="oauth2">oauth2</label>
+          <input type="checkbox" name="oauth2" id="oauth2">
+          <label for="oauth2">oauth2</label>
 
-            <br/>
-            <input type="checkbox" name="schemaValidator" id="schemaValidator">
-            <label for="schemaValidator">schema validator</label>
+          <br />
+          <input type="checkbox" name="schemaValidator" id="schemaValidator">
+          <label for="schemaValidator">schema validator</label>
 
-            <br/>
-            <input type="checkbox" name="gistSource" id="gistSource">
-            <label for="gistSource">github gist source</label>
+          <br />
+          <input type="checkbox" name="gistSource" id="gistSource">
+          <label for="gistSource">github gist source</label>
 
-            <br/>
-            <input type="checkbox" name="gitSource" id="gistSource">
-            <label for="gitSource">github repo source</label>
+          <br />
+          <input type="checkbox" name="gitSource" id="gistSource">
+          <label for="gitSource">github repo source</label>
 
-            <br/>
-            <input type="checkbox" name="customPlugin" id="customPlugin">
-            <label for="customPlugin">custom plugin ( can be any hook.io service <a href="#readmore">Read More</a>)</label>
-            <input type="text" name="customPluginName" placeholder="examples/basic-auth"/>
-            
-            <div class="form-group inputsHolder">
-              <p>
-                <em>You may drag and drop services to change their order.</em>
-              </p>
-              <label for="inputs" class="i18n">Inputs</label>
-              <input type="text" class="chainServices i18n" id="inputs" name="inputs">
-            </div>
-            <div class="form-group">
-              <label for="input" class="i18n">Input</label>
-              <input tabindex="10" type="text" class="input i18n" id="input" name="input" title="input uri" placeholder="examples/basic-auth">
-              <button class="addInput">Add Service Input</button>
-            </div>
-            
-            <h3>Response Plugins</h3>
-            
+          <br />
+          <input type="checkbox" name="customPlugin" id="customPlugin">
+          <label for="customPlugin">custom plugin ( can be any hook.io service <a href="#readmore">Read More</a>)</label>
+          <input type="text" name="customPluginName" placeholder="examples/basic-auth" />
+
+          <div class="form-group inputsHolder">
+            <p>
+              <em>You may drag and drop services to change their order.</em>
+            </p>
+            <label for="inputs" class="i18n">Inputs</label>
+            <input type="text" class="chainServices i18n" id="inputs" name="inputs">
           </div>
-          
-          <a name="schema"></a>
-
           <div class="form-group">
-            <input tabindex="10" type="checkbox" class="schemaActive i18n" id="schemaActive" name="schemaActive" title="Themes are an easy way to customize the output of the Service.">
-            <label for="schemaActive" class="i18n">Use a Schema for Service Input Parameters</label>
+            <label for="input" class="i18n">Input</label>
+            <input tabindex="10" type="text" class="input i18n" id="input" name="input" title="input uri" placeholder="examples/basic-auth">
+            <button class="addInput">Add Service Input</button>
           </div>
 
-          <div class="well schemaRow">
-            <h2 class="i18n">Schema for HTTP Input Parameters</h2>
-            <button type="button" class="schemaHelpButton btn btn-primary">Schema Help</button> <br/>
+          <h3>Response Plugins</h3>
 
-            <div class="schemaHelp tiny">
-              <br/>
-              <p>Adding a schema to a service provides an automated layer of validation and default values for incoming HTTP request parameters.</p>
-              <p>Schemas are useful for validating incoming service parameters or setting default service values without having to write any additional validation code.</p>
-              <p>Schemas are implemented using the <a href="https://github.com/mschema/mschema" target="_blank">mschema library.</a> Additional documentation and tests for schema usage <a href="https://github.com/mschema/mschema/tree/master/test" target="_blank">can be found here</a>.
+        </div>
+
+        <a name="schema"></a>
+
+        <div class="form-group">
+          <input tabindex="10" type="checkbox" class="schemaActive i18n" id="schemaActive" name="schemaActive" title="Themes are an easy way to customize the output of the Service.">
+          <label for="schemaActive" class="i18n">Use a Schema for Service Input Parameters</label>
+        </div>
+
+        <div class="well schemaRow">
+          <h2 class="i18n">Schema for HTTP Input Parameters</h2>
+          <button type="button" class="schemaHelpButton btn btn-primary">Schema Help</button> <br />
+
+          <div class="schemaHelp tiny">
+            <br />
+            <p>Adding a schema to a service provides an automated layer of validation and default values for incoming HTTP request parameters.</p>
+            <p>Schemas are useful for validating incoming service parameters or setting default service values without having to write any additional validation code.</p>
+            <p>Schemas are implemented using the <a href="https://github.com/mschema/mschema" target="_blank">mschema library.</a> Additional documentation and tests for schema usage <a href="https://github.com/mschema/mschema/tree/master/test" target="_blank">can be found here</a>.
               <p>
                 Example Schema:
               </p>
@@ -1325,10 +1354,10 @@ module['exports'] = function helloWorld (hook) {
 }
                 </code></pre>
               </div>
-            </div>
+          </div>
 
-            <div class="form-group">
-              <textarea name="schema" class="hookSchema">{
+          <div class="form-group">
+            <textarea name="schema" class="hookSchema">{
   "name": {
     "type": "string",
     "required": true
@@ -1345,175 +1374,175 @@ module['exports'] = function helloWorld (hook) {
   }
 }
               </textarea>
-            </div>
           </div>
+        </div>
 
-          <a name="view"></a>
+        <a name="view"></a>
 
-          <div class="form-group customTheme">
-            <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Service.">
-            <label for="themeActive" class="i18n">Customize appearance of Service with a Theme or View-Presenter</label>
-          </div>
+        <div class="form-group customTheme">
+          <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Service.">
+          <label for="themeActive" class="i18n">Customize appearance of Service with a Theme or View-Presenter</label>
+        </div>
 
-          <div class="themeSelector well themeRow"></div>
+        <div class="themeSelector well themeRow"></div>
 
-          <a name="cron"></a>
-          <div class="form-group">
-            <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Service will execute as a scheduled tasked based on provided Cron pattern.">
-            <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
-          </div>
+        <a name="cron"></a>
+        <div class="form-group">
+          <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Service will execute as a scheduled tasked based on provided Cron pattern.">
+          <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
+        </div>
 
-          <div class="form-group cronRow well">
-            <h2>Hooks can be scheduled on a timer</h2>
+        <div class="form-group cronRow well">
+          <h2>Hooks can be scheduled on a timer</h2>
 
-            <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
-            <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
-            <p class="superTiny">By design, Crons will not pass any data into the Service. If you need to pass data into the scheduled Service, you can simply set default data in the Service or chain two Hooks together to pipe the data.</p>
-            <p><strong class="warning">Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
+          <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
+          <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
+          <p class="superTiny">By design, Crons will not pass any data into the Service. If you need to pass data into the scheduled Service, you can simply set default data in the Service or chain two Hooks together to pipe the data.</p>
+          <p><strong class="warning">Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
 
-            <h3>Cron Pattern</h3>
-            <div class="cronDiv"></div>
+          <h3>Cron Pattern</h3>
+          <div class="cronDiv"></div>
 
-          </div>
+        </div>
 
-          <a name="security"></a>
-          <div class="securityHolder well">
-            <h2 class="i18n">Security</h2>
-            <!-- private / tokens -->
+        <a name="security"></a>
+        <div class="securityHolder well">
+          <h2 class="i18n">Security</h2>
+          <!-- private / tokens -->
 
-            <div class="paidAccount">
-              <p>
-                <span class="warning"><strong>Note:</strong> </span> In order to enable <a href="{{appUrl}}/faq#private">private services</a>, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
-              </p>
-            </div>
-
-            <div class="form-group private">
-
-              <div class="form-control">
-                <label for="hookPublic">Public Service</label>
-                <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
-                &nbsp;
-
-                <label for="hookPrivate" class="hookPrivateLabel">Private Service</label>
-                <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
-              </div>
-              <p>
-                If a service is set to "Private", it will only be accessible when logged into the web app, or through a valid API Access Key with an associated role of <code>hook::run</code>.
-              </p>
-              <p>
-                Additionally, Private services restrict public access to potentially private information like your source code or logs. <a href="{{appUrl}}/keys">Read More.</a>
-              </p>
-
-              <div class="securityHints">
-                <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
-                <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
-              </div>
-            </div>
-          </div>
-
-          <a name="timeouts"></a>
-          <div class="timeoutsHolder well">
-            <h2 class="i18n">Timeouts</h2>
-            <!-- private / tokens -->
-            <p>The timeout value is how long your service will run in Milliseconds until {{appName}} automatically exits the service and ends the response.</p>
-            <p>Some custom services may require longer timeouts, but most services should not. <a href="{{appUrl}}/docs#timeouts" target="_blank">Read More about Timeouts</a></p> 
-            <div class="paidAccount">
-              <p>
-                <span class="warning"><strong>Note:</strong> </span> In order increase the service timeout value enable, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
-              </p>
-            </div>
-            <div class="form-group">
-              <label for="customTimeout" class="i18n">Service Timeout</label>
-              <input name="customTimeout" type="text" class="form-control customTimeout" id="customTimeout" value="" size="40">
-            </div>
-          </div>
-
-          <a name="metrics"></a>
-
-          <div class="analyticsHolder well">
-            <h2 class="i18n">Metrics </h2>
-            <!-- private / tokens -->
-            <h3 class="noMetrics">No metrics are available yet. Try running or re-running the Hook.</h3>
-            <div class="form-group">
-              <div class="hookMetrics">
-                <table class="table">
-                  <tr>
-                    <th>Metric</th>
-                    <th>Count</th>
-                  </tr>
-                </table>
-                <p><a class="hookMetricReport" href="{{appUrl}}/metrics/marak/echo/report" target="_blank">{{appUrl}}/metrics/marak/echo/report</a></p>
-              </div>
-            </div>
-          </div>
-
-          <a name="endpoints"></a>
-          <div class="endpointHolder well">
-            <h2 class="i18n">Endpoints </h2>
-            <p>Your microservice contains the following unique URL endpoints. These are used for help managing the microservice.</p>
-            <p><strong>Note:</strong> These endpoints are currently: Public. In order to protect these URLs set the microservice to Private.</p>
-            <!-- private / tokens -->
-            <div class="form-group">
-              <div class="hookEndpoints">
-                <table class="table">
-                  <tr>
-                    <th>Endpoint</th>
-                    <th>URL</th>
-                  </tr>
-                  <tr>
-                    <td><a href="#" class="hookAdmin">Administration Page</a></td>
-                    <td><a href="#" class="hookAdmin">/admin</a></td>
-                  </tr>
-                  <tr>
-                    <td><a href="#" class="hookSource">View Source</a></td>
-                    <td><a href="#" class="hookSource">/_src</a></td>
-                  </tr>
-                  <tr>
-                    <td><a href="#" class="hookLogs">View Logs</a></td>
-                    <td><a href="#" class="hookLogs">/_log</a></td>
-                  </tr>
-                  <tr>
-                    <td><a href="#" class="hookRevisions">View Revisions</a></td>
-                    <td><a href="#" class="hookRevisions">/_rev</a></td>
-                  </tr>
-                  <tr>
-                    <td><a href="#" class="hookFork">Share Fork</a></td>
-                    <td><a href="#" class="hookFork">/_fork</a></td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <a name="local"></a>
-          <div class="localHolder well">
-            <h2 class="i18n">Local Development </h2>
-            <p>{{appName}} services may be cloned and run locally by installing the <a href="/sdk">{{appName}} SDK and Microcule.</a></p>
-            <h3>Quick SDK Install</h3>
-<pre><code>
-  sudo npm install -g hook.io-sdk
-</code></pre>
-<br/>
+          <div class="paidAccount">
             <p>
-              Once the SDK is installed, you will have access to the <code>hook-clone</code> CLI command. Using <code>hook-clone</code> you can copy this service for local development running the following commands:
+              <span class="warning"><strong>Note:</strong> </span> In order to enable <a href="{{appUrl}}/faq#private">private services</a>, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
+            </p>
+          </div>
+
+          <div class="form-group private">
+
+            <div class="form-control">
+              <label for="hookPublic">Public Service</label>
+              <input tabindex="5" type="radio" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Service from text editor">
+              &nbsp;
+
+              <label for="hookPrivate" class="hookPrivateLabel">Private Service</label>
+              <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Service as a Github Gist">
+            </div>
+            <p>
+              If a service is set to "Private", it will only be accessible when logged into the web app, or through a valid API Access Key with an associated role of <code>hook::run</code>.
+            </p>
+            <p>
+              Additionally, Private services restrict public access to potentially private information like your source code or logs. <a href="{{appUrl}}/keys">Read More.</a>
             </p>
 
-            <h3>Clone Service to Local</h3>
-            <div>
-<pre><code>
+            <div class="securityHints">
+              <p>A public service will be publicly indexed and available for anyone to access at anytime.</p>
+              <p>A private service will be hidden and only allowed accessible through a <a href="{{appUrl}}/keys" target="_blank">role based key access credential</a>.</p>
+            </div>
+          </div>
+        </div>
+
+        <a name="timeouts"></a>
+        <div class="timeoutsHolder well">
+          <h2 class="i18n">Timeouts</h2>
+          <!-- private / tokens -->
+          <p>The timeout value is how long your service will run in Milliseconds until {{appName}} automatically exits the service and ends the response.</p>
+          <p>Some custom services may require longer timeouts, but most services should not. <a href="{{appUrl}}/docs#timeouts" target="_blank">Read More about Timeouts</a></p>
+          <div class="paidAccount">
+            <p>
+              <span class="warning"><strong>Note:</strong> </span> In order increase the service timeout value enable, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="customTimeout" class="i18n">Service Timeout</label>
+            <input name="customTimeout" type="text" class="form-control customTimeout" id="customTimeout" value="" size="40">
+          </div>
+        </div>
+
+        <a name="metrics"></a>
+
+        <div class="analyticsHolder well">
+          <h2 class="i18n">Metrics </h2>
+          <!-- private / tokens -->
+          <h3 class="noMetrics">No metrics are available yet. Try running or re-running the Hook.</h3>
+          <div class="form-group">
+            <div class="hookMetrics">
+              <table class="table">
+                <tr>
+                  <th>Metric</th>
+                  <th>Count</th>
+                </tr>
+              </table>
+              <p><a class="hookMetricReport" href="{{appUrl}}/metrics/marak/echo/report" target="_blank">{{appUrl}}/metrics/marak/echo/report</a></p>
+            </div>
+          </div>
+        </div>
+
+        <a name="endpoints"></a>
+        <div class="endpointHolder well">
+          <h2 class="i18n">Endpoints </h2>
+          <p>Your microservice contains the following unique URL endpoints. These are used for help managing the microservice.</p>
+          <p><strong>Note:</strong> These endpoints are currently: Public. In order to protect these URLs set the microservice to Private.</p>
+          <!-- private / tokens -->
+          <div class="form-group">
+            <div class="hookEndpoints">
+              <table class="table">
+                <tr>
+                  <th>Endpoint</th>
+                  <th>URL</th>
+                </tr>
+                <tr>
+                  <td><a href="#" class="hookAdmin">Administration Page</a></td>
+                  <td><a href="#" class="hookAdmin">/admin</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#" class="hookSource">View Source</a></td>
+                  <td><a href="#" class="hookSource">/_src</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#" class="hookLogs">View Logs</a></td>
+                  <td><a href="#" class="hookLogs">/_log</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#" class="hookRevisions">View Revisions</a></td>
+                  <td><a href="#" class="hookRevisions">/_rev</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#" class="hookFork">Share Fork</a></td>
+                  <td><a href="#" class="hookFork">/_fork</a></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <a name="local"></a>
+        <div class="localHolder well">
+          <h2 class="i18n">Local Development </h2>
+          <p>{{appName}} services may be cloned and run locally by installing the <a href="/sdk">{{appName}} SDK and Microcule.</a></p>
+          <h3>Quick SDK Install</h3>
+          <pre><code>
+  sudo npm install -g hook.io-sdk
+</code></pre>
+          <br />
+          <p>
+            Once the SDK is installed, you will have access to the <code>hook-clone</code> CLI command. Using <code>hook-clone</code> you can copy this service for local development running the following commands:
+          </p>
+
+          <h3>Clone Service to Local</h3>
+          <div>
+            <pre><code>
   hook-clone <span class="hookOwner">examples</span>/<span class="hookName">bash-schema</span>
   cd <span class="hookName">bash-schema</span>
   npm install
   npm start
 </code></pre>
-  </div>
-    <br/>
-            <p>
-              This will start a local HTTP development server mounted with the cloned microservice.
-            </p>
           </div>
+          <br />
+          <p>
+            This will start a local HTTP development server mounted with the cloned microservice.
+          </p>
+        </div>
 
-          <!--
+        <!--
           <div class="form-group">
             <label for="status">Hook Status</label>
             <select class="form-control status" name="status">
@@ -1524,37 +1553,36 @@ module['exports'] = function helloWorld (hook) {
           -->
 
 
-          <!-- TODO - add form for hook schema -->
-          <div class="dangerZone well" align="right">
-            <div class="form-group danger">
-              <span class="warning"><strong>Danger Zone</strong></span>:
-                <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>
-            </div>
+        <!-- TODO - add form for hook schema -->
+        <div class="dangerZone well" align="right">
+          <div class="form-group danger">
+            <span class="warning"><strong>Danger Zone</strong></span>:
+            <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>
           </div>
+        </div>
 
-          <a name="save"></a>
-          <div class="form-group">
-            <input tabindex="1" name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary hookSave">
-          </div>
-          <!-- 
+        <a name="save"></a>
+        <div class="form-group">
+          <input tabindex="1" name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary hookSave">
+        </div>
+        <!-- 
           <div class="form-group">
             <input type="checkbox" class="isPublic" id="isPublic" name="isPublic" title="If checked, the Hook will be pubicly listed and other users will be able to search for it.">
             <label for="isPublic">Display Hook in public Hook registry</label>
           </div>
           -->
-        </form>
-
-        <form name="gatewayForm" id="gatewayForm" action="/gateway" method="POST" target="hookFrame" class="gatewayForm">
-            <input type="hidden" name="code" id="source"/>
-            <input type="hidden" name="language" id="gatewayLang"/>
-            <input type="hidden" name="schema" id="gatewaySchema"/>
-            <input type="hidden" name="view" id="gatewayView"/>
-            <input type="hidden" name="presenter" id="gatewayPresenter"/>
-        </form>
+      </form>
+      <form name="gatewayForm" id="gatewayForm" action="/gateway" method="POST" target="hookFrame" class="gatewayForm">
+        <input type="hidden" name="code" id="source" />
+        <input type="hidden" name="language" id="gatewayLang" />
+        <input type="hidden" name="schema" id="gatewaySchema" />
+        <input type="hidden" name="view" id="gatewayView" />
+        <input type="hidden" name="presenter" id="gatewayPresenter" />
+      </form>
     </div>
   </div>
 
-  <br/>
+  <br />
 
   <!--
   <h3>Not sure how to get started? Here is a basic echo example below.</h3>
@@ -1565,8 +1593,8 @@ module['exports'] = function helloWorld (hook) {
 
   <div data-gist="357645b8a17daeb17458">Loading...</div>
   -->
-  <br/>
-  <br/>
+  <br />
+  <br />
 </div>
 
 <script src="/js/jquery-ui.js"></script>
