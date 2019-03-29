@@ -96,6 +96,9 @@
     /** Define arrowhead **/
     cursor: pointer;
   }
+  .telegramWarning {
+    display: none;
+  }
 
 </style>
 
@@ -568,7 +571,7 @@ body legend {
 
   var agreedToWarning = false;
 
-  $(document).ready(function(){
+  $(document).ready(function () {
 
     var deployingCode = false, snippetLoading = false;
 
@@ -775,9 +778,10 @@ body legend {
       $('#presenter').attr('value', val.presenter);
     });
     drawHookLinks();
-    
+
     if (boot.source && boot.source.length > 0) {
       editor.setValue(boot.source);
+      checkForTelegramText(boot.source);
       //$('#editorSource').attr('checked', 'CHECKED');
       //$('.gistUrlHolder').hide();
       //$('.codeEditorHolder').show();
@@ -1180,7 +1184,7 @@ body legend {
                   <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
                   <button type="button" class="codeButton btn">Edit Code</button>
                   <input tabindex="1" name="save" type="submit" value="Save Code"/ class="btn i18n btn hookSave"><br/>
-
+                  <p class="telegramWarning warning medium"><strong>Warning:</strong> Telegram services are currently not supported. Due to large amounts of spam from the Telegram network we have temporaliry blocked all incoming Telegram traffic. If you wish to enable Telegram for this account please <a href="/support?t=Please Enable Telegram" target="_blank">Contact Support</a></p>
                   <!-- TODO: add help button for service code 
                     <button type="button" class="helpButton btn">Help</button> <br/>
                   -->
@@ -1198,18 +1202,28 @@ module['exports'] = function helloWorld (hook) {
 
                   var editor, schema, themeSource, presenterSource;
 
-                    $(document).ready(function(){
+                    function checkForTelegramText (source) {
+                      if (source.search('telegram') !== -1) {
+                        $('.telegramWarning').show();
+                      } else {
+                        $('.telegramWarning').hide();
+                      }
+                    }
+
+                    $(document).ready(function () {
                       schema = CodeMirror.fromTextArea($('.hookSchema').get(0), {
                         lineNumbers: true
                       });
                       schema.refresh();
+                      editor.on('change', function () {
+                         html = editor.getValue();
+                         checkForTelegramText(html);
+                      });
                     });
-
                     editor = CodeMirror.fromTextArea($('.codeEditor').get(0), {
                       lineNumbers: true
                     });
                     editor.refresh();
-
                   </script>
                 <iframe tabindex="9" name="hookFrame" class="hookFrame"></iframe>
               </div>
