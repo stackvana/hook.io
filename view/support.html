@@ -1,3 +1,79 @@
+<style>
+  .sent {
+    font-size:32px;
+  }
+</style>
+
 <div>
-  <h1>Support<h1>
+  <h1>Support</h1>
+  <div class="contact_area container">
+    <div class="page_title contact">
+    </div>  
+    <form id="contactForm" action="/contact" method="POST" class="well mschema-forms-generic">
+        <fieldset class="fieldset">
+          <legend>Contact Information</legend>
+          <div class="form_control">
+            <ul>
+              <li>
+                <div class="field">
+                  <label class="label" for="accountName">Account Name<em>*</em></label>
+                  <div class="input-box">
+                     <input type="text" class="form-control border_color" id="accountName" name="accountName" readonly="readonly">
+                  </div>
+                </div>
+
+                <div class="field email">
+                  <label class="label" for="email">Email <em>*</em></label>
+                  <div class="input-box einput">
+                    <input type="email" class="form-control border_color" id="email" name="email">
+                  </div>
+                </div>
+              </li>
+              <!--
+              <li>
+                <div class="field">
+                  <label class="label" for="type">Comment Type</label>
+                  <div class="input-box">
+                    <select id='type' name="type">
+                      <option>I have a General Question</option>
+                      <option>Support Request</option>
+                      <option>Sales / Billing Question</option>
+                      <option>Security Issues</option>
+                      <option>Other</option>
+                    </select>
+                  </div>                        
+                </div>
+              </li>
+              -->
+              <li>
+                <div class="field">
+                  <label class="label" for="Subject">Subject</label>
+                  <div class="input-box">
+                    <input type="text" class="form-control border_color" id="Subject" name="subject">
+                  </div>                        
+                </div>
+              </li>
+              <li>
+                <div class="field">
+                  <label class="label" for="Comment">Comment <em>*</em></label>
+                  <div class="input-box">
+                    <textarea class="form-control border_color" id="Comment" name="comment" cols="30" rows="7"></textarea>
+                  </div>
+                </div>
+              </li>
+            </ul>
+        </fieldset>
+        <div class="button_set">
+          <p>* Required Fields</p>
+            <div class="newsl_button">
+              <button type="submit"><span>SUBMIT</span></button>
+            </div>  
+        </div>
+      </div>
+    </form>
+    <div class="sent" align="center">
+      We have received your message. Thank you!<br/>
+      Someone will get back to you soon.
+    </div>
+  </div>
 </div>
