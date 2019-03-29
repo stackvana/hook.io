@@ -5,12 +5,20 @@
   }
 </style>
 
+<link href="/css/github.css" rel="stylesheet" type="text/css">
+<script src="/js/rainbow.min.js"></script>
+
 <div class="container content">
-  <h1>Service Source Code</h1>
-  <h2>Admin Page: <a class="hookAdmin" href="">microservice name</a></h2>
-  <h2>Service Home: <a href="" class="hookRun">Run Service</a></h2>
+  <h1>Source Code</h1>
+  <h2><a href="" class="hookRun">Run Service</a></h2>
+
+  <p>These examples can be run directly in the browser or from any client which speaks HTTP.<br/>You can also send data using tools like <a href="{{appUrl}}/curl">cURL</a>.</p>
+    <!-- A copy of the service will then automatically be created in your account. 
+    -->
+  </p>
+  <!--
   <div>
-    <h2>Source Files</h2>
+    <h2>Files</h2>
     <ul>
       <li><a class="service" href="?f=index.sh">index.sh</a></li>
       <li><a class="schema" href="?f=schema.js">schema.js</a></li>
@@ -18,6 +26,7 @@
       <li><a class="presenter" href="?f=presenter.js">presenter.js</a></li>
     </ul>
   </div>
+  -->
   <!--
   <div class="hooks">
     <h2>Before Middlewares</h2>
@@ -27,7 +36,9 @@
   </div>
   -->
   <div>
-    <h2>Showing Source Code: <span class="currentFile"></span></h2>
-    <textarea id="code"></textarea>
+    <h2>Code <span class="currentFile"></span></h2>
+    <!-- TODO: multiple languages -->
+    <pre><code id="code" data-language="javascript"></code></pre>
   </div>
+  <p>To make your own copy of this service or "Fork" it simply click the <a href="#" id="forkLink"><span title="Fork" class="forkBtn octicon octicon-repo-forked"></span></a> button. <span class="loggedOut">You will need to register for a <a href="{{appUrl}}/login">Free Account</a>, but it's very quick and easy!</span>
 </div>

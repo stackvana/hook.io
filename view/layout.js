@@ -112,7 +112,7 @@ module['exports'] = function view (opts, callback) {
   if (req.isAuthenticated()) {
     if (typeof req.session.user === 'undefined' || req.session.user === 'anonymous') {
       // redirect to the register account page
-      if (req.url !== '/register' && !req.jsonResponse) {
+      if (req.url !== '/register' && !req.jsonResponse && req.url !== '/session') {
         return res.redirect(307, config.app.url + '/register');
       }
     }
