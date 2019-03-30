@@ -23,7 +23,7 @@ module['exports'] = function view (opts, callback) {
         provider: config.email.provider,
         api_user: config.email.api_user,
         api_key: config.email.api_key,
-        to: "marak.squires@gmail.com",
+        to: "hookmaster@hook.io",
         from: params.email,
         subject: 'hook.io - contact - ' + params.accountName + '  ' + params.subject,
         html: params.comment

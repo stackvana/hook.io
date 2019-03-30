@@ -32,7 +32,7 @@ module['exports'] = function (opts, cb) {
         provider: config.email.provider,
         api_user: config.email.api_user,
         api_key: config.email.api_key,
-        to: "marak.squires@gmail.com",
+        to: "hookmaster@hook.io",
         from: "accounts@hook.io",
         subject: 'hook.io - delete account information',
         html: JSON.stringify(cancel, true, 2)
