@@ -152,7 +152,7 @@ module['exports'] = function view (opts, callback) {
       // `free` is used for accounts created before 5/7/2018
       $('.trialPeriod').remove();
       var now = moment();
-      var created = moment('5/15/2018');
+      var created = moment('4/2/2019');
       var daysSinceCreation = now.diff(created, 'days');
       $('.daysLeftInTrial').html((TRIAL_DAYS_LIMIT - daysSinceCreation).toString());
       if (trialPages.indexOf(_url) !== -1) {
