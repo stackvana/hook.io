@@ -729,9 +729,9 @@
             $.growl.notice({
               message: "Service saved."
             });
+            $('#previousName').attr('value', res.hook.name);
             return;
           }
-          console.log(res);
           alert('did not update ' + res.status);
         }
       });
@@ -746,7 +746,6 @@
       }
       return false;
     });
-
 
     $('.schemaHelpButton').on('click', function() {
       if ($('.schemaHelp').css('display') === "none") {
@@ -1378,32 +1377,12 @@ module['exports'] = function helloWorld (hook) {
         </div>
 
         <a name="view"></a>
-
         <div class="form-group customTheme">
           <input tabindex="10" type="checkbox" class="themeActive i18n" id="themeActive" name="themeActive" title="Themes are an easy way to customize the output of the Service.">
           <label for="themeActive" class="i18n">Customize appearance of Service with a Theme or View-Presenter</label>
         </div>
 
         <div class="themeSelector well themeRow"></div>
-
-        <a name="cron"></a>
-        <div class="form-group">
-          <input tabindex="11" type="checkbox" class="cronActive i18n" id="cronActive" name="cronActive" title="If checked, the Service will execute as a scheduled tasked based on provided Cron pattern.">
-          <label for="cronActive" class="i18n">Schedule Service on a Timer using Cron</label>
-        </div>
-
-        <div class="form-group cronRow well">
-          <h2>Hooks can be scheduled on a timer</h2>
-
-          <p>All Hooks support the ability to schedule their execution based on a date time pattern.</p>
-          <p class="superTiny">We call this date time pattern a <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a>.</p>
-          <p class="superTiny">By design, Crons will not pass any data into the Service. If you need to pass data into the scheduled Service, you can simply set default data in the Service or chain two Hooks together to pipe the data.</p>
-          <p><strong class="warning">Warning:</strong> We currently cannot provide any guarantees about Cron accuracy or reliability. If you require a high reliability timer, <a href="mailto:{{appAdminEmail}}">please let us know</a>. </p>
-
-          <h3>Cron Pattern</h3>
-          <div class="cronDiv"></div>
-
-        </div>
 
         <a name="security"></a>
         <div class="securityHolder well">

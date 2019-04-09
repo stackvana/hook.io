@@ -212,15 +212,7 @@ module['exports'] = function view (opts, callback) {
       }
 
       // TODO: check to see if index.html file matches up with known theme
-      data.cron = params.cronString || req.hook.cron;
       data.status = params.status || req.hook.status;
-
-      // booleans
-      if (typeof params.cronActive !== 'undefined') {
-        data.cronActive = true;
-      } else {
-        data.cronActive = false;
-      }
 
       if (typeof params.isPublic !== 'undefined') {
         data.isPublic = true;
@@ -440,14 +432,6 @@ module['exports'] = function view (opts, callback) {
       }
       */
 
-      if (h.cronActive === true) {
-        $('.cronActive').attr('checked', 'CHECKED');
-      }
-
-      if (typeof h.cron !== 'undefined') {
-        $//('#cronString').attr('value', h.cron);
-      }
-
       /*
       if (h.inputs) {
         $('#inputs').val(h.inputs);
@@ -528,9 +512,7 @@ module['exports'] = function view (opts, callback) {
         }
 
         var out = $.html();
-        h.cron = h.cron || "* * * * *";
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
-        out = out.replace("{{hook.cron}}", h.cron);
 
         var boot = {
           baseUrl: config.app.url,
@@ -538,8 +520,7 @@ module['exports'] = function view (opts, callback) {
           source: _source,
           // presenter: new Buffer(h.presenterSource || "").toString('base64'),
           view: new Buffer(h.themeSource || "").toString('base64'),
-          themes: themes,
-          cron: h.cron
+          themes: themes
         };
 
         var services = hooks.services;
