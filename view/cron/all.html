@@ -1,0 +1,67 @@
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet"/>
+
+<style>
+  .serverTime {
+    font-style: italic;
+  }
+  .crons {
+    width: 600px;
+  }
+  .crons td {
+    padding: 5px;
+  }
+  .crons th {
+    font-weight: bold;
+    padding: 5px;
+  }
+  .cronMenu {
+    font-size: 24px;
+    height: 100%;
+    margin-bottom:0px !important;
+  }
+  .cronMenu li {
+    border: solid;
+    vertical-align: middle;
+    margin-bottom:10px !important;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    min-height: 50px;
+  }
+</style>
+
+<div class="blog-area">
+  <h1>Cron Jobs</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Cron Jobs</h3>
+              <ul class="sidebar_menu">
+                <li><a href="{{appUrl}}/cron/new">Create New Cron</a></li>
+                <li><a href="{{appUrl}}/cron/all">View All Crons</a></li>
+                <li><a href="{{appUrl}}/cron/status">Cron Status</a></li>
+              </ul>
+            </aside>
+          </div>
+          <br/>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <table class="crons">
+            <tr>
+              <th>Name</th>
+              <th>Expression</th>
+              <th>Total</th>
+              <th>Last Time</th>
+              <th>Next Time</th>
+              <th>Edit</th>
+            </tr>
+          </table>
+        </div>
+        <!-- end shop-content start -->
+      </div>  
+    </div>  
+  </div>

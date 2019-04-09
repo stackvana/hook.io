@@ -1,0 +1,65 @@
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet"/>
+
+<style>
+  .serverTime {
+    font-style: italic;
+  }
+  .crons {
+    width: 600px;
+  }
+  .crons td {
+    padding: 5px;
+  }
+  .crons th {
+    font-weight: bold;
+    padding: 5px;
+  }
+  .cronMenu {
+    font-size: 24px;
+    height: 100%;
+    margin-bottom:0px !important;
+  }
+  .cronMenu li {
+    border: solid;
+    vertical-align: middle;
+    margin-bottom:10px !important;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    min-height: 50px;
+  }
+</style>
+
+<script src="/js/jquery-ui.js"></script>
+
+<div class="blog-area">
+  <h1>Cron</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Cron Jobs</h3>
+              <ul class="sidebar_menu">
+                <li><a href="{{appUrl}}/cron/new">Create New Cron</a></li>
+                <li><a href="{{appUrl}}/cron/all">View All Crons</a></li>
+                <li><a href="{{appUrl}}/cron/status">Cron Status</a></li>
+              </ul>
+            </aside>
+          </div>
+          <br/>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <h2>A time-based job scheduler for making web requests. An alternate to Linux <a href="http://en.wikipedia.org/wiki/Cron#Format">Cron</a></h2>
+          <div class="col-lg-6 col-md-6 col-sm-6 item">
+            <ul class="list-group cronMenu">
+              <a href="{{appUrl}}/cron/new"><li class="list-group-item keysStatus">Create New Cron Job</li></a>
+              <a href="{{appUrl}}/cron/all"><li class="list-group-item keysStatus">View Existing Jobs</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

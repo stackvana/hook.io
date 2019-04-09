@@ -1,0 +1,101 @@
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet"/>
+
+<style>
+  .serverTime {
+    font-style: italic;
+  }
+  .crons {
+    width: 600px;
+  }
+  .crons td {
+    padding: 5px;
+  }
+  .crons th {
+    font-weight: bold;
+    padding: 5px;
+  }
+  .cronMenu {
+    font-size: 24px;
+    height: 100%;
+    margin-bottom:0px !important;
+  }
+  .cronMenu li {
+    border: solid;
+    vertical-align: middle;
+    margin-bottom:10px !important;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    min-height: 50px;
+  }
+</style>
+
+<div class="blog-area">
+  <h1>Cron Jobs</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Cron Jobs</h3>
+              <ul class="sidebar_menu">
+                <li><a href="{{appUrl}}/cron/new">Create New Cron</a></li>
+                <li><a href="{{appUrl}}/cron/all">View All Crons</a></li>
+                <li><a href="{{appUrl}}/cron/status">Cron Status</a></li>
+              </ul>
+            </aside>
+          </div>
+          <br/>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <table class="crons">
+            <tr>
+              <td><strong>Name:</strong></td>
+              <td class="cronName"></td>
+            </tr>
+            <tr>
+              <td><strong>Status:</strong></td>
+              <td class="cronStatus">Paused</td>
+            </tr>
+            <tr>
+              <td><strong>URI:</strong></td>
+              <td class="cronURI">123</td>
+            </tr>
+            <tr>
+              <td><strong>Method:</strong></td>
+              <td class="cronMethod">GET</td>
+            </tr>
+            <tr>
+              <td><strong>Expression:</strong></td>
+              <td class="cronExpression">n/a</td>
+            </tr>
+            
+            <tr>
+              <td><strong>Next Execution Time:</strong></td>
+              <td class="nextExecutionDate">n/a</td>
+            </tr>
+            <tr>
+              <td><strong>Last Execution Time:</strong></td>
+              <td class="lastExecutionDate">n/a</td>
+            </tr>
+            <tr>
+              <td><strong>Total Executions:</strong></td>
+              <td class="totalExecutions">n/a</td>
+            </tr>
+            <tr>
+              <td colspan="2"><a class="editLink">Edit this Cron</a></td>
+            </tr>
+            <!--
+              <tr>
+                <td>Body</td>
+                <td class="cronBody">123</td>
+              </tr>
+            -->
+          </table>
+          <pre><code class="json"></code></pre>
+        </div>
+      </div>
+    </div> 
+  </div>
