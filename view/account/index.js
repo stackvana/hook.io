@@ -47,6 +47,9 @@ module['exports'] = function view (opts, callback) {
 
       _user.name = params.name;
 
+      // attempt to use timezone value if supplied by the client
+      _user.timezone = params.timezone;
+
       user.update(_user, function (err, result) {
         if (err) {
           return res.end(err.message);
@@ -135,7 +138,13 @@ module['exports'] = function view (opts, callback) {
               _user.password = params.password;
             }
           }
-          
+
+          if (typeof params.timezone !== 'undefined') {
+            if (params.timezone.length > 0) {
+              _user.timezone = params.timezone;
+            }
+          }
+
           // TODO: perform lookup of existing accounts by email
           // do not allow users to override email address already in use
           user.find({ email: params.email }, function (err, _users){
@@ -231,17 +240,22 @@ module['exports'] = function view (opts, callback) {
 var request = require('hyperquest');
 var dateFormat = require('dateformat');
 var forms = require('mschema-forms');
-
+var timezone = require('timezone-support');
 function showUserForm (user, cb) {
 
   var formSchema = userSchema || {};
-
   formSchema.name = {
     default: user.name,
     disabled: true
   };
 
   formSchema.email.default = user.email || "";
+  formSchema.timezone = {
+    type: 'string',
+    format: 'select',
+    value: user.timezone,
+    enum: timezone.listTimeZones()
+  };
 
   formSchema.servicePlan = {
     "type": "string",

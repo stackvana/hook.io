@@ -92,6 +92,7 @@ module.exports = function (opts, cb) {
           var _update = {
             id: _user.id,
             name: params.account_name,
+            timezone: params.timezone,
             password: params.password
           };
           // console.log('attemping to update user', _update)

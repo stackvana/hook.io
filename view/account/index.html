@@ -67,6 +67,9 @@
     font-size: 24px;
     padding-bottom: 10px;
   }
+  .boxAlert {
+    padding: 12px;
+  }
 </style>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -80,6 +83,11 @@
       }
       return false;
     });
+    // TODO: don't show local timezone if set in DB
+    // Do suggest they change it though...
+    // Will require boot data?
+    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    $('.timezone option[value="' + tz + '"]').prop('selected', true)
   });
 </script>
 <div id="main">

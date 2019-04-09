@@ -17,7 +17,7 @@
     bottom: 12px;
     font-size: 14px;
   }
-  .discount {
+  .signupForm {
     padding-bottom: 2px;
   }
 </style>
@@ -33,9 +33,9 @@
   }
 
   $(document).ready(function(){
-    
     $('#account_name').focus();
-
+    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    $('#timezone').val(tz);
     $('#account_name').on('keyup', function(e){
       var v = $(this).val();
       var s = slugify($(this).val());
@@ -112,6 +112,7 @@
         "account_name": $('#account_name').val(),
         "email": $('#signup_email').val(),
         "password": $('#signup_password').val(),
+        "timezone": $('#timezone').val(),
         "confirmPassword": $('#confirm_password').val()
       };
 
@@ -125,7 +126,7 @@
 
 <div class="content container">
   <h1>Register Account</h1>
-  <form name="signupForm" class="signupForm discount" action="/register" method="POST">
+  <form name="signupForm" class="signupForm" action="/register" method="POST">
     <h2>To continue, we require you register an account name and password</h2>
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-6">
@@ -171,6 +172,7 @@
         -->
       </div>
     </div>
+    <input type="hidden" name="timezone" id="timezone">
   </form>
   <!-- TODO: add ajaxy validation for username availability and then login -->
   <h3></h3>
