@@ -1,6 +1,6 @@
-var cron = require('../lib/resources/cron/cron');
+var cron = require('../../lib/resources/cron/cron');
 
-cron.processAll(function(err, result){
+cron.run(function(){
   if (err) {
     throw err;
   }
