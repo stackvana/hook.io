@@ -142,6 +142,7 @@ module['exports'] = function view (opts, callback) {
           if (typeof params.timezone !== 'undefined') {
             if (params.timezone.length > 0) {
               _user.timezone = params.timezone;
+              req.session.timezone = params.timezone;
             }
           }
 
