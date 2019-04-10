@@ -148,7 +148,7 @@
         url: boot.baseUrl + '/' + input + '/resource', // the url where we want to POST
         dataType: 'json', // what type of data do we expect back from the server
         encode: true,
-        error: function(res) {
+        error: function(res, body) {
           if (res.status === 404) {
             $.growl.error({
               message: 'Could not find service.'
@@ -716,11 +716,14 @@
         data: _data, // our data object
         dataType: 'json', // what type of data do we expect back from the server
         encode: true,
-        error: function(err) {
+        error: function (err, res) {
           $('.hookSave').attr('disabled', null);
-          console.log(err)
+          var msg = 'Issue communicating with server. Please contact support or try again.';
+          if (err.responseText) {
+            msg = err.responseText;
+          }
           $.growl.error({
-            message: 'Issue communicating with server. Please contact support or try again.'
+            message: msg
           });
         },
         success: function(res) {

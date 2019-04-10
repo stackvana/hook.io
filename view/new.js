@@ -101,76 +101,57 @@ module['exports'] = function view (opts, callback) {
         req.resource.owner = req.resource.owner.toLowerCase();
         params.name = params.name.toLowerCase();
 
-        var query = { name: params.name, owner: req.resource.owner };
-        return hook.find(query, function (err, results) {
-          if (err) {
-            return res.end(err.message);
+        params.cron = params.cronString;
+
+        if (params.hookSource === "code") {
+          delete params.gist;
+          // updated 9/2/16 to allow .code parameter ( instead of source )
+          params.source = params.source || params.code || params.codeEditor;
+          if (typeof params.source === "undefined") {
+            // Remark: It might be better to return an error here instead of assigning a default value...
+            //         It can be a bit surprising if user intended to supply source code but ended up with this default value due to bad parameters to Hook.create
+            // params.source = "module['exports'] = function myService (req, res, next) {  \n  res.end('source not provided'); \n};";
           }
-          if (results.length > 0) {
-            var h = results[0];
-            var msg = 'Hook already exists ' + '/' + h.owner + "/" + h.name;
-            if (req.jsonResponse === true) {
-              msg = {
-                error: true,
-                message: msg,
-                type: "duplicate-key"
-              };
-              return res.end(JSON.stringify(msg, true, 2));
-            } else {
-              return res.end(msg);
-            }
+        }
+        // TODO: remove this line
+        params.owner = req.resource.owner;
+
+        if (params.isPrivate === true || params.isPrivate === "true") {
+          params.isPrivate = true;
+        } else {
+          params.isPrivate = false;
+        }
+
+        // Only allow fields which exist on the Hook resource
+        // Should this be an option in resource library itself?
+        var safeParams = {};
+        Object.keys(hook.schema.properties).forEach(function (p) {
+          if (params[p] !== 'undefined') {
+            safeParams[p] = params[p];
           }
-          params.cron = params.cronString;
-
-          if (params.hookSource === "code") {
-            delete params.gist;
-            // updated 9/2/16 to allow .code parameter ( instead of source )
-            params.source = params.source || params.code || params.codeEditor;
-            if (typeof params.source === "undefined") {
-              // Remark: It might be better to return an error here instead of assigning a default value...
-              //         It can be a bit surprising if user intended to supply source code but ended up with this default value due to bad parameters to Hook.create
-              // params.source = "module['exports'] = function myService (req, res, next) {  \n  res.end('source not provided'); \n};";
-            }
-          }
-          // TODO: remove this line
-          params.owner = req.resource.owner;
-
-          if (params.isPrivate === true || params.isPrivate === "true") {
-            params.isPrivate = true;
-          } else {
-            params.isPrivate = false;
-          }
-
-          // Only allow fields which exist on the Hook resource
-          // Should this be an option in resource library itself?
-          var safeParams = {};
-          Object.keys(hook.schema.properties).forEach(function (p) {
-            if (params[p] !== 'undefined') {
-              safeParams[p] = params[p];
-            }
-          });
-
-          return hook.create.call({ req: req, res: res }, safeParams, function (err, result) {
-            if (err) {
-              return callback(null, err.message);
-            }
-            var h = result;
-            req.hook = h;
-
-             resource.emit('hook::created', {
-               ip: req.connection.remoteAddress,
-               owner: params.owner,
-               name: params.name
-             });
-
-             if (req.jsonResponse) {
-               return res.json({ status: 'created', hook: result });
-             } else {
-               // if not, redirect to admin page for newly created hook
-               return res.redirect('/admin?owner=' + h.owner + "&name=" + h.name + "&status=created");
-            }
-          });
         });
+
+        return hook.create.call({ req: req, res: res }, safeParams, function (err, result) {
+          if (err) {
+            return callback(null, err.message);
+          }
+          var h = result;
+          req.hook = h;
+
+           resource.emit('hook::created', {
+             ip: req.connection.remoteAddress,
+             owner: params.owner,
+             name: params.name
+           });
+
+           if (req.jsonResponse) {
+             return res.json({ status: 'created', hook: result });
+           } else {
+             // if not, redirect to admin page for newly created hook
+             return res.redirect('/admin?owner=' + h.owner + "&name=" + h.name + "&status=created");
+          }
+        });
+
       }
 
       if (typeof req.session.gistLink === 'string') {
@@ -187,14 +168,9 @@ module['exports'] = function view (opts, callback) {
         $('.hookPrivate').attr('DISABLED', 'DISABLED');
         $('.hookPrivateLabel').css('color', '#aaa');
       }
-
-
       $('.typeOfService').remove();
       $('.cronSettings').remove();
       $('.redirectOptions').remove();
-      $('.simpleBot').remove();
-      $('.webhookPlugins').remove();
-      $('.botAgent').remove();
 
       var services = hooks.services;
       var examples = {};
