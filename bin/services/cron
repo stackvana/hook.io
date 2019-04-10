@@ -1,6 +1,7 @@
 var cron = require('../../lib/resources/cron/cron');
+var PAUSE_TIME = 60000;
 
-cron.run(function(){
+cron.run(function(err, result){
   if (err) {
     throw err;
   }
@@ -11,5 +12,5 @@ cron.run(function(){
     // by calling process.exit, we close the script and let the process
     // monitor restart the cron process
     process.exit(0);
-  }, 60000);
+  }, PAUSE_TIME);
 });

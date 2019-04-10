@@ -5,7 +5,7 @@
     font-style: italic;
   }
   .crons {
-    width: 600px;
+    width: 100%;
   }
   .crons td {
     padding: 5px;
@@ -50,14 +50,20 @@
           <br/>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-9">
+          <div class="nocrons">
+            <h3>It looks like you haven't created any Cron Jobs yet.</h3>
+            <ul class="list-group cronMenu">
+              <a href="{{appUrl}}/cron/new"><li class="list-group-item">Create New Cron Job</li></a>
+            </ul>
+          </div>
           <table class="crons">
             <tr>
               <th>Name</th>
               <th>Expression</th>
-              <th>Total</th>
-              <th>Last Time</th>
-              <th>Next Time</th>
-              <th>Edit</th>
+              <th>Ran</th>
+              <th>Last Run</th>
+              <th>Next Estimated</th>
+              <th>&nbsp;</th>
             </tr>
           </table>
         </div>

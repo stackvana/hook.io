@@ -3,6 +3,7 @@ var checkRoleAccess = require('../../lib/server/routeHandlers/checkRoleAccess');
 var config = require('../../config');
 var mschema = require('mschema');
 var cron = require('../../lib/resources/cron/cron');
+var resource = require('resource');
 
 module['exports'] = function createCronPresenter (opts, callback) {
 
@@ -53,6 +54,11 @@ module['exports'] = function createCronPresenter (opts, callback) {
               res.status(400);
               return res.json({ error: true, message: err.message });
             }
+            resource.emit('cron::created', {
+              ip: req.connection.remoteAddress,
+              owner: req.resource.params.owner,
+              name: req.resource.params.name
+            });
             if (req.jsonResponse) {
               return res.json(result);
             } else {

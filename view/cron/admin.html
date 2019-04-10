@@ -661,8 +661,14 @@
             </div>
       </div>
       <br/>
-      <input class="btn btn-primary cronSave" type="submit" value="Save Cron"/>
-      <input class="btn btn-warning cancelCron" type="button" value="Close"/>
+      <div class="dangerZone well">
+        <input class="btn btn-primary cronSave" type="submit" value="Save Cron"/>
+        <input class="btn btn-warning cancelCron" type="button" value="Close"/>
+        <div class="form-group danger" align="right">
+          <span class="warning"><strong>Danger Zone</strong></span>:
+          <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Cron</a>||</span>
+        </div>
+      </div>
       
     </div>
     <!--
@@ -670,7 +676,6 @@
     -->
     <!-- TODO: time zone select -->
       <input type="hidden" name="owner" id="owner" class="cronOwner form-control form-control-sm">
-    
     </form>
   </div>
 </div>
@@ -693,6 +698,15 @@
       document.location = '/cron/' + boot.owner + '/' + boot.name;
       return false;
     });
+    $('.deleteLink').on('click', function() {
+      var name = $(this).attr('data-name');
+      var result = confirm('Are you certain you want to destroy:\n\n' + name);
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    });
     $('#cronForm').on('submit', function() {
       $('.cronSave').attr('DISABLED', 'DISABLED');
       $.growl.warning({
@@ -707,8 +721,12 @@
         encode: true,
         error: function(err) {
           $('.cronSave').attr('disabled', null);
+          var msg = 'Issue communicating with server. Please contact support or try again.';
+          if (err.responseText) {
+            msg = err.responseText;
+          }
           $.growl.error({
-            message: 'Issue communicating with server. Please contact support or try again.'
+            message: msg
           });
         },
         success: function(res) {

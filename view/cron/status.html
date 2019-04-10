@@ -1,18 +1,70 @@
-<div class="container content">
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet"/>
+
+<style>
+  .serverTime {
+    font-style: italic;
+  }
+  .crons {
+    width: 600px;
+  }
+  .crons td {
+    padding: 5px;
+  }
+  .crons th {
+    font-weight: bold;
+    padding: 5px;
+  }
+  .cronMenu {
+    font-size: 24px;
+    height: 100%;
+    margin-bottom:0px !important;
+  }
+  .cronMenu li {
+    border: solid;
+    vertical-align: middle;
+    margin-bottom:10px !important;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    min-height: 50px;
+  }
+</style>
+
+<div class="blog-area">
   <h1>Cron Status</h1>
-  <table>
-    <tr>
-      <td>Status</td>
-      <td>ONLINE</td>
-    </tr>
-    <tr>
-      <td>Last Checked</td>
-      <td>date time</td>
-    </tr>
-    <tr>
-      <td>Next Estimated Check</td>
-      <td>date time</td>
-    </tr>
-  </table>
-  <pre><code class="status"></code></pre>
-</div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="widget_area fix">
+            <aside class="left_widget blog_border0">
+              <h3 class="sidebar_middle_title">Cron Jobs</h3>
+              <ul class="sidebar_menu">
+                <li><a href="{{appUrl}}/cron/new">Create New Cron</a></li>
+                <li><a href="{{appUrl}}/cron/all">View All Crons</a></li>
+                <li><a href="{{appUrl}}/cron/status">Cron Status</a></li>
+              </ul>
+            </aside>
+          </div>
+          <br/>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <table class="crons">
+              <tr>
+                <td><strong>Status</strong></td>
+                <td>Online</td>
+              </tr>
+              <tr>
+                <td><strong>Last Checked</strong></td>
+                <td><span class="lastCronBatch"></span></td>
+              </tr>
+            </table>
+            <!--
+              <pre><code class="status"></code></pre>
+            -->
+        </div>
+        <!-- end shop-content start -->
+      </div>  
+    </div>  
+  </div>

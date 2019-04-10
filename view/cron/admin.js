@@ -73,6 +73,8 @@ module.exports = function (opts, cb) {
         $('.cronPreviousName').val(c.name);
         $('.cronOwner').val(c.owner);
         $('.cronURI').val(c.uri);
+        $('.deleteLink').attr('href', '/cron/' + c.owner + "/" + c.name + "/destroy");
+        $('.deleteLink').attr('data-name', (c.owner + "/" + c.name));
         if (c.status === 'paused') {
           $('input[name="status"][value="paused"]').attr('checked', 'CHECKED');
         } else {
