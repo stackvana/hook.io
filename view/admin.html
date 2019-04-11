@@ -733,6 +733,19 @@
               message: "Service saved."
             });
             $('#previousName').attr('value', res.hook.name);
+            /* TODO: need a way to generate new private link client-side
+              if(h.isPrivate) {
+                $('.hookRun').attr('href', '/' + h.owner + '/' + h.name + '?hook_private_key=' + req.session.hookAccessKey);
+              } else {
+                $('.hookRun').attr('href', '/' + h.owner + '/' + h.name);
+              }
+            */
+            $('.hookRun').attr('href', '/' + res.hook.owner + '/' + res.hook.name);
+            // TODO: better stateObj values?
+            let stateObj = {
+              foo: 'bar',
+            };
+            history.pushState(stateObj, 'page 1', 'admin?owner=' + res.hook.owner + '&name=' + res.hook.name);
             return;
           }
           alert('did not update ' + res.status);
