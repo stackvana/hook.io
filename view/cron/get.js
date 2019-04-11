@@ -35,10 +35,26 @@ module.exports = function (opts, cb) {
           $('.json').append(JSON.stringify(cached, true, 2));
           $('.json').append(JSON.stringify(metrics, true, 2));
           */
+          var obj = {
+            name: c.name,
+            owner: c.owner,
+            method: c.method,
+            status: c.status,
+            cronExpression: c.cronExpression,
+            uri: c.uri,
+            hits: metrics,
+            lastExecutionDate: df(cached.lastExecutionDate,  'mm/dd/yyyy HH:MM:ss Z'),
+            nextExecutionDate: df(cached.nextExecutionDate,  'mm/dd/yyyy HH:MM:ss Z')
+          };
+
+          if (req.jsonResponse) {
+            return res.json(obj);
+          }
+
           $('.totalExecutions').html(metrics || 'n/a');
           if (cached) {
-            $('.lastExecutionDate').html(df(cached.lastExecutionDate,  'mm/dd/yyyy HH:MM:ss Z'));
-            $('.nextExecutionDate').html(df(cached.nextExecutionDate,  'mm/dd/yyyy HH:MM:ss Z'));
+            $('.lastExecutionDate').html(obj.lastExecutionDate);
+            $('.nextExecutionDate').html(obj.nextExecutionDate);
           }
           $('.cronMethod').html(c.method);
           $('.cronURI').html(c.uri);

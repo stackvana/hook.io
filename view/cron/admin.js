@@ -3,10 +3,13 @@ var checkRoleAccess = require('../../lib/server/routeHandlers/checkRoleAccess');
 var config = require('../../config');
 var mschema = require('mschema');
 var cron = require('../../lib/resources/cron/cron');
+var user = require('../../lib/resources/user');
+var servicePlan = require('../../lib/resources/servicePlan');
+
 var resource = require('resource');
 var web = require('../../lib/web/web');
 
-module.exports = function (opts, cb) {
+module.exports = function cronAdminPresenter (opts, cb) {
   var $ = this.$, 
     req = opts.request,
     res = opts.response,
@@ -15,6 +18,7 @@ module.exports = function (opts, cb) {
   var self = this;
 
   $ = req.white($);
+
 
   psr(req, res, function(req, res, fields){
     for (var p in fields) {
@@ -46,12 +50,20 @@ module.exports = function (opts, cb) {
         if (typeof name === 'undefined' || name.length === 0) {
           return res.redirect('/cron/' + req.session.user);
         }
-        cron.findOne({ owner: params.owner, name: name }, function (err, c){
+        cron.findOne({ owner: params.owner, name: name }, async function (err, c) {
           if (err) {
             return web.handle404(req, res);
           }
-          req.cron = c;
-          finish();
+          user.findOne({ name: params.owner }, function (err, u) {
+            if (err) {
+              return res.end(err.message);
+            }
+            req.session.servicePlan = u.servicePlan || 'free';
+            req.session.timezone = u.timezone;
+            req.session.serviceLimits = servicePlan[u.servicePlan];
+            req.cron = c;
+            finish();
+          });
         });
       }
     });

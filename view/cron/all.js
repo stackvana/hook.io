@@ -19,10 +19,6 @@ module['exports'] = function allCronPresenter (opts, cb) {
 
   var self = this;
 
-  if (!req.isAuthenticated()) {
-    return res.redirect('/login');
-  }
-
   psr(req, res, function (req, res, fields) {
     for (var p in fields) {
       params[p] = fields[p];
@@ -54,8 +50,10 @@ module['exports'] = function allCronPresenter (opts, cb) {
               keys.push('/' + key.owner + '/' + key.name);
               metricKeys.push('/cron/' + key.owner + '/' + key.name);
             });
+
             metric.batchGet(metricKeys, function (err, metrics) {
               cron.batchGet(keys, function (err, crons) {
+                var arr = [];
                 results.forEach(function(r, i){
                   if (r) {
                     var cached = crons['/' + r.owner + '/' + r.name] || {
@@ -63,7 +61,7 @@ module['exports'] = function allCronPresenter (opts, cb) {
                       nextExecutionDate: 'n/a'
                     };
                     var hits = metrics['/cron/' + r.owner + '/' + r.name] || "0";
-                    var timezone = req.session.timezone;
+                    var timezone = req.session.timezone || 'America/New_York';
                     var lastExecutionDate = fnst.formatToTimeZone(cached.lastExecutionDate, 'MMMM DD, YYYY HH:mm:ss z', { timeZone: timezone });
                     var nextExecutionDate = fnst.formatToTimeZone(cached.nextExecutionDate, 'MMMM DD, YYYY HH:mm:ss z', { timeZone: timezone });
                     if (lastExecutionDate === 'Invalid Date') {
@@ -72,6 +70,15 @@ module['exports'] = function allCronPresenter (opts, cb) {
                     if (nextExecutionDate === 'Invalid Date') {
                       nextExecutionDate = 'n/a';
                     }
+                    arr.push({
+                      name: r.name,
+                      owner: r.owner,
+                      cronExpression: r.cronExpression,
+                      hits: hits,
+                      lastExecutionDate: lastExecutionDate,
+                      nextExecutionDate: nextExecutionDate,
+                      status: r.status
+                    })
                     $('.crons').append(html.rowToString([
                       html.makeLink(config.app.url + '/cron/' + r.owner + '/' + r.name, r.name),
                       r.cronExpression,
@@ -83,6 +90,9 @@ module['exports'] = function allCronPresenter (opts, cb) {
                     ]));
                   }
                 });
+                if (req.jsonResponse) {
+                  return res.json(arr);
+                }
                 return cb(null, $.html());
               });
             });
