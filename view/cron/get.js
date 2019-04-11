@@ -45,7 +45,7 @@ module.exports = function (opts, cb) {
           $('.cronExpression').html(c.cronExpression);
           $('.cronStatus').html(c.status);
           $('.editLink').attr('href', config.app.url + '/cron/' + c.owner + '/' + c.name + '/admin');
-          // $('.cronBody').html(c.params);
+          $('.testLink').attr('href', config.app.url + '/cron/' + c.owner + '/' + c.name + '/test');
           cb(null, $.html());
         });
       });

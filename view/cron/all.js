@@ -78,6 +78,7 @@ module['exports'] = function allCronPresenter (opts, cb) {
                       hits,
                       lastExecutionDate,
                       nextExecutionDate,
+                      r.status,
                       html.makeLink(config.app.url + '/cron/' + r.owner + '/' + r.name + '/admin', 'Edit'),
                     ]));
                   }
