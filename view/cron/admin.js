@@ -72,6 +72,7 @@ module.exports = function (opts, cb) {
         $('.cronName').val(c.name);
         $('.cronPreviousName').val(c.name);
         $('.cronOwner').val(c.owner);
+        $('.cronExpression').val(c.cronExpression);
         $('.cronURI').val(c.uri);
         $('.deleteLink').attr('href', '/cron/' + c.owner + "/" + c.name + "/destroy");
         $('.deleteLink').attr('data-name', (c.owner + "/" + c.name));
@@ -93,9 +94,7 @@ module.exports = function (opts, cb) {
     }
     data.id = req.cron.id;
     data.owner = req.cron.owner;
-    // update the cron information in the couchdb document
-    // recalulate the next time the cron should run
-    // store the updated cron object in the redis cache
+    data.servicePlan = req.session.servicePlan;
     return cron.update(data, function (err, result) {
       if (err) {
         // TODO: generic error handler
