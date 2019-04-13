@@ -1,4 +1,4 @@
-// hook-api-test.js
+// account-billing-test.js
 var tap = require("tape");
 var r = require('../lib/helpers/_request');
 var config = require('../config');

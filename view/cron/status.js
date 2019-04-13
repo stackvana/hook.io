@@ -13,7 +13,7 @@ module.exports = function (opts, cb) {
       return res.end(err.message);
     }
     var date = result.lastCronBatch;
-    var timezone = req.session.timezone;
+    var timezone = req.session.timezone || 'America/New_York';
     const zonedDate = fnst.formatToTimeZone(date, 'MMMM DD, YYYY HH:mm:ss z', { timeZone: timezone });
     $('.lastCronBatch').html(zonedDate);
     $('.status').html(JSON.stringify(result, true, 2))

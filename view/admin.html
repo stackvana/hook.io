@@ -121,22 +121,6 @@
 
   $(document).ready(function() {
 
-    $('.cronDiv').croneditor({
-      "value": "{{hook.cron}}"
-    });
-
-    if ($('input[name="cronActive"]').is(':checked')) {
-      $('.cronRow').show();
-    }
-
-    $('input[name="cronActive"]').click(function() {
-      if ($(this).prop('checked')) {
-        $('.cronRow').show();
-      } else {
-        $('.cronRow').hide();
-      }
-    });
-
     $('.addInput').on('click', function() {
       var input = $('#input').val();
       if (input.length === 0) {
@@ -266,15 +250,6 @@
     });
 
   });
-
-  /*
-  $('#cronString').keydown(function(){
-    var job = new cron.CronTime($(this).val());
-    var start = new Date();
-    var next = job._getNextDateFrom(start);
-    $('#estimateRun').val(next);
-  });
-  */
 </script>
 <style>
   .formStatus {
@@ -300,35 +275,6 @@
     margin-bottom: 10px;
     font-size: 24px;
     font-weight: 700;
-  }
-
-  .cron-button {
-    height: 16px;
-    padding-left: 20px;
-    margin-left: 5px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    cursor: pointer;
-  }
-
-  .cron-button-save {
-    background-image: url('img/disk.png');
-  }
-
-  .cron-changed {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: #fdd;
-  }
-
-  .cron-controls {
-    margin-left: 10px;
-    color: #c77;
-    font-size: 0.9em;
-  }
-
-  .cron-controls>span.cron-loading {
-    background-image: url('img/loading.gif');
   }
 
   .routeHint {
@@ -1593,4 +1539,3 @@ module['exports'] = function helloWorld (hook) {
 </div>
 
 <script src="/js/jquery-ui.js"></script>
-<script src="/js/jquery.croneditor.js"></script>

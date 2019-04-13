@@ -10,7 +10,9 @@ var testUser = config.testUsers.david;
 var sdk = require('hook.io-sdk');
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
+  startDevCluster({
+    flushRedis: true
+  }, function (err) {
     if (err) {
       throw err;
     }

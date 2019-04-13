@@ -35,7 +35,7 @@ tap.test('start the dev cluster', function (t) {
 
 // destroy the hook
 tap.test('attempt to destroy the test hook', function (t) {
-  client.hook.destroy({ owner: 'david', name: 'test-hook' }, function (err, res){
+  client.hook.destroy({ owner: 'david', name: 'test-hook' }, function (err, res) {
     t.error(err, 'request did not error');
     t.end();
   });
@@ -48,7 +48,7 @@ tap.test('attempt to create a new hook', function (t) {
     "source": 'echo "hello";',
     "language": "bash",
     "path": "/:id"
-  }, function (err, res){
+  }, function (err, res) {
     t.error(err, 'request did not error');
     t.equal(res.status, 'created', 'returned correct name');
     t.equal(typeof res.hook, 'object', 'returned hook object');

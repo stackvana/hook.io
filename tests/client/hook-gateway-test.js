@@ -10,7 +10,9 @@ var sdk = require('hook.io-sdk');
 var testUser = config.testUsers.bobby;
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
+  startDevCluster({
+    flushRedis: true
+  }, function (err) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other

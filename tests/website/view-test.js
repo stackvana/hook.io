@@ -1,4 +1,4 @@
-// hook-api-test.js
+// view-test.js
 var tap = require("tape");
 var r = require('../lib/helpers/_request');
 var config = require('../config');
@@ -52,7 +52,7 @@ function enumerateView (v) {
 
 //
 // Helper assert for checking if a page response has unmatched {{fooBar}} style replacements
-// This is useful for catching missing data-binds in the view causing mustaches to render to client
+// This is !!SUPER!! useful for catching missing data-binds in the view causing mustaches to render to client
 //
 function checkMissingMustacheReplacement (t, text, item) {
   if (typeof text === "string") {
@@ -60,23 +60,25 @@ function checkMissingMustacheReplacement (t, text, item) {
     // such as: {{appUrl}} or {{appName}}
     var search = text.search("{{") || text.search("}}");
     // exclude certain pages which actually presenter {{fooBar}} style strings to user ( such as documentation or source code )
-    if (['/themes', '/examples/bash-view/view'].indexOf(item) === -1) {
-      t.equal(search, -1, 'did not found any unmatched mustache replacements')
+    if (['/themes', '/examples/bash-view/view', '/emails/layout', '/emails/0_referral_madness', '/emails/1_paid_accounts'].indexOf(item) === -1) {
+      t.equal(search, -1, 'did not found any unmatched mustache replacements in ' + item)
     }
   }
 }
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err, servers) {
+  startDevCluster({
+    flushRedis: true
+  }, function (err, servers) {
     t.error(err)
     webServer = servers['web'];
     // get flat representation of all files
     allPageKeys = enumerateView(webServer.view)
-    t.ok('cluster started');
+    t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
-      t.end('dev cluster started');
+      t.end();
     }, 1500);
   });
 });
@@ -86,24 +88,27 @@ tap.test('start the dev cluster', function (t) {
 // TODO: check text/html response in additional to json response, make sure formats / headers are set
 tap.test('attempt to get all pages - no session', function (t) {
   var callbacks = 0;
+  var all = {};
   // t.plan(allPageKeys.length * 2);
   allPageKeys = allPageKeys.filter(function(a){
-    if (['/helpers/i18n', '/hook/_rev', '/hook/_src'].indexOf(a) === -1) {
+    if (['/helpers/i18n', '/helpers/html', '/hook/_rev', '/hook/_src', '/billingForm'].indexOf(a) === -1) {
+      all[a] = a;
       return a;
     }
   });
-  async.eachLimit(allPageKeys, 50, function iter (item, next) {
+  async.eachLimit(allPageKeys, 20, function iter (item, next) {
     r({ uri: baseURL + item, method: "GET", json: true }, function (err, body, res) {
+      all[item] = null;
       t.error(err);
       // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
-      t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response');
+      t.equal(res.statusCode >= 200 && res.statusCode < 500, true, item + ' got 200-400 range response');
       checkMissingMustacheReplacement(t, body, item);
-      t.ok('did not error back', item);
+      // t.pass('cluster started');
       next();
     });
-  }, function end (){
+  }, function end () {
     t.end();
-  })
+  });
 });
 
 // TODO: check text/html response in additional to json response, make sure formats / headers are set
@@ -116,7 +121,7 @@ tap.test('attempt to get all pages - logged in test user - json responses', func
       jar: true,
       form: {
         "email": testUser.email,
-        "password": "asd"
+        "password": testUser.password
       },
     }, function (err, res) {
       t.error(err, 'request did not error');
@@ -134,7 +139,6 @@ tap.test('attempt to get all pages - logged in test user - json responses', func
 
       allPageKeys.push('/marak/gist-test/source');
 
-
       var callbacks = 0;
       // t.plan(allPageKeys.length * 2);
       allPageKeys = allPageKeys.filter(function(a){
@@ -150,7 +154,7 @@ tap.test('attempt to get all pages - logged in test user - json responses', func
           // check that the returned HTML response does not contain any unmatched mustache replacements
           // such as: {{appUrl}} or {{appName}}
           checkMissingMustacheReplacement(t, body, item);
-          t.ok('did not error back', item)
+          t.pass('cluster started');
           next();
         });
       }, function end (){
@@ -169,7 +173,7 @@ tap.test('attempt to get all pages - logged in test user - non json responses', 
       json: true,
       form: {
         "email": testUser.email,
-        "password": "asd"
+        "password": testUser.password
       },
     }, function (err, res) {
       t.error(err, 'request did not error');
@@ -177,18 +181,21 @@ tap.test('attempt to get all pages - logged in test user - non json responses', 
       t.equal(res.result, 'valid', "valid login");
 
       var callbacks = 0;
+      var all = {};
+      // TODO: why so many commented out???
       allPageKeys = allPageKeys.filter(function(a){
-        if (['/helpers/i18n', '/hook/_rev', '/hook/_src'].indexOf(a) === -1) {
+        if (['/helpers/i18n', '/helpers/html', '/hook/_rev', '/hook/_src', '/billingForm', '/account', '/domains', '/keys', '/register'].indexOf(a) === -1) {
+          all[a] = a;
           return a;
         }
       });
-      async.eachLimit(allPageKeys, 50, function iter (item, next) {
+      async.eachLimit(allPageKeys, 1, function iter (item, next) {
         r({ uri: baseURL + item, method: "GET", html: true, jar: true }, function (err, body, res) {
+          all[item] = null
           t.error(err);
           // var shouldReturn404 = ['/hook/_rev', '/hook/_src']; // TODO: remove helpers/i18n from view folder
           t.equal(res.statusCode >= 200 && res.statusCode < 500, true, 'got 200-400 range response')
           checkMissingMustacheReplacement(t, body, item);
-          t.ok('did not error back', item)
           next();
         });
       }, function end (){
@@ -199,10 +206,11 @@ tap.test('attempt to get all pages - logged in test user - non json responses', 
 
 });
 
-
 tap.test('perform hard shutdown of cluster', function (t) {
-  t.end('cluster is shutting down');
+  t.end();
   setTimeout(function(){
     process.exit();
   }, 10);
 });
+return;
+

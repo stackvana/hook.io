@@ -96,7 +96,7 @@ module['exports'] = function view (opts, callback) {
           };
           // is hookAccessKey already set in user.login now?
           req.session.hookAccessKey = u.hookAccessKey;
-          req.session.timezone = u.timezone;
+          req.session.timezone = u.timezone || 'America/New_York';
           r.redirect = req.session.redirectTo || "/services";
           if (req.jsonResponse) {
             return res.json(r);

@@ -152,14 +152,15 @@ tap.test('attempt to call all possible *-hello-world examples', function (t) {
       };
 
       var noCarriageReturn = ["perl", "scheme", "php"];
-      if (typeof customResponses[lang] !== 'undefined') {
-        t.equal(body, customResponses[lang], 'got correct response from ' + lang);
+      
+      if (typeof customResponses[item] !== 'undefined') {
+        t.equal(body, customResponses[item], 'got correct response from ' + item);
         next();
         return;
       }
 
-      if (typeof customResponses[item] !== 'undefined') {
-        t.equal(body, customResponses[item], 'got correct response from ' + item);
+      if (typeof customResponses[lang] !== 'undefined') {
+        t.equal(body, customResponses[lang], 'got correct response from ' + lang);
         next();
         return;
       }

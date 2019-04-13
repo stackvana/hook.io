@@ -59,7 +59,7 @@ module.exports = function cronAdminPresenter (opts, cb) {
               return res.end(err.message);
             }
             req.session.servicePlan = u.servicePlan || 'free';
-            req.session.timezone = u.timezone;
+            req.session.timezone = u.timezone || 'America/New_York';
             req.session.serviceLimits = servicePlan[u.servicePlan];
             req.cron = c;
             finish();
