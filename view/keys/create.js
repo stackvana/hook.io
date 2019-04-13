@@ -30,6 +30,7 @@ module['exports'] = function createKeysPresenter (opts, callback) {
           var validate = mschema.validate(req.resource.params, self.schema);
           if (!validate.valid) {
             validate.status = "error";
+            res.status(400);
             return res.json(validate);
           } else {
             req.resource.params.owner = req.resource.owner;

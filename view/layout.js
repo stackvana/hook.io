@@ -147,8 +147,7 @@ module['exports'] = function view (opts, callback) {
     $('.trialPeriod').remove();
     $('.upgradeAccount').remove();
   } else {
-
-    if (req.session.servicePlan === 'free') {
+    if (req.session.servicePlan === 'free' || typeof req.session.servicePlan === 'undefined') {
       // `free` is used for accounts created before 5/7/2018
       $('.trialPeriod').remove();
       var now = moment();

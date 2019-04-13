@@ -6,7 +6,6 @@ var user = require('../lib/resources/user'),
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
 module['exports'] = function view (opts, callback) {
   var $ = this.$;
   metric.get('/user/count', function(err, userCount){

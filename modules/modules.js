@@ -20,6 +20,7 @@ module['exports'] = {
   "gengo": "0.1.8",
   "geoip-lite" : "1.1.6",
   "geocodio": "0.0.1",
+  "got": "9.6.0",
   "github": "0.2.3",
   "github-url-from-git": "1.4.0",
   "gm": "1.17.0",

@@ -64,9 +64,7 @@ module['exports'] = function resetPassword (opts, cb) {
     var query = {};
     nameOrEmail = nameOrEmail.toLowerCase();
     query[type] = nameOrEmail;
-
     user.reset(query, function (err, u) {
-
       if (err) {
         var r = {
           result: 'invalid',
@@ -101,7 +99,7 @@ module['exports'] = function resetPassword (opts, cb) {
         html: tmpl
       }, function (err, result) {
         if (err) {
-          return res.end(err.message);
+          return res.end('Error in sending email ' + err.message);
         }
         // if email is found, send reset password email
         // TODO: send partial email string back to user with ****** to show where email was sent
