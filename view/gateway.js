@@ -2,7 +2,11 @@ var hook = require('../lib/resources/hook');
 var metric = require('../lib/resources/metric');
 var config = require('../config');
 var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess')
-var stack = require('microcule');
+var microcule = require('microcule');
+var RateLimiter = microcule.plugins.RateLimiter;
+var rateLimiter = new RateLimiter({
+  provider: metric
+});
 
 module['exports'] = function view (opts, callback) {
   var $ = this.$,
@@ -44,10 +48,9 @@ module['exports'] = function view (opts, callback) {
       // metric.incr("/" + service.owner + "/" + "gateway" + '/hits');
     // WARNING: currently using default limit values ( see above note )
     //stack.plugins.bodyParser()(req, res, function(){
-      stack.plugins.rateLimiter({
+      rateLimiter.middle({
         maxLimit: 1000000,
-        maxConcurrency: 50, // limit public gateway to 50 requests, we should key this per account / anonymous
-        provider: metric
+        maxConcurrency: 50 // limit public gateway to 50 requests, we should key this per account / anonymous
       })(req, res, function () {
         _runRemote();
       });
