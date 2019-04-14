@@ -62,8 +62,15 @@ module['exports'] = function allCronPresenter (opts, cb) {
                     };
                     var hits = metrics['/cron/' + r.owner + '/' + r.name] || "0";
                     var timezone = req.session.timezone || 'America/New_York';
-                    var lastExecutionDate = fnst.formatToTimeZone(cached.lastExecutionDate, 'MMMM DD, YYYY HH:mm:ss z', { timeZone: timezone });
-                    var nextExecutionDate = fnst.formatToTimeZone(cached.nextExecutionDate, 'MMMM DD, YYYY HH:mm:ss z', { timeZone: timezone });
+                    var lastExecutionDate = 'n/a';
+                    var nextExecutionDate = 'n/a';
+
+                    if (cached.lastExecutionDate) {
+                      lastExecutionDate = fnst.formatToTimeZone(cached.lastExecutionDate, 'MMMM DD, YYYY HH:mm:ss z', { timeZone: timezone });
+                    }
+                    if (cached.nextExecutionDate) {
+                      nextExecutionDate = fnst.formatToTimeZone(cached.nextExecutionDate, 'MMMM DD, YYYY HH:mm:ss z', { timeZone: timezone });
+                    }
                     if (lastExecutionDate === 'Invalid Date') {
                       lastExecutionDate = 'n/a';
                     }

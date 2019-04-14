@@ -67,14 +67,14 @@ module.exports = function (opts, cb) {
             lastExecutionDate: df(cached.lastExecutionDate,  'mm/dd/yyyy HH:MM:ss Z'),
             nextExecutionDate: df(cached.nextExecutionDate,  'mm/dd/yyyy HH:MM:ss Z')
           };
-
           if (req.jsonResponse) {
             return res.json(obj);
           }
-
           $('.totalExecutions').html(metrics || 'n/a');
-          if (cached) {
+          if (cached.lastExecutionDate) {
             $('.lastExecutionDate').html(obj.lastExecutionDate);
+          }
+          if (cached.nextExecutionDate) {
             $('.nextExecutionDate').html(obj.nextExecutionDate);
           }
           $('.cronMethod').html(c.method);
