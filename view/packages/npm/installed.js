@@ -5,6 +5,10 @@ module['exports'] = function (opts, cb) {
   function npmLink (m) {
     return '<a href="https://npmjs.org/package/' + m + '">' + m + '</a>'
   };
+  $('.installed').remove();
+  $('.status').html('The NPM Package Listing has been temporarily removed.');
+  return cb(null, $.html());
+  /* Removed ( for now / was not accurate )
   packages.all({ status: 'installed' }, function(err, results){
     if (err) {
       return res.end(err.message);
@@ -21,4 +25,5 @@ module['exports'] = function (opts, cb) {
     }
     cb(null, $.html());
   });
+  */
 };

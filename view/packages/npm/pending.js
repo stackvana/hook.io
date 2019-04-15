@@ -5,6 +5,10 @@ module['exports'] = function npmPending (opts, cb) {
   function npmLink (m) {
     return '<a href="https://npmjs.org/package/' + m + '">' + m + '</a>'
   };
+  $('.pending').remove();
+  $('.status').html('No packages pending installation.');
+  cb(null, $.html());
+  /* Remove ( for now)
   packages.all({ status: 'pending' }, function(err, results){
     if (err) {
       return res.end(err.message);
@@ -21,4 +25,5 @@ module['exports'] = function npmPending (opts, cb) {
     }
     cb(null, $.html());
   });
+  */
 };
