@@ -10,6 +10,11 @@
   .error {
     background-color: red;
   }
+  #cronForm label {
+    cursor: hand;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+  }
 </style>
 <div>
   <h1>Manage Cron Job</h1>
@@ -31,7 +36,6 @@
           <label for="name"><strong>Name of Cron</strong> <span class="text-secondary">(Required)</span></label>
           <input type="text" name="name" id="name" placeholder="cron-name-123" class="cronName form-control form-control-sm">
           <input type="hidden" name="previousName" id="previousName" class="cronPreviousName form-control form-control-sm">
-          
         </div>
 
         <div class="form-group">
@@ -40,7 +44,7 @@
         </div>
         <!--
         <div class="form-group row">
-          <label for="auth_user" class=" w-100"><strong>HTTP basic auth</strong> <span class="text-secondary">(Optional)</span></label>
+          <label for="auth_user" class=" "><strong>HTTP basic auth</strong> <span class="text-secondary">(Optional)</span></label>
           <div class="container-fluid">
             <div class="row px-0">
               <div class="col-6 pl-0 pr-1">
@@ -54,49 +58,47 @@
         </div>
         -->
         <div class="form-group">
-          <label class=" w-100"><strong>When to execute</strong> <span class="text-secondary">(Required)</span></label>
-        </div>
-        <div class="form-row mx-0 mt-2 align-items-center">
-          <div class="ml-2 w-100">
-            <div class="form-check" style="line-height: 24px;">
-              <!-- <input class="form-check-input" type="radio" value="2" id="cronexp" name="specifiedBy"/> -->
-              <label class="form-check-label" for="cronExpression">
-                Cron expression:
+          <div>
+            <div style="line-height: 24px;">
+              <!-- <input class="-input" type="radio" value="2" id="cronexp" name="specifiedBy"/> -->
+              <label class="-label" for="cronExpression">
+                <strong>Cron expression:</strong>
               </label>
             </div>
           </div>
-          <div class="w-100 ml-4 mr-2 pr-1">
+          <div class=" ml-4 mr-2 pr-1">
             <input type="text" id="cronExpression" name="cronExpression" class="cronExpression form-control form-control-sm ml-1" value="* * * * *">
           </div>
         </div>
  
          <div class="form-group">
-           <label class="" for="status"><strong>Schedule Cron Activity</strong> <span class="text-secondary"></span></label>
+           <label for="status"><strong>Cron Status</strong> <span class="text-secondary"></span></label>
            <br/>
-           <label>Active<input class="cronStatus" type="radio" name="status" value="active"/></label>
-           <label>Paused<input class="cronStatus" type="radio" name="status" value="paused"/></label>
+           <label>Paused <input class="cronStatus" type="radio" name="status" value="paused"/></label>
+           &nbsp;
+           <label>Active <input class="cronStatus" type="radio" name="status" value="active"/></label>
          </div>
  
         <div class="timeZoneArea">
-          <div class="form-group mt-3 mx-2 mb-0">
-            <label class=" w-100"><strong>Timezone</strong> <span class="text-secondary">(Optional)</span></label>
+          <div class="form-group">
+            <label class=" "><strong>Timezone</strong> <span class="text-secondary">(Optional)</span></label>
           </div>
 
-          <div class="form-row mx-0 align-items-center">
-            <div class="ml-2">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" checked="checked" id="timezoneFromDefault" value="1" name="timezoneFrom">
-                <label class="form-check-label" for="timezoneFromDefault">
+          <div>
+            <div>
+              <div>
+                <input class="-input" type="radio" checked="checked" id="timezoneFromDefault" value="1" name="timezoneFrom">
+                <label class="-label" for="timezoneFromDefault">
                   Default timezone of your account (<span id="currentTimezone">America/New_York</span>)      </label>
                 <a href="/user/edit?u=updateTimezone" target="_blank">Update</a>
               </div>
             </div>
           </div>
 
-          <div class="form-row mx-0 align-items-center mt-2">
-            <div class="ml-2">
-              <div class="form-check">
-                <input type="radio" class="form-check-input form-control-sm mr-2" id="timezoneFromCustom" value="2" name="timezoneFrom" style="margin-top: 0rem;">
+          <div>
+            <div>
+              <div>
+                <input type="radio" class="-input form-control-sm mr-2" id="timezoneFromCustom" value="2" name="timezoneFrom" style="margin-top: 0rem;">
                 <select id="custom_timezone" class="form-control form-control-sm w-auto" name="timezone">
                   <option selected="selected" value="UTC">UTC</option>
                   <option value="Africa/Abidjan">Africa/Abidjan</option>
@@ -557,7 +559,7 @@
 
       <div id="fragment-2">
         <div class="form-group">
-          <label for="http-method" class=""><strong>HTTP method</strong> <span class="text-secondary">(Optional)</span></label>
+          <label for="http-method"><strong>HTTP method</strong> <span class="text-secondary">(Optional)</span></label>
           <select id="http-method" name="http_method" class="form-control form-control-sm">
             <option value="GET">GET</option>
             <option value="POST">POST</option>
@@ -572,7 +574,7 @@
         </div>
         <!--
         <div class="form-group">
-          <label for="http-headers" class=""><strong>HTTP headers</strong> <span class="text-secondary">(Optional)</span></label>
+          <label for="http-headers"><strong>HTTP headers</strong> <span class="text-secondary">(Optional)</span></label>
           <textarea class="form-control form-control-sm mr-sm-2" rows="10" id="http-headers" name="http_headers"></textarea>
           <small class="text-muted pt-1">
             Example: <br><b>Header-Name-1: value1</b><br><b>Header-Name-2: value2</b>
@@ -591,14 +593,14 @@
       
       <div id="fragment-4">
         <div class="tab-pane active show" id="cronJobSettingsTimeout">
-              <div class="form-group mt-3 mx-2 mb-0">
-          <label class=" w-100"><strong>Cron job timeout</strong> <span class="text-secondary"></span></label>
+              <div class="form-group">
+          <label class=" "><strong>Cron job timeout</strong> <span class="text-secondary"></span></label>
         </div>
 
-        <div class="form-row mx-0 align-items-center">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" checked="checked" id="timeoutByDefault" value="1" name="timeoutBy">
-            <label class="form-check-label" for="timeoutByDefault">
+        <div>
+          <div>
+            <input class="-input" type="radio" checked="checked" id="timeoutByDefault" value="1" name="timeoutBy">
+            <label class="-label" for="timeoutByDefault">
               Current maximum timeout: 10 seconds </label>
           </div>
           <br/>
@@ -613,17 +615,17 @@
       <div id="fragment-5">
         <div class="tab-pane active show" id="cronJobSettingsEmail">
               <div class="form-group">
-          <label for="email-me" class=""><strong>Email me</strong> <span class="text-secondary">(Optional)</span></label>
+          <label for="email-me"><strong>Email me</strong> <span class="text-secondary">(Optional)</span></label>
           <select id="email-me" name="email_me" class="form-control form-control-sm">
             <option selected="selected" value="0">never</option>
             <option value="1">when cron job starts failing, OR returns to success from failure</option>
           </select>
         </div>
 
-        <div class="form-row mx-0 align-items-center sensitivity" style="">
-          <label for="mailing-threshold" class=" ml-1 w-100"><strong>Sensitivity</strong> <span class="text-secondary">(Optional)</span></label>
-          <div class="ml-2">
-            <label class="form-check-label" for="mailing-threshold" style="padding-left: 0.1em;">
+        <div class=" sensitivity" style="">
+          <label for="mailing-threshold" class=" ml-1 "><strong>Sensitivity</strong> <span class="text-secondary">(Optional)</span></label>
+          <div>
+            <label class="-label" for="mailing-threshold" style="padding-left: 0.1em;">
               Send email after
             </label>
           </div>
