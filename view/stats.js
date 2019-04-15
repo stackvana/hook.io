@@ -12,7 +12,7 @@ module['exports'] = function view (opts, callback) {
     if (userCount === null) {
       userCount = 0;
     }
-    $('.activeUsers').html(userCount.toString());
+    $('.activeUsers').html(numberWithCommas(userCount.toString()));
     metric.get('/hook/count', function(err, hookCount){
       metric.zscore('totalHits', 'tallies', function (err, m) {
       //metric.get('/hook/totalHits', function(err, m){
@@ -22,7 +22,7 @@ module['exports'] = function view (opts, callback) {
         if (m === null) {
           m = 0;
         }
-        $('.activeServices').html(hookCount.toString());
+        $('.activeServices').html(numberWithCommas(hookCount.toString()));
         var count = m.toString();
         $('.totalRun').html(numberWithCommas(count));
         request('https://api.github.com/repos/bigcompany/hook.io', {
