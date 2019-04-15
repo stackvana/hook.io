@@ -140,7 +140,12 @@ module['exports'] = function view (opts, callback) {
               // $('.hookReport', tpl).html(JSON.stringify(report[i]));
               // var diff = Number(report[i].lastEnd) - Number(report[i].lastStart);
               var lastStart = new Date(Number(report[i].lastStart)).toString();
-              lastStart = df(lastStart , "mm/dd/yyyy HH:MM:ss Z");
+              
+              try {
+                lastStart = df(lastStart , "mm/dd/yyyy HH:MM:ss Z");
+              } catch (err) {
+                lastStart = 'n/a';
+              }
 
               var lastTime = Number(report[i].lastTime);
 
