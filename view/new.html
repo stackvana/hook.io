@@ -498,17 +498,19 @@ label {
           <label for="name" class="i18n">Url</label>
           <span class="serviceUrlPreview form-control">...</span>
         </div>
-        <div class="form-group private">
-          <label for="hookPublic">Public Service</label>
-          <input tabindex="5" type="radio" CHECKED="CHECKED" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
-          &nbsp;
-          <label for="hookPrivate" class="hookPrivateLabel">Private Service</label>
-          <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
-        </div>
-        <div class="form-group tiny">
-          Public services and their source codes will be accessible to anyone. Private services are protected through <a href="{{appUrl}}/keys" target="_blank">API Access Keys</a>.
-          <br/>
-          <span class="paidAccount warning tiny">Notice: In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing" class="warning">paid account</a>.</span>
+        <div class="publicPrivate">
+          <div class="form-group private">
+            <label for="hookPublic">Public Service</label>
+            <input tabindex="5" type="radio" CHECKED="CHECKED" value="false" class="hookPublic" id="hookPublic" name="isPrivate" title="Specify the source of the Hook from text editor">
+            &nbsp;
+            <label for="hookPrivate" class="hookPrivateLabel">Private Service</label>
+            <input tabindex="4" type="radio" value="true" class="hookPrivate" id="hookPrivate" name="isPrivate" title="Specify the source of the Hook as a Github Gist">
+          </div>
+          <div class="form-group tiny">
+            Public services and their source codes will be accessible to anyone. Private services are protected through <a href="{{appUrl}}/keys" target="_blank">API Access Keys</a>.
+            <br/>
+            <span class="paidAccount warning tiny">Notice: In order to enable private services, you must upgrade to a <a href="{{appUrl}}/pricing" class="warning">paid account</a>.</span>
+          </div>
         </div>
       </div>
 

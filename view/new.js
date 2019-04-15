@@ -165,8 +165,9 @@ module['exports'] = function view (opts, callback) {
     if (req.session.paidStatus === 'paid') {
       $('.paidAccount').remove();
     } else {
-      $('.hookPrivate').attr('DISABLED', 'DISABLED');
-      $('.hookPrivateLabel').css('color', '#aaa');
+      $('.publicPrivate').remove();
+      //$('.hookPrivate').attr('DISABLED', 'DISABLED');
+      //$('.hookPrivateLabel').css('color', '#aaa');
     }
     $('.typeOfService').remove();
     $('.cronSettings').remove();
