@@ -1,4 +1,4 @@
-<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet" />
+  <link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet" />
 
 <style>
   .hookTable .smaller {
@@ -1082,29 +1082,32 @@
             <div class="form-control">
               <label class="radio-inline" for="editorSource" title="Specify the source of the Service from text editor">
                 <input type="radio" value="code" class="editorSource" id="editorSource" name="hookSource">
-                Code Editor
+                {{appName}} Code Editor
               </label>
+            </div>
+            <div class="form-control">
               <label class="radio-inline gistSourceLabel" for="gistSource" title="Specify the source of the Service as a Github Gist">
                 <input type="radio" value="gist" class="gistSource" id="gistSource" name="hookSource">
                 Github Gist
               </label>
+          </div>
+          <div class="form-control">
               <label class="radio-inline gistRepoLabel" for="githubRepoSource" title="Specify the source of the Service as a Github Repository">
                 <input type="radio" value="githubRepo" class="githubRepoSource" id="githubRepoSource" name="hookSource">
                 Github Repo
               </label>
             </div>
-            <div class="githubRequired">
-              <span class="warning tiny">
-                Github sources are not available unless {{appName}} is authorized to read from your Github account.
-              </span>
-              <p>
-                <a href="{{appUrl}}/login/github" class="btn btn-social btn-github" style="height:60px;width:260px;"><i class="fa fa-github"></i> <span style="top: 14px;position:relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connect Github Account</span></a>
-              </p>
-            </div>
           </div>
 
           <div class="form-group gistUrlHolder">
-            <p>Pull service source code from Github Gist</p>
+            <p>
+              <a href="{{appUrl}}/login/github" class="btn btn-social btn-github githubRequired" style="height:60px;width:260px;"><i class="fa fa-github"></i> <span style="top: 14px;position:relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connect Github Account</span></a>
+            </p>
+            <div class="githubRequired">
+              <p class="tiny">
+                Github sources are not available unless {{appName}} is authorized to read from your Github account.
+              </p>
+            </div>
             <label for="gist">Gist Url</label>
             <input type="text" class="form-control gist" name="gist" id="gist" placeholder="https://gist.github.com/Marak/357645b8a17daeb17458" value="https://gist.github.com/Marak/357645b8a17daeb17458" size="80" />
             <div class="tiny" style="padding-top:5px;">
@@ -1128,7 +1131,15 @@
           </div>
 
           <div class="form-group githubRepoHolder">
-            <p>Pull service source code from a Github Repository<br />Note: Private Github Repos require you grant additional access: <a href="{{appUrl}}/login/github/private-repos">Here</a></p>
+            <p>
+              <a href="{{appUrl}}/login/github" class="btn btn-social btn-github githubRequired" style="height:60px;width:260px;"><i class="fa fa-github"></i> <span style="top: 14px;position:relative;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connect Github Account</span></a>
+            </p>
+            <div class="githubRequired">
+              <p class=" tiny">
+                Github sources are not available unless {{appName}} is authorized to read from your Github account.
+              </p>
+            </div>
+            <p>Note: Private Github Repos require you grant additional access: <a href="{{appUrl}}/login/github/private-repos">Here</a></p>
             <label for="repo">Repo Name</label>
             <input type="text" class="form-control repo" name="repo" id="repo" placeholder="stackvana/microcule-examples" value="" size="80" />
 
@@ -1168,8 +1179,6 @@
                 box-shadow: 10px 10px 5px #888888;
               }
             </style>
-
-            <p>Using the Code Editor, source is stored directly on hook.io</p>
 
             <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
             <button type="button" class="codeButton btn">Edit Code</button>

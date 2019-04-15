@@ -397,10 +397,10 @@ module['exports'] = function view (opts, callback) {
       $('.hookSource').attr('value', h.gist);
 
       if (typeof req.user.accessToken === "undefined") {
-        $('.githubRepoSource').attr('DISABLED', 'DISABLED');
-        $('.gistSource').attr('DISABLED', 'DISABLED');
-        $('.gistRepoLabel').css('color', '#aaa');
-        $('.gistSourceLabel').css('color', '#aaa');
+        //$('.githubRepoSource').attr('DISABLED', 'DISABLED');
+        //$('.gistSource').attr('DISABLED', 'DISABLED');
+        //$('.gistRepoLabel').css('color', '#aaa');
+        //$('.gistSourceLabel').css('color', '#aaa');
       } else {
         $('.githubRequired').remove();
       }
@@ -511,6 +511,7 @@ module['exports'] = function view (opts, callback) {
           delete req.session.tempLang;
         }
 
+        $('.customTheme').remove();
         var out = $.html();
         out = out.replace("{{themes}}", JSON.stringify(themes, true, 2));
 
