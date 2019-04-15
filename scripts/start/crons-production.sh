@@ -1,1 +1,1 @@
-mon -d "node ./bin/services/cron" --log ./logs/cron-log.txt
+mon -d "node ./bin/services/cron" --log ./logs/cron-log.txt --on-error ./scripts/alerts/cron-exited

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var cron = require('../../lib/resources/cron/cron');
 var PAUSE_TIME = 60000;
 
