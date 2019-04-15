@@ -519,6 +519,7 @@ module['exports'] = function view (opts, callback) {
           baseUrl: config.app.url,
           owner: req.session.user,
           source: _source,
+          paidStatus: req.session.paidStatus,
           // presenter: new Buffer(h.presenterSource || "").toString('base64'),
           view: new Buffer(h.themeSource || "").toString('base64'),
           themes: themes

@@ -110,6 +110,13 @@
 
   .telegramWarning {
     display: none;
+    padding-top: 10px;
+    margin: 0px;
+  }
+  .telegramPaidOnly {
+    display: none;
+    padding-top: 10px;
+    margin: 0px;
   }
 </style>
 
@@ -675,6 +682,7 @@
         success: function(res) {
           $('.hookSave').attr('disabled', null);
           if (res.status === 'updated') {
+            $('.telegramPaidOnly').remove();
             $.growl.notice({
               message: "Service saved."
             });
@@ -692,6 +700,13 @@
               foo: 'bar',
             };
             history.pushState(stateObj, 'page 1', 'admin?owner=' + res.hook.owner + '&name=' + res.hook.name);
+            return;
+          }
+          if (res.error) {
+            $.growl.error({
+              message: res.message
+            });
+            $('.telegramPaidOnly').show();
             return;
           }
           alert('did not update ' + res.status);
@@ -1179,15 +1194,15 @@
                 box-shadow: 10px 10px 5px #888888;
               }
             </style>
-
             <button tabindex="7" type="button" class="testButton btn btn-primary">Test Code</button>
             <button type="button" class="codeButton btn">Edit Code</button>
-            <input tabindex="1" name="save" type="submit" value="Save Code"/ class="btn i18n btn hookSave"><br />
-            <p class="telegramWarning warning medium"><strong>Warning:</strong> Telegram services are currently not supported. Due to large amounts of spam from the Telegram network we have temporaliry blocked all incoming Telegram traffic. If you wish to enable Telegram for this account please <a href="/support?t=Please Enable Telegram" target="_blank">Contact Support</a></p>
-            <!-- TODO: add help button for service code 
-                    <button type="button" class="helpButton btn">Help</button> <br/>
-                  -->
-
+            <input tabindex="1" name="save" type="submit" value="Save Code" class="btn i18n btn hookSave"/>
+            <p class="telegramWarning warning medium">
+              <strong>Warning:</strong> Telegram services require a <a href="https://hook.io/pricing">paid account</a>. 
+            </p>
+            <p class="telegramPaidOnly warning medium">
+              <strong>Error:</strong> You may not save Telegram services without a <a href="https://hook.io/pricing">paid account</a>. 
+            </p>
             <textarea tabindex="8" name="codeEditor" class="codeEditor">// A simple hello world microservice 
 // Service will respond to HTTP requests with a string
 module['exports'] = function helloWorld (hook) {
@@ -1201,11 +1216,14 @@ module['exports'] = function helloWorld (hook) {
               /*global $, CodeMirror */
               var editor, schema;
 
-              function checkForTelegramText(source) {
-                if (source.search('telegram') !== -1) {
-                  $('.telegramWarning').show();
-                } else {
-                  $('.telegramWarning').hide();
+              function checkForTelegramText (source) {
+                // only show warning for non-paid accounts
+                if (boot.paidStatus !== 'paid') {
+                  if (source.search('telegram') !== -1) {
+                    $('.telegramWarning').show();
+                  } else {
+                    $('.telegramWarning').hide();
+                  }
                 }
               }
 
