@@ -1,0 +1,1 @@
+mon -d "node ./bin/services/cron" --log ./logs/cron-log.txt

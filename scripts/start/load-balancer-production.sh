@@ -1,0 +1,1 @@
+mon -d "./bin/services/load-balancer " --log ./logs/server-log.txt --on-error ./scripts/alerts/load-balancer-exited --on-restart ./scripts/alerts/load-balancer-restarted

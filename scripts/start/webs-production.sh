@@ -1,0 +1,3 @@
+mon -d "./bin/services/web" --log ./logs/web-logs.txt --on-error ./scripts/alerts/web-exited --on-restart ./scripts/alerts/web-restarted &&
+mon -d "./bin/services/web" --log ./logs/web-logs.txt --on-error ./scripts/alerts/web-exited --on-restart ./scripts/alerts/web-restarted &&
+mon -d "./bin/services/web" --log ./logs/web-logs.txt --on-error ./scripts/alerts/web-exited --on-restart ./scripts/alerts/web-restarted
