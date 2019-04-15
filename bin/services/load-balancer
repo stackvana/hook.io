@@ -2,14 +2,14 @@
 var lb = require('../../lib/load-balancer/load-balancer');
 var cluster = require('cluster');
 var config = require('../../config');
-// config.env = "prod";
+config.env = 'prod';
 if (config.env === 'dev') {
-  console.log('using dev mode, no cluster')
+  console.log('using dev mode, no cluster');
   lb.start({}, function(err, app){
     if (err) {
       throw err;
     }
-    console.log('lb started', app.server.address())
+    console.log('lb started', app.server.address());
   });
 } else {
 
@@ -22,35 +22,35 @@ if (config.env === 'dev') {
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
     for(var i = 0; i < numWorkers; i++) {
-        cluster.fork();
+      cluster.fork();
     }
 
     cluster.on('exit', function (worker, code, signal) {
-        console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
-        console.log('Starting a new worker');
-        // If the worker exited after disconnect, don't do anything. It should have already forked.
-        if (worker.exitedAfterDisconnect === true) {
-          console.log('exited after disconnect. probably performing rolling update');
-        } else {
+      console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
+      console.log('Starting a new worker');
+      // If the worker exited after disconnect, don't do anything. It should have already forked.
+      if (worker.exitedAfterDisconnect === true) {
+        console.log('exited after disconnect. probably performing rolling update');
+      } else {
         // Else if the worker did not have disconnect event, assume it was a crash and fork() immediately 
-          console.log('got exit event without disconnect, probably a process crash')
-        }
-        cluster.fork();
+        console.log('got exit event without disconnect, probably a process crash');
+      }
+      cluster.fork();
     });
 
     cluster.on('online', function(worker) {
       console.log('Worker ' + worker.process.pid + ' is online');
-      worker.on("disconnect", function () {
-         var id = worker.id;
-         console.log("node got disconnect event", id);
-         // once disconnected, this node is no longer accepting incoming traffic from the cluster
-         // so immediately kill the worker node
-         worker.kill();
+      worker.on('disconnect', function () {
+        var id = worker.id;
+        console.log('node got disconnect event', id);
+        // once disconnected, this node is no longer accepting incoming traffic from the cluster
+        // so immediately kill the worker node
+        worker.kill();
       });
 
       // message handler is used for worker to receieve messages from parent process
       worker.on('message', function (message) {
-        if (message.event === "restart") {
+        if (message.event === 'restart') {
           // disconnect one worker from the pool and wait
           var workers = Object.keys(cluster.workers);
           if (workers.length === 0) {
@@ -67,10 +67,10 @@ if (config.env === 'dev') {
             queryResponse[w] = {
               pid: cluster.workers[w].process.pid,
               spawnfile: cluster.workers[w].process.spawnfile
-            }
+            };
             // TODO: add uptime() or ctime
           }
-          worker.send({ event: 'queryResponse', data: queryResponse })
+          worker.send({ event: 'queryResponse', data: queryResponse });
         }
       });
     });
