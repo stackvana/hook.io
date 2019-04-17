@@ -44,8 +44,14 @@ Before setting up a local hook.io server, you should try the free hosted version
 
 If you don't need a full hosting platform and only want to host microservices, we recommend using the [Microcule](https://github.com/stackvana/microcule) project.
 
-Everything needed to setup a full locally running hook.io server is available is this repo. We have a Docker image available, but it's not being used in production and needs to be improved.
+```bash
+git clone https://github.com/bigcompany/hook.io.git
+cd hook.io
+docker-compose build
+docker-compose up
+````
 
+At this point you should be able to load hook.io locally at: `http://localhost:9999`
 
 ## What is the purpose of hook.io?
 
