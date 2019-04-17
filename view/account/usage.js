@@ -51,11 +51,11 @@ module['exports'] = function view (opts, callback) {
           return callback(null, $.html());
         }
         var now = new Date();
-        var month = 'monthlyHits - ' + now.getMonth() + '/' + now.getFullYear();
+        var month = 'monthlyHits - ' + (now.getMonth() + 1) + '/' + now.getFullYear();
 
         $('.usage').append('<tr><td><strong>' + 'Service Plan' + '</strong></td><td>' + (_user.servicePlan || 'trial') +'</td></tr>');
         $('.usage').append('<tr><td><strong>' + 'Currently Running' + '</strong></td><td>' + report['running'] +' / ' + servicePlan[_user.servicePlan].concurrency +'</td></tr>');
-        $('.usage').append('<tr><td><strong>' + 'Monthly Hits ' + now.getMonth() + '/' + now.getFullYear() + '</strong></td><td>' + report[month] +' / ' + numberWithCommas(servicePlan[_user.servicePlan].hits) +'</td></tr>');
+        $('.usage').append('<tr><td><strong>' + 'Monthly Hits ' + (now.getMonth() + 1) + '/' + now.getFullYear() + '</strong></td><td>' + report[month] +' / ' + numberWithCommas(servicePlan[_user.servicePlan].hits) +'</td></tr>');
         $('.usage').append('<tr><td><strong>' + 'Total Hits' + '</strong></td><td>' + numberWithCommas(report['totalHits']) + '</td></tr>');
 
         callback(null, $.html());

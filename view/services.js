@@ -170,7 +170,7 @@ module['exports'] = function view (opts, callback) {
               $('.hookRunning', tpl).html(report[i].running);
 
               var now = new Date();
-              var monthlyHitsKey = 'monthlyHits - ' + now.getMonth() + '/' + now.getFullYear();
+              var monthlyHitsKey = 'monthlyHits - ' + (now.getMonth() + 1) + '/' + now.getFullYear();
 
               $('.hookMonthlyHits', tpl).html(report[i][monthlyHitsKey]); // TODO: date format uplook
               if (report[i].statusCode === "500") {

@@ -274,7 +274,7 @@ module['exports'] = function view (opts, callback) {
         $('.hookMetricReport').attr("href", config.app.url + '/metrics' + reportKey);
 
         var now = new Date();
-        var monthlyHitsKey = 'monthlyHits - ' + now.getMonth() + '/' + now.getFullYear();
+        var monthlyHitsKey = 'monthlyHits - ' + (now.getMonth() + 1) + '/' + now.getFullYear();
 
         // List each metric we want to show
 
