@@ -1,5 +1,3 @@
 #!/usr/bin/env node
-var sendEmailAlert = require('./sendEmailAlert');
-sendEmailAlert({
-  subject: 'load balancer node has restarted'
-});
+var alert = require('./alert');
+alert('load balancer node has restarted');

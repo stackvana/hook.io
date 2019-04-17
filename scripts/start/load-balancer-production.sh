@@ -1,1 +1,1 @@
-mon -d "./bin/services/load-balancer " --log ./logs/server-log.txt --on-error ./scripts/alerts/load-balancer-exited --on-restart ./scripts/alerts/load-balancer-restarted
+mon -d "./bin/services/load-balancer " --log ./logs/balancer-logs.txt --on-error "tail -n 1000 ./logs/balancer-logs.txt | ./scripts/alerts/load-balancer-exited" --on-restart "tail -n 1000 ./logs/balancer-logs.txt | ./scripts/alerts/load-balancer-restarted"

@@ -10,7 +10,7 @@ module.exports = function (opts) {
     to: 'marak.squires@gmail.com',
     from: 'alerts@hook.io',
     subject: opts.subject,
-    html: 'n/a'
+    html: opts.html || 'n/a'
   }, function (err, result) {
     if (err) {
       return res.end('Error in sending email ' + err.message);

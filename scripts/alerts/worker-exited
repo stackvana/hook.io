@@ -1,5 +1,3 @@
 #!/usr/bin/env node
-var sendEmailAlert = require('./sendEmailAlert');
-sendEmailAlert({
-  subject: 'worker mon has exited!'
-});
+var alert = require('./alert');
+alert('worker mon has exited!');

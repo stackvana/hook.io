@@ -1,5 +1,3 @@
 #!/usr/bin/env node
-var sendEmailAlert = require('./sendEmailAlert');
-sendEmailAlert({
-  subject: 'load balancer mon has exited!'
-});
+var alert = require('./alert');
+alert('load balancer mon has exited!');
