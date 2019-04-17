@@ -12,7 +12,6 @@ var checkRoleAccess = require('../lib/server/routeHandlers/checkRoleAccess');
 module['exports'] = function view (opts, callback) {
   var req = opts.request,
     res = opts.response;
-
   var $ = this.$,
     self = this;
 
@@ -130,6 +129,18 @@ module['exports'] = function view (opts, callback) {
           safeParams[p] = params[p];
         }
       });
+
+      if (typeof safeParams.language === 'undefined' && typeof safeParams.source === 'undefined') {
+        safeParams.language = 'javascript';
+        safeParams.source = `module.exports = function helloWorld (req, res) {
+  // req is a Node.js http.IncomingMessage
+  var host = req.host;
+  // res is a Node.js httpServer.ServerResponse
+  // Respond to the request with a simple string
+  console.log('sent to the /logs endpoint');
+  res.json(req.params);
+};`;
+      }
 
       return hook.create.call({ req: req, res: res }, safeParams, function (err, result) {
         if (err) {
