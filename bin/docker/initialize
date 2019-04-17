@@ -1,5 +1,4 @@
 #!/bin/sh
-
 if [ ! -e "/src/.setup_done" ]
 then
   echo "Creating admin..."
@@ -12,10 +11,10 @@ then
   touch "/src/.setup_done"
   echo
   echo "================================================================"
-  echo "REMINDER: you need to configure your local instance."
+  echo "  Load Balancer started locally:                                "
   echo
-  echo "  e.g. curl http://{{your_docker_machine_ip}}/_admin?setBase=1"
+  echo "  http://localhost:9999"
   echo
-  echo "See docs/Docker.md for more information."
+  echo
   echo "================================================================"
 fi

@@ -10,6 +10,9 @@ services:
 
   app:
     build: .
+    volumes:
+         - .:/src
+         - /src/node_modules
     command: /src/bin/docker/wait redis couch worker0 balancer -c node /src/bin/services/web
     depends_on:
       - "redis"
@@ -19,6 +22,9 @@ services:
 
   balancer:
     #build: .
+    volumes:
+         - .:/src
+         - /src/node_modules
     image: "hookio_app"
     command: /src/bin/docker/wait redis -c node /src/bin/services/load-balancer
     ports:
@@ -30,6 +36,9 @@ services:
 
   worker0:
     #build: .
+    volumes:
+         - .:/src
+         - /src/node_modules
     image: "hookio_app"
     command: /src/bin/docker/wait redis couch -c node /src/bin/services/worker
     privileged: true
