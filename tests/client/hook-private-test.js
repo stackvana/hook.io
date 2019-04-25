@@ -143,6 +143,21 @@ tap.test('attempt to run the private hook - run access - http header key', funct
   });
 });
 
+tap.test('attempt to run the private hook - run access - json data', function (t) {
+  r({ uri: baseURL + "/" + testUser.name + "/" + "test-private-hook", method: "POST", json: { "hook_private_key": testUser.run_key } }, function (err, res) {
+    t.error(err);
+    t.equal(res, 'hello\n', 'returned correct result');
+    t.end();
+  });
+});
+
+tap.test('attempt to run the private hook - run access - form data', function (t) {
+  r({ uri: baseURL + "/" + testUser.name + "/" + "test-private-hook", method: "POST", form: { "hook_private_key": testUser.run_key } }, function (err, res) {
+    t.error(err);
+    t.equal(res, 'hello\n', 'returned correct result');
+    t.end();
+  });
+});
 
 tap.test('attempt to delete the hook we just created - correct access key', function (t) {
   client.hook.destroy({ owner: 'david', name: 'test-private-hook' }, function (err, res){
