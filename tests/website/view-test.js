@@ -69,9 +69,9 @@ function checkMissingMustacheReplacement (t, text, item) {
 tap.test('start the dev cluster', function (t) {
   startDevCluster({
     flushRedis: true
-  }, function (err, servers) {
+  }, function (err, data) {
     t.error(err)
-    webServer = servers['web'];
+    webServer = data.servers['web'];
     // get flat representation of all files
     allPageKeys = enumerateView(webServer.view)
     t.pass('cluster started');

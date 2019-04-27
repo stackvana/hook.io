@@ -2,6 +2,10 @@ var tap = require("tape");
 var r = require('../lib/helpers/_request');
 var config = require('../config');
 var baseURL = config.baseUrl;
+var async = require('async');
+var user = require('../../lib/resources/user');
+user.persist(config.couch);
+
 var startDevCluster = require('../lib/helpers/startDevCluster');
 
 // david is a pre-generated user 
@@ -12,13 +16,15 @@ var freeUser = {
 };
 
 var sdk = require('hook.io-sdk');
-
 var testUser = config.testUsers.david;
 var bobby = config.testUsers.bobby;
 var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
+  startDevCluster({
+    flushRedis: true,
+    flushTestUsers: true
+  }, function (err) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other

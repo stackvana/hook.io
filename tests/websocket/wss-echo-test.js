@@ -11,8 +11,8 @@ var startDevCluster = require('../lib/helpers/startDevCluster');
 config.balancer.https = true;
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err, _apps) {
-    apps = _apps;
+  startDevCluster({}, function (err, boot) {
+    apps = boot.servers;
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other

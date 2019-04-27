@@ -5,7 +5,6 @@ var baseURL = config.baseUrl;
 var startDevCluster = require('../lib/helpers/startDevCluster');
 
 var testUser = config.testUsers.david;
-
 /*
 tap.test('attempt to set datastore document without any auth ( anonymous root )', function (t) {
   r({ uri: baseURL + "/datastore/set", method: "POST", json: { key: "testKey", value: "hello"} }, function (err, res) {
@@ -26,7 +25,8 @@ tap.test('attempt to get datastore document we just created without any auth ( a
 
 tap.test('start the dev cluster', function (t) {
   startDevCluster({
-    flushRedis: true
+    flushRedis: true,
+    flushTestUsers: true
   }, function (err) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting

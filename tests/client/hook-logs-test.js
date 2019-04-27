@@ -13,7 +13,10 @@ var r = require('../lib/helpers/_request');
 var baseURL = config.baseUrl;
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
+  startDevCluster({
+    flushRedis: true,
+    flushTestUsers: true
+  }, function (err, boot) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
@@ -32,6 +35,14 @@ var client = sdk.createClient(testUser.hookSdk);
 //
 // Basic hook API tests
 //
+tap.test('attempt to delete the public hook', function (t) {
+  client.hook.destroy({
+    "name": "test-public-hook",
+    "owner": "david" // TODO: should default to owner if not specified?
+  }, function (err, res) {
+    t.end();
+  });
+});
 
 tap.test('attempt to create a new public hook', function (t) {
   client.hook.create({

@@ -9,7 +9,10 @@ var sdk = require('hook.io-sdk');
 
 var testUser = config.testUsers.david;
 var client = sdk.createClient(testUser.hookSdk);
-
+var examples = require('microcule-examples');
+var hook = require('../../lib/resources/hook');
+var appConfig = require('../../config');
+hook.persist(appConfig.couch);
 
 /*
 
@@ -18,9 +21,15 @@ var client = sdk.createClient(testUser.hookSdk);
     examples/basic-auth
 
 */
+var requiredServices = ['basic-auth'];
+var util = require('util');
+let findOne = util.promisify(hook.findOne);
+let create = util.promisify(hook.create);
+
 tap.test('start the dev cluster', function (t) {
   startDevCluster({
-    flushRedis: true
+    flushRedis: true,
+    flushTestUsers: true
   }, function (err) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
@@ -29,6 +38,37 @@ tap.test('start the dev cluster', function (t) {
       t.end();
     }, 2000);
   });
+});
+
+tap.test('destroy the required hooks', async function (t) {
+  for (let service of requiredServices) {
+    try {
+      let h = await findOne({ name: service, owner: 'examples' });
+      let d = util.promisify(h.destroy);
+      await d();
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  t.end();
+});
+
+tap.test('create the required hooks', async function (t) {
+  for (let service of requiredServices) {
+    try {
+      let h = await create({
+        name: service,
+        owner: 'examples',
+        source: examples.services[service].source,
+        language: examples.services[service].language,
+        mschema: examples.services[service].schema,
+        mschemaStatus: 'enabled'
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+  t.end();
 });
 
 //

@@ -62,7 +62,7 @@ tap.test('update existing cron', function (t) {
     uri: 'http://hook.io/examples/echo',
     status: 'active',
     method: 'POST',
-    cronExpression: '* */1 * * *'
+    cronExpression: '* */30 * * *'
   }, function (err, body) {
     t.error(err, 'request did not error');
     var c = body.cron;
@@ -70,7 +70,7 @@ tap.test('update existing cron', function (t) {
     t.equal(c.name, 'test-cron', 'has correct name');
     t.equal(c.owner, 'david', 'has correct owner');
     t.equal(c.uri, 'http://hook.io/examples/echo', 'has correct uri');
-    t.equal(c.cronExpression, '* */1 * * *', 'has correct cronExpression');
+    t.equal(c.cronExpression, '* */30 * * *', 'has correct cronExpression');
     t.equal(c.status, 'active', 'has correct status');
     t.equal(c.method, 'POST', 'has correct method');
     t.end();
@@ -86,7 +86,7 @@ tap.test('get an existing cron', function (t) {
     t.equal(c.name, 'test-cron', 'has correct name');
     t.equal(c.owner, 'david', 'has correct owner');
     t.equal(c.uri, 'http://hook.io/examples/echo', 'has correct uri');
-    t.equal(c.cronExpression, '* */1 * * *', 'has correct cronExpression');
+    t.equal(c.cronExpression, '* */30 * * *', 'has correct cronExpression');
     t.equal(c.status, 'active', 'has correct status');
     t.equal(c.method, 'POST', 'has correct method');
     t.end();

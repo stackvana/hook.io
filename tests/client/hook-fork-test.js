@@ -23,7 +23,10 @@ tap.test('start the dev cluster', function (t) {
      Requires:
        - examples/bash
   */
-  startDevCluster({}, function (err) {
+  startDevCluster({
+    flushRedis: true,
+    flushTestUsers: true
+  }, function (err) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other

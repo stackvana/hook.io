@@ -9,8 +9,8 @@ var metric = require('../../lib/resources/metric');
 
 var testUser = config.testUsers.david;
 
-config.MAX_SERVICE_CONCURRENCY = 3;
 config.flushRedis = true;
+config.flushTestUsers = true;
 
 var client = sdk.createClient(testUser.hookSdk);
 
@@ -57,12 +57,9 @@ tap.test('attempt to create a new hook with delay - authorized api key', functio
   });
 });
 
-tap.test('attempt to run 4 hooks at once', function (t) {
-  t.plan(6);
+tap.test('attempt to run 3 hooks at once', function (t) {
+  t.plan(5);
   // TODO: actually parse every response and ensure at least one contains concurrency error
-  client.hook.run({ owner: "david", name: "test-hook-concurrency", data: { "foo": "bar" } }, function (err, res) {
-    t.error(err);
-  });
   client.hook.run({ owner: "david", name: "test-hook-concurrency", data: { "foo": "bar" } }, function (err, res) {
     t.error(err);
   });
@@ -73,7 +70,7 @@ tap.test('attempt to run 4 hooks at once', function (t) {
     client.hook.run({ owner: "david", name: "test-hook-concurrency", data: { "foo": "bar" } }, function (err, res) {
       t.error(err);
       t.equal(res.error, true)
-      t.equal(res.message, 'Rate limited: Max concurrency limit hit: 3')
+      t.equal(res.message, 'Rate limited: Max concurrency limit hit: 2')
     });
   }, 2000);
 });
