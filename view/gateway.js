@@ -8,6 +8,13 @@ var rateLimiter = new RateLimiter({
   provider: metric
 });
 
+// Ensure that anonymous user has been registered in rate limiter
+// If this is not done, all anonymous gateway requests would be blocked
+rateLimiter.registerService({
+  owner: 'anonymous',
+  name: 'gateway'
+});
+
 module['exports'] = function view (opts, callback) {
   var $ = this.$,
   res = opts.res,
@@ -45,17 +52,32 @@ module['exports'] = function view (opts, callback) {
     // TODO: reset limits on the start of every month, or at the start of the billing cycle?
     // TODO: pull value from config / paidPlans.js
     // TODO: add back specific gateway hits
-      // metric.incr("/" + service.owner + "/" + "gateway" + '/hits');
     // WARNING: currently using default limit values ( see above note )
-    //stack.plugins.bodyParser()(req, res, function(){
-      rateLimiter.middle({
-        maxLimit: 1000000,
-        maxConcurrency: 50 // limit public gateway to 50 requests, we should key this per account / anonymous
-      })(req, res, function () {
-        _runRemote();
-      });
-    //});
-
+    // TODO: Scope gateway limits to current user session or default to anonymous limits
+    rateLimiter.middle({
+      maxLimit: 1000000,
+      maxConcurrency: 50 // limit public gateway to 50 requests, we should key this per account / anonymous
+    })(req, res, function (err) {
+      if (err) {
+        // TODO: better handling of specific error codes
+        if (err.code === 'RATE_LIMIT_EXCEEDED') {
+          res.statusCode = 410;
+          return res.json({
+            error: true,
+            message: 'Rate limited: Max monthly limit hit: ' + err.monthlyLimit
+          });
+        }
+        if (err.code === 'RATE_CONCURRENCY_EXCEEDED') {
+          res.statusCode = 410;
+          return res.json({
+            error: true,
+            message: 'Rate limited: Max concurrency limit hit: ' + err.maxConcurrency
+          });
+        }
+        return res.end(err.message);
+      }
+      _runRemote();
+    });
   }
 
   // run hook on remote worker
