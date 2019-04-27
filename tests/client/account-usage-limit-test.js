@@ -11,23 +11,16 @@ var testUser = config.testUsers.david;
 var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err) {
+  startDevCluster({
+    flushRedis: true,
+    flushTestUsers: true
+  }, function (err) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
     setTimeout(function(){
       t.end();
     }, 2000);
-  });
-});
-
-// clear the usage limits for test user
-tap.test('reset test user metrics', function (t) {
-  t.pass('cluster started');('metrics reset');
-  metric.client.del('/metric/david/report', function (err){
-    t.error(err);
-    t.pass('cluster started');
-    t.end();
   });
 });
 

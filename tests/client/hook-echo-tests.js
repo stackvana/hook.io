@@ -6,6 +6,9 @@ var startDevCluster = require('../lib/helpers/startDevCluster');
 var examples = require('microcule-examples');
 var async = require('async');
 var pl = require('../../lib/resources/programmingLanguage');
+var hook = require('../../lib/resources/hook');
+var appConfig = require('../../config');
+hook.persist(appConfig.couch);
 
 // hook-api-test.js
 var tap = require("tape");
@@ -18,9 +21,11 @@ var sdk = require('hook.io-sdk');
 var testUser = config.testUsers.bobby;
 
 var client = sdk.createClient(testUser.hookSdk);
-
 tap.test('start the dev cluster', function (t) {
-  startDevCluster({}, function (err, servers) {
+  startDevCluster({
+    flushRedis: true,
+    flushTestUsers: true
+  }, function (err, servers) {
     t.pass('cluster started');
     // should not require a timeout, probably issue with one of the services starting
     // this isn't a problem in production since these services are intended to start independant of each other
@@ -30,9 +35,54 @@ tap.test('start the dev cluster', function (t) {
   });
 });
 
+var requiredServices = ['echo', 'lua-echo', 'javascript-input-schema'];
+
+var helloExamples = [];
+pl.alpha.push('babel')
+Object.keys(examples.services).forEach(function(s){
+  if (s.search(/hello/) !== -1 && pl.alpha.indexOf(examples.services[s].language) === -1) {
+    helloExamples.push(s);
+    requiredServices.push(s);
+  }
+});
+
+var util = require('util');
+let findOne = util.promisify(hook.findOne);
+let create = util.promisify(hook.create);
+
 //
 // Basic hook API tests
 //
+tap.test('destroy the required hooks', async function (t) {
+  for (let service of requiredServices) {
+    try {
+      let h = await findOne({ name: service, owner: 'examples' });
+      let d = util.promisify(h.destroy);
+      await d();
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  t.end();
+});
+
+tap.test('create the required hooks', async function (t) {
+  for (let service of requiredServices) {
+    try {
+      let h = await create({
+        name: service,
+        owner: 'examples',
+        source: examples.services[service].source,
+        language: examples.services[service].language,
+        mschema: examples.services[service].schema,
+        mschemaStatus: 'enabled'
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+  t.end();
+});
 
 /*
 
@@ -124,21 +174,17 @@ tap.test('submit a URL-encoded form to the lua echo hook with form data', functi
     t.end();
   });
 });
+/*
 
+*/
+
+/*
 // TODO: search examples for all *-echo tests and call them in loop
 tap.test('attempt to call all possible *-hello-world examples', function (t) {
 
   var customResponses = {
     'r': '[1] "hello world"\n'
   };
-
-  var helloExamples = [];
-  pl.alpha.push('babel')
-  Object.keys(examples.services).forEach(function(s){
-    if (s.search(/hello/) !== -1 && pl.alpha.indexOf(examples.services[s].language) === -1) {
-      helloExamples.push(s);
-    }
-  });
 
   async.eachSeries(helloExamples, function iter (item, next) {
     var lang = examples.services[item].language;
@@ -185,6 +231,7 @@ tap.test('attempt to call all possible *-hello-world examples', function (t) {
   });
 
 });
+*/
 
 /*
 
