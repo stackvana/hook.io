@@ -106,7 +106,16 @@ tap.test('attempt to run 3 hooks in a row', function (t) {
   });
 });
 
-tap.test('check that an alert was created for RATE_LIMIT_EXCEEDED', function (t) {
+tap.test('run the hook after rate limit has already been exceeded and alerts created', function (t) {
+  client.hook.run({ owner: "david", name: "test-hook-rate-limits", data: { "foo": "bar" } }, function (err, res) {
+    t.error(err);
+    t.equal(res.error, true);
+    t.equal(res.message, 'Rate limited: Max monthly limit hit: 2');
+    t.end();
+  });
+});
+
+tap.test('check that only one alert was created for RATE_LIMIT_EXCEEDED', function (t) {
   // wait a few seconds for async alert to save
   setTimeout(function(){
     alerts.find({ username: 'david' }, function (err, results) {
