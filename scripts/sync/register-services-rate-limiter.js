@@ -25,8 +25,12 @@ hook.all(function (err, results) {
   if (err) {
     throw err;
   }
-  results.forEach(function(r){
-    rateLimiter.registerService({ owner: r.owner, name: r.name });
-    // keys.push('/' + r.owner + '/' + r.name);
+  async.eachLimit(results, 80, updateHookCache, function (err, re){
+    console.log('finished', err, re);
+    process.exit();
   });
+  function updateHookCache (_hook, cb) {
+    console.log('updating hook', _hook.name);
+    rateLimiter.registerService({ owner: _hook.owner, name: _hook.name }, cb);
+  }
 });
