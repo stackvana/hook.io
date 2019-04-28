@@ -1,0 +1,15 @@
+Hello {{username}}!
+
+This is a friendly reminder that your hook.io account has reached 75% of it's allotted requests this month.
+
+Current Monthly Requests: {{currentMonthlyTotal}}
+Monthly Limit: {{monthlyTotalLimit}}
+Service Plan: {{planName}}
+
+If your account exceeds it's monthly limit it's services may become temporarily unavailable.
+
+Please let me know if you have any questions.
+
+Sincerely,
+Marak
+Creator of hook.io

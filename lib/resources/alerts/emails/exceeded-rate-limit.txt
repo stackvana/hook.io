@@ -1,0 +1,14 @@
+Hello {{username}}!
+
+Your hook.io account has exceeded {{monthlyTotalLimit}} requests this month which is above the limits of your current {{planName}} plan.
+
+Allowed Monthly Requests: {{currentMonthlyTotal}}
+Current Service Plan: {{planName}}
+
+In order to keep your services online we ask that you upgrade your account at: https://hook.io/pricing
+
+Please let me know if you have any questions.
+
+Sincerely,
+Marak
+Creator of hook.io

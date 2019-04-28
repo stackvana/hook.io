@@ -46,7 +46,6 @@
     "mschema-forms": "https://github.com/mschema/mschema-forms/tarball/master",
     "mschema-rpc": "https://github.com/mschema/mschema-rpc/tarball/master",
     "nano": "^6.2.0",
-    "node-slug": "0.0.2",
     "node-uuid": "^1.4.3",
     "npm": "^6.9.0",
     "octonode": "^0.7.6",
@@ -66,7 +65,7 @@
     "rss": "^1.1.1",
     "run-remote-service": "https://github.com/bigcompany/run-remote-service/tarball/master",
     "run-service": "https://github.com/bigcompany/run-service/tarball/master",
-    "slug": "^0.8.0",
+    "slug": "1.1.0",
     "stream-buffers": "^1.1.0",
     "stripe": "^3.3.4",
     "then-sleep": "^1.0.1",
@@ -76,15 +75,15 @@
     "trycatch": "^1.5.20",
     "view": "https://github.com/bigcompany/view/tarball/master",
     "websocket-stream": "^3.1.0",
-    "ws": "^6.2.0"
+    "ws": "^6.2.1"
   },
   "devDependencies": {
     "eslint-plugin-html": "^5.0.3",
     "gulp-mustache": "^4.1.1",
     "gulp-rename": "*",
     "nyc": "11.1.x",
-    "tape": "^4.10.1",
-    "tap": "^12.6.1"
+    "tap": "^12.6.2",
+    "tape": "^4.10.1"
   },
   "scripts": {
     "test": "tap --no-timeout tests/**/*-test.js",
