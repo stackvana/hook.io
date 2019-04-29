@@ -1,0 +1,1 @@
+mon -d "node ./bin/crons/send-user-alerts" --log ./logs/user-alerts-logs.txt --on-error "tail -n 1000 ./logs/user-alerts-logs.txt | ./scripts/alerts/user-alerts-exited"

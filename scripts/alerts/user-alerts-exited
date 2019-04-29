@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+var alert = require('./alert');
+alert('user alerts mon has exited!');
