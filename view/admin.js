@@ -552,7 +552,8 @@ module['exports'] = function view (opts, callback) {
 
         boot.examples = examples;
         out = out.replace('{{hook}}', JSON.stringify(boot, true, 2));
-        out = out.replace(/\{\{appAdminEmail\}\}/g, config.app.adminEmail);
+        var appAdminEmail = "hookmaster@hook.io";
+        out = out.replace(/\{\{appAdminEmail\}\}/g, appAdminEmail);
         return callback(null, out);
       });
 

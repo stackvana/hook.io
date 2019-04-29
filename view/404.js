@@ -5,7 +5,7 @@ module['exports'] = function (opts, cb) {
       req = opts.req,
       res = opts.res;
 
-  var appAdminEmail = config.app.adminEmail;
+  var appAdminEmail = "hookmaster@hook.io";
 
   $('.requestedUrl').html(opts.request.url);
   if (req.jsonResponse === true) {
