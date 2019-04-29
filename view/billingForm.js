@@ -44,27 +44,6 @@ module['exports'] = function billingForm (data, cb) {
     disabled: true
   };
 
-
- /*
-  billingSchema.card_number = {
-    type: "string",
-    default: data.card_number,
-    disabled: true
-  };
-
-  billingSchema.card_exp = {
-    type: "string",
-    default: data.card_exp,
-    disabled: true
-  };
-
-  billingSchema.card_ccv = {
-    type: "string",
-    default: data.card_ccv,
-    disabled: true
-   };
- */
-
   billingSchema.run = {
     "type": "string",
     "default": "true",

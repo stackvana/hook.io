@@ -1,4 +1,4 @@
-  <link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet" />
+<link href="{{appUrl}}/css/jquery-ui.css" rel="stylesheet" />
 
 <style>
   .hookTable .smaller {
@@ -695,6 +695,7 @@
               }
             */
             $('.hookRun').attr('href', '/' + res.hook.owner + '/' + res.hook.name);
+            // hookRunButton
             // TODO: better stateObj values?
             let stateObj = {
               foo: 'bar',
@@ -1198,10 +1199,10 @@
             <button type="button" class="codeButton btn">Edit Code</button>
             <input tabindex="1" name="save" type="submit" value="Save Code" class="btn i18n btn hookSave"/>
             <p class="telegramWarning warning medium">
-              <strong>Warning:</strong> Telegram services require a <a href="https://hook.io/pricing">paid account</a>. 
+              <strong>Warning:</strong> Telegram services require a <a href="{{appUrl}}/pricing">paid account</a>. 
             </p>
             <p class="telegramPaidOnly warning medium">
-              <strong>Error:</strong> You may not save Telegram services without a <a href="https://hook.io/pricing">paid account</a>. 
+              <strong>Error:</strong> You may not save Telegram services without a <a href="{{appUrl}}/pricing">paid account</a>. 
             </p>
             <textarea tabindex="8" name="codeEditor" class="codeEditor">// A simple hello world microservice 
 // Service will respond to HTTP requests with a string
@@ -1380,7 +1381,7 @@ module['exports'] = function helloWorld (hook) {
 
           <div class="paidAccount">
             <p>
-              <span class="warning"><strong>Note:</strong> </span> In order to enable <a href="{{appUrl}}/faq#private">private services</a>, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
+              <span class="warning"><strong>Note:</strong> </span> In order to enable <a href="{{appUrl}}/faq#private">private services</a>, you must upgrade to a <a href="{{appUrl}}/pricing">paid account</a>.
             </p>
           </div>
 
@@ -1416,7 +1417,7 @@ module['exports'] = function helloWorld (hook) {
           <p>Some custom services may require longer timeouts, but most services should not. <a href="{{appUrl}}/docs#timeouts" target="_blank">Read More about Timeouts</a></p>
           <div class="paidAccount">
             <p>
-              <span class="warning"><strong>Note:</strong> </span> In order increase the service timeout value enable, you must upgrade to a <a href="https://hook.io/pricing">paid account</a>.
+              <span class="warning"><strong>Note:</strong> </span> In order increase the service timeout value enable, you must upgrade to a <a href="{{appUrl}}/pricing">paid account</a>.
             </p>
           </div>
           <div class="form-group">
@@ -1526,12 +1527,17 @@ module['exports'] = function helloWorld (hook) {
           <div class="form-group danger">
             <span class="warning"><strong>Danger Zone</strong></span>:
             <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Delete Hook</a>||</span>
+            <!--
+              <span style="background-color:white;">||<a class="red deleteLink i18n" href="">Disable Hook</a>||</span>
+            -->
           </div>
         </div>
 
         <a name="save"></a>
         <div class="form-group">
-          <input tabindex="1" name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary hookSave">
+          <input name="save" type="submit" value="Save Microservice"/ class="btn i18n btn-primary hookSave">
+          &nbsp;
+          <a href="" target="_blank" class="hookRun"><input name="run" type="button" value="Run Service"/ class="btn i18n btn-success hookRunButton"></a><br />
         </div>
         <!-- 
           <div class="form-group">
