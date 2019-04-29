@@ -2,6 +2,7 @@ var forms = require('mschema-forms');
 var config = require('../config');
 var metric = require('../lib/resources/metric');
 var dateFormat = require('dateformat');
+let fnst = require('date-fns-timezone')
 var util = require('util');
 var generate = util.promisify(forms.generate);
 var recent = util.promisify(metric.recent);
@@ -30,6 +31,7 @@ module['exports'] = async function topPresenter (opts, callback) {
   // get all metrics data for rendering view
   let recentMembers = await recent('recent');
   let recentErrors = await recent('recent:500');
+  let recentAlerts = await recent('alerts');
   let mostAccountHits = await top('hits');
   let runningServices = await top('running');
 
@@ -45,15 +47,18 @@ module['exports'] = async function topPresenter (opts, callback) {
   };
 
   formSchema.user.formatter = function (val) {
-    return '<a href="' + config.app.url + '/' + val + '">' + val + '</a>';
+    return '<a href="' + config.app.url + val + '/_src">' + val + '</a>';
   }
 
   formSchema.hits.formatter = function (val) {
-    return dateFormat(new Date(Number(val)), 'hh:MM:ss dddd, mmmm dS, yyyy');
+    let timezone = req.session.timezone || 'America/New_York';
+    let zonedDate = fnst.formatToTimeZone(new Date(Number(val)), 'MMMM DD, YYYY hh:mm:ss A z', { timeZone: timezone });
+    return zonedDate;
   }
 
   recentMembers = formatResults(recentMembers);
   recentErrors = formatResults(recentErrors);
+  recentAlerts = formatResults(recentAlerts);
   runningServices = formatResults(runningServices);
   mostAccountHits = formatResults(mostAccountHits);
 
@@ -69,6 +74,10 @@ module['exports'] = async function topPresenter (opts, callback) {
     schema: formSchema
   });
 
+  formSchema.user.formatter = function (val) {
+    return '<a href="' + config.app.url + val + '/logs">' + val + '</a>';
+  }
+
   let recentErrorsHtml = await generate({
     type: "grid",
     name: 'recent-error-forms',
@@ -78,6 +87,22 @@ module['exports'] = async function topPresenter (opts, callback) {
       action: ""
     },
     data: recentErrors,
+    schema: formSchema
+  });
+
+  formSchema.user.formatter = function (val) {
+    return '<a href="' + config.app.url + '/metrics/' + val + '/report" target="_blank">' + val + '</a>';
+  }
+
+  let recentAlertsHtml = await generate({
+    type: "grid",
+    name: 'recent-alerts-forms',
+    form: {
+      legend: 'Recent Rate Limit Alerts',
+      submit: "Submit",
+      action: ""
+    },
+    data: recentAlerts,
     schema: formSchema
   });
 
@@ -120,6 +145,7 @@ module['exports'] = async function topPresenter (opts, callback) {
   $('.hits').html(mostAccountHitsHtml);
   $('.recentErrors').html(recentErrorsHtml);
   $('.recent').html(recentlyRunHtml);
+  $('.recentAlerts').html(recentAlertsHtml);
 
   callback(null, $.html());
 
