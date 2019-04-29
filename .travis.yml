@@ -8,3 +8,9 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose build
   - docker-compose up
+  
+script:
+  - npm test
+  
+after_script:
+  - docker-compose down
