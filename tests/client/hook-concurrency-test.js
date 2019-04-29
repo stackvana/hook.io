@@ -9,6 +9,8 @@ var sdk = require('hook.io-sdk');
 var startDevCluster = require('../lib/helpers/startDevCluster');
 var metric = require('../../lib/resources/metric');
 var alerts = require('../../lib/resources/alerts/alerts');
+var user = require('../../lib/resources/user');
+user.persist(appConfig.couch);
 
 var testUser = config.testUsers.david;
 
@@ -20,13 +22,20 @@ alerts.persist(config.couch);
 var client = sdk.createClient(testUser.hookSdk);
 
 tap.test('start the dev cluster', function (t) {
-  startDevCluster(config, function (err) {
+  startDevCluster(config, function (err, data) {
     t.pass('cluster started');
-    // should not require a timeout, probably issue with one of the services starting
-    // this isn't a problem in production since these services are intended to start independant of each other
-    setTimeout(function(){
-      t.end();
-    }, 2000);
+    var david = data.users.david;
+    david.servicePlanMeta = {
+      hits: 10,
+      concurrency: 2
+    };
+    user.update(david, function(){
+      // should not require a timeout, probably issue with one of the services starting
+      // this isn't a problem in production since these services are intended to start independant of each other
+      setTimeout(function(){
+        t.end();
+      }, 2000);
+    });
   });
 });
 
@@ -43,7 +52,6 @@ tap.test('reset test user metrics', function (t) {
   });
 });
 
-/*
 tap.test('attempt to clear all david alerts in system', function (t) {
   alerts.find({ username: 'david' }, function (err, results) {
     async.map(results, function(item, cb){
@@ -53,7 +61,6 @@ tap.test('attempt to clear all david alerts in system', function (t) {
     })
   });
 });
-*/
 
 /*
 
@@ -75,8 +82,7 @@ tap.test('attempt to create a new hook with delay - authorized api key', functio
 });
 
 tap.test('attempt to run 3 hooks at once', function (t) {
-  t.plan(5);
-  /*
+  t.plan(10);
   resource.on('usage::ratelimit', function (data){
     t.equal(data.code, 'RATE_CONCURRENCY_EXCEEDED');
     t.equal(data.maxConcurrency, 2);
@@ -84,7 +90,6 @@ tap.test('attempt to run 3 hooks at once', function (t) {
     t.equal(data.email, 'david@marak.com');
     t.equal(data.servicePlan, 'trial');
   });
-  */
   // TODO: actually parse every response and ensure at least one contains concurrency error
   client.hook.run({ owner: "david", name: "test-hook-concurrency", data: { "foo": "bar" } }, function (err, res) {
     t.error(err);
@@ -101,20 +106,19 @@ tap.test('attempt to run 3 hooks at once', function (t) {
   }, 2000);
 });
 
-/*
 tap.test('check that an alert was created for RATE_CONCURRENCY_EXCEEDED', function (t) {
   // wait a few seconds for async alert to save
   setTimeout(function(){
     alerts.find({ username: 'david' }, function (err, results) {
       t.error(err);
       t.equal(results.length, 1);
+      t.equal(results[0].status, 'silent');
       t.equal(results[0].code, 'RATE_CONCURRENCY_EXCEEDED');
       t.end();
     });
   }, 1000);
 });
 
-*/
 
 tap.test('attempt to delete the hook we just created - correct access key', function (t) {
   client.hook.destroy({ owner: 'david', name: 'test-hook-concurrency' }, function (err, res) {
