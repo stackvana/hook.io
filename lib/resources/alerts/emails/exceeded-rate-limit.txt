@@ -1,14 +1,14 @@
-Hello {{username}}!
+Hello {{username}}! <br/><br/>
 
-Your hook.io account has exceeded {{monthlyTotalLimit}} requests this month which is above the limits of your current {{planName}} plan.
+Your hook.io account has exceeded {{monthlyLimit}} requests this month which is above the limits of your current {{servicePlan}} plan.<br/><br/>
 
-Allowed Monthly Requests: {{currentMonthlyTotal}}
-Current Service Plan: {{planName}}
+Allowed Monthly Requests: {{monthlyLimit}}<br/>
+Current Service Plan: {{servicePlan}}<br/><br/>
 
-In order to keep your services online we ask that you upgrade your account at: https://hook.io/pricing
+In order to keep your services online we ask that you upgrade your account at: https://hook.io/pricing<br/><br/>
 
-Please let me know if you have any questions.
+Please let me know if you have any questions.<br/><br/>
 
-Sincerely,
-Marak
-Creator of hook.io
+Sincerely,<br/>
+Marak<br/>
+Creator of hook.io<br/>

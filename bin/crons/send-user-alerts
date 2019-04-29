@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+var PAUSE_TIME = 60000;
+const alerts = require('../../lib/resources/alerts/alerts');
+
+alerts.sendAlerts({}, function(err, result){
+  console.log(err, result);
+  // TODO: set timeout
+  // wait 60 seconds and process again
+  setTimeout(function(){
+    // this script is intended to be run with a process monitor
+    // by calling process.exit, we close the script and let the process
+    // monitor restart the cron process
+    process.exit(0);
+  }, PAUSE_TIME);
+});

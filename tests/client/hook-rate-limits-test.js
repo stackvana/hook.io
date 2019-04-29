@@ -122,6 +122,7 @@ tap.test('check that only one alert was created for RATE_LIMIT_EXCEEDED', functi
       t.error(err);
       t.equal(results.length, 1);
       t.equal(results[0].code, 'RATE_LIMIT_EXCEEDED');
+      t.equal(results[0].metadata.servicePlan, 'trial');
       t.end();
     });
   }, 1000);
