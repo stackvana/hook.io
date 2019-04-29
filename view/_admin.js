@@ -77,6 +77,14 @@ module['exports'] = function view (opts, callback) {
              return res.end('updated');
            });
          break;
+         case 'user.unregisterFromBalancer':
+           return cache.del('/user/' + params.name, function (err) {
+             if (err) {
+               return res.end(err.message);
+             }
+             return res.end('updated');
+           });
+         break;
          /*
          default:
           return res.json({
@@ -158,6 +166,8 @@ module['exports'] = function view (opts, callback) {
 
 
           $('.destroyUser').attr('href', '?method=user.destroy&name=' + _user.name + '&email=' + _user.email);
+          $('.removeUserCache').attr('href', '?method=user.unregisterFromBalancer&name=' + _user.name);
+
           // $('.user .json').html(JSON.stringify(_user, true, 2));
           $('.loginAs').attr('href', '?loginAs=' + _user.name );
 
