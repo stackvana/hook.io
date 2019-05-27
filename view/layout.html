@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="">
-    <head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Free Microservice and Webhook Hosting. Deploy your code in seconds. Thousands of existing services to choose from. Integrated support for Node.js, NPM, and Github.">
@@ -10,411 +10,83 @@
     <title>{{appName}}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- google font  -->
-    <!-- TOOD: make local fonts available for development so we don't have to rely on the CDN -->
-    <!-- <link href='https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700' rel='stylesheet' type='text/css'> -->
 
-    <!--
-    <script type="text/javascript" src="/js/clippy.min.js"></script>
-    <link href="{{appUrl}}/css/clippy.css" media="all" rel="stylesheet" type="text/css" />
-    -->
-
-    <!-- Favicon
-    ============================================ -->
+    <!-- Favicon -->
     <!-- <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"> -->
 
-    <!-- Bootstrap CSS
-    ============================================ -->
     <link rel="stylesheet" href="{{appUrl}}/css/bootstrap.min.css">
-
-    <!-- Bootstrap Social CSS
-    ============================================ -->
     <link rel="stylesheet" href="{{appUrl}}/css/social.css">
-
-    <!-- Github octicons CSS / images / fonts
-    ============================================ -->
-
     <link href="{{appUrl}}/octicons/octicons.css" media="all" rel="stylesheet" type="text/css" />
-
-    <!-- jquery.autocomplete.js CSS
-    ============================================ -->      
     <link rel="stylesheet" href="{{appUrl}}/css/autocomplete.css">
-
-    <!-- owl.carousel CSS
-    ============================================ -->      
     <link rel="stylesheet" href="{{appUrl}}/css/owl.carousel.css">
-
-    <!-- owl.theme CSS
-    ============================================ -->      
     <link rel="stylesheet" href="{{appUrl}}/css/owl.theme.css">
-            
-    <!-- owl.transitions CSS
-    ============================================ -->      
     <link rel="stylesheet" href="{{appUrl}}/css/owl.transitions.css">
-
-    <!-- font-awesome.min CSS
-    ============================================ -->      
     <link rel="stylesheet" href="{{appUrl}}/css/font-awesome.min.css">
-
-    <!-- animate CSS
-    ============================================ -->         
     <link rel="stylesheet" href="{{appUrl}}/css/animate.css">
-
-    <!-- meanmenu CSS
-    ============================================ -->    
-    <link rel="stylesheet" href="{{appUrl}}/css/meanmenu.min.css">   
-
-    <!-- nivo-slider css -->
-    <link rel="stylesheet" href="{{appUrl}}/css/nivo-slider.css">       
-
-    <!-- normalize CSS
-    ============================================ -->        
+    <link rel="stylesheet" href="{{appUrl}}/css/meanmenu.min.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/nivo-slider.css">
     <link rel="stylesheet" href="{{appUrl}}/css/normalize.css">
-
-    <!-- fancyBox 
-    ============================================ -->         
-    <link rel="stylesheet" href="{{appUrl}}/css/jquery.fancybox.css">         
-
-    <!-- main CSS
-    ============================================ -->          
+    <link rel="stylesheet" href="{{appUrl}}/css/jquery.fancybox.css">
     <link rel="stylesheet" href="{{appUrl}}/css/main.css">
-    <!-- style CSS
-    ============================================ -->          
-        <link rel="stylesheet" href="{{appUrl}}/style.css">
-    <!-- new base style CSS ( put new styles in here )
-    ============================================ -->  
+    <link rel="stylesheet" href="{{appUrl}}/style.css">
     <link rel="stylesheet" href="{{appUrl}}/css/base.css">
-
-    <!-- shake css class -->
     <link rel="stylesheet" type="text/css" href="{{appUrl}}/css/csshake.min.css">
-
-    <!-- responsive CSS
-    ============================================ -->          
     <link rel="stylesheet" href="{{appUrl}}/css/responsive.css">
-
+    <!-- Likely going to deprecate all links above this -->
+    <link rel="stylesheet" href="{{appUrl}}/css/atoms/buttons.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/organisms/topNav.css">
+    <link rel="stylesheet" href="{{appUrl}}/css/organisms/mobileNav.css">
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    <!-- jquery-1.11.3.min js
-    ============================================ -->
     <script src="/js/vendor/jquery-1.11.3.min.js"></script>
-
     <script type="text/javascript" src="/js/jquery.sortable.js"></script>
-
-    </head>
-    <body>
+  </head>
+  <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <!--Start header  area -->  
-  <header>
-    <!--Start header top  area -->
-    <div class="header_top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="top_menu">
-              <ul>
-                <li><a href="{{appUrl}}/services"><i class="fa fa-cog"></i> <span class="i18n">Services</span> <i class="fa fa-angle-down"></i> </a>
-                  <ul>
-                    <li><a href="{{appUrl}}/account" class="i18n">Account</a></li>
-                    <li><a href="{{appUrl}}/keys" class="i18n">API Keys</a></li>
-                    <li><a href="{{appUrl}}/cron" class="i18n">Cron Jobs</a></li>
-                    <li><a href="{{appUrl}}/env" class="i18n">Env Vars</a></li>
-                    <li><a href="{{appUrl}}/events" class="i18n">Events</a></li>
-                    <li><a href="{{appUrl}}/logs" class="i18n">Logs</a></li>
-                    <li><a class="logoutLink i18n" href="{{appUrl}}/logout">Log Out</a></li>
-                    <li><a class="loginLink i18n" href="{{appUrl}}/login">Log In</a></li>
-                  </ul>               
-                </li>
-                <li><a href="{{appUrl}}/new"><i class="fa fa-cloud-upload"></i> <span  class="i18n">Create new Service</span></a></li>
-                <li class="loginLink"><a href="{{appUrl}}/login"><i class="fa fa-lock"> </i> <span class="i18n">Login</span> </a></li>
-                <li class="logoutLink"><a href="{{appUrl}}/logout"><i class="fa fa-lock"> </i> <span class="i18n">Logout</span> </a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="top_menu_right">
-              <ul class="pull-right">
-                <li><a href="{{appUrl}}/pricing"><i class="fa fa-info-circle" aria-hidden="true"></i> <span class="i18n">Pricing</span></a></li>
-                <li><a href="{{appUrl}}/chat"><i class="fa fa-heart-o"></i> <span class="i18n">Live Chat</span></a></li>
-                <li><a href="https://github.com/bigcompany/hook.io" target="_blank"><i class="fa fa-github"></i> <span class="i18n">Open-Source</span></a></li>
-                <li><a href="#"><i class="fa fa-globe"></i> <span class="i18n currentLang">English</span> <i class="fa fa-angle-down"></i></a>
-                  <ul>
-                    <li><a href="{{appUrl}}?lang=en"><span class="i18n">English</span> </a></li>
-                    <li><a href="{{appUrl}}?lang=de"><span class="i18n">German</span> </a></li>
-                    <li><a href="{{appUrl}}/i18n#add-language"><span class="i18n">Add new </span> </a></li>
-                  </ul>
-                </li>
-                <!--
-                <li><a href="#" class="last-child"><i class="fa fa-money"></i> Template <i class="fa fa-angle-down"></i></a>
-                  <ul>
-                    <li><a href="#">Cloudie</a></li>
-                    <li><a href="#">Classic</a></li>
-                    <li><a href="#">USD </a></li>
-                  </ul>               
-                </li>
-                -->
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--end header top  area -->
-    <!--Start header mid  area -->
-    <div class="header_mid">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3 col-lg-3">
-            <div class="logo"><a href="{{appUrl}}/"><img src="{{appLogo}}" alt="" /></a></div>
-          </div>
-          <div class="col-md-5 col-lg-6">
-            <a name="search"></a>
-            <div class="search">
-              <form action="#">
-                <div class="input_search">
-                  <input id="autocomplete" type="text" class="form-control form-round" placeholder="Type keyword to jump to section...">
-                  <span class="button_con">
-                    <button type="button"><i class="fa fa-search"></i></button>
-                  </span>
-                </div><!-- /input-group -->
-              </form>
-            </div>
-          </div>
-          <div class="col-md-4 col-lg-3 text_c">
-            <a href="{{appUrl}}/stats">
-              <div class="shoping_cart_area">
-                <div class="cart_shoping">
-                  <span class="title-cart">Deployments:</span>
-                  <span class="pricet">loading...</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Start header mid  area -->
-    <!--Start header nav  area -->
-    <div class="header_nav">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <nav class="main_nemu">
-              <ul id="menu">
-                <li><a href="{{appUrl}}/webhooks" class="i18n">Webhooks</a>
-                  <div class="megamenu">
-                    <div class="mega">
-                      <h2><a href="{{appUrl}}/faq#getting-started">Getting Started</a></h2>
-                      <a href="{{appUrl}}/faq#what-is-a-webhook">What is a Webhook?</a>
-                      <a href="{{appUrl}}/editor">Interactive Playground</a>
-                      <a href="{{appUrl}}/examples">Live Examples</a>
-                      <a href="{{appUrl}}/faq#deploying-first-service">Deploying your first service</a>
-                      <a href="{{appUrl}}/docs">Documentation</a>
-                      <a href="{{appUrl}}/pricing">Paid Plans</a>
-                    </div>
-                    <div class="mega">
-                      <h2><a href="#">Technologies</a></h2>
-                      <a href="{{appUrl}}/webhooks">Webhooks</a>
-                      <a href="{{appUrl}}/websockets">Websockets</a>
-                      <a href="{{appUrl}}/api#rest">HTTP REST</a>
-                      <a href="{{appUrl}}/api#rest">JSON</a>
-                      <a href="{{appUrl}}/docs#content-type">Streaming HTTP</a>
-                      <a href="{{appUrl}}/docs#content-type">Streaming Form multipart</a>
-                    </div>
-                    <div class="mega">
-                      <h2><a href="#">Features</a></h2>
-                      <a href="{{appUrl}}/domains">Domains</a>
-                      <a href="{{appUrl}}/cron">Cron Jobs</a>
-                      <a href="{{appUrl}}/docs#schema">Schema</a>
-                      <!--
-                      <a href="{{appUrl}}/themes">Theming</a>
-                      -->
-                      <a href="{{appUrl}}/curl">Unix Pipe Integration</a>
-                    </div>
-                    <div class="mega">
-                      <h2><a href="{{appUrl}}/examples">Languages</a></h2>
-                      <a href="{{appUrl}}/examples#javascript">JavaScript ( ES7 )</a>
-                      <a href="{{appUrl}}/examples#python">Python</a>
-                      <a href="{{appUrl}}/examples#php">PHP</a>
-                      <a href="{{appUrl}}/examples#bash">Bash</a>
-                      <a href="{{appUrl}}/examples#lua">Lua</a>
-                      <a href="{{appUrl}}/examples">many more...</a>
-                      
-                    </div>
-                  </div>
-                </li>
-                <li><a href="{{appUrl}}/insight" class="i18n">Insight</a>
-                  <ul class="sub_menu">
-                    <li><a href="{{appUrl}}/faq" class="i18n">FAQ</a></li>
-                    <li><a href="{{appUrl}}/pricing" class="i18n">Pricing</a></li>
-                    <li><a href="{{appUrl}}/docs" class="i18n">Documentation</a></li>
-                    <li><a href="{{appUrl}}/logs" class="i18n">Logging</a></li>
-                    <li><a href="{{appUrl}}/events" class="i18n">System Events</a></li>
-                    <li><a href="{{appUrl}}/metrics" class="i18n">Metrics</a></li>
-                    <li><a href="{{appUrl}}/env" class="i18n">Environment Variables</a></li>
-                  </ul>
-                </li>
-                <!--
-                <li><a href="{{appUrl}}/databases" class="i18n">Databases</a>
-                  <div class="megamenu men_longwidth">
-                    <div class="mega">
-                      <h2><a href="{{appUrl}}/databases">Using Databases</a></h2>
-                      <a href="{{appUrl}}/docs#databases">Documentation</a>
-                      <a href="{{appUrl}}/databases#api">API</a>
-                      <a href="{{appUrl}}/databases#sdk">SDK</a>
-                    </div>
-                    <div class="mega">
-                      <h2><a href="#" class="i18n">Multi-Cloud</a></h2>
-                      <a href="{{appUrl}}/datastore">Built-in Datastore</a>
-                      <a href="{{appUrl}}/databases#dynamodb">Amazon DynamoDB</a>
-                      <a href="{{appUrl}}/databases#couchdb">CouchDB</a>
-                      <a href="{{appUrl}}/databases#mongodb">MongoDB</a>
-                      <a href="{{appUrl}}/databases#redis">Redis</a>
-                    </div>
-                    <div class="mega">
-                      <h2><a href="{{appUrl}}/databases#examples" class="i18n">Example Code</a></h2>
-                      <a href="{{appUrl}}/examples#">Create a new Document</a>
-                      <a href="{{appUrl}}/examples#">Get a Document</a>
-                      <a href="{{appUrl}}/examples#">Query for a Document</a>
-                      <a href="{{appUrl}}/examples#">Remove a Document</a>
-                    </div>
-                  </div>
-                </li>
-                -->
-                <!--
-                <li><a href="{{appUrl}}/files" class="i18n">File Storage</a>
-                  <div class="megamenu">
-                    <div class="mega">
-                      <h2><a href="{{appUrl}}/files">Using Files</a></h2>
-                      <a href="{{appUrl}}/files#docs">Documentation</a>
-                      <a href="{{appUrl}}/files#api">API</a>
-                      <a href="{{appUrl}}/files#sdk">SDK</a>
-                    </div>
-                    <div class="mega">
-                      <h2><a href="{{appUrl}}/files#providers" class="i18n">Multi-cloud</a></h2>
-                      <a href="{{appUrl}}/files#amazon">Amazon S3</a>
-                      <a href="{{appUrl}}/files#google">Google Cloud</a>
-                      <a href="{{appUrl}}/files#microsoft">Mirosoft Azure</a>
-                      <a href="{{appUrl}}/files#rackspace">Rackspace Cloud Files</a>
-                      <a href="{{appUrl}}/files#sftp">SSH / SFTP</a>
-                    </div>
-                    <div class="mega">
-                      <h2><a href="{{appUrl}}/examples#files" class="i18n">Example Code</a></h2>
-                      <a href="{{appUrl}}/examples#files">Upload a File</a>
-                      <a href="{{appUrl}}/examples#files">Download a File</a>
-                      <a href="{{appUrl}}/examples#files">Streaming File transfers</a>
-                      <a href="{{appUrl}}/examples#files">Reading a directory</a>
-                      <a href="{{appUrl}}/examples#files">see more...</a>
-                    </div>
-                  </div>
-                </li>
-                -->
-                <li><a href="{{appUrl}}/keys">Role Based Access Control</a>
-                  <ul class="sub_menu">
-                    <li><a href="{{appUrl}}/keys">API Access Keys</a></li>
-                    <li><a href="{{appUrl}}/roles">System Roles</a></li>
-                    <li><a href="{{appUrl}}/roles#custom">Custom Roles</a></li>
-                    <li><a href="{{appUrl}}/roles#custom-role-checks">Performing Role Checks</a></li>
-                  </ul>               
-                </li>
-                <li><a href="{{appUrl}}/datastore" class="i18n">Datastore</a></li>
-                <li><a href="{{appUrl}}/api">Developer API</a>
-                  <ul class="sub_menu">
-                    <li><a href="{{appUrl}}/api#microservices">Getting Started</a></li>
-                    <li><a href="{{appUrl}}/api#keys">API Access Keys</a></li>
-                    <li><a href="{{appUrl}}/api#rest">HTTP REST API</a></li>
-                    <li><a href="{{appUrl}}/sdk">Client SDK</a></li>
-                    <li><a href="{{appUrl}}/gateways">Hot Code Gateways</a></li>
-                  </ul>
-                </li>
-                <li><a href="{{appUrl}}/contact">Contact Us</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--end header nav  area -->    
-  </header>
-    <!--end header  area -->
-  <!--Start mobile menu  area -->
-  <div class="mobile_memu_area">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="mobile_memu">
-            <nav>
-              <ul>
-                <li><a href="{{appUrl}}/new">Create New Microservice</a></li>
-                <li><a href="{{appUrl}}/login">My Account</a></li>
-                
-                <li><a href="{{appUrl}}/microservices">Microservices</a>
-                  <ul>
-                    <li><a href="{{appUrl}}/faq#what-is-a-microservice">What is a Microservice?</a></li>
-                    <li><a href="{{appUrl}}/editor">Interactive Playground</a></li>
-                    <li><a href="{{appUrl}}/faq#creating">Deploying your first service</a></li>
-                    <li><a href="{{appUrl}}/docs">Documentation</a></li>
-                    <li><a href="{{appUrl}}/pricing">Paid Plans</a></li>
-                  </ul>
-                </li>
-                <li><a href="{{appUrl}}/insight">Insight</a>
-                  <ul>
-                    <li><a href="{{appUrl}}/faq">Faq</a></li>
-                    <li><a href="{{appUrl}}/docs">Documentation</a></li>
-                    <li><a href="{{appUrl}}/logs">Logging</a></li>
-                    <li><a href="{{appUrl}}/events">System Events</a></li>
-                    <li><a href="{{appUrl}}/metrics">Metrics</a></li>
-                    <li><a href="{{appUrl}}/env">Environment Variables</a></li>
-                  </ul>
-                </li>
-                <!--
-                <li><a href="{{appUrl}}/databases">Databases</a>
-                  <ul>
-                    <li><a href="{{appUrl}}/datastore">Built-in Datastore</a></li>
-                    <li><a href="{{appUrl}}/databases/dynamodb">Amazon DynamoDB</a></li>
-                    <li><a href="{{appUrl}}/databases/couchdb">CouchDB</a></li>
-                    <li><a href="{{appUrl}}/databases/mongodb">MongoDB</a></li>
-                    <li><a href="{{appUrl}}/databases/redis">Redis</a></li>
-                    <li><a href="{{appUrl}}/databases#additional">More...</a></li>
-                  </ul>
-                </li>
-                <li><a href="{{appUrl}}/files">File Storage</a>
-                  <ul>
-                    <li><a href="{{appUrl}}/files#amazon">Amazon s3</a></li>
-                    <li><a href="{{appUrl}}/files#google">Google Cloud</a></li>
-                    <li><a href="{{appUrl}}/files#microsoft">Mirosoft Azure</a></li>
-                    <li><a href="{{appUrl}}/files#rackspace">Rackspace Cloud Files</a></li>
-                    <li><a href="{{appUrl}}/files#sftp-ssh">SSH / SFTP</a></li>
-                  </ul>             
-                </li>
-                -->
-                <li><a href="{{appUrl}}/keys">Role Based Access Control</a>
-                  <ul>
-                    <li><a href="{{appUrl}}/keys">API Access Keys</a></li>
-                    <li><a href="{{appUrl}}/roles">System Roles</a></li>
-                    <li><a href="{{appUrl}}/roles#custom-role-checks">Custom Roles</a></li>
-                  </ul>
-                </li>
-                <li><a href="{{appUrl}}/api">Developer API</a>
-                  <ul>
-                    <li><a href="{{appUrl}}/api">Getting Started</a></li>
-                    <li><a href="{{appUrl}}/api#keys">API Access Keys</a></li>
-                    <li><a href="{{appUrl}}/api#rest">HTTP REST API</a></li>
-                    <li><a href="{{appUrl}}/sdk">Client SDK</a></li>
-                    <li><a href="{{appUrl}}/gateways">Hot Code Gateways</a></li>
-                  </ul>
-                </li>
-                <li><a href="{{appUrl}}/contact">Contact Us</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--end mobile menu  area -->   
-
+    <nav class="topNav" role="navigation">
+      <a class="topNav-logo" href="{{appUrl}}" >
+        <img src="{{appUrl}}/img/logo.png" alt="hook.io">
+      </a>
+      <ul class="topNav-list">
+        <li class="topNav-listItem">
+          <a class="topNav-link" href="{{appUrl}}/pricing">pricing</a>
+        </li>
+        <li class="topNav-listItem">
+          <a class="topNav-link" href="{{appUrl}}/login">log in</a>
+        </li>
+      </ul>
+    </nav>
+    <input type="checkbox" class="mobileNavCheckbox" id="hamburger">
+    <label class="mobileNavButton button" for="hamburger">
+      <span class="mobileNavButton-icon"></span> menu
+    </label>
+    <nav class="mobileNav">
+      <ul class="mobileNav-list">
+        <li class="mobileNav-listItem">
+          <button type="button">create a new webhook</button>
+        </li>
+        <li class="mobileNav-listItem">
+          <a class="mobileNav-link" href="{{appUrl}}/services">webhooks</a>
+        </li>
+        <li class="mobileNav-listItem">
+          <a class="mobileNav-link" href="{{appUrl}}/keys">API keys</a>
+        </li>
+        <li class="mobileNav-listItem">
+          <a class="mobileNav-link" href="{{appUrl}}/cron">cron jobs</a>
+        </li>
+        <li class="mobileNav-listItem">
+          <a class="mobileNav-link" href="{{appUrl}}/env">environment variables</a>
+        </li>
+        <li class="mobileNav-listItem">
+          <a class="mobileNav-link" href="{{appUrl}}/services">webhooks</a>
+        </li>
+        <li class="mobileNav-listItem">
+          <h2>Account</h2>
+          <a class="mobileNav-link" href="{{appUrl}}/account">{{user.emailAddress}}</a>
+        </li>
+      </ul>
+    </nav>
     <!-- slider-area start -->
     <section class="main-slider-area">
       <div class="container-fluid pd0">
@@ -426,7 +98,7 @@
                 <img src="/img/splash-bg.png" alt="main slider" title="#htmlcaption2"/>
               </div>
               <div id="htmlcaption1" class="nivo-html-caption slider-caption-1">
-                <div class="slider-progress"></div>               
+                <div class="slider-progress"></div>
                 <div class="slide1-text">
                   <div class="middle-text">
                     <div class="cap-title wow slideInRight" data-wow-duration="1.1s" data-wow-delay="0s">
@@ -434,18 +106,18 @@
                     </div>
                     <div class="cap-title wow slideInRight" data-wow-duration="2s" data-wow-delay="0s">
                       <h3><span class="no-p-laft">free to try</span></h3>
-                    </div>                    
+                    </div>
                     <div class="cap-dec wow slideInRight" data-wow-duration="3s" data-wow-delay="0s">
                       <p>{{appName}} is the leading open-source provider of microservice and webhook hosting.<br /> Our service is built with <span class="octicon octicon-heart" style="color:red;"></span> by Developers for Developers</p>
-                    </div>  
+                    </div>
                     <div class="cap-readmore wow bounceInUp smore" data-wow-duration="3s" data-wow-delay="1s">
                       <a href="{{appUrl}}/examples">Deploy your first Microservice</a>
-                    </div>  
-                  </div>  
-                </div>            
+                    </div>
+                  </div>
+                </div>
               </div>
               <div id="htmlcaption2" class="nivo-html-caption slider-caption-1">
-                <div class="slider-progress"></div>               
+                <div class="slider-progress"></div>
                 <div class="slide1-text">
                   <div class="middle-text">
                     <div class="cap-title slide2 wow zoomIn" data-wow-duration=".9s" data-wow-delay=".5s">
@@ -453,14 +125,14 @@
                     </div>
                     <div class="cap-dec wow zoomIn" data-wow-duration="1.1s" data-wow-delay=".5s">
                       <p>{{appName}} is the leading open-source provider of microservice and webhook hosting.<br /> Our service is built with love by Developers for Developers</p>
-                    </div>  
+                    </div>
                     <div class="cap-readmore wow zoomIn smore" data-wow-duration="1.5s" data-wow-delay=".5s">
                       <a href="{{appUrl}}/examples">Deploy your first Microservice</a>
-                    </div>  
-                  </div>  
-                </div>            
+                    </div>
+                  </div>
+                </div>
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -528,12 +200,12 @@
 
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 item">
-                      <div class="blog_content blogmt yield">           
-                      </div>            
+                      <div class="blog_content blogmt yield">
+                      </div>
                     </div>
                   </div>
-                </div>  
-              </div>  
+                </div>
+              </div>
             </div>
           -->
         </div>
@@ -570,7 +242,7 @@
                 <li class="clearfix">
                   <i class="fa fa-envelope"></i>
                   <span>{{appAdminEmail}}</span>
-                </li>               
+                </li>
               </ul>
             </div>
           </div>
@@ -601,7 +273,7 @@
                 <li><a href="https://github.com/bigcompany/hook.io">Open-Source</a></li>
                 <!-- <li><a href="{{appUrl}}/limits">Platform Limitations</a></li> -->
               </ul>
-            </div>        
+            </div>
           </div>
           <div class="col-lg-2 col-md-3 col-sm-5">
             <h2 class="footer_title"><span>contact us</span></h2>
@@ -615,9 +287,9 @@
                 <li><a href="{{appUrl}}/blog">Blog</a></li>
                 <li><a href="{{appUrl}}/faq">Help & FAQs</a></li>
               </ul>
-            </div>        
+            </div>
           </div>
-          
+
           <div class="col-lg-3 col-md-3 col-sm-5 hidden-sm">
             <h2 class="footer_title"><span>NEWSLETTER</span></h2>
             <div class="newslatter_widget">
@@ -632,7 +304,7 @@
                   </div>
                 </form>
               </div>
-            </div>        
+            </div>
           </div>
         </div>
       </div>
@@ -673,52 +345,52 @@
               <span><a href="{{appUrl}}/pricing"><img src="/img/d.png" alt="" /></a></span>
               <span><a href="{{appUrl}}/pricing"><img src="/img/a.png" alt="" /></a></span>
             </div>
-          </div>        
+          </div>
         </div>
       </div>
     </div>
     <!-- End footer bottom -->
-  </footer> 
+  </footer>
   <!-- End end footer  -->
-        <!-- JS --> 
+        <!-- JS -->
     <!-- TODO: remove unused jquery plugins -->
     <!-- fancybox js
-    ============================================ -->    
-    <script src="/js/jquery.fancybox.pack.js"></script>                
+    ============================================ -->
+    <script src="/js/jquery.fancybox.pack.js"></script>
     <!-- bootstrap js
-    ============================================ -->         
-        <script src="/js/bootstrap.min.js"></script>      
+    ============================================ -->
+        <script src="/js/bootstrap.min.js"></script>
       <!-- owl.carousel.min js
-    ============================================ -->       
+    ============================================ -->
         <script src="/js/owl.carousel.min.js"></script>
       <!-- scrollup js
-    ============================================ -->    
-        <script src="/js/jquery.scrollup.min.js"></script>             
+    ============================================ -->
+        <script src="/js/jquery.scrollup.min.js"></script>
       <!-- countdown js
-    ============================================ -->         
-        <script src="/js/jquery.countdown.min.js"></script>    
+    ============================================ -->
+        <script src="/js/jquery.countdown.min.js"></script>
     <!-- plugins js
-    ============================================ -->         
+    ============================================ -->
         <script src="/js/plugins.js"></script>
         <!-- price_slider js -->
         <script src="/js/price_slider.js"></script>
     <!-- meanmenu js
-    ============================================ -->      
-        <script src="/js/jquery.meanmenu.min.js"></script>   
+    ============================================ -->
+        <script src="/js/jquery.meanmenu.min.js"></script>
 
 
         <!-- autocomplete js
-        ============================================ -->      
-            <script src="/js/jquery.autocomplete.min.js"></script>   
+        ============================================ -->
+            <script src="/js/jquery.autocomplete.min.js"></script>
 
         <!-- counterup js
-    ============================================ -->      
+    ============================================ -->
         <script src="/js/jquery.counterup.min.js"></script>
     <script src="/js/waypoints.min.js"></script>
     <!-- nivoslider js -->
-    <script src="/js/jquery.nivo.slider.pack.js"></script>        
+    <script src="/js/jquery.nivo.slider.pack.js"></script>
       <!-- wow js
-    ============================================ -->       
+    ============================================ -->
     <script src="/js/wow.js"></script>
     <script>
       new WOW().init();
@@ -730,7 +402,7 @@
       <!-- main js
     ============================================ -->
         <script src="/js/main.js"></script>
-        
+
         <script>
         var keywords = keywords = [
           { value: 'Account', data: '/account' },
@@ -805,7 +477,7 @@
               document.location = suggestion.data;
             }
           });
-          
+
           // if login page, auto-select login form on document ready so users can press enter key to login
           if(document.location.pathname === "/") {
             $('#autocomplete').select();

@@ -1,0 +1,23 @@
+.topNav {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ height: 6rem;
+ padding: 0 1rem;
+}
+.topNav-logo {
+	display: block;
+	height: 1.5rem;
+	width: 6.75rem;
+}
+.topNav-list {
+	display: flex;
+	margin-right: 8rem;
+}
+.topNav-listItem {
+	display: block;
+	margin-left: 1rem;
+}
+.topNav-link {
+
+}
