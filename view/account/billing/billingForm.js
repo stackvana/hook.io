@@ -1,5 +1,5 @@
 var forms = require('mschema-forms');
-var servicePlan = require('../lib/resources/servicePlan');
+var servicePlan = require('../../../lib/resources/servicePlan');
 
 module['exports'] = function billingForm (data, cb) {
 

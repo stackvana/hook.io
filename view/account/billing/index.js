@@ -1,14 +1,13 @@
-var hook = require('../lib/resources/hook');
-var user = require('../lib/resources/user');
-var servicePlan = require('../lib/resources/servicePlan');
-var config = require('../config');
+var hook = require('../../../lib/resources/hook');
+var user = require('../../../lib/resources/user');
+var config = require('../../../config');
 var bodyParser = require('body-parser');
 var mergeParams = require('merge-params');
 var moment = require('moment');
 var request = require('request');
-var billing = require('../lib/resources/billing')
+var billing = require('../../../lib/resources/billing')
 var stripe = require('stripe')(config.stripe.secretKey);
-var servicePlan = require('../lib/resources/servicePlan');
+var servicePlan = require('../../../lib/resources/servicePlan');
 var billingForm = require('./billingForm');
 var TRIAL_DAYS_LIMIT = 60;
 
@@ -57,21 +56,23 @@ module['exports'] = function view (opts, callback) {
     function createStripeSubscription (id, opts, cb) {
       stripe.customers.createSubscription(id, opts, cb);
     }
-    
-    function createLocalBillings (opts, cb) {
+
+    function createOrUpdateLocalUser (opts, cb) {
       // TODO: separate rules if the user is already logged in, but with no purchase? that way, no create will happen
+      console.log('incoming opts', opts)
       if (typeof opts.owner === "undefined" || opts.owner === "anonymous") {
-        var slug = require('slug');
-        // quick hack fix for creating a unique user name based on email
-        // TODO: no way to update user name now...fix that in /account page
-        var name = slug(opts.email);
         user.find({ email: opts.email }, function (err, results) {
           if (err) {
             return res.end(err.message);
           }
-
+          console.log('got back users', results)
           if (results.length === 0) {
-            user.create({ name: name, email: opts.email, paidStatus: "paid", servicePlan: planName }, function (err, u) {
+            user.create({ 
+              email: opts.email,
+              paidStatus: "paid",
+              servicePlan: planName,
+              stripeID: opts.stripeID
+            }, function (err, u) {
               if (err) {
                 return res.end(err.message);
               }
@@ -85,6 +86,7 @@ module['exports'] = function view (opts, callback) {
             u.paidStatus = "paid";
             u.email = opts.email;
             u.servicePlan = planName;
+            u.stripeID = opts.stripeID;
 
             req.session.paidStatus = "paid";
             req.session.servicePlan = planName;
@@ -108,7 +110,8 @@ module['exports'] = function view (opts, callback) {
         if (typeof _user !== "undefined") {
           user.login({ req: req, res: res, user: _user }, function (err) {
             opts.owner = _user.name;
-            billing.create(opts, cb);
+            cb(null);
+            // billing.create(opts, cb);
           });
         } else {
           user.find({ name: opts.owner }, function (err, results) {
@@ -125,7 +128,7 @@ module['exports'] = function view (opts, callback) {
               req.session.servicePlan = planName;
               req.session.serviceLimits = servicePlan[planName];
 
-              u.save(function(err, r){
+              u.save(function (err, r) {
                 if (err) {
                   return res.end(err.message);
                 }
@@ -133,7 +136,8 @@ module['exports'] = function view (opts, callback) {
                   if (err) {
                     return res.end(err.message);
                   }
-                  billing.create(opts, cb);
+                  cb(null);
+                  // billing.create(opts, cb);
                 });
               });
             }
@@ -173,77 +177,88 @@ module['exports'] = function view (opts, callback) {
     if (params.addCustomer) {
       // console.log('adding new customer');
       // create a new customer based on email address
-      stripe.customers.create(
-        { email: params.email },
-        function (err, customer) {
-          if (err) {
-            if (params.ajax || req.jsonResponse) {
-              return res.end(err.message);
-            }
-            // possible issue here with existing customers attempting to add new plans
-            $('.status').html(err.message);
-          }
-          // console.log('new customer created', err, customer);
-          $('.status').html('New billing informationed added!');
-
-          // select plan based on user-selected value
-
-          // the stripe customer has been created, now enroll them into a subscription
-          createStripeSubscription(customer.id, {
-             plan: _plan,
-             source: params.stripeToken // source is the token created from checkout.js
-           }, function(err, charge){
-             if (err) {
-               if (params.ajax || req.jsonResponse) {
-                 return res.end(err.message);
-               }
-               $('.status').addClass('error');
-               $('.status').html(err.message);
-               return callback(err, $.html());
-             }
-
-            // the stripe subscription was successful, now create a local billings entry to correspond with stripe
-            createLocalBillings({
-              owner: req.session.user, // TODO: better check here
-              stripeID: customer.id,
-              email: params.email || req.session.email,
-              amount: params.amount,
-              plan: _plan
-            }, function (err, _billing) {
-              if (err) {
-                $('.status').html(err.message);
-                return callback(null, err.message);
-              }
-              // the local billing entry was successful, fetch that billing and render page
-              // TODO: remove session and user scope code here? or remove it from createBillings
-              req.user = req.user || {};
-              req.user.paidStatus = "paid";
-              req.session.paidStatus = "paid";
-
-              // update service plan name based on purchase
-              var planName = "trial";
-              Object.keys(servicePlan).forEach(function(item){
-                if (servicePlan[item].stripe_label === _plan) {
-                  planName = item;
-                }
-              });
-              req.session.servicePlan = planName;
-              req.session.serviceLimits = servicePlan[planName];
-
-              // console.log('added to plan', err, charge);
-              $('.status').html('Billing Information Added! Thank you!');
+      // TODO: first check to see if customer exists before creating
+      stripe.customers.list({
+        email: params.email
+      }, function (err, customers) {
+        console.log('listing customers', err, customers);
+        if (customers.data.length > 0) {
+          // if this happens should be try updating the plan?
+          return res.json({ error: true, message: 'Customer already exists!'});
+        }
+        stripe.customers.create(
+          { 
+            email: params.email
+          },
+          function (err, customer) {
+            if (err) {
               if (params.ajax || req.jsonResponse) {
-                return res.end('paid');
+                return res.end(err.message);
               }
-              billing.find({ owner: req.session.user }, function (err, results) {
-                if (err) {
-                  $('.status').html(err.message);
-                  return callback(err, $.html());
+              // possible issue here with existing customers attempting to add new plans
+              $('.status').html(err.message);
+            }
+            // console.log('new customer created', err, customer);
+            $('.status').html('New billing informationed added!');
+
+            // select plan based on user-selected value
+
+            // the stripe customer has been created, now enroll them into a subscription
+            createStripeSubscription(customer.id, {
+               plan: _plan,
+               source: params.stripeToken // source is the token created from checkout.js
+             }, function(err, charge){
+               if (err) {
+                 if (params.ajax || req.jsonResponse) {
+                   return res.end(err.message);
+                 }
+                 $('.status').addClass('error');
+                 $('.status').html(err.message);
+                 return callback(err, $.html());
+               }
+
+              // check to see if user currently exists in the system by email?
+               createOrUpdateLocalUser({
+                 owner: req.session.user, // TODO: better check here
+                 stripeID: customer.id,
+                 email: params.email || req.session.email,
+                 amount: params.amount,
+                 plan: _plan
+               }, function (err, r) {
+                // the stripe subscription was successful, now create a local billings entry to correspond with stripe
+                // TODO: update user document with new stripe customer id
+                /*
+                 {
+                  owner: req.session.user, // TODO: better check here
+                  stripeID: customer.id,
+                  email: params.email || req.session.email,
+                  amount: params.amount,
+                  plan: _plan
                 }
-                showBillings(results, function(){
+                */
+                  // the local billing entry was successful, fetch that billing and render page
+                  // TODO: remove session and user scope code here? or remove it from createBillings
+                  req.user = req.user || {};
+                  req.user.paidStatus = "paid";
+                  req.session.paidStatus = "paid";
+
+                  // update service plan name based on purchase
+                  var planName = "trial";
+                  Object.keys(servicePlan).forEach(function(item){
+                    if (servicePlan[item].stripe_label === _plan) {
+                      planName = item;
+                    }
+                  });
+                  req.session.servicePlan = planName;
+                  req.session.serviceLimits = servicePlan[planName];
+
+                  // console.log('added to plan', err, charge);
+                  $('.status').html('Billing Information Added! Thank you!');
+                  if (params.ajax || req.jsonResponse) {
+                    return res.end('paid');
+                  }
                   callback(err, $.html());
-                });
-              });
+               });
             });
           });
         }
@@ -257,26 +272,9 @@ module['exports'] = function view (opts, callback) {
         }
         return res.redirect('/login');
       }
-      billing.find({ owner: req.session.user }, function (err, results) {
-        if (err) {
-          return callback(null, err.message);
-        }
-        if (results.length > 0) {
-          $('.noBilling').remove();
-          var _billing = results[0];
-          showBillings(results, function(){
-            var out = $.html();
-            out = out.replace('{{stripePK}}', config.stripe.publicKey);
-            callback(null, out);
-          });
-        } else {
-          // TODO: add copy on billing page for pricing options
-          // $('.billingForm').html('<h3>No Billing Options Found!</h3>' + checkOut);
-          $('.cancelPlan').remove();
-          $('#stripeForm').remove();
-          callback(null, $.html());
-        }
-      });
+      var out = $.html();
+      out = out.replace('{{stripePK}}', config.stripe.publicKey);
+      callback(null, out);
      }
   });
 };
