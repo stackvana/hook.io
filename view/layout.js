@@ -23,6 +23,7 @@ module['exports'] = function view (opts, callback) {
   if (!req.isAuthenticated()) {
     //req.session.user = "anonymous";
     $('.logoutLink').remove();
+    $('.loggedInOnly').remove();
   } else {
     $('.loginLink').remove();
   }
@@ -244,6 +245,7 @@ module['exports'] = function view (opts, callback) {
     if (typeof req.session !== 'undefined') {
       out = out.replace(/\{\{userName\}\}/g, req.session.user || 'anonymous');
       out = out.replace(/\{\{userEmail\}\}/g, req.session.email);
+      out = out.replace(/\{\{user.email\}\}/g, req.session.email);
     }
     out = out.replace(/\{\{username\}\}/g, req.session.user || 'anonymous');
     return $.load(out);

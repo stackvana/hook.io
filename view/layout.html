@@ -53,15 +53,16 @@
           <a class="topNav-link" href="{{appUrl}}/pricing">pricing</a>
         </li>
         <li class="topNav-listItem">
-          <a class="topNav-link" href="{{appUrl}}/login">log in</a>
+          <a class="topNav-link loginLink" href="{{appUrl}}/login">log in</a>
+          <a class="topNav-link logoutLink" href="{{appUrl}}/logout">log out</a>
         </li>
       </ul>
     </nav>
-    <input type="checkbox" class="mobileNavCheckbox" id="hamburger">
-    <label class="mobileNavButton button" for="hamburger">
+    <input type="checkbox" class="mobileNavCheckbox loggedInOnly" id="hamburger">
+    <label class="mobileNavButton button loggedInOnly" for="hamburger">
       <span class="mobileNavButton-icon"></span> menu
     </label>
-    <nav class="mobileNav">
+    <nav class="mobileNav loggedInOnly">
       <ul class="mobileNav-list">
         <li class="mobileNav-listItem">
           <button type="button">create a new webhook</button>
@@ -83,7 +84,7 @@
         </li>
         <li class="mobileNav-listItem">
           <h2>Account</h2>
-          <a class="mobileNav-link" href="{{appUrl}}/account">{{user.emailAddress}}</a>
+          <a class="mobileNav-link" href="{{appUrl}}/account">{{user.email}}</a>
         </li>
       </ul>
     </nav>
