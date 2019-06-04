@@ -67,7 +67,7 @@
     "run-service": "https://github.com/bigcompany/run-service/tarball/master",
     "slug": "1.1.0",
     "stream-buffers": "^1.1.0",
-    "stripe": "^3.3.4",
+    "stripe": "^6.34.0",
     "then-sleep": "^1.0.1",
     "through2": "^0.6.3",
     "timezone-support": "^1.8.1",
